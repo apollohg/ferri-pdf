@@ -136,7 +136,7 @@ pub(crate) use font_values::{
 };
 pub(crate) use generated::{
     CounterRequest, ElementContent, GeneratedContent, GeneratedOutput, NamedStringMode,
-    NamedStringRequest, TargetReferenceError, TargetRequest, TargetValue,
+    NamedStringRequest, TargetReferenceError, TargetRequest, TargetValue, truncate_text,
 };
 pub(crate) use grid_values::{
     AutoFlow, COLUMNS, GridAreas, GridLine, GridStyle, MAX_GRID_LINE, NamedArea, ROWS, Subgrid,
@@ -213,8 +213,6 @@ pub enum StyleError {
         resource: &'static str,
         limit: usize,
     },
-    #[error("generated content exceeds {limit} bytes")]
-    GeneratedContentLimit { limit: usize },
     #[error("CSS value exceeds {limit} {resource}")]
     GrammarLimit {
         resource: &'static str,

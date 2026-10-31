@@ -1009,7 +1009,7 @@ fn prepare<'a, 't>(
             &style.quotes,
             &mut |request| Ok(context.strings.text(page, request)),
             &mut |request| {
-                context.counters.text(
+                Ok(context.counters.text(
                     page,
                     margin.location,
                     request,
@@ -1017,9 +1017,13 @@ fn prepare<'a, 't>(
                         .document
                         .page_counters(page)
                         .unwrap_or(&CounterSnapshot::default()),
-                )
+                ))
             },
         )?;
+        crate::document::record_text_limit(
+            context.document.styles().degradations(),
+            output.limited(),
+        );
         let images = context
             .document
             .margin_images(&output, style, context.resolver);

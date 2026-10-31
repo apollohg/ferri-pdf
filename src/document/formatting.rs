@@ -2571,9 +2571,10 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         .then(|| self.traversal.strings.generated_event(element, pseudo));
         let bound = self.traversal.bind(content, context, running)?;
         let quotes = self.traversal.quotes;
-        let output = bound.element_output_with_counters(
-            crate::document::MAX_INLINE_TEXT_BYTES,
-            &mut |request| self.traversal.counters.text(request),
+        let output = content_output(
+            self.sheet,
+            &mut self.traversal.counters,
+            &bound,
             &style.quotes,
             &mut self.traversal.quotes,
         )?;
@@ -2978,9 +2979,10 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             },
             false,
         )?;
-        let output = bound.element_output_with_counters(
-            crate::document::MAX_INLINE_TEXT_BYTES,
-            &mut |request| self.traversal.counters.text(request),
+        let output = content_output(
+            self.sheet,
+            &mut self.traversal.counters,
+            &bound,
             &style.quotes,
             &mut self.traversal.quotes,
         )?;
@@ -3015,9 +3017,10 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                     .traversal
                     .generated
                     .bind_copy(content, context, numbers)?;
-                let output = bound.element_output_with_counters(
-                    crate::document::MAX_INLINE_TEXT_BYTES,
-                    &mut |request| self.traversal.counters.text(request),
+                let output = content_output(
+                    self.sheet,
+                    &mut self.traversal.counters,
+                    &bound,
                     quotes,
                     &mut depth.clone(),
                 )?;
@@ -3107,14 +3110,34 @@ fn list_marker(
         },
         false,
     )?;
-    let output = bound.element_output_with_counters(
-        crate::document::MAX_INLINE_TEXT_BYTES,
-        &mut |request| traversal.counters.text(request),
+    let output = content_output(
+        sheet,
+        &mut traversal.counters,
+        &bound,
         &marker.quotes,
         &mut traversal.quotes,
     )?;
     let images = resources.generated_images(&output, &used);
     Paragraph::generated_marker(&output, &images, &used)
+}
+
+/// The output of `bound` content with the document's counters, reporting text it left out
+/// past its limit.
+fn content_output(
+    sheet: &Stylesheet,
+    counters: &mut crate::document::counters::Counters,
+    bound: &crate::style::GeneratedContent,
+    quotes: &crate::style::Quotes,
+    depth: &mut crate::style::QuoteDepth,
+) -> Result<crate::style::GeneratedOutput, StyleError> {
+    let output = bound.element_output_with_counters(
+        crate::document::MAX_INLINE_TEXT_BYTES,
+        &mut |request| Ok(counters.text(request)),
+        quotes,
+        depth,
+    )?;
+    crate::document::content::record_text_limit(sheet.degradations(), output.limited());
+    Ok(output)
 }
 
 /// Whether a paragraph in `blocks` or in the boxes they hold left text out past its limit.

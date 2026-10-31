@@ -138,13 +138,13 @@ impl GeneratedBindings {
             && content.has_page_counters()
         {
             self.pages.borrow_mut().insert(context);
-            return Self::bind_page(
+            return Ok(Self::bind_page(
                 bound,
                 PageNumbers {
                     page: self.values.paged.pages.get(&context).copied(),
                     total: self.values.paged.total,
                 },
-            );
+            ));
         }
         Ok(bound)
     }
@@ -167,20 +167,20 @@ impl GeneratedBindings {
             shown.total |= content.shows_pages();
             PageNumbers::default()
         });
-        Self::bind_page(bound, numbers)
+        Ok(Self::bind_page(bound, numbers))
     }
     fn bind_page(
         content: std::borrow::Cow<'_, GeneratedContent>,
         numbers: PageNumbers,
-    ) -> Result<std::borrow::Cow<'_, GeneratedContent>, StyleError> {
+    ) -> std::borrow::Cow<'_, GeneratedContent> {
         if !content.has_page_counters() {
-            return Ok(content);
+            return content;
         }
-        Ok(std::borrow::Cow::Owned(content.bind_page_counters(
+        std::borrow::Cow::Owned(content.bind_page_counters(
             MAX_INLINE_TEXT_BYTES,
             numbers.page.unwrap_or(UNPAGINATED_PAGE),
             numbers.total.unwrap_or(UNPAGINATED_TOTAL),
-        )?))
+        ))
     }
     /// Binds target references and named strings.
     fn bind_references<'a>(
@@ -301,10 +301,10 @@ impl GeneratedPass {
         context: PageStyleTarget,
         numbers: PageNumbers,
     ) -> Result<std::borrow::Cow<'a, GeneratedContent>, StyleError> {
-        GeneratedBindings::bind_page(
+        Ok(GeneratedBindings::bind_page(
             self.bindings.bind_references(content, Some(context))?,
             numbers,
-        )
+        ))
     }
     /// Records the initial values page contexts' resets without one gave the counters they
     /// reset, by page.
@@ -395,6 +395,10 @@ pub(crate) struct GeneratedReferences {
     page_initials: Vec<(usize, std::sync::Arc<str>, i128)>,
 }
 impl GeneratedReferences {
+    /// Where content bound by these references reports what it renders without.
+    pub(crate) fn degradations(&self) -> &crate::style::Degradations {
+        &self.bindings.degradations
+    }
     pub(crate) fn bind<'a>(
         &self,
         content: &'a GeneratedContent,
@@ -438,7 +442,7 @@ impl GeneratedReferences {
                         .page_text(numbers(page), pages)
                         .expect("page counter")
                 }
-                TargetValue::Counter(counter) => target.counters.text(counter)?.into_text(),
+                TargetValue::Counter(counter) => target.counters.text(counter).into_text(),
                 TargetValue::Text(source) => ElementText::new(
                     document
                         .element(*owner)
@@ -448,7 +452,7 @@ impl GeneratedReferences {
                     &target.after,
                     None,
                 )
-                .resolve(*source)?,
+                .resolve(*source),
             };
             values.insert(request.clone(), text);
         }

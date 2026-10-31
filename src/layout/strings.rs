@@ -122,6 +122,7 @@ impl StringLocations {
         assignments: &[RunningStringAssignment],
         numbers: &PageCounters,
         pages: usize,
+        degradations: &crate::style::Degradations,
     ) -> Result<PageStrings, StyleError> {
         if self.assignments.len() != assignments.len() {
             return Err(StyleError::Invalid(
@@ -153,11 +154,12 @@ impl StringLocations {
                     });
             }
             for assignment in &assignments[index].values {
-                let text = assignment.content.page_text(
+                let value = assignment.content.bound_page_output(
                     numbers.page(location.page, None),
                     pages,
                     crate::document::MAX_INLINE_TEXT_BYTES,
                 )?;
+                crate::document::record_text_limit(degradations, value.limited());
                 output
                     .names
                     .entry(assignment.name.clone())
@@ -166,7 +168,7 @@ impl StringLocations {
                         page: location.page,
                         owner: index,
                         start: location.start,
-                        value: text,
+                        value: value.into_text(),
                     });
             }
         }

@@ -53,8 +53,9 @@ fn selected_rules_resolve_geometry_production_and_margin_content_from_one_cascad
     assert_eq!(
         first.margins[0]
             .content
-            .page_text(1, 3, CONTENT_LIMIT)
-            .unwrap(),
+            .bound_page_output(1, 3, CONTENT_LIMIT)
+            .unwrap()
+            .text(),
         "A 1"
     );
     let second = sheet
@@ -74,8 +75,9 @@ fn selected_rules_resolve_geometry_production_and_margin_content_from_one_cascad
     assert_eq!(
         second.margins[0]
             .content
-            .page_text(2, 3, CONTENT_LIMIT)
-            .unwrap(),
+            .bound_page_output(2, 3, CONTENT_LIMIT)
+            .unwrap()
+            .text(),
         "B 2 of 3"
     );
     assert_eq!(
@@ -129,8 +131,9 @@ fn page_candidates_preserve_important_layer_inversion_and_descriptor_rollback() 
     assert_eq!(
         page.margins[0]
             .content
-            .page_text(1, 1, CONTENT_LIMIT)
-            .unwrap(),
+            .bound_page_output(1, 1, CONTENT_LIMIT)
+            .unwrap()
+            .text(),
         "Base"
     );
     let unlayered = sheet(&format!("{css}@page{{size:200pt 300pt}}"));
@@ -180,8 +183,9 @@ fn user_important_page_values_outrank_more_specific_author_rules() {
     assert_eq!(
         page.margins[0]
             .content
-            .page_text(1, 1, CONTENT_LIMIT)
-            .unwrap(),
+            .bound_page_output(1, 1, CONTENT_LIMIT)
+            .unwrap()
+            .text(),
         "User"
     );
 }

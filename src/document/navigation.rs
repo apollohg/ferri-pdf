@@ -1,6 +1,9 @@
 //! Hyperlinks and their same-document targets (HTML §4.6.4, §7.4.6.4) and bookmarks
 //! (CSS GCPM 3 §4), located later by the boxes that carry them.
-use crate::document::{DocumentError, MAX_INLINE_TEXT_BYTES, content::element_text};
+use crate::document::{
+    DocumentError, MAX_INLINE_TEXT_BYTES,
+    content::{element_text, record_text_limit},
+};
 use crate::dom::{DocumentTree, Element, ElementId};
 use crate::resources::{ResourceBase, Url};
 use crate::style::{GeneratedContent, GeneratedPseudoElement, QuoteDepth, Quotes, Style};
@@ -439,13 +442,20 @@ impl NavigationBuilder {
                 .element(id)
                 .expect("navigation element remains in the document");
             if let Some(index) = input.heading {
-                self.navigation.headings[index].text = element_text(element)?;
+                let mut text = element_text(element);
+                record_text_limit(
+                    generated.degradations(),
+                    crate::style::truncate_text(&mut text, MAX_INLINE_TEXT_BYTES),
+                );
+                self.navigation.headings[index].text = text;
             }
             if let Some(index) = input.index {
                 let text = input
                     .heading
                     .map(|heading| self.navigation.headings[heading].text.as_str());
-                self.navigation.bookmarks[index].label = label(element, &input, text)?;
+                let label = label(element, &input, text)?;
+                record_text_limit(generated.degradations(), label.limited());
+                self.navigation.bookmarks[index].label = label.into_text();
             }
         }
         self.navigation.element_destinations = self.destinations;
@@ -491,7 +501,7 @@ fn label(
     element: Element<'_>,
     input: &PendingLabel,
     known_text: Option<&str>,
-) -> Result<String, DocumentError> {
+) -> Result<crate::style::GeneratedOutput, DocumentError> {
     let mut content = crate::document::content::ElementText::new(
         element,
         known_text,
@@ -500,10 +510,10 @@ fn label(
         input.marker.as_deref(),
     );
     let mut depth = input.depth;
-    Ok(input.content.element_text_with_sources(
+    Ok(input.content.element_output_with_sources(
         MAX_INLINE_TEXT_BYTES,
-        &mut |source| content.resolve(source),
-        &mut |request| input.counters.text(request),
+        &mut |source| Ok(content.resolve(source)),
+        &mut |request| Ok(input.counters.text(request)),
         &input.quotes,
         &mut depth,
     )?)

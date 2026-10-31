@@ -50,7 +50,13 @@ enum GeneratedPart {
     Image(crate::paint::BackgroundImage),
 }
 #[derive(Clone, Debug, PartialEq, serde::Serialize)]
-pub(crate) struct GeneratedContent(Vec<GeneratedPart>);
+#[serde(transparent)]
+pub(crate) struct GeneratedContent {
+    parts: Vec<GeneratedPart>,
+    /// Binding the content left out text past its limit.
+    #[serde(skip)]
+    limited: bool,
+}
 
 /// What the `<image>` values of a content list compute against: the element's values and its
 /// `currentcolor`.
@@ -64,6 +70,8 @@ pub(crate) struct GeneratedOutput {
     leaders: Vec<std::ops::Range<usize>>,
     /// Images with the text offsets they stand at, in text order.
     images: Vec<(usize, crate::paint::BackgroundImage)>,
+    /// Text past the content's limit was left out, with the parts after it.
+    limited: bool,
 }
 impl From<Representation> for GeneratedOutput {
     fn from(representation: Representation) -> Self {
@@ -73,12 +81,19 @@ impl From<Representation> for GeneratedOutput {
             text,
             leaders: Vec::new(),
             images,
+            limited: false,
         }
     }
 }
 impl GeneratedOutput {
     pub(crate) fn text(&self) -> &str {
         &self.text
+    }
+    pub(crate) fn into_text(self) -> String {
+        self.text
+    }
+    pub(crate) fn limited(&self) -> bool {
+        self.limited
     }
     pub(crate) fn leaders(&self) -> &[std::ops::Range<usize>] {
         &self.leaders
@@ -139,9 +154,9 @@ impl ComputedContent {
                 return Err(unsupported(element));
             };
             return Ok(std::sync::Arc::new(Self::Items {
-                content: GeneratedContent(vec![GeneratedPart::RunningElement(page_value_request(
-                    arguments, element,
-                )?)]),
+                content: GeneratedContent::new(vec![GeneratedPart::RunningElement(
+                    page_value_request(arguments, element)?,
+                )]),
                 alternative: None,
             }));
         }
@@ -276,13 +291,19 @@ pub(crate) type ElementContentText<'a> =
     dyn FnMut(ElementContent) -> Result<String, StyleError> + 'a;
 
 impl GeneratedContent {
+    fn new(parts: Vec<GeneratedPart>) -> Self {
+        Self {
+            parts,
+            limited: false,
+        }
+    }
     pub(crate) fn has_quote_actions(&self) -> bool {
-        self.0
+        self.parts
             .iter()
             .any(|part| matches!(part, GeneratedPart::Quote(_)))
     }
     pub(crate) fn advance_quote_depth(&self, depth: &mut QuoteDepth) {
-        for part in &self.0 {
+        for part in &self.parts {
             if let GeneratedPart::Quote(action) = part {
                 depth.apply(*action, &Quotes::default());
             }
@@ -290,7 +311,7 @@ impl GeneratedContent {
     }
 
     pub(crate) fn supported(&self) -> bool {
-        self.0.iter().all(|part| {
+        self.parts.iter().all(|part| {
             !matches!(
                 part,
                 GeneratedPart::Element(ElementContent::FirstLetter | ElementContent::Marker)
@@ -300,19 +321,19 @@ impl GeneratedContent {
     /// CSS Content 3 §1: a content list of a single `<image>` is a `<content-replacement>`,
     /// which makes its element a replaced element filled with the image.
     pub(crate) fn replacement(&self) -> Option<&crate::paint::BackgroundImage> {
-        match self.0.as_slice() {
+        match self.parts.as_slice() {
             [GeneratedPart::Image(image)] => Some(image),
             _ => None,
         }
     }
     pub(crate) fn has_images(&self) -> bool {
-        self.0
+        self.parts
             .iter()
             .any(|part| matches!(part, GeneratedPart::Image(_)))
     }
     /// `content(text)`, the initial `bookmark-label` (CSS GCPM 3 §4.2).
     pub(crate) fn element_text_content() -> Self {
-        Self(vec![GeneratedPart::Element(ElementContent::Text)])
+        Self::new(vec![GeneratedPart::Element(ElementContent::Text)])
     }
     /// `normal` and `none` generate nothing. Alternative text after `/` describes the content
     /// for assistive technology and does not render.
@@ -329,7 +350,7 @@ impl GeneratedContent {
             images,
         ) {
             return crate::style::background_values::image(image, images.relative, images.current)
-                .map(|image| Some(Self(vec![GeneratedPart::Image(image)])));
+                .map(|image| Some(Self::new(vec![GeneratedPart::Image(image)])));
         }
         let list = value
             .find(Label::Production(Production::ContentList))
@@ -347,23 +368,16 @@ impl GeneratedContent {
             .iter()
             .map(|item| part(item, scope, images))
             .collect::<Result<_, _>>()
-            .map(Self)
+            .map(Self::new)
     }
-    pub(crate) fn page_text(
+    /// The output of content whose element sources and document counters are bound, on page
+    /// `page` of `pages`.
+    pub(crate) fn bound_page_output(
         &self,
         page: i128,
         pages: usize,
         limit: usize,
-    ) -> Result<String, StyleError> {
-        self.page_text_with_quotes(page, pages, limit, &Quotes::default())
-    }
-    pub(crate) fn page_text_with_quotes(
-        &self,
-        page: i128,
-        pages: usize,
-        limit: usize,
-        quotes: &Quotes,
-    ) -> Result<String, StyleError> {
+    ) -> Result<GeneratedOutput, StyleError> {
         self.render(
             Some(PageContent {
                 number: page,
@@ -373,10 +387,9 @@ impl GeneratedContent {
             limit,
             None,
             None,
-            quotes,
+            &Quotes::default(),
             &mut QuoteDepth::default(),
         )
-        .map(|output| output.text)
     }
     #[cfg(test)]
     pub(crate) fn page_text_with_strings(
@@ -412,16 +425,15 @@ impl GeneratedContent {
         self.render(None, limit, None, None, quotes, depth)
             .map(|output| output.text)
     }
-    pub(crate) fn element_text_with_sources(
+    pub(crate) fn element_output_with_sources(
         &self,
         limit: usize,
         content: &mut ElementContentText<'_>,
         counters: &mut CounterText<'_>,
         quotes: &Quotes,
         depth: &mut QuoteDepth,
-    ) -> Result<String, StyleError> {
+    ) -> Result<GeneratedOutput, StyleError> {
         self.render(None, limit, Some(content), Some(counters), quotes, depth)
-            .map(|output| output.text)
     }
     /// Captures element and document-counter values while retaining page-dependent parts.
     pub(crate) fn bind_element_sources(
@@ -440,14 +452,14 @@ impl GeneratedContent {
     }
 
     pub(crate) fn target_requests(&self) -> impl Iterator<Item = &TargetRequest> {
-        self.0.iter().filter_map(|part| match part {
+        self.parts.iter().filter_map(|part| match part {
             GeneratedPart::Target(request) => Some(request),
             _ => None,
         })
     }
     /// The running element a page-margin box's `element()` content places.
     pub(crate) fn running_element(&self) -> Option<&NamedStringRequest> {
-        match self.0.as_slice() {
+        match self.parts.as_slice() {
             [GeneratedPart::RunningElement(request)] => Some(request),
             _ => None,
         }
@@ -457,56 +469,47 @@ impl GeneratedContent {
         self.shows_page() || self.shows_pages()
     }
     pub(crate) fn shows_page(&self) -> bool {
-        self.0
+        self.parts
             .iter()
             .any(|part| matches!(part, GeneratedPart::Page(_)))
     }
     pub(crate) fn shows_pages(&self) -> bool {
-        self.0
+        self.parts
             .iter()
             .any(|part| matches!(part, GeneratedPart::Pages(_)))
     }
     /// Binds the page counters of document content to those of the page it lies on, keeping
     /// the image symbols of their representations.
-    pub(crate) fn bind_page_counters(
-        &self,
-        limit: usize,
-        page: i128,
-        pages: usize,
-    ) -> Result<Self, StyleError> {
-        let mut parts = Vec::with_capacity(self.0.len());
-        for part in &self.0 {
+    pub(crate) fn bind_page_counters(&self, limit: usize, page: i128, pages: usize) -> Self {
+        let mut bound = Bound::new(limit, self.limited);
+        for part in &self.parts {
             let representation = match part {
                 GeneratedPart::Page(style) => style.representation(page),
                 GeneratedPart::Pages(style) => style.representation(pages as i128),
                 part => {
-                    parts.push(part.clone());
+                    if !bound.push(part.clone()) {
+                        break;
+                    }
                     continue;
                 }
             };
             let mut start = 0;
             let text = representation.text();
+            let mut pieces = Vec::new();
             for (offset, image) in representation.images() {
-                parts.push(GeneratedPart::Text(text[start..*offset].to_owned()));
-                parts.push(GeneratedPart::Image((**image).clone()));
+                pieces.push(GeneratedPart::Text(text[start..*offset].to_owned()));
+                pieces.push(GeneratedPart::Image((**image).clone()));
                 start = *offset;
             }
-            parts.push(GeneratedPart::Text(text[start..].to_owned()));
+            pieces.push(GeneratedPart::Text(text[start..].to_owned()));
+            if !pieces.into_iter().all(|piece| bound.push(piece)) {
+                break;
+            }
         }
-        let bytes: usize = parts
-            .iter()
-            .map(|part| match part {
-                GeneratedPart::Text(text) | GeneratedPart::Leader(text) => text.len(),
-                _ => 0,
-            })
-            .sum();
-        if bytes > limit {
-            return Err(StyleError::GeneratedContentLimit { limit });
-        }
-        Ok(Self(parts))
+        bound.content
     }
     pub(crate) fn named_string_requests(&self) -> impl Iterator<Item = &NamedStringRequest> {
-        self.0.iter().filter_map(|part| match part {
+        self.parts.iter().filter_map(|part| match part {
             GeneratedPart::NamedString(request) => Some(request),
             _ => None,
         })
@@ -536,26 +539,17 @@ impl GeneratedContent {
         limit: usize,
         resolve: &mut dyn FnMut(&GeneratedPart) -> Result<Option<String>, StyleError>,
     ) -> Result<Self, StyleError> {
-        let mut bytes = 0usize;
-        let parts = self
-            .0
-            .iter()
-            .map(|part| {
-                let bound = resolve(part)?.map_or_else(|| part.clone(), GeneratedPart::Text);
-                if let GeneratedPart::Text(text) | GeneratedPart::Leader(text) = &bound {
-                    bytes = bytes
-                        .checked_add(text.len())
-                        .filter(|bytes| *bytes <= limit)
-                        .ok_or(StyleError::GeneratedContentLimit { limit })?;
-                }
-                Ok(bound)
-            })
-            .collect::<Result<_, StyleError>>()?;
-        Ok(Self(parts))
+        let mut bound = Bound::new(limit, self.limited);
+        for part in &self.parts {
+            if !bound.push(resolve(part)?.map_or_else(|| part.clone(), GeneratedPart::Text)) {
+                break;
+            }
+        }
+        Ok(bound.content)
     }
 
     pub(crate) fn counter_requests(&self) -> impl Iterator<Item = &CounterRequest> {
-        self.0.iter().filter_map(|part| match part {
+        self.parts.iter().filter_map(|part| match part {
             GeneratedPart::Counter(request) => Some(request),
             _ => None,
         })
@@ -615,7 +609,8 @@ impl GeneratedContent {
         let mut text = String::new();
         let mut leaders = Vec::new();
         let mut images = Vec::new();
-        for part in &self.0 {
+        let mut limited = self.limited;
+        for part in &self.parts {
             let fragment: std::borrow::Cow<'_, str> = match part {
                 GeneratedPart::Image(image) => {
                     images.push((text.len(), image.clone()));
@@ -672,24 +667,65 @@ impl GeneratedContent {
                     content(*source)?.into()
                 }
             };
-            if text
-                .len()
-                .checked_add(fragment.len())
-                .is_none_or(|size| size > limit)
-            {
-                return Err(StyleError::GeneratedContentLimit { limit });
-            }
-            if matches!(part, GeneratedPart::Leader(_)) && !fragment.is_empty() {
-                leaders.push(text.len()..text.len() + fragment.len());
-            }
+            let start = text.len();
             text.push_str(&fragment);
+            let cut = truncate_text(&mut text, limit);
+            if matches!(part, GeneratedPart::Leader(_)) && text.len() > start {
+                leaders.push(start..text.len());
+            }
+            if cut {
+                images.retain(|(offset, _)| *offset <= text.len());
+                limited = true;
+                break;
+            }
         }
         Ok(GeneratedOutput {
             text,
             leaders,
             images,
+            limited,
         })
     }
+}
+
+/// Content bound within `limit` bytes of text.
+struct Bound {
+    content: GeneratedContent,
+    bytes: usize,
+    limit: usize,
+}
+impl Bound {
+    fn new(limit: usize, limited: bool) -> Self {
+        Self {
+            content: GeneratedContent {
+                parts: Vec::new(),
+                limited,
+            },
+            bytes: 0,
+            limit,
+        }
+    }
+    /// Appends `part`, its text cut at the limit; false once the limit cut it, the parts after
+    /// it being left out.
+    fn push(&mut self, mut part: GeneratedPart) -> bool {
+        let mut cut = false;
+        if let GeneratedPart::Text(text) | GeneratedPart::Leader(text) = &mut part {
+            cut = truncate_text(text, self.limit.saturating_sub(self.bytes));
+            self.bytes += text.len();
+        }
+        self.content.parts.push(part);
+        self.content.limited |= cut;
+        !cut
+    }
+}
+
+/// Cuts `text` to at most `limit` bytes at a character boundary; whether it cut any.
+pub(crate) fn truncate_text(text: &mut String, limit: usize) -> bool {
+    if text.len() <= limit {
+        return false;
+    }
+    text.truncate(text.floor_char_boundary(limit));
+    true
 }
 
 /// A counter representation's text, its images recorded from the text offset `at` it is
@@ -952,22 +988,59 @@ mod tests {
             })
             .unwrap();
         assert_eq!(
-            bound.page_text(1, 1, TEST_CONTENT_LIMIT).unwrap(),
+            bound
+                .bound_page_output(1, 1, TEST_CONTENT_LIMIT)
+                .unwrap()
+                .text(),
             "XII/b.d/Prefix"
         );
         assert!(
             matches!(
-                content.page_text(1, 1, TEST_CONTENT_LIMIT),
+                content.bound_page_output(1, 1, TEST_CONTENT_LIMIT),
                 Err(StyleError::Unsupported(_))
             ),
             "an unresolved target must never silently become empty text"
         );
-        assert!(
-            matches!(
-                content.bind_targets(2, &mut |_| Ok("long".into())),
-                Err(StyleError::GeneratedContentLimit { limit: 2 })
-            ),
-            "target expansion must obey the existing text bound"
+        let output = content
+            .bind_targets(2, &mut |_| Ok("long".into()))
+            .unwrap()
+            .bound_page_output(1, 1, TEST_CONTENT_LIMIT)
+            .unwrap();
+        assert_eq!(
+            (output.text(), output.limited()),
+            ("lo", true),
+            "target expansion past the text bound is cut there, with the parts after it"
+        );
+    }
+
+    #[test]
+    fn text_past_the_limit_is_cut_at_a_character_boundary_with_the_parts_after_it() {
+        let value = match_value(
+            Property::Content.data().root,
+            "'a\\e9' counter(page) 'b'",
+            &mut 0,
+            ValueContext::Element,
+        )
+        .unwrap()
+        .unwrap();
+        let content = GeneratedContent::from_component(&value, &Scope::predefined(), None)
+            .unwrap()
+            .unwrap();
+        let whole = content.bound_page_output(7, 7, TEST_CONTENT_LIMIT).unwrap();
+        assert_eq!((whole.text(), whole.limited()), ("a\u{e9}7b", false));
+        // The two-byte letter straddles the limit, so it is left out whole.
+        let cut = content.bound_page_output(7, 7, 2).unwrap();
+        assert_eq!(
+            (cut.text(), cut.limited()),
+            ("a", true),
+            "the cut keeps whole characters and leaves out the parts after it"
+        );
+        let bound = content.bind_page_counters(2, 7, 7);
+        let output = bound.bound_page_output(7, 7, TEST_CONTENT_LIMIT).unwrap();
+        assert_eq!(
+            (output.text(), output.limited()),
+            ("a", true),
+            "binding page counters past the limit cuts the same way and keeps the cut reported"
         );
     }
 
@@ -1012,7 +1085,7 @@ mod tests {
         );
         assert!(
             matches!(
-                content.page_text(2, 7, TEST_CONTENT_LIMIT),
+                content.bound_page_output(2, 7, TEST_CONTENT_LIMIT),
                 Err(StyleError::Unsupported(_))
             ),
             "missing page assignments must not silently become empty strings"

@@ -37,8 +37,7 @@ impl StyleDiagnosticKind {
             StyleError::Unsupported(_) => Self::Unsupported,
             StyleError::StylesheetLimit { .. }
             | StyleError::GrammarLimit { .. }
-            | StyleError::VariableLimit { .. }
-            | StyleError::GeneratedContentLimit { .. } => Self::LimitExceeded,
+            | StyleError::VariableLimit { .. } => Self::LimitExceeded,
             _ => invalid,
         }
     }
@@ -83,6 +82,9 @@ pub enum Degradation {
     /// page box takes the geometry no `@page` rule sizes.
     #[error("the page box geometry is not finite; the page takes the initial page geometry")]
     NonFinitePageGeometry,
+    /// Generated content, or text taken from elements for it, past `limit` bytes is left out.
+    #[error("generated text past {limit} bytes is left out")]
+    GeneratedTextLimit { limit: usize },
     /// An inline `svg` element the renderer cannot process renders nothing (SVG 2 §1.9).
     #[error("inline SVG content is in error and renders nothing: {reason}")]
     SvgInError { reason: String },

@@ -513,10 +513,7 @@ impl Counters {
                 .collect(),
         )
     }
-    pub(crate) fn text(
-        &mut self,
-        request: &CounterRequest,
-    ) -> Result<crate::style::Representation, StyleError> {
+    pub(crate) fn text(&mut self, request: &CounterRequest) -> crate::style::Representation {
         self.value(request.name.clone());
         let text = render_counter(
             request,
@@ -527,9 +524,9 @@ impl Counters {
                 .iter()
                 .filter(|counter| counter.name == request.name)
                 .map(|counter| counter.value.get()),
-        )?;
+        );
         self.update_previous();
-        Ok(text)
+        text
     }
 }
 
@@ -796,10 +793,7 @@ impl CounterSnapshot {
             .find(|(counter, _)| counter.as_ref() == name)
             .map(|(_, value)| *value)
     }
-    pub(crate) fn text(
-        &self,
-        request: &CounterRequest,
-    ) -> Result<crate::style::Representation, StyleError> {
+    pub(crate) fn text(&self, request: &CounterRequest) -> crate::style::Representation {
         render_counter(
             request,
             self.0
@@ -809,39 +803,33 @@ impl CounterSnapshot {
         )
     }
 }
+/// The representation of `values`; `counters()` stops joining them once past
+/// `MAX_INLINE_TEXT_BYTES`, which the content showing it cuts at its limit.
 fn render_counter(
     request: &CounterRequest,
     mut values: impl DoubleEndedIterator<Item = i128>,
-) -> Result<crate::style::Representation, StyleError> {
+) -> crate::style::Representation {
     let Some(separator) = &request.separator else {
-        return Ok(request
+        return request
             .style
-            .representation(values.next_back().unwrap_or(INITIAL_COUNTER_VALUE)));
+            .representation(values.next_back().unwrap_or(INITIAL_COUNTER_VALUE));
     };
     let mut joined = crate::style::Representation::default();
     let mut empty = true;
     for value in values {
-        let part = request.style.representation(value);
-        let separator = if empty { "" } else { separator.as_ref() };
-        if joined
-            .text()
-            .len()
-            .saturating_add(separator.len())
-            .saturating_add(part.text().len())
-            > crate::document::MAX_INLINE_TEXT_BYTES
-        {
-            return Err(StyleError::GeneratedContentLimit {
-                limit: crate::document::MAX_INLINE_TEXT_BYTES,
-            });
+        if joined.text().len() > crate::document::MAX_INLINE_TEXT_BYTES {
+            break;
         }
-        joined.push_str(separator);
-        joined.append(part);
+        if !empty {
+            joined.push_str(separator);
+        }
+        joined.append(request.style.representation(value));
         empty = false;
     }
     if empty {
         joined = request.style.representation(INITIAL_COUNTER_VALUE);
     }
-    Ok(joined)
+    joined
 }
 
 #[cfg(test)]

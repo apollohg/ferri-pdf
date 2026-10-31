@@ -282,8 +282,8 @@ impl StringAssignments {
                             name: value.name,
                             content: value.content.bind_element_sources(
                                 MAX_INLINE_TEXT_BYTES,
-                                &mut |source| text.resolve(source),
-                                &mut |request| value.counters.text(request),
+                                &mut |source| Ok(text.resolve(source)),
+                                &mut |request| Ok(value.counters.text(request)),
                             )?,
                         })
                     })

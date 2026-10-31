@@ -109,8 +109,9 @@ fn captured(css: &str, body: &str) -> Vec<Vec<(String, String)>> {
                         value.name.to_string(),
                         value
                             .content
-                            .page_text(2, 7, crate::document::MAX_INLINE_TEXT_BYTES)
-                            .expect("captured strings retain only page-dependent expressions"),
+                            .bound_page_output(2, 7, crate::document::MAX_INLINE_TEXT_BYTES)
+                            .expect("captured strings retain only page-dependent expressions")
+                            .into_text(),
                     )
                 })
                 .collect()
@@ -429,4 +430,122 @@ fn empty_table_group_breaks_keep_string_events_on_the_groups_page() {
             );
         }
     }
+}
+
+const MEBIBYTE: usize = 1024 * 1024;
+/// Copies of a mebibyte that pass the generated text limit.
+const PAST_TEXT_LIMIT: usize = crate::document::MAX_INLINE_TEXT_BYTES / MEBIBYTE + 1;
+const LIMIT_CSS: &str = "@page{size:2000pt 200pt;margin:40pt;@top-center{white-space:nowrap;font:8pt Spike}}body{font:8pt Spike}";
+
+fn reports_text_limit(diagnostics: &[crate::RenderDiagnostic]) -> bool {
+    diagnostics.iter().any(|diagnostic| {
+        matches!(
+            diagnostic,
+            crate::RenderDiagnostic::Degraded(crate::style::Degradation::GeneratedTextLimit { limit })
+                if *limit == crate::document::MAX_INLINE_TEXT_BYTES
+        )
+    })
+}
+
+/// The text of the first page's line starting with `prefix`, rendering `css` and `body`.
+fn limited_render(css: &str, body: &str, prefix: &str) -> String {
+    let html = format!("<style>{PROFILE}{LIMIT_CSS}{css}</style>{body}");
+    let output = render_html(&html, &local_options())
+        .expect("generated text past its limit must be cut, not fail the render");
+    assert!(
+        reports_text_limit(&output.diagnostics),
+        "the cut generated text is reported: {:?}",
+        output.diagnostics
+    );
+    let pages = output.layout.expect("layout requested").pages;
+    pages[0]
+        .iter()
+        .find(|line| line.text.starts_with(prefix))
+        .unwrap_or_else(|| {
+            panic!(
+                "no line starts with {prefix:?}: {:?}",
+                pages[0].iter().map(|line| &line.text).collect::<Vec<_>>()
+            )
+        })
+        .text
+        .clone()
+}
+
+#[test]
+fn counters_joined_past_the_text_limit_are_cut_in_running_strings_instead_of_failing() {
+    // Each nested `div` resets its own `c`, so `counters()` joins one value per level with
+    // mebibyte separators: past the limit after the 65th level.
+    let separator = " ".repeat(MEBIBYTE);
+    let header = limited_render(
+        &format!(
+            "div{{counter-reset:c}}#last{{string-set:t counters(c,'{separator}')}}@page{{@top-center{{content:'A' string(t) 'Z'}}}}"
+        ),
+        &format!(
+            "{}<p id=last>Body</p>{}",
+            "<div>".repeat(PAST_TEXT_LIMIT),
+            "</div>".repeat(PAST_TEXT_LIMIT)
+        ),
+        "A",
+    );
+    // The limit keeps 64 values and their separators, which collapse to spaces; the header's
+    // own prefix pushes its last separator's final space, and the `Z` after it, out.
+    let kept = vec!["0"; PAST_TEXT_LIMIT - 1].join(" ");
+    assert_eq!(header, format!("A{kept}"), "the cut header text");
+}
+
+#[test]
+fn margin_boxes_repeating_strings_past_the_text_limit_cut_their_content_instead_of_failing() {
+    // Each value fills a mebibyte, so the header passes the limit inside its last copy.
+    let value = format!("{}x", " ".repeat(MEBIBYTE - 1));
+    let header = limited_render(
+        &format!(
+            "p{{string-set:t '{value}'}}@page{{@top-center{{content:'A' {} 'Z'}}}}",
+            "string(t) ".repeat(PAST_TEXT_LIMIT - 1)
+        ),
+        "<p>Body</p>",
+        "A",
+    );
+    let kept = vec!["x"; PAST_TEXT_LIMIT - 2].join(" ");
+    assert_eq!(
+        header,
+        format!("A {kept}"),
+        "the copy the limit cuts loses its `x`, and the `Z` after it is left out"
+    );
+}
+
+#[test]
+fn element_text_repeated_past_the_text_limit_is_cut_in_running_strings_and_bookmarks() {
+    let css = format!(
+        "h1{{content-visibility:hidden;string-set:t {sources};bookmark-label:{sources}}}",
+        sources = "content(text) ".repeat(PAST_TEXT_LIMIT)
+    );
+    let body = format!("<h1>{}</h1><p>Body</p>", "x".repeat(MEBIBYTE));
+    let html = format!("<style>{PROFILE}{LIMIT_CSS}{css}</style>{body}");
+    let output = render_html(&html, &local_options())
+        .expect("element text repeated past its limit must be cut, not fail the render");
+    assert!(
+        reports_text_limit(&output.diagnostics),
+        "the cut running string and bookmark label are reported: {:?}",
+        output.diagnostics
+    );
+    let strings = captured(&css, &body);
+    let value = &strings[0][0].1;
+    assert!(
+        value.len() == crate::document::MAX_INLINE_TEXT_BYTES && value.bytes().all(|b| b == b'x'),
+        "the running string keeps the text up to the limit: {} bytes",
+        value.len()
+    );
+    let document = crate::document::StyledDocument::parse(
+        &html,
+        &local_options().base,
+        &[],
+        &crate::resources::FileResolver::default(),
+    )
+    .expect("bookmark labels past the limit are cut, not failed");
+    let label = &document.navigation().bookmarks[0].label;
+    assert!(
+        label.len() == crate::document::MAX_INLINE_TEXT_BYTES && label.bytes().all(|b| b == b'x'),
+        "the bookmark label keeps the text up to the limit: {} bytes",
+        label.len()
+    );
 }

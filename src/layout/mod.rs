@@ -844,7 +844,12 @@ fn paged_content<'t>(
     (pages, display_lists, links, text_areas, underlays): PageOutputs<'_>,
 ) -> Result<Option<crate::document::GeneratedValues>, LayoutError> {
     let counters = page_counters::PageCounters::new(page_boxes);
-    let strings = string_locations.resolve(document.running_strings(), &counters, pages.len())?;
+    let strings = string_locations.resolve(
+        document.running_strings(),
+        &counters,
+        pages.len(),
+        document.styles().degradations(),
+    )?;
     let first_margin_paragraph = measurer.sources.paragraph_count();
     page_margins::render(
         page_boxes,

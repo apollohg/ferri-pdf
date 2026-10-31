@@ -174,6 +174,7 @@ fn after_child_row_paints_keep_canonical_text_navigation_and_stacking() {
             document.running_strings(),
             &crate::layout::page_counters::PageCounters::new(&output.page_boxes),
             output.pages.len(),
+            document.styles().degradations(),
         )
         .expect("arranged source events must have committed page locations");
     let request = |mode| crate::style::NamedStringRequest {

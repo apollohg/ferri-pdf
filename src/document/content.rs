@@ -1,6 +1,6 @@
 use crate::document::{MAX_INLINE_TEXT_BYTES, inline::is_css_whitespace};
 use crate::dom::{Element, TreeRelation};
-use crate::style::{Display, ElementContent, Style, StyleError};
+use crate::style::{Display, ElementContent, Style};
 use std::borrow::Cow;
 
 #[derive(Default)]
@@ -44,23 +44,20 @@ impl<'a, 'd> ElementText<'a, 'd> {
             marker,
         }
     }
-    pub(crate) fn resolve(&mut self, source: ElementContent) -> Result<String, StyleError> {
-        Ok(match source {
-            ElementContent::Text => {
-                if self.text.is_none() {
-                    self.text = Some(Cow::Owned(element_text(self.element)?));
-                }
-                self.text
-                    .as_deref()
-                    .expect("element text was initialized")
-                    .to_owned()
-            }
+    /// The text `content()` takes; text from the element's subtree stops once past
+    /// `MAX_INLINE_TEXT_BYTES`, which the content taking it cuts at its limit.
+    pub(crate) fn resolve(&mut self, source: ElementContent) -> String {
+        match source {
+            ElementContent::Text => self
+                .text
+                .get_or_insert_with(|| Cow::Owned(element_text(self.element)))
+                .to_string(),
             ElementContent::FirstLetter => {
                 let text = text_with_generated(
                     self.element,
                     self.before.first_letter_text(),
                     self.after.first_letter_text(),
-                )?;
+                );
                 let first = crate::document::first_letter::find(
                     &text,
                     crate::style::WhiteSpaceCollapse::Collapse,
@@ -71,54 +68,71 @@ impl<'a, 'd> ElementText<'a, 'd> {
             ElementContent::Before => collapse(&self.before.text),
             ElementContent::After => collapse(&self.after.text),
             ElementContent::Marker => self.marker.map(collapse).unwrap_or_default(),
-        })
+        }
     }
 }
 
 /// `bookmark-label` text: literal strings verbatim, `content()` values as if `white-space:
-/// normal` (CSS GCPM 3 §1.1.1).
-pub(crate) fn element_text(element: Element<'_>) -> Result<String, StyleError> {
+/// normal` (CSS GCPM 3 §1.1.1). It stops once past `MAX_INLINE_TEXT_BYTES`.
+pub(crate) fn element_text(element: Element<'_>) -> String {
     text_with_generated(element, "", "")
 }
 
-fn text_with_generated(
-    element: Element<'_>,
-    before: &str,
-    after: &str,
-) -> Result<String, StyleError> {
-    let mut text = String::new();
+fn text_with_generated(element: Element<'_>, before: &str, after: &str) -> String {
+    let mut text = Collapsed::default();
     for part in std::iter::once(before)
         .chain(element.text_in(TreeRelation::Formatting))
         .chain(std::iter::once(after))
     {
-        if text
-            .len()
-            .checked_add(part.len())
-            .is_none_or(|bytes| bytes > MAX_INLINE_TEXT_BYTES)
-        {
-            return Err(StyleError::GeneratedContentLimit {
-                limit: MAX_INLINE_TEXT_BYTES,
-            });
+        if !text.push(part, MAX_INLINE_TEXT_BYTES) {
+            break;
         }
-        text.push_str(part);
     }
-    Ok(collapse(&text))
+    text.text
+}
+
+/// Text with its runs of white space collapsed and trimmed from both ends, as
+/// `white-space: normal` lays out a lone line.
+#[derive(Default)]
+struct Collapsed {
+    text: String,
+    space: bool,
+}
+impl Collapsed {
+    /// Appends `part`; false once the text is past `limit` bytes, where it stops.
+    fn push(&mut self, part: &str, limit: usize) -> bool {
+        for ch in part.chars() {
+            if is_css_whitespace(ch) {
+                self.space = !self.text.is_empty();
+                continue;
+            }
+            if std::mem::take(&mut self.space) {
+                self.text.push(' ');
+            }
+            self.text.push(ch);
+            if self.text.len() > limit {
+                return false;
+            }
+        }
+        true
+    }
+}
+
+/// Reports generated text that `limited` says was cut at `MAX_INLINE_TEXT_BYTES`.
+pub(crate) fn record_text_limit(degradations: &crate::style::Degradations, limited: bool) {
+    if limited {
+        degradations.record(crate::style::Degradation::GeneratedTextLimit {
+            limit: MAX_INLINE_TEXT_BYTES,
+        });
+    }
 }
 
 /// Collapses runs of white space and trims it from both ends, as `white-space: normal` lays
 /// out a lone line.
 pub(crate) fn collapse(text: &str) -> String {
-    let mut collapsed = String::new();
-    for word in text
-        .split(is_css_whitespace)
-        .filter(|word| !word.is_empty())
-    {
-        if !collapsed.is_empty() {
-            collapsed.push(' ');
-        }
-        collapsed.push_str(word);
-    }
-    collapsed
+    let mut collapsed = Collapsed::default();
+    collapsed.push(text, usize::MAX);
+    collapsed.text
 }
 
 #[cfg(test)]

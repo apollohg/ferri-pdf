@@ -31,6 +31,7 @@ use crate::dom::DocumentTree;
 use crate::resources::{ResourceError, ResourceResolver};
 use crate::style::{PrintSettings, SourceDiagnostic, StyleError, Stylesheet};
 
+pub(crate) use content::record_text_limit;
 pub(crate) use counters::CounterSnapshot;
 pub(crate) use element_images::{ElementMeasurements, ElementState, ShapeSamples};
 #[cfg(test)]

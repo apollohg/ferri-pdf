@@ -157,21 +157,39 @@ mod tests {
             .expect("document values can be bound before pagination");
         assert_eq!(requests, ["chapter"]);
         assert_eq!(
-            bound.page_text(2, 7, TEST_CONTENT_LIMIT).unwrap(),
+            bound
+                .bound_page_output(2, 7, TEST_CONTENT_LIMIT)
+                .unwrap()
+                .text(),
             "Chapter 3/2:7"
         );
         assert_eq!(
-            bound.page_text(4, 9, TEST_CONTENT_LIMIT).unwrap(),
+            bound
+                .bound_page_output(4, 9, TEST_CONTENT_LIMIT)
+                .unwrap()
+                .text(),
             "Chapter 3/4:9"
         );
         let limit = "Chapter 3/2:7".len() - 1;
-        assert!(
-            matches!(bound.page_text(2, 7, limit), Err(StyleError::GeneratedContentLimit { limit: found }) if found == limit)
+        let cut = bound.bound_page_output(2, 7, limit).unwrap();
+        assert_eq!(
+            (cut.text(), cut.limited()),
+            ("Chapter 3/2:", true),
+            "page text past the limit is left out and reported"
         );
-        let assignment = parse("heading 'AB' content(text)");
-        let limit = 4;
-        assert!(matches!(assignment[0].content.bind_element_sources(
-            limit, &mut |_| Ok("CDE".into()), &mut |_| unreachable!("no counter in fixture")
-        ), Err(StyleError::GeneratedContentLimit { limit: found }) if found == limit));
+        let assignment = parse("heading 'AB' content(text) 'F'");
+        let cut = assignment[0]
+            .content
+            .bind_element_sources(4, &mut |_| Ok("CDE".into()), &mut |_| {
+                unreachable!("no counter in fixture")
+            })
+            .expect("element values past the limit are cut, not failed");
+        let output = cut.bound_page_output(1, 1, TEST_CONTENT_LIMIT).unwrap();
+        assert_eq!(
+            (output.text(), output.limited()),
+            ("ABCD", true),
+            "binding cuts the element value at the limit, leaves out the parts after it, and \
+             its output reports the cut"
+        );
     }
 }

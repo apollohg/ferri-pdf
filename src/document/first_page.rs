@@ -583,7 +583,7 @@ impl Collector {
                                 selection.counter_work.clone(),
                             )?);
                         }
-                        counters.as_mut().unwrap().text(request)
+                        Ok(counters.as_mut().unwrap().text(request))
                     },
                     &quotes,
                     &mut depth,

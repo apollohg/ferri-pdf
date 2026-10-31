@@ -4,7 +4,7 @@ use crate::document::{CounterSnapshot, PageBox, PageStart};
 use crate::dom::ElementId;
 use crate::style::{
     AutomaticInitial, CounterProperties, CounterRequest, FOOTNOTE_COUNTER, INITIAL_COUNTER_VALUE,
-    MarginLocation, PAGE_COUNTER, PAGES_COUNTER, StyleError,
+    MarginLocation, PAGE_COUNTER, PAGES_COUNTER,
 };
 use std::sync::Arc;
 
@@ -76,7 +76,7 @@ impl PageCounters {
         location: MarginLocation,
         request: &CounterRequest,
         document: &CounterSnapshot,
-    ) -> Result<crate::style::Representation, StyleError> {
+    ) -> crate::style::Representation {
         let values = &self.pages[page];
         let name = request.name.as_ref();
         values
