@@ -366,6 +366,15 @@ struct SceneRoot<'a> {
 /// A transform node's plane matrices by page; `None` where the plane is not rendered.
 type PagePlanes = Vec<(usize, Option<Matrix3d>)>;
 
+/// A node whose matrices place content in its 3D rendering context's space.
+#[derive(Clone, Copy)]
+enum ContextStep {
+    /// The `Parent3d` node of a box, placing its content.
+    Basis(usize),
+    /// A transform node, placing its box's plane.
+    Plane(usize),
+}
+
 /// The affine maps from a native space into page space and back.
 fn native_maps(native: Option<nested::NativeSpace>) -> [[f32; 6]; 2] {
     let into = native.map_or(kurbo::Affine::IDENTITY, |space| {
@@ -3708,15 +3717,16 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     }
     /// The transform node of the nearest transformed box in the 3D rendering context whose
     /// content holds the content of the box owning `Parent3d` node `node`.
-    fn context_anchor(&self, node: usize) -> Option<usize> {
-        let Effect::Parent3d(_, transform, parent) = self.clips[node].effect else {
-            unreachable!("contexts nest through parent 3D nodes")
-        };
-        transform.or_else(|| {
-            parent
-                .filter(|&parent| self.extends_context(parent))
-                .and_then(|parent| self.context_anchor(parent))
-        })
+    fn context_anchor(&self, mut node: usize) -> Option<usize> {
+        loop {
+            let Effect::Parent3d(_, transform, parent) = self.clips[node].effect else {
+                unreachable!("contexts nest through parent 3D nodes")
+            };
+            if transform.is_some() {
+                return transform;
+            }
+            node = parent.filter(|&parent| self.extends_context(parent))?;
+        }
     }
     /// `local`, a page-space matrix placing a box in the space of its parent, whose `Parent3d`
     /// node is `parent`, after the matrices placing that parent in its 3D rendering context's
@@ -3731,51 +3741,69 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     /// its 3D rendering context's space, from the context root's parent's space; `None` for
     /// the identity.
     fn basis(&self, node: usize, page: usize) -> Result<Option<Matrix3d>, LayoutError> {
-        let Effect::Parent3d(_, transform, parent) = self.clips[node].effect else {
-            unreachable!("contexts nest through parent 3D nodes")
-        };
-        if let Some(transform) = transform {
-            return self.plane_on(transform, page);
-        }
-        // An untransformed box lies where its parent's perspective, which keeps its plane in
-        // place, puts it.
-        let Some(parent) = parent else {
-            return Ok(None);
-        };
-        let perspective = self
-            .parent_3d_on(&self.clips[parent], page)?
-            .map(|parent| parent.perspective);
-        let outer = if self.extends_context(parent) {
-            self.basis(parent, page)?
-        } else {
-            None
-        };
-        Ok(match (outer, perspective) {
-            (Some(outer), Some(perspective)) => {
-                Some(crate::style::transform::multiply(&outer, &perspective))
-            }
-            (outer, perspective) => outer.or(perspective),
-        })
+        self.accumulated(ContextStep::Basis(node), page)
     }
     /// The accumulated 3D transformation matrix in page space of the plane of transform node
     /// `index` on `page`: from its 3D rendering context's space, or its parent's outside one.
     fn plane_on(&self, index: usize, page: usize) -> Result<Option<Matrix3d>, LayoutError> {
-        let node = &self.clips[index];
-        let Effect::Transform(style, parent, _) = node.effect else {
-            unreachable!("planes are placed by transform nodes")
-        };
-        let areas = self
-            .node_areas(node, page)
-            .ok_or(LayoutError::MissingContainingFragment { page })?;
-        let Some(local) = self.local_plane(style, &areas, Some(node), page)? else {
-            return Ok(None);
-        };
-        let [into, out] = native_maps(node.native);
-        let local = crate::style::transform::conjugated(&local, into, out);
-        match parent.filter(|&parent| self.extends_context(parent)) {
-            Some(parent) => self.within(parent, local, page).map(Some),
-            None => Ok(Some(local)),
+        self.accumulated(ContextStep::Plane(index), page)
+    }
+    /// The product of the matrices placing `start` on `page` in its 3D rendering context's
+    /// space, gathered outwards in a loop since contexts nest as deeply as their boxes; `None`
+    /// for the identity, or for a plane that is not rendered.
+    fn accumulated(
+        &self,
+        start: ContextStep,
+        page: usize,
+    ) -> Result<Option<Matrix3d>, LayoutError> {
+        // From the innermost matrix outwards.
+        let mut factors = Vec::new();
+        let mut step = Some(start);
+        while let Some(current) = step {
+            step = match current {
+                ContextStep::Basis(node) => {
+                    let Effect::Parent3d(_, transform, parent) = self.clips[node].effect else {
+                        unreachable!("contexts nest through parent 3D nodes")
+                    };
+                    match (transform, parent) {
+                        (Some(transform), _) => Some(ContextStep::Plane(transform)),
+                        // An untransformed box lies where its parent's perspective, which keeps
+                        // its plane in place, puts it.
+                        (None, Some(parent)) => {
+                            factors.extend(
+                                self.parent_3d_on(&self.clips[parent], page)?
+                                    .map(|parent| parent.perspective),
+                            );
+                            self.extends_context(parent)
+                                .then_some(ContextStep::Basis(parent))
+                        }
+                        (None, None) => None,
+                    }
+                }
+                ContextStep::Plane(index) => {
+                    let node = &self.clips[index];
+                    let Effect::Transform(style, parent, _) = node.effect else {
+                        unreachable!("planes are placed by transform nodes")
+                    };
+                    let areas = self
+                        .node_areas(node, page)
+                        .ok_or(LayoutError::MissingContainingFragment { page })?;
+                    // An unrendered plane places nothing, nor do the planes outside it.
+                    let Some(local) = self.local_plane(style, &areas, Some(node), page)? else {
+                        break;
+                    };
+                    let [into, out] = native_maps(node.native);
+                    factors.push(crate::style::transform::conjugated(&local, into, out));
+                    parent
+                        .filter(|&parent| self.extends_context(parent))
+                        .map(ContextStep::Basis)
+                }
+            };
         }
+        Ok(factors
+            .into_iter()
+            .rev()
+            .reduce(|outer, inner| crate::style::transform::multiply(&outer, &inner)))
     }
     /// The scene node of a box with `style` whose parent's `Parent3d` node is `parent_3d`,
     /// inside the current clip, when the box establishes a 3D rendering context: its used
