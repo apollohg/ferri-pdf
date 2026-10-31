@@ -2,7 +2,7 @@
 //! CSS error handling rules say, and limits degrade the output instead of failing it.
 mod common;
 
-use common::lossy_options;
+use common::{lossy_options, pdf_number_faults};
 use ferri_pdf::render_html;
 use std::fmt::Write;
 
@@ -602,27 +602,355 @@ impl Generator {
     }
 }
 
-/// Renders the documents `generate` makes for each case from its seed, collecting every
-/// failure.
-fn assert_generated_documents_render(kind: &str, generate: impl Fn(&mut Generator, u64) -> String) {
+/// The pinned grammar the engine's property table compiles from (`build.rs`).
+const GRAMMAR_DIRECTORY: &str = "spec/css";
+/// Values of each numeric type past what layout, painting and PDF represent: overflowing,
+/// infinite and NaN calculations (CSS Values 4 §10.9), denormal magnitudes and integers past
+/// 32 bits.
+const NUMERIC_EXTREMES: &[(&str, &[&str])] = &[
+    (
+        "length",
+        &[
+            "3e38px",
+            "-3e38px",
+            "calc(1e30px*1e30)",
+            "calc(-1e30px*1e30)",
+            "1e-38px",
+            "calc(infinity*1px)",
+            "calc(-infinity*1px)",
+            "calc(NaN*1px)",
+        ],
+    ),
+    (
+        "percentage",
+        &[
+            "3e38%",
+            "-3e38%",
+            "calc(1e30%*1e30)",
+            "1e-38%",
+            "calc(infinity*1%)",
+            "calc(NaN*1%)",
+        ],
+    ),
+    (
+        "number",
+        &[
+            "3e38",
+            "-3e38",
+            "calc(1e30*1e30)",
+            "calc(-1e30*1e30)",
+            "1e-38",
+            "calc(infinity)",
+            "calc(-infinity)",
+            "calc(NaN)",
+        ],
+    ),
+    (
+        "integer",
+        &[
+            "2147483647",
+            "-2147483648",
+            "99999999999999999999",
+            "-99999999999999999999",
+            "calc(infinity)",
+            "calc(-infinity)",
+            "calc(NaN)",
+        ],
+    ),
+    (
+        "angle",
+        &[
+            "3e38deg",
+            "-3e38deg",
+            "calc(1e30deg*1e30)",
+            "1e-38deg",
+            "calc(infinity*1deg)",
+            "calc(NaN*1deg)",
+        ],
+    ),
+];
+/// Where the generated declarations apply: `{}` stands for them in each context's markup.
+const VALUE_CONTEXTS: &[(&str, &str)] = &[
+    (
+        "block",
+        "<div style=\"{}\">block text that wraps across lines</div>",
+    ),
+    (
+        "inline text",
+        "<p>before <span style=\"{}\">inline text that wraps</span> after</p>",
+    ),
+    (
+        "table cell",
+        "<table><tr><td style=\"{}\">cell</td><td>next</td></tr><tr><td>row</td></tr></table>",
+    ),
+    (
+        "flex item",
+        "<div style=\"display:flex;flex-wrap:wrap\"><div style=\"{}\">flex item</div><div>next</div></div>",
+    ),
+    (
+        "grid item",
+        "<div style=\"display:grid;grid-template-columns:1fr auto\"><div style=\"{}\">grid item</div><div>next</div></div>",
+    ),
+    (
+        "float",
+        "<div style=\"float:left;{}\">float</div><p>text flowing beside the float</p>",
+    ),
+    (
+        "abspos",
+        "<div style=\"position:relative\"><div style=\"position:absolute;{}\">positioned</div>in flow</div>",
+    ),
+    (
+        "multicol",
+        "<div style=\"columns:2;{}\">multi-column text that wraps across lines and columns</div>",
+    ),
+    (
+        "footnote",
+        "<p>body<span style=\"float:footnote;{}\">footnote text</span></p>",
+    ),
+    (
+        "footnote area",
+        "<style>@page{@footnote{{}}}</style><p>body<span style=\"float:footnote\">footnote text</span></p>",
+    ),
+    (
+        "page-margin box",
+        "<style>@page{@top-center{content:'head';{}}@bottom-center{content:counter(page)}}</style><p>body</p>",
+    ),
+    (
+        "running element",
+        "<style>@page{@top-center{content:element(run)}}</style><div style=\"position:running(run);{}\">running</div><p>body</p>",
+    ),
+    ("page box", "<style>@page{{}}</style><p>body</p>"),
+    (
+        "list marker",
+        "<style>li::marker{{}}</style><ol><li>item</li><li style=\"{}\">styled item</li></ol>",
+    ),
+    (
+        "inline SVG",
+        "<svg width=100 height=100 style=\"{}\"><rect width=50 height=50 style=\"{}\"/><circle cx=50 cy=50 r=20 style=\"{}\"/><text x=5 y=20 style=\"{}\">svg</text></svg>",
+    ),
+    (
+        "MathML",
+        "<math style=\"{}\"><mfrac style=\"{}\"><mi>x</mi><msqrt><mn style=\"{}\">2</mn></msqrt></mfrac></math>",
+    ),
+    (
+        "form control",
+        "<input value=input style=\"{}\"><select style=\"{}\"><option>option</select><button style=\"{}\">button</button><progress value=1 max=2 style=\"{}\"></progress>",
+    ),
+    (
+        "link and destination",
+        "<h1 style=\"{}\">bookmarked</h1><p><a href=#target style=\"{}\">link</a></p><div id=target style=\"{}\">target</div>",
+    ),
+    (
+        "first letter",
+        "<style>p::first-letter{{}}</style><p>First letter of a paragraph</p>",
+    ),
+];
+const MAX_COMPONENTS: usize = 4;
+const MAX_FUNCTION_ARGUMENTS: usize = 3;
+/// Extreme-value documents per run: each is small, and the run samples properties, values
+/// and contexts rather than taking their product.
+const EXTREME_VALUE_CASES: u64 = 128;
+
+/// How a property's grammar takes numeric values: bare, or as the arguments of a functional
+/// notation; each with the [`NUMERIC_EXTREMES`] types it accepts there.
+struct NumericForm {
+    function: Option<String>,
+    types: Vec<usize>,
+}
+struct NumericProperty {
+    name: String,
+    forms: Vec<NumericForm>,
+}
+
+/// Property and production grammars: the pinned mdn-data with the errata and extensions
+/// `build.rs` applies.
+struct Grammar {
+    properties: std::collections::BTreeMap<String, String>,
+    syntaxes: std::collections::BTreeMap<String, String>,
+}
+impl Grammar {
+    fn load() -> Self {
+        let directory = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(GRAMMAR_DIRECTORY);
+        let read = |file: &str| -> serde_json::Value {
+            let path = directory.join(file);
+            let text = std::fs::read_to_string(&path)
+                .unwrap_or_else(|error| panic!("{}: {error}", path.display()));
+            serde_json::from_str(&text)
+                .unwrap_or_else(|error| panic!("{}: {error}", path.display()))
+        };
+        let syntaxes_of = |value: &serde_json::Value| -> Vec<(String, String)> {
+            value
+                .as_object()
+                .into_iter()
+                .flatten()
+                .filter_map(|(name, entry)| {
+                    Some((name.clone(), entry.get("syntax")?.as_str()?.to_owned()))
+                })
+                .collect()
+        };
+        let errata = read("errata.json");
+        let mut grammar = Self {
+            properties: syntaxes_of(&read("mdn-data/properties.json"))
+                .into_iter()
+                .collect(),
+            syntaxes: syntaxes_of(&read("mdn-data/syntaxes.json"))
+                .into_iter()
+                .collect(),
+        };
+        grammar.syntaxes.extend(syntaxes_of(&errata["syntaxes"]));
+        grammar
+            .properties
+            .extend(syntaxes_of(&errata["properties"]));
+        grammar.properties.extend(syntaxes_of(&errata["additions"]));
+        grammar
+            .properties
+            .extend(syntaxes_of(&read("extensions.json")["properties"]));
+        grammar
+    }
+
+    /// Collects the numeric types `syntax` accepts outside functional notations, and the
+    /// functional-notation productions it references.
+    fn collect(
+        &self,
+        syntax: &str,
+        seen: &mut std::collections::HashSet<String>,
+        types: &mut std::collections::BTreeSet<usize>,
+        functions: &mut std::collections::BTreeSet<String>,
+    ) {
+        let mut rest = syntax;
+        while let Some(open) = rest.find('<') {
+            let after = &rest[open + 1..];
+            let Some(close) = after.find('>') else { break };
+            rest = &after[close + 1..];
+            let name = after[..close]
+                .trim_matches('\'')
+                .split([' ', '['])
+                .next()
+                .unwrap_or_default()
+                .trim_matches('\'');
+            if let Some(index) = NUMERIC_EXTREMES.iter().position(|(kind, _)| *kind == name) {
+                types.insert(index);
+            } else if name.ends_with("()") {
+                functions.insert(name.to_owned());
+            } else if seen.insert(name.to_owned())
+                && let Some(syntax) = self.syntaxes.get(name).or(self.properties.get(name))
+            {
+                self.collect(syntax, seen, types, functions);
+            }
+        }
+    }
+
+    /// Every property whose grammar accepts a numeric type, with how it takes each.
+    fn numeric_properties(&self) -> Vec<NumericProperty> {
+        let numeric_types = |syntax: &str| {
+            let (mut types, mut functions) = Default::default();
+            self.collect(syntax, &mut Default::default(), &mut types, &mut functions);
+            (types, functions)
+        };
+        self.properties
+            .iter()
+            .filter(|(name, _)| !name.starts_with("--"))
+            .filter_map(|(name, syntax)| {
+                let (types, functions) = numeric_types(syntax);
+                let bare = (!types.is_empty()).then(|| NumericForm {
+                    function: None,
+                    types: types.into_iter().collect(),
+                });
+                let forms: Vec<_> = bare
+                    .into_iter()
+                    .chain(functions.into_iter().filter_map(|function| {
+                        let (types, _) = numeric_types(self.syntaxes.get(&function)?);
+                        (!types.is_empty()).then(|| NumericForm {
+                            function: Some(function.trim_end_matches("()").to_owned()),
+                            types: types.into_iter().collect(),
+                        })
+                    }))
+                    .collect();
+                (!forms.is_empty()).then(|| NumericProperty {
+                    name: name.clone(),
+                    forms,
+                })
+            })
+            .collect()
+    }
+}
+
+impl Generator {
+    fn extreme(&mut self, types: &[usize]) -> &'static str {
+        let (_, values) = NUMERIC_EXTREMES[types[self.below(types.len())]];
+        self.pick(values)
+    }
+
+    /// One declaration of `property` whose numeric components all take extreme values.
+    fn extreme_declaration(&mut self, property: &NumericProperty) -> String {
+        let components: Vec<_> = (0..=self.below(MAX_COMPONENTS))
+            .map(|_| {
+                let form = &property.forms[self.below(property.forms.len())];
+                match &form.function {
+                    None => self.extreme(&form.types).to_owned(),
+                    Some(function) => {
+                        let separator = if self.chance(2) { ", " } else { " " };
+                        let arguments: Vec<_> = (0..=self.below(MAX_FUNCTION_ARGUMENTS))
+                            .map(|_| self.extreme(&form.types))
+                            .collect();
+                        format!("{function}({})", arguments.join(separator))
+                    }
+                }
+            })
+            .collect();
+        format!("{}:{}", property.name, components.join(" "))
+    }
+
+    /// Declarations giving numeric properties extreme values, in one sampled context.
+    fn extreme_value_document(&mut self, properties: &[NumericProperty]) -> String {
+        let declarations: Vec<_> = (0..=self.below(MAX_DECLARATIONS))
+            .map(|_| {
+                let property = &properties[self.below(properties.len())];
+                self.extreme_declaration(property)
+            })
+            .collect();
+        let (context, markup) = VALUE_CONTEXTS[self.below(VALUE_CONTEXTS.len())];
+        format!(
+            "<!doctype html><!-- {context} -->{}",
+            markup.replace("{}", &declarations.join(";"))
+        )
+    }
+}
+
+/// Renders the documents `generate` makes for each of `cases` from its seed, collecting every
+/// failure to render a valid PDF whose numbers are finite and within the PDF limit.
+fn assert_generated_documents_render(
+    kind: &str,
+    cases: u64,
+    generate: impl Fn(&mut Generator, u64) -> String,
+) {
     let mut failures = Vec::new();
-    for case in 0..CASES {
+    for case in 0..cases {
         let seed = FIRST_SEED.wrapping_add(case.wrapping_mul(SEED_STEP)) | 1;
         let html = generate(&mut Generator(seed), case);
         let result = std::panic::catch_unwind(|| render_html(&html, &lossy_options()));
         match result {
-            Ok(Ok(output)) => assert!(
-                output.page_count > 0 && output.pdf.starts_with(b"%PDF-"),
-                "seed {seed:#x}: rendering produced no PDF pages ({} pages)",
-                output.page_count
-            ),
+            Ok(Ok(output)) => {
+                assert!(
+                    output.page_count > 0 && output.pdf.starts_with(b"%PDF-"),
+                    "seed {seed:#x}: rendering produced no PDF pages ({} pages)",
+                    output.page_count
+                );
+                let faults = pdf_number_faults(&output.pdf);
+                if !faults.is_empty() {
+                    failures.push(format!(
+                        "seed {seed:#x}: invalid PDF:\n  {}\n{html}",
+                        faults.join("\n  ")
+                    ));
+                }
+            }
             Ok(Err(error)) => failures.push(format!("seed {seed:#x}: error: {error}\n{html}")),
             Err(_) => failures.push(format!("seed {seed:#x}: panicked\n{html}")),
         }
     }
     assert!(
         failures.is_empty(),
-        "{} of {CASES} hostile {kind} failed to render:\n\n{}",
+        "{} of {cases} hostile {kind} failed to render:\n\n{}",
         failures.len(),
         failures.join("\n\n")
     );
@@ -630,12 +958,45 @@ fn assert_generated_documents_render(kind: &str, generate: impl Fn(&mut Generato
 
 #[test]
 fn generated_hostile_documents_always_render() {
-    assert_generated_documents_render("documents", |generator, case| {
+    assert_generated_documents_render("documents", CASES, |generator, case| {
         generator.document(case % DEEP_CASE_PERIOD == 0)
     });
 }
 
 #[test]
 fn generated_hostile_geometry_always_renders() {
-    assert_generated_documents_render("geometries", |generator, _| generator.geometry_document());
+    assert_generated_documents_render("geometries", CASES, |generator, _| {
+        generator.geometry_document()
+    });
+}
+
+#[test]
+fn generated_extreme_numeric_values_render_valid_pdfs() {
+    let properties = Grammar::load().numeric_properties();
+    // Each numeric type is reached, bare and through functional notations, so the loader
+    // follows the grammar's productions.
+    for (name, kind, function) in [
+        ("width", "length", None),
+        ("opacity", "number", None),
+        ("z-index", "integer", None),
+        ("rotate", "angle", None),
+        ("transform", "angle", Some("rotate")),
+        ("color", "percentage", Some("rgb")),
+    ] {
+        let kind = NUMERIC_EXTREMES
+            .iter()
+            .position(|(extreme, _)| *extreme == kind);
+        assert!(
+            properties.iter().any(|property| property.name == name
+                && property
+                    .forms
+                    .iter()
+                    .any(|form| form.function.as_deref() == function
+                        && kind.is_some_and(|kind| form.types.contains(&kind)))),
+            "the grammar gives {name} a numeric form {function:?} taking {kind:?}"
+        );
+    }
+    assert_generated_documents_render("extreme values", EXTREME_VALUE_CASES, |generator, _| {
+        generator.extreme_value_document(&properties)
+    });
 }
