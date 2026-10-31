@@ -4795,11 +4795,21 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
             let extent = resolve(self, cursor.page, &space)?;
             let end_y = cursor.origin + (f64::from(extent) * cursor.remaining) as f32;
+            // CSS Break 3 §4.4: each fragmentainer takes some content to guarantee progress, so
+            // repeated edges that fill it leave the content its 1px minimum past them, unless a
+            // later row of columns has room.
+            let progress_end = if matches!(&self.fragmentainers, Fragmentainers::Columns(rows) if rows.has_next_row(cursor.page))
+            {
+                f32::NEG_INFINITY
+            } else {
+                space.start + crate::graphics::POINTS_PER_PIXEL
+            };
             if !overflows(
                 end_y,
-                self.fragmentainers.height(cursor.page)
+                (self.fragmentainers.height(cursor.page)
                     - space.bottom_reserve
-                    - self.band_footer_height(cursor.page),
+                    - self.band_footer_height(cursor.page))
+                .max(progress_end),
             ) {
                 if self.page > cursor.page {
                     self.select_page(cursor.page, end_y);
@@ -4813,18 +4823,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 }
                 return Ok(None);
             }
-            let end = self.fragmentainers.height(cursor.page)
+            let end = (self.fragmentainers.height(cursor.page)
                 - space.cloned_end
-                - self.band_footer_height(cursor.page);
-            // Fragmentainers with no room after their repeated edges never progress, so the
-            // content would take every page up to the limit.
-            if end <= space.start
-                && !matches!(&self.fragmentainers, Fragmentainers::Columns(rows) if rows.has_next_row(cursor.page))
-            {
-                return Err(LayoutError::PageLimit {
-                    limit: MAX_LAYOUT_PAGES,
-                });
-            }
+                - self.band_footer_height(cursor.page))
+            .max(progress_end);
             if extent > 0.0 {
                 cursor.remaining = (cursor.remaining
                     - f64::from((end - cursor.origin).max(0.0)) / f64::from(extent))

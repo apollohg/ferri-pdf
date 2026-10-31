@@ -141,7 +141,7 @@ impl Budget {
 mod tests {
     use super::*;
     use crate::document::StyledDocument;
-    use crate::layout::{MAX_LAYOUT_PAGES, MAX_LAYOUT_WORK, layout_with_work_limit};
+    use crate::layout::{MAX_LAYOUT_WORK, layout_with_work_limit};
     use crate::resources::{FileResolver, ResourceBase};
 
     #[test]
@@ -658,23 +658,57 @@ mod tests {
     }
 
     #[test]
-    fn fixed_column_overflow_without_room_for_cloned_edges_truncates_before_exhausting_work() {
-        const LIMIT: usize = 4096;
+    fn table_rows_progress_past_repeated_edges_that_fill_their_fragmentainers() {
+        const LIMIT: usize = 65_536;
         let resolver = FileResolver::default();
+        let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        // The cells' padding and the space before the rows exceed the 1px fragmentainer, which
+        // still takes 1px of the rows' content.
         let document = StyledDocument::parse(
-            "<!doctype html><style>@page{size:200pt 200pt;margin:10pt}html,body{margin:0}section{column-count:2;column-gap:10pt;column-fill:auto;height:10pt}div{height:100pt;padding:10pt;box-decoration-break:clone;background:blue}</style><section><div></div></section>",
+            &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}{NO_ROOM_PAGE}body{{font:10pt/10pt Fixed}}td{{padding:10pt}}</style><table><tr><td>r1a</td><td>r1b</td></tr><tr><td>r2a</td><td>r2b</td></tr></table><p>after</p>"),
+            &base, &[], &resolver,
+        )
+        .unwrap();
+        let pass = crate::layout::layout_pass(&document, &resolver, Budget::new(LIMIT))
+            .unwrap_or_else(|error| panic!("rows on fragmentainers without room failed: {error}"));
+        assert_eq!(
+            pass.diagnostics,
+            [],
+            "the rows progress, so no content is omitted at the page limit"
+        );
+        let pages = page_text(&pass.trace);
+        let mut lines: Vec<_> = pages.iter().flatten().copied().collect();
+        lines.sort_unstable();
+        assert_eq!(
+            lines,
+            ["after", "r1a", "r1b", "r2a", "r2b"],
+            "every cell and the paragraph after the table are placed once: {pages:?}"
+        );
+    }
+
+    #[test]
+    fn fixed_columns_without_room_for_cloned_edges_take_1px_of_content_each() {
+        const LIMIT: usize = 4096;
+        const CONTENT_HEIGHT: f32 = 100.0;
+        let resolver = FileResolver::default();
+        // The columns are as tall as the box's cloned padding, so each takes the 1px of its
+        // content that guarantees progress (CSS Break 3 §4.4) and the overflow columns
+        // continue in the inline direction (CSS Multi-column Layout 1 §8.2).
+        let document = StyledDocument::parse(
+            &format!("<!doctype html><style>@page{{size:200pt 200pt;margin:10pt}}html,body{{margin:0}}section{{column-count:2;column-gap:10pt;column-fill:auto;height:10pt}}div{{height:{CONTENT_HEIGHT}pt;padding:10pt;box-decoration-break:clone;background:blue}}</style><section><div></div></section>"),
             &ResourceBase::default(), &[], &resolver,
         ).unwrap();
         let pass = crate::layout::layout_pass(&document, &resolver, Budget::new(LIMIT))
             .unwrap_or_else(|error| {
-                panic!("a fixed column that cannot make progress past cloned edges must truncate: {error}")
+                panic!("fixed columns without room past cloned edges must still progress: {error}")
             });
+        assert_eq!(pass.diagnostics, [], "no content is omitted");
         assert_eq!(
-            pass.diagnostics,
-            [crate::layout::LayoutDiagnostic::PageLimit {
-                limit: MAX_LAYOUT_PAGES
-            }],
-            "the content no fragmentainer can hold is omitted with a diagnostic"
+            pass.trace.pages.len(),
+            1,
+            "the columns overflow inline, on one page"
         );
         let blue: Vec<_> = pass.trace.display_lists[0]
             .iter()
@@ -682,20 +716,22 @@ mod tests {
                 crate::graphics::DisplayItem::Box(paint)
                     if paint.decoration.background.rgb == [0, 0, 255] =>
                 {
-                    Some(paint.rect)
+                    Some(paint)
                 }
                 _ => None,
             })
             .collect();
-        assert_eq!(
-            pass.trace.pages.len(),
-            1,
-            "the truncated layout keeps the page the section starts on"
+        let columns = (CONTENT_HEIGHT / crate::graphics::POINTS_PER_PIXEL).ceil() as usize;
+        assert!(
+            blue.len() >= columns,
+            "each column takes at most 1px of the {CONTENT_HEIGHT}pt content, so it needs \
+             {columns} columns, got {} fragments",
+            blue.len()
         );
         assert!(
-            !blue.is_empty(),
-            "the fragments laid out before the limit keep their paint: {:?}",
-            pass.trace.display_lists[0]
+            blue.windows(2).all(|pair| pair[0].rect.x < pair[1].rect.x),
+            "each fragment lies in the next overflow column: {:?}",
+            blue.iter().map(|paint| paint.rect.x).collect::<Vec<_>>()
         );
     }
 }
