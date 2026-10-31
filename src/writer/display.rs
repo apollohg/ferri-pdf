@@ -186,6 +186,15 @@ impl Painter<'_, '_, '_> {
         Ok(())
     }
 
+    /// Reports the runs the text writer left out because PDF cannot write them.
+    pub(super) fn record_unwritable_runs(&mut self) {
+        if let Some(number) = self.text.take_unwritable() {
+            self.images.record(crate::writer::PaintDiagnostic::Omitted {
+                reason: PdfError::UnwritableNumber(number).to_string(),
+            });
+        }
+    }
+
     /// Omits the item at `index` that failed to draw with `error`, with the content it groups,
     /// closing what it pushed past `depth`; returns the index of the item after it.
     // Out of `draw_scoped`, whose frame each nested group stacks.
@@ -225,13 +234,19 @@ impl Painter<'_, '_, '_> {
     ) -> Result<(usize, Space), PdfError> {
         let item = &items[index];
         let unwritable = match item {
-            DisplayItem::Text { line } => self
-                .lines
-                .get(*line)
-                .and_then(crate::writer::numbers::unwritable_number),
+            // The text writer leaves out the line's runs it cannot write.
+            DisplayItem::Text { line } => self.lines.get(*line).and_then(|line| {
+                crate::writer::numbers::unwritable_number(&[line.x, line.baseline])
+            }),
             _ => crate::writer::numbers::unwritable_number(item),
         };
         if let Some(number) = unwritable {
+            // A box that paints nothing loses nothing by not being written.
+            if let DisplayItem::Box(paint) = item
+                && !paint.has_ink()
+            {
+                return Ok((index + 1, space));
+            }
             return Err(PdfError::UnwritableNumber(number));
         }
         match item {
@@ -242,9 +257,11 @@ impl Painter<'_, '_, '_> {
             | DisplayItem::TextShadow(_)
             | DisplayItem::Decoration(_)
             | DisplayItem::Backdrop(_)
-            | DisplayItem::Scene(_) => self
-                .draw_paint(item, space, surface)
-                .map(|()| (index + 1, space)),
+            | DisplayItem::Scene(_) => {
+                let drawn = self.draw_paint(item, space, surface);
+                self.record_unwritable_runs();
+                drawn.map(|()| (index + 1, space))
+            }
             DisplayItem::PushProjection(_)
             | DisplayItem::PushBlend(BlendMode::PlusDarker | BlendMode::PlusLighter)
             | DisplayItem::PushFilter(_)

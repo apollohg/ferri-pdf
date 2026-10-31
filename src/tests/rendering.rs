@@ -1095,7 +1095,8 @@ fn soft_line_breaks_end_arabic_joining_context() {
 fn large_tab_intervals_do_not_expand_source_or_glyph_storage() {
     let html =
         format!("<style>{PROFILE}p{{white-space:pre;tab-size:1000000000}}</style><p>A\tB</p>");
-    let output = render_html(&html, &local_options()).unwrap();
+    // The run after the tab lies past what PDF writes, so the writer leaves it out.
+    let output = render_html(&html, &lossy_options()).unwrap();
     let trace = output.layout.unwrap();
     let line = &trace.pages[0][0];
     assert_eq!(

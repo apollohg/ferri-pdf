@@ -313,3 +313,32 @@ fn links_and_destinations_pdf_cannot_write_are_left_out() {
         );
     }
 }
+
+#[test]
+fn runs_pdf_cannot_write_are_left_out_of_their_line_alone() {
+    let output = render_html(
+        "<!doctype html><p style='white-space:pre;tab-size:1000000000;color:red;\
+         font-size:40px'>A\tB</p>",
+        &lossy_options(),
+    )
+    .expect("a run placed past what PDF writes does not fail the document");
+    let faults = pdf_number_faults(&output.pdf);
+    assert!(
+        faults.is_empty(),
+        "the run after the huge tab writes no number:\n{}",
+        faults.join("\n")
+    );
+    assert!(
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            RenderDiagnostic::Paint(PaintDiagnostic::Omitted { reason })
+                if reason.starts_with("paint number")
+        )),
+        "the run left out is reported, got {:?}",
+        output.diagnostics
+    );
+    assert!(
+        red_pixels(&output) > 0,
+        "the run before the tab still paints"
+    );
+}

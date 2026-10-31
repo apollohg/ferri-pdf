@@ -103,9 +103,11 @@ impl Layer<'_> {
                 {
                     self.rasterize(painter, &items[run..index], surface)?;
                     let line = line_at(painter.lines, *line)?;
-                    painter
+                    let drawn = painter
                         .text
-                        .draw_projected(line, &self.plane.projection, surface)?;
+                        .draw_projected(line, &self.plane.projection, surface);
+                    painter.record_unwritable_runs();
+                    drawn?;
                     index += 1;
                     run = index;
                 }

@@ -6,8 +6,8 @@
 mod common;
 
 use ferri_pdf::{
-    DisplayItem, Error, FileResolver, ImageError, PaintDiagnostic, RenderDiagnostic, RenderOptions, RenderOutput,
-    Resource, ResourceBase, ResourceError, ResourceResolver, render_with_resolver,
+    DisplayItem, Error, FileResolver, ImageError, PaintDiagnostic, RenderDiagnostic, RenderOptions,
+    RenderOutput, Resource, ResourceBase, ResourceError, ResourceResolver, render_with_resolver,
 };
 
 /// The variant of each raster fixture whose header claims dimensions past the decoding budget.

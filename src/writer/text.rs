@@ -77,6 +77,9 @@ pub(super) struct TextWriter<'a> {
     fonts: &'a FontBook,
     data: Vec<Option<krilla::Data>>,
     embedded: HashMap<InstanceKey, Font>,
+    /// A number of a run left out since the last [`Self::take_unwritable`], which PDF cannot
+    /// write.
+    unwritable: Option<f64>,
 }
 impl<'a> TextWriter<'a> {
     pub(crate) fn new(fonts: &'a FontBook) -> Self {
@@ -84,7 +87,12 @@ impl<'a> TextWriter<'a> {
             fonts,
             data: vec![None; fonts.faces().len()],
             embedded: HashMap::new(),
+            unwritable: None,
         }
+    }
+    /// A number of a run left out since the last call, which PDF cannot write.
+    pub(crate) fn take_unwritable(&mut self) -> Option<f64> {
+        self.unwritable.take()
     }
     /// Whether every colour `runs` paint comes from their colours, strokes, palettes and
     /// marks, which excludes bitmap and SVG colour glyphs.
@@ -219,6 +227,12 @@ impl<'a> TextWriter<'a> {
         let mut glyphs = Vec::new();
         for run in runs {
             if run.font_size == 0.0 {
+                continue;
+            }
+            // A run placed past what PDF writes is left out, not the rest of its line.
+            let placed = [origin[0] + run.x, origin[1] + run.baseline_shift];
+            if let Some(number) = crate::writer::numbers::unwritable_number(&(run, placed)) {
+                self.unwritable.get_or_insert(number);
                 continue;
             }
             let font = self.font(run)?;
