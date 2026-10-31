@@ -2075,7 +2075,7 @@ fn synthesis_shorthand_participates_in_the_cascade_and_leaves_real_faces_enabled
 }
 
 #[test]
-fn source_lists_try_supported_fonts_in_order_and_preserve_policy_errors() {
+fn source_lists_try_supported_fonts_in_order_and_report_skipped_sources() {
     let assets = Assets(HashMap::from([(
         PathBuf::from("/document/good.ttf"),
         FONT.to_vec(),
@@ -2091,6 +2091,19 @@ fn source_lists_try_supported_fonts_in_order_and_preserve_policy_errors() {
         &assets,
     )
     .expect("unavailable sources and unsupported formats must allow the next source");
+    let skipped: Vec<_> = output
+        .diagnostics
+        .iter()
+        .filter_map(|diagnostic| match diagnostic {
+            crate::RenderDiagnostic::UnavailableFont(failure) => Some(failure.reference.as_str()),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(
+        skipped,
+        ["missing.ttf"],
+        "the fetched source that failed is reported; local() and unsupported formats are not fetched"
+    );
     let trace = output.layout.unwrap();
     let run = &trace.pages[0][0].runs[0];
     assert_eq!(
@@ -2098,25 +2111,35 @@ fn source_lists_try_supported_fonts_in_order_and_preserve_policy_errors() {
         "Custom",
         "a working later URL must be selected before moving to the next family"
     );
-    let result = render_with_resolver(
+    let output = render_with_resolver(
         "<style>@font-face{font-family:Custom;src:url(assets/fonts/DejaVuSans.ttf)}body{font-family:Custom}</style><p>Blocked font</p>",
         &RenderOptions {
             base: env!("CARGO_MANIFEST_DIR").into(),
+            include_layout: true,
             ..Default::default()
         },
         &crate::FileResolver {
             max_resource_bytes: 4,
             ..Default::default()
         },
-    );
+    )
+    .expect("a font over the resource limit is unavailable, not fatal");
     assert!(
         matches!(
-            result,
-            Err(crate::Error::Css(crate::StyleError::Resource(
-                ResourceError::TooLarge { limit: 4, .. }
-            )))
+            output.diagnostics.as_slice(),
+            [crate::RenderDiagnostic::UnavailableFont(failure)]
+                if matches!(failure.error, crate::fonts::FontError::Resource(
+                    ResourceError::TooLarge { limit: 4, .. }
+                ))
         ),
-        "resource policy errors must not be downgraded into font availability failures"
+        "the resource policy failure is reported: {:?}",
+        output.diagnostics
+    );
+    let trace = output.layout.unwrap();
+    assert_ne!(
+        trace.fonts[trace.pages[0][0].runs[0].font_id.index()].family,
+        "Custom",
+        "text falls back past the unavailable face"
     );
 }
 use super::common;

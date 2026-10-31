@@ -650,6 +650,7 @@ dependencies = [
  "skrifa 0.42.1",
  "smallvec",
  "strict-num",
+ "subsetter",
  "svgtypes",
  "thiserror",
  "tiny-skia",

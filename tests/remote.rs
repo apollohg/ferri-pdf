@@ -349,7 +349,7 @@ fn compressed_response_limit_applies_after_gzip_expansion() {
 }
 
 #[test]
-fn remote_font_fallback_skips_missing_sources_but_never_policy_denials() {
+fn remote_font_fallback_skips_missing_and_denied_sources_alike() {
     let server = Server::new([(
         "/valid.ttf",
         Reply::ok(include_bytes!("oracle/assets/DejaVuSans.ttf").as_slice()),
@@ -360,31 +360,46 @@ fn remote_font_fallback_skips_missing_sources_but_never_policy_denials() {
         ..Default::default()
     };
     let html = "<style>@font-face{font-family:Remote;src:url(missing.ttf),url(valid.ttf)}body{font-family:Remote}</style><p>Fallback source</p>";
-    let output = render_with_resolver(html, &options, &UrlResolver::default()).unwrap();
-    assert!(
+    let skipped = |output: &ferri_pdf::RenderOutput| -> Vec<String> {
         output
-            .layout
-            .unwrap()
-            .fonts
+            .diagnostics
             .iter()
-            .any(|font| font.family == "Remote")
-    );
-    assert_eq!(server.requests(), ["/missing.ttf", "/valid.ttf"]);
-    let resolver = UrlResolver::default().with_url_filter(|url| url.path() != "/missing.ttf");
-    let error = render_with_resolver(html, &options, &resolver)
-        .err()
-        .expect("policy denial must not fall back");
-    assert!(
-        matches!(
-            error,
-            ferri_pdf::Error::Css(ferri_pdf::StyleError::Resource(ResourceError::Denied(_)))
+            .filter_map(|diagnostic| match diagnostic {
+                ferri_pdf::RenderDiagnostic::UnavailableFont(failure) => {
+                    Some(format!("{} {}", failure.reference, failure.error))
+                }
+                _ => None,
+            })
+            .collect()
+    };
+    for (resolver, reason) in [
+        (UrlResolver::default(), "HTTP 404"),
+        (
+            UrlResolver::default().with_url_filter(|url| url.path() != "/missing.ttf"),
+            "rejected by policy",
         ),
-        "policy error must propagate: {error:?}"
-    );
+    ] {
+        let output = render_with_resolver(html, &options, &resolver)
+            .unwrap_or_else(|error| panic!("{reason}: a failed source must fall back: {error}"));
+        let reported = skipped(&output);
+        assert!(
+            matches!(reported.as_slice(), [skip] if skip.starts_with("missing.ttf ") && skip.contains(reason)),
+            "{reason}: the skipped source is reported: {reported:?}"
+        );
+        assert!(
+            output
+                .layout
+                .unwrap()
+                .fonts
+                .iter()
+                .any(|font| font.family == "Remote"),
+            "{reason}: the next source supplies the face"
+        );
+    }
     assert_eq!(
         server.requests(),
-        ["/missing.ttf", "/valid.ttf"],
-        "denial must prevent both the denied request and fallback request"
+        ["/missing.ttf", "/valid.ttf", "/valid.ttf"],
+        "a denied source is never requested, and its fallback is"
     );
 }
 

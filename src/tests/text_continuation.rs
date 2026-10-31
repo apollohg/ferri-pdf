@@ -326,7 +326,7 @@ fn a_checkpoint_from_another_paragraph_is_rejected_before_layout() {
 }
 
 #[test]
-fn producing_one_line_does_not_shape_an_unrequested_suffix_or_repeat_a_terminal_error() {
+fn producing_one_line_does_not_shape_an_unrequested_suffix_or_retry_a_denied_fallback() {
     let words = (0..30)
         .map(|index| format!("A{index:03}"))
         .collect::<Vec<_>>()
@@ -362,31 +362,28 @@ fn producing_one_line_does_not_shape_an_unrequested_suffix_or_repeat_a_terminal_
         0,
         "the unrequested suffix must not load its fallback"
     );
-    let mut denied = false;
-    for line in lines.by_ref() {
-        match line {
-            Ok(_) => {}
-            Err(TextError::Font(crate::fonts::FontError::Resource(
-                crate::resources::ResourceError::Denied(_),
-            ))) => {
-                denied = true;
-                break;
-            }
-            Err(error) => panic!("unexpected continuation failure: {error}"),
-        }
-    }
+    let rest: Vec<_> = lines
+        .map(|line| line.expect("a denied fallback face is unavailable, not fatal"))
+        .collect();
     assert!(
-        denied,
-        "the final character must surface the real resource-policy failure"
-    );
-    assert!(
-        lines.next().is_none(),
-        "a failed line stream must terminate rather than yield the error forever"
+        rest.last().is_some_and(|line| line.text.ends_with('漢')),
+        "the final character falls back past the denied face: {:?}",
+        rest.iter().map(|line| &line.text).collect::<Vec<_>>()
     );
     assert_eq!(
         resolver.0.get(),
         1,
-        "a policy failure must not be retried after iterator termination"
+        "a denied fallback is requested once, when a character first needs it"
+    );
+    assert!(
+        matches!(
+            document.styles().fonts.take_failures().as_slice(),
+            [failure] if matches!(
+                failure.error,
+                crate::fonts::FontError::Resource(crate::resources::ResourceError::Denied(_))
+            )
+        ),
+        "the denial is recorded for the document's diagnostics"
     );
 }
 

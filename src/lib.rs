@@ -46,8 +46,9 @@ use crate::text::TextError;
 
 pub use crate::document::DocumentDiagnostic as RenderDiagnostic;
 pub use crate::fonts::{
-    FontDescriptor, FontFaceStyle, FontFamily, FontId, FontPreferences, FontRange, FontSelection,
-    FontSlant, FontStyle, FontSynthesis, FontVariation, FontWeight, FontWidth, GenericFamily,
+    FontDescriptor, FontError, FontFaceStyle, FontFamily, FontId, FontPreferences, FontRange,
+    FontSelection, FontSlant, FontStyle, FontSynthesis, FontVariation, FontWeight, FontWidth,
+    GenericFamily,
 };
 pub use crate::graphics::{
     BlendMode, Border, BorderStyle, BoxDecoration, BoxPaint, Clip, ClipBounds, Color, Contour,
@@ -242,12 +243,7 @@ fn prepare_document(
     })?;
     let (document, trace) =
         layout::layout_document(document, resolver).map_err(|error| match error {
-            LayoutError::Text(TextError::Font(fonts::FontError::InvalidFont(_))) => {
-                Error::InvalidFont
-            }
-            LayoutError::Text(TextError::Font(fonts::FontError::Resource(error))) => {
-                Error::Css(StyleError::Resource(error))
-            }
+            LayoutError::Text(TextError::Font(FontError::InvalidFont(_))) => Error::InvalidFont,
             LayoutError::Text(TextError::Font(error)) => Error::Css(StyleError::Font(error)),
             LayoutError::Style(error @ StyleError::Font(_)) => Error::Css(error),
             error => Error::Layout(error.to_string()),

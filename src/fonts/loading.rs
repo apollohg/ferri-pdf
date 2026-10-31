@@ -1,7 +1,7 @@
 use crate::fonts::{
     FontAdjustments, FontBook, FontData, FontError, FontFaceStyle, FontId, FontInstance, FontRange,
     FontSelection, FontSlant, FontSource, FontSources, FontStyle, FontVariation, FontWeight,
-    matching, validate,
+    LoadedFont, matching, validate,
 };
 use crate::resources::ResourceResolver;
 
@@ -119,6 +119,7 @@ impl FontBook {
                 value,
             });
         }
+        let (default_weight, default_style) = (weight, style);
         let optical = adjustments.optical_sizing.then_some(FontVariation {
             tag: OPTICAL_SIZE_AXIS.to_bytes(),
             value: size,
@@ -147,9 +148,16 @@ impl FontBook {
                 }),
             }
         }
-        for variation in &variations {
+        // A face whose variation data cannot take a value keeps that axis's default; one that
+        // cannot be embedded at its values keeps every axis's default.
+        variations.retain(|variation| {
             face.set_variation(ttf_parser::Tag::from_bytes(&variation.tag), variation.value)
-                .ok_or(FontError::VariationAxis(variation.tag))?;
+                .is_some()
+        });
+        if !variations.is_empty() && !self.embeds_instance(id, data, &face, &variations) {
+            face = ttf_parser::Face::parse(data, 0).map_err(FontError::InvalidFont)?;
+            variations.clear();
+            (weight, style) = (default_weight, default_style);
         }
         Ok(Some(FontInstance {
             face,
@@ -185,10 +193,69 @@ impl FontBook {
         if let FontData::Lazy { sources, data } = &face.data
             && data.get().is_none()
         {
-            let loaded = self.load_sources(sources, resolver)?;
-            let _ = data.set(loaded);
+            let _ = data.set(self.load_sources(sources, resolver));
         }
         Ok(face.data())
+    }
+
+    /// Whether the author face `id`, whose `data` is `face`, embeds at `variations`; checked
+    /// once per instance, recording why not. Bundled faces always embed.
+    fn embeds_instance(
+        &self,
+        id: FontId,
+        data: &[u8],
+        face: &ttf_parser::Face<'_>,
+        variations: &[FontVariation],
+    ) -> bool {
+        let Some(FontData::Lazy {
+            sources,
+            data: loaded,
+        }) = self.face(id).map(|face| &face.data)
+        else {
+            return true;
+        };
+        let Some(url) = loaded
+            .get()
+            .and_then(Option::as_ref)
+            .and_then(|loaded| loaded.url.clone())
+        else {
+            return true;
+        };
+        let key = (
+            id,
+            variations
+                .iter()
+                .map(|variation| (variation.tag, variation.value.to_bits()))
+                .collect(),
+        );
+        if let Some(embeds) = self
+            .instances
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner)
+            .get(&key)
+        {
+            return *embeds;
+        }
+        let embedded = crate::fonts::embed_all_glyphs(data, face, variations);
+        let embeds = embedded.is_ok();
+        if let Err(error) = embedded {
+            self.failures
+                .lock()
+                .unwrap_or_else(std::sync::PoisonError::into_inner)
+                .push(crate::fonts::FontFailure {
+                    base: sources.base.clone(),
+                    reference: url,
+                    error: FontError::UnembeddableInstance {
+                        variations: variations.to_vec(),
+                        error,
+                    },
+                });
+        }
+        self.instances
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner)
+            .insert(key, embeds);
+        embeds
     }
 
     /// Reads an already attempted face without acquiring additional resources.
@@ -202,30 +269,49 @@ impl FontBook {
         Ok(face.data())
     }
 
+    /// The first of `sources` that loads as a valid font (CSS Fonts 4 §4.3); a URL that
+    /// cannot be fetched, policy denies, or that holds no valid font is skipped, recorded.
     fn load_sources(
         &self,
         sources: &FontSources,
         resolver: &dyn ResourceResolver,
-    ) -> Result<Option<Vec<u8>>, FontError> {
+    ) -> Option<LoadedFont> {
         for source in &sources.sources {
-            let data = match source {
-                FontSource::Local(name) => self.local_data(name).map(<[u8]>::to_vec),
-                FontSource::Url(reference) => match resolver.resolve(reference, &sources.base) {
-                    Ok(resource) => Some(resource.bytes),
-                    Err(error) if error.is_unavailable() => None,
-                    Err(error) => return Err(error.into()),
+            let reference = match source {
+                FontSource::Local(name) => match self.local_data(name) {
+                    Some(data) => {
+                        return Some(LoadedFont {
+                            data: data.to_vec(),
+                            url: None,
+                        });
+                    }
+                    None => continue,
                 },
+                FontSource::Url(reference) => reference,
             };
-            let Some(data) = data else {
-                continue;
-            };
-            match validate(&data) {
-                Ok(()) => return Ok(Some(data)),
-                Err(FontError::InvalidFont(_)) => {}
-                Err(error) => return Err(error),
+            let loaded = resolver
+                .resolve(reference, &sources.base)
+                .map_err(FontError::from)
+                .and_then(|resource| validate(&resource.bytes).map(|()| resource.bytes));
+            match loaded {
+                Ok(data) => {
+                    return Some(LoadedFont {
+                        data,
+                        url: Some(reference.clone()),
+                    });
+                }
+                Err(error) => self
+                    .failures
+                    .lock()
+                    .unwrap_or_else(std::sync::PoisonError::into_inner)
+                    .push(crate::fonts::FontFailure {
+                        base: sources.base.clone(),
+                        reference: reference.clone(),
+                        error,
+                    }),
             }
         }
-        Ok(None)
+        None
     }
 
     fn local_data(&self, name: &str) -> Option<&[u8]> {

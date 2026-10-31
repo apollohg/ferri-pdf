@@ -28,7 +28,7 @@ fn shadow_font_references_shape_with_the_correct_faces() {
 }
 
 #[test]
-fn inaccessible_shadow_font_sources_are_not_loaded_but_selected_denials_propagate() {
+fn inaccessible_shadow_font_sources_are_not_loaded_and_selected_denials_are_reported() {
     const DENIED_FONT: &str = "https://denied.example/font.ttf";
     #[derive(Default)]
     struct Policy {
@@ -55,22 +55,31 @@ fn inaccessible_shadow_font_sources_are_not_loaded_but_selected_denials_propagat
         let html = format!(
             "<style>{OUTER}</style><p>Outside</p><div><template shadowrootmode=closed><style>@font-face{{font-family:Shared;src:url({DENIED_FONT})}}</style><p {declaration}>Inside</p></template></div>"
         );
-        let result = ferri_pdf::render_with_resolver(&html, &common::local_options(), &policy);
-        if selected {
-            assert!(
+        let output = ferri_pdf::render_with_resolver(&html, &common::local_options(), &policy)
+            .unwrap_or_else(|error| {
+                panic!("selected={selected}: a denied font is not fatal: {error}")
+            });
+        let denied = output
+            .diagnostics
+            .iter()
+            .filter(|diagnostic| {
                 matches!(
-                    &result,
-                    Err(ferri_pdf::Error::Css(ferri_pdf::StyleError::Resource(
-                        ResourceError::Denied(_)
-                    )))
-                ),
-                "selected shadow font policy denial must retain its typed error: {:?}",
-                result.as_ref().err()
+                    diagnostic,
+                    ferri_pdf::RenderDiagnostic::UnavailableFont(failure)
+                        if matches!(failure.error, ferri_pdf::FontError::Resource(ResourceError::Denied(_)))
+                )
+            })
+            .count();
+        if selected {
+            assert_eq!(
+                denied, 1,
+                "a selected shadow font denial is reported: {:?}",
+                output.diagnostics
             );
             assert_eq!(policy.denied.get(), 1);
         } else {
-            assert!(
-                result.is_ok(),
+            assert_eq!(
+                denied, 0,
                 "an inherited document font must not acquire an identically named private shadow font"
             );
             assert_eq!(policy.denied.get(), 0);

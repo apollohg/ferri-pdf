@@ -2971,12 +2971,14 @@ fn math_color_metrics_load_only_for_the_computed_value() {
 }
 
 #[test]
-fn active_metric_policy_failures_are_not_font_availability_fallbacks() {
+fn metric_fonts_over_the_resource_limit_fall_back_to_the_next_family() {
     const RESOURCE_LIMIT_BYTES: usize = 1;
+    const FACE: &str = "@font-face{font-family:Metric;src:url(MetricGlyphTest.ttf)}";
     let resolver = FileResolver {
         max_resource_bytes: RESOURCE_LIMIT_BYTES,
         ..Default::default()
     };
+    let metrics = |style: &Style| format!("{:?} {:?}", style.width, style.color);
     for declaration in [
         "width:1ch",
         "color:rgb(calc(1ch / 1pt * 10) 0 0)",
@@ -2988,18 +2990,14 @@ fn active_metric_policy_failures_are_not_font_availability_fallbacks() {
         "width:if(style(1ch > 0pt):12pt;else:14pt)",
         "width:attr(data-missing <length>,1ch)",
     ] {
-        let error = computed_with(&format!("@font-face{{font-family:Metric;src:url(MetricGlyphTest.ttf)}}#target{{font-family:Metric;{declaration}}}"), &resolver).unwrap_err();
-        assert!(
-            matches!(
-                error,
-                StyleError::Font(crate::fonts::FontError::Resource(
-                    crate::resources::ResourceError::TooLarge {
-                        limit: RESOURCE_LIMIT_BYTES,
-                        ..
-                    }
-                ))
-            ),
-            "active metric loading must preserve the resource error for {declaration}: {error}"
+        let rule = format!("#target{{font-family:Metric;{declaration}}}");
+        let limited = computed_with(&format!("{FACE}{rule}"), &resolver).unwrap_or_else(|error| {
+            panic!("an unavailable metric font must not fail {declaration}: {error}")
+        });
+        assert_eq!(
+            metrics(&limited),
+            metrics(&computed(&rule)),
+            "{declaration} measures the fallback font as if the face did not exist"
         );
     }
 }

@@ -174,7 +174,7 @@ fn media_font_units_follow_preferences_and_remain_independent_of_authored_fonts(
 }
 
 #[test]
-fn installed_preferences_do_not_expose_webfonts_or_bypass_resource_policy() {
+fn installed_preferences_do_not_expose_webfonts_and_denied_webfonts_are_unavailable() {
     struct Denied;
     impl ferri_pdf::ResourceResolver for Denied {
         fn resolve(
@@ -199,14 +199,24 @@ fn installed_preferences_do_not_expose_webfonts_or_bypass_resource_policy() {
     let html = format!(
         "<!doctype html><style>{BASE}@font-face{{font-family:'DejaVu Sans';src:url(denied.ttf)}}p{{font-family:'DejaVu Sans'}}</style><p>H</p>"
     );
+    let output = ferri_pdf::render_with_resolver(&html, &options(), &Denied)
+        .expect("a denied webfont is unavailable, not fatal");
     assert!(
         matches!(
-            ferri_pdf::render_with_resolver(&html, &options(), &Denied),
-            Err(ferri_pdf::Error::Css(ferri_pdf::StyleError::Resource(
-                ferri_pdf::ResourceError::OutsideRoot(_)
-            )))
+            output.diagnostics.as_slice(),
+            [ferri_pdf::RenderDiagnostic::UnavailableFont(failure)]
+                if failure.reference == "denied.ttf"
+                    && matches!(failure.error, ferri_pdf::FontError::Resource(
+                        ferri_pdf::ResourceError::OutsideRoot(_)
+                    ))
         ),
-        "explicit CSS webfonts must still propagate the resolver's policy failure"
+        "an explicit CSS webfont reports the resolver's policy failure: {:?}",
+        output.diagnostics
+    );
+    assert_eq!(
+        output.layout.unwrap().pages[0][0].text,
+        "H",
+        "the text renders in a fallback face"
     );
 }
 

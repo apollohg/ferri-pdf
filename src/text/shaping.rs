@@ -17,6 +17,8 @@ pub(super) const NARROW_NO_BREAK_SPACE: char = '\u{202f}';
 pub(super) const NARROW_SPACE_FACTOR: f32 = 0.5;
 const MAX_LIGATURE_TRACKING_EM: f32 = 0.025;
 const WORD_SPACE: char = ' ';
+/// The glyph that shows a missing character.
+const NOTDEF: u32 = 0;
 /// UA synthesis policy for `font-variant-position` (§6.5): sizes up to the small size keep
 /// more of their size than sizes from the large size, with linear interpolation between.
 const POSITION_SMALL_SIZE: f32 = 20.0 * POINTS_PER_PIXEL;
@@ -484,7 +486,13 @@ fn shape_run(
         .zip(shaped.glyph_positions())
         .enumerate()
     {
-        if info.glyph_id == 0 && size != 0.0 && missing == MissingGlyphs::Reject {
+        // A malformed font can map text to glyphs it does not have, which it lacks as surely.
+        let id = if info.glyph_id < u32::from(face.number_of_glyphs()) {
+            info.glyph_id
+        } else {
+            NOTDEF
+        };
+        if id == NOTDEF && size != 0.0 && missing == MissingGlyphs::Reject {
             return Err(TextError::MissingGlyph { text: text.into() });
         }
         let start = info.cluster as usize;
@@ -540,7 +548,7 @@ fn shape_run(
             return Err(TextError::NonFiniteGeometry);
         }
         let glyph = PositionedGlyph {
-            id: info.glyph_id,
+            id,
             x_advance: advance,
             x_spacing,
             x_offset: if upright {

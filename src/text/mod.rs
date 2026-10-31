@@ -1374,7 +1374,15 @@ impl<'a> TextContext<'a> {
         }
         let mut runs = Vec::new();
         for (range, id, policy) in pieces {
-            runs.extend(self.shape_run(id, paragraph, range, rtl, style, policy)?);
+            // A malformed font can substitute glyphs it lacks for graphemes it renders alone;
+            // the run then shows them as the font shapes them.
+            let shaped = match self.shape_run(id, paragraph, range.clone(), rtl, style, policy) {
+                Err(TextError::MissingGlyph { .. }) => {
+                    self.shape_run(id, paragraph, range, rtl, style, MissingGlyphs::Substitute)
+                }
+                shaped => shaped,
+            };
+            runs.extend(shaped?);
         }
         Ok(runs)
     }

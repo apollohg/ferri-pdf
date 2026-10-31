@@ -98,18 +98,6 @@ pub enum ResourceError {
     InvalidDataUrl(#[from] DataUrlError),
 }
 
-impl ResourceError {
-    /// The resource could not be obtained, as opposed to being malformed or denied by policy.
-    pub fn is_unavailable(&self) -> bool {
-        match self {
-            Self::Read { .. } | Self::UnsupportedScheme(_) => true,
-            #[cfg(feature = "http")]
-            Self::Http { .. } | Self::HttpStatus { .. } | Self::Timeout(_) => true,
-            _ => false,
-        }
-    }
-}
-
 /// Resolve a reference against its containing document or resource.
 pub trait ResourceResolver {
     fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError>;

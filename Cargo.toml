@@ -105,6 +105,7 @@ unicode-linebreak = "0.1"
 unicode-script = "0.5"
 unicode-segmentation = "1.12"
 ttf-parser = { version = "0.25", features = ["gvar-alloc"] }
+subsetter = { version = "0.2.6", features = ["variable-fonts"] }
 thiserror = "2"
 # Only languages whose patterns are MIT, BSD-3-Clause, Unlicense or FSFAP-no-warranty-disclaimer
 # licensed; assets/hyphenation/PATTERNS.txt carries their notices.
@@ -225,6 +226,7 @@ siphasher.workspace = true
 skrifa.workspace = true
 smallvec.workspace = true
 strict-num.workspace = true
+subsetter.workspace = true
 svgtypes.workspace = true
 thiserror.workspace = true
 tiny-skia-path.workspace = true
@@ -243,3 +245,8 @@ zune-jpeg.workspace = true
 
 [dev-dependencies]
 rustls = { version = "=0.23.46", default-features = false, features = ["std", "tls12"] }
+
+# Font and image codecs wrap integer arithmetic on malformed input as release builds do (the
+# font parsers port HarfBuzz's unsigned arithmetic); debug builds must not panic on it either.
+[profile.dev.package."*"]
+overflow-checks = false

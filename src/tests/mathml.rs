@@ -1349,7 +1349,7 @@ fn non_math_display_math_keeps_block_first_line_propagation() {
 }
 
 #[test]
-fn math_attribute_metrics_preserve_active_font_policy_errors() {
+fn math_attribute_metrics_report_unavailable_fonts_they_activate() {
     const RESOURCE_LIMIT_BYTES: usize = 1;
     let font = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("tests/fixtures/fonts/MetricGlyphTest.ttf");
@@ -1357,32 +1357,35 @@ fn math_attribute_metrics_preserve_active_font_policy_errors() {
         max_resource_bytes: RESOURCE_LIMIT_BYTES,
         ..Default::default()
     };
-    let source = |attribute: &str| {
-        format!(
+    let font_failures = |attribute: &str| {
+        let source = format!(
             "<style>@font-face{{font-family:BlockedMath;src:url('{}')}}math{{font-family:BlockedMath}}</style><math><mpadded lspace='{attribute}'><mspace width='10pt' height='20pt'/></mpadded></math>",
             font.display()
-        )
+        );
+        crate::document::StyledDocument::parse(&source, &local_options().base, &[], &resolver)
+            .unwrap_or_else(|error| panic!("lspace={attribute}: an unavailable font is not fatal: {error}"))
+            .into_diagnostics()
+            .into_iter()
+            .filter(|diagnostic| {
+                matches!(
+                    diagnostic,
+                    crate::document::DocumentDiagnostic::UnavailableFont(failure)
+                        if matches!(failure.error, crate::fonts::FontError::Resource(
+                            crate::resources::ResourceError::TooLarge { limit: RESOURCE_LIMIT_BYTES, .. }
+                        ))
+                )
+            })
+            .count()
     };
-    let options = local_options();
-    crate::document::StyledDocument::parse(&source("invalid"), &options.base, &[], &resolver)
-        .expect("invalid MathML length attributes recover without activating unused font metrics");
-    let error =
-        crate::document::StyledDocument::parse(&source("1ex"), &options.base, &[], &resolver)
-            .err()
-            .expect(
-                "valid metric-bearing MathML attributes must preserve active font policy failure",
-            );
-    assert!(
-        matches!(
-            error,
-            crate::document::DocumentError::Style(crate::style::StyleError::Font(
-                crate::fonts::FontError::Resource(crate::resources::ResourceError::TooLarge {
-                    limit: RESOURCE_LIMIT_BYTES,
-                    ..
-                })
-            ))
-        ),
-        "mpadded lspace=1ex must retain its typed resource error rather than silently replacing the valid attribute by zero: {error}"
+    assert_eq!(
+        font_failures("invalid"),
+        0,
+        "invalid MathML length attributes recover without activating unused font metrics"
+    );
+    assert_eq!(
+        font_failures("1ex"),
+        1,
+        "a metric-bearing attribute activates the face and reports it unavailable"
     );
 }
 

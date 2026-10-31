@@ -24,7 +24,8 @@ pub use selection::{FontFaceStyle, FontRange, FontSelection, FontSlant, FontVari
 pub(crate) use silhouette::Silhouettes;
 
 use serde::Serialize;
-use std::sync::{Arc, OnceLock};
+use std::collections::HashMap;
+use std::sync::{Arc, Mutex, OnceLock, PoisonError};
 
 /// The initial `font-family`, resolved to `serif`.
 pub(crate) const DEFAULT_FAMILY: GenericFamily = GenericFamily::Serif;
@@ -214,8 +215,15 @@ enum FontData {
     Loaded(Arc<Vec<u8>>),
     Lazy {
         sources: Arc<FontSources>,
-        data: Arc<OnceLock<Option<Vec<u8>>>>,
+        data: Arc<OnceLock<Option<LoadedFont>>>,
     },
+}
+
+/// The data of the first `@font-face` source that loaded.
+struct LoadedFont {
+    data: Vec<u8>,
+    /// The `url()` it came from; `None` for a `local()` face, which is bundled.
+    url: Option<String>,
 }
 
 pub(crate) enum FontSource {
@@ -247,7 +255,10 @@ impl FontFace {
             FontData::Bundled(bytes) => Some(bytes),
             #[cfg(test)]
             FontData::Loaded(bytes) => Some(bytes),
-            FontData::Lazy { data, .. } => data.get().and_then(Option::as_deref),
+            FontData::Lazy { data, .. } => data
+                .get()
+                .and_then(Option::as_ref)
+                .map(|loaded| loaded.data.as_slice()),
         }
     }
 }
@@ -259,7 +270,14 @@ pub(crate) struct FontBook {
     preferences: FontPreferences,
     feature_values: Vec<feature_values::FeatureValue>,
     palettes: Vec<palettes::PaletteValues>,
+    /// The `@font-face` sources loading skipped, shared by the book's copies.
+    failures: Arc<Mutex<Vec<FontFailure>>>,
+    /// Whether each loaded face embeds at the variation values it was instanced at.
+    instances: Arc<Mutex<HashMap<InstanceKey, bool>>>,
 }
+
+/// A face and the bits of its variation values.
+type InstanceKey = (FontId, Vec<([u8; 4], u32)>);
 impl Default for FontBook {
     fn default() -> Self {
         Self::with_preferences(FontPreferences::default())
@@ -273,7 +291,13 @@ impl FontBook {
             preferences,
             feature_values: Vec::new(),
             palettes: Vec::new(),
+            failures: Arc::default(),
+            instances: Arc::default(),
         }
+    }
+    /// The `@font-face` sources loading has skipped since the last call.
+    pub(crate) fn take_failures(&self) -> Vec<FontFailure> {
+        std::mem::take(&mut self.failures.lock().unwrap_or_else(PoisonError::into_inner))
     }
     fn generic_names(&self, generic: GenericFamily) -> impl Iterator<Item = &str> {
         self.preferences
@@ -507,10 +531,44 @@ impl FontBook {
     }
 }
 
+/// Rejects data the renderer cannot both shape and embed, as user agents sanitize fonts
+/// before use (CSS Fonts 4 §4.3): a font that fails is invalid, so loading moves on to the
+/// face's next source.
 fn validate(data: &[u8]) -> Result<(), FontError> {
-    ttf_parser::Face::parse(data, 0)
-        .map(|_| ())
-        .map_err(FontError::InvalidFont)
+    let face = ttf_parser::Face::parse(data, 0).map_err(FontError::InvalidFont)?;
+    embed_all_glyphs(data, &face, &[]).map_err(FontError::Unembeddable)
+}
+
+/// Embeds a subset of every glyph of `face` at `variations`, as the PDF writer embeds the
+/// glyphs it uses, so that success covers each subset the PDF needs.
+fn embed_all_glyphs(
+    data: &[u8],
+    face: &ttf_parser::Face<'_>,
+    variations: &[FontVariation],
+) -> Result<(), subsetter::Error> {
+    let glyphs: Vec<u16> = (0..face.number_of_glyphs()).collect();
+    let coordinates: Vec<_> = variations
+        .iter()
+        .map(|variation| (subsetter::Tag::new(&variation.tag), variation.value))
+        .collect();
+    subsetter::subset_with_variations(
+        data,
+        0,
+        &coordinates,
+        &subsetter::GlyphRemapper::new_from_glyphs_sorted(&glyphs),
+    )
+    .map(|_| ())
+}
+
+/// An `@font-face` source skipped because it could not be fetched or is not a usable font, or
+/// an instance of its font that cannot be embedded.
+#[derive(Debug, thiserror::Error)]
+#[error("font {reference}: {error}")]
+pub struct FontFailure {
+    pub base: crate::resources::ResourceBase,
+    pub reference: String,
+    #[source]
+    pub error: FontError,
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -523,14 +581,22 @@ pub enum FontError {
     UnresolvedFont(FontId),
     #[error("invalid font: {0}")]
     InvalidFont(#[source] ttf_parser::FaceParsingError),
+    #[error("font cannot be embedded: {0}")]
+    Unembeddable(#[source] subsetter::Error),
+    #[error(
+        "font instance {variations:?} cannot be embedded, so its text uses the default instance: {error}"
+    )]
+    UnembeddableInstance {
+        variations: Vec<FontVariation>,
+        #[source]
+        error: subsetter::Error,
+    },
     #[error("font weight must be between 1 and 1000: {0}")]
     InvalidWeight(f32),
     #[error("font width must be a finite nonnegative percentage: {0}")]
     InvalidWidth(f32),
     #[error("font slant must be between -90 and 90 degrees: {0}")]
     InvalidSlant(f32),
-    #[error("cannot apply font variation axis {0:?}")]
-    VariationAxis([u8; 4]),
     #[error("adjusted font size is not finite: {0}")]
     InvalidSize(f32),
     #[error("no font face in the family list is available")]

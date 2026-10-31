@@ -1,10 +1,19 @@
 use crate::{
-    DisplayItem, ImageError, RenderOptions, Resource, ResourceBase, ResourceError,
-    ResourceResolver, render_with_resolver,
+    DisplayItem, RenderOptions, Resource, ResourceBase, ResourceError, ResourceResolver,
+    render_with_resolver,
 };
 use std::{cell::RefCell, path::PathBuf};
 
 const FONT: &[u8] = include_bytes!("../../assets/fonts/DejaVuSansMono.ttf");
+/// Whether `diagnostic` reports the denied SVG chart font.
+fn denied_font(diagnostic: &crate::RenderDiagnostic) -> bool {
+    matches!(
+        diagnostic,
+        crate::RenderDiagnostic::UnavailableFont(failure)
+            if matches!(failure.error, crate::fonts::FontError::Resource(ResourceError::Denied(_)))
+    )
+}
+
 const CHART: &str = "<svg xmlns='http://www.w3.org/2000/svg' width='100' height='40'><text x='0' y='30' font-family='ChartFace' font-size='20'>H</text></svg>";
 
 #[derive(Default)]
@@ -112,7 +121,7 @@ fn svg_only_font_sources_share_lazy_acquisition_and_survive_viewport_reparse() {
 }
 
 #[test]
-fn svg_font_denials_remain_typed_and_hidden_text_does_not_acquire_fonts() {
+fn svg_font_denials_fall_back_and_hidden_text_does_not_acquire_fonts() {
     for hidden in [false, true] {
         let assets = Assets {
             denied: true,
@@ -134,9 +143,19 @@ fn svg_font_denials_remain_typed_and_hidden_text_does_not_acquire_fonts() {
         } else {
             let output = result.unwrap();
             assert!(
-                matches!(output.diagnostics.as_slice(), [crate::RenderDiagnostic::UnavailableImage(failure)]
-                if matches!(&failure.error, ImageError::Font(crate::fonts::FontError::Resource(ResourceError::Denied(_))))),
-                "SVG-only font denial must omit the image with its typed diagnostic"
+                matches!(output.diagnostics.as_slice(), [diagnostic] if denied_font(diagnostic)),
+                "an SVG-only font denial is reported once: {:?}",
+                output.diagnostics
+            );
+            assert!(
+                output
+                    .layout
+                    .unwrap()
+                    .display_lists
+                    .iter()
+                    .flatten()
+                    .any(|item| matches!(item, DisplayItem::Image(_))),
+                "the chart still renders, its text in a fallback font"
             );
             assert_eq!(assets.calls.borrow().len(), 3);
         }
@@ -144,7 +163,7 @@ fn svg_font_denials_remain_typed_and_hidden_text_does_not_acquire_fonts() {
 }
 
 #[test]
-fn svg_geometry_loads_metric_fonts_lazily_and_preserves_denials() {
+fn svg_geometry_loads_metric_fonts_lazily_and_reports_denials() {
     for width in ["80px", "8ex", "calc(8ex)"] {
         for denied in [false, true] {
             let assets = Assets {
@@ -171,10 +190,11 @@ fn svg_geometry_loads_metric_fonts_lazily_and_preserves_denials() {
                 "{width}, denied={denied}: only metric-dependent geometry acquires a font, once across reparses"
             );
             if denied && needs_font {
-                assert!(output.diagnostics.iter().any(|diagnostic| matches!(diagnostic,
-                    crate::RenderDiagnostic::UnavailableImage(failure)
-                    if matches!(&failure.error, ImageError::Font(crate::fonts::FontError::Resource(ResourceError::Denied(_))))
-                )), "{width}: intrinsic metric resolution must preserve the font denial diagnostic");
+                assert!(
+                    matches!(output.diagnostics.as_slice(), [diagnostic] if denied_font(diagnostic)),
+                    "{width}: intrinsic metric resolution reports the font denial once: {:?}",
+                    output.diagnostics
+                );
             } else {
                 assert!(
                     output.diagnostics.is_empty(),
@@ -187,7 +207,7 @@ fn svg_geometry_loads_metric_fonts_lazily_and_preserves_denials() {
 }
 
 #[test]
-fn external_motion_path_fonts_remain_lazy_and_denials_remain_typed() {
+fn external_motion_path_fonts_remain_lazy_and_denials_are_reported() {
     for width in ["80", "8ex", "calc(8ex)"] {
         for svg_consumer in [false, true] {
             let assets = Assets {
@@ -206,27 +226,19 @@ fn external_motion_path_fonts_remain_lazy_and_denials_remain_typed() {
                 &options(),
                 &assets,
             );
+            let output = result.unwrap_or_else(|error| {
+                panic!("{width}, SVG={svg_consumer}: a denied path font is not fatal: {error}")
+            });
             if width == "80" {
                 assert!(
-                    result.unwrap().diagnostics.is_empty(),
+                    output.diagnostics.is_empty(),
                     "pixel-only external paths must not activate denied fonts"
                 );
-            } else if svg_consumer {
-                let output = result.unwrap();
-                assert!(output.diagnostics.iter().any(|diagnostic| matches!(diagnostic,
-                    crate::RenderDiagnostic::UnavailableImage(failure)
-                    if matches!(&failure.error, ImageError::Font(crate::fonts::FontError::Resource(ResourceError::Denied(_))))
-                )), "SVG external path font denial must retain its typed image diagnostic");
             } else {
                 assert!(
-                    matches!(
-                        &result,
-                        Err(crate::Error::Css(crate::style::StyleError::Font(
-                            crate::fonts::FontError::Resource(ResourceError::Denied(_))
-                        )))
-                    ),
-                    "HTML external path font denial must retain its typed CSS error: {:?}",
-                    result.err()
+                    matches!(output.diagnostics.as_slice(), [diagnostic] if denied_font(diagnostic)),
+                    "{width}, SVG={svg_consumer}: the external path font denial is reported once: {:?}",
+                    output.diagnostics
                 );
             }
             assert_eq!(
@@ -420,20 +432,16 @@ fn svg_initial_and_unavailable_generic_classes_cannot_activate_css_aliases() {
     let assets = Denied {
         calls: std::cell::Cell::new(0),
     };
-    let result = render_with_resolver(
+    let output = render_with_resolver(
         r#"<style>@font-face{font-family:'Liberation Serif';src:url(denied.ttf)}</style><svg width='100' height='80'><text x='0' y='30'>H</text><text x='0' y='60' font-family="'Liberation Serif'">H</text></svg>"#,
         &options(),
         &assets,
-    );
+    )
+    .expect("a denied explicit family falls back");
     assert!(
-        matches!(
-            result,
-            Err(crate::Error::Image(ImageError::Font(
-                crate::fonts::FontError::Resource(ResourceError::Denied(_))
-            )))
-        ),
+        matches!(output.diagnostics.as_slice(), [diagnostic] if denied_font(diagnostic)),
         "an explicitly quoted family still acquires its requested source: {:?}",
-        result.err()
+        output.diagnostics
     );
     assert_eq!(assets.calls.get(), 1);
 }

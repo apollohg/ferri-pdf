@@ -102,6 +102,8 @@ pub enum DocumentDiagnostic {
         reference: String,
         media_type: String,
     },
+    #[error("{0}")]
+    UnavailableFont(#[from] crate::fonts::FontFailure),
     #[error("stylesheet {reference} is unavailable: {error}")]
     UnavailableSource {
         base: crate::resources::ResourceBase,
@@ -724,6 +726,13 @@ impl StyledDocument {
                 .take_failures()
                 .into_iter()
                 .map(DocumentDiagnostic::UnavailableImage),
+        );
+        self.diagnostics.extend(
+            self.styles
+                .fonts
+                .take_failures()
+                .into_iter()
+                .map(DocumentDiagnostic::UnavailableFont),
         );
         self.diagnostics
     }

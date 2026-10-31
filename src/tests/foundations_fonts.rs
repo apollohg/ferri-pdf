@@ -432,7 +432,7 @@ fn face_matching_narrows_width_before_style_and_weight() {
 }
 
 #[test]
-fn modern_font_source_hints_skip_unsupported_technology_and_keep_policy_errors() {
+fn modern_font_source_hints_skip_unsupported_technology_and_report_policy_failures() {
     const FONT_BYTE_LIMIT: usize = 4;
     let html = format!(
         "<style>@font-face{{font-family:'{VARIABLE_FAMILY}';src:url('../../../assets/fonts/DejaVuSans.ttf') format(truetype) tech(features-graphite),url(RobotoFlex.ttf) format(truetype) tech(variations)}}p{{font-family:'{VARIABLE_FAMILY}';font-size:{VARIABLE_SIZE_PT}pt;line-height:24pt;font-optical-sizing:none}}</style><p>H</p>"
@@ -458,21 +458,25 @@ fn modern_font_source_hints_skip_unsupported_technology_and_keep_policy_errors()
         max_resource_bytes: FONT_BYTE_LIMIT,
         ..Default::default()
     };
-    let error = crate::render_with_resolver(&html, &options, &resolver).err();
+    let output = crate::render_with_resolver(&html, &options, &resolver)
+        .expect("a font over the resource limit is unavailable, not fatal");
     assert!(
         matches!(
-            error,
-            Some(
-                crate::Error::Resource(crate::ResourceError::TooLarge {
-                    limit: FONT_BYTE_LIMIT,
-                    ..
-                }) | crate::Error::Css(StyleError::Resource(crate::ResourceError::TooLarge {
-                    limit: FONT_BYTE_LIMIT,
-                    ..
-                }))
-            )
+            output.diagnostics.as_slice(),
+            [crate::RenderDiagnostic::UnavailableFont(failure)]
+                if failure.reference == "RobotoFlex.ttf"
+                    && matches!(failure.error, crate::fonts::FontError::Resource(
+                        crate::ResourceError::TooLarge { limit: FONT_BYTE_LIMIT, .. }
+                    ))
         ),
-        "font technology fallback must not hide resource policy failures: {error:?}"
+        "font technology fallback must still report the resource policy failure: {:?}",
+        output.diagnostics
+    );
+    let trace = output.layout.unwrap();
+    assert_ne!(
+        trace.fonts[trace.pages[0][0].runs[0].font_id.index()].family,
+        VARIABLE_FAMILY,
+        "text falls back past the unavailable face"
     );
 }
 

@@ -188,7 +188,7 @@ fn syntax_recovery_does_not_swallow_parse_limits() {
 }
 
 #[test]
-fn syntax_recovery_does_not_swallow_resource_denial() {
+fn syntax_recovery_keeps_the_declaration_whose_font_is_denied() {
     struct Denied;
     impl ResourceResolver for Denied {
         fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {
@@ -196,17 +196,29 @@ fn syntax_recovery_does_not_swallow_resource_denial() {
             Err(ResourceError::Denied(base.resolve(reference)?))
         }
     }
-    let result = render_with_resolver(
+    let output = render_with_resolver(
         "<style>@font-face{font-family:Denied;src:url(blocked.ttf)}p{broken; font-family:Denied}</style><p>denied</p>",
         &local_options(),
         &Denied,
+    )
+    .expect("a denied font is unavailable, not fatal");
+    let denied = output
+        .diagnostics
+        .iter()
+        .filter(|diagnostic| {
+            matches!(
+                diagnostic,
+                RenderDiagnostic::UnavailableFont(failure)
+                    if failure.reference == "blocked.ttf"
+                        && matches!(failure.error, crate::fonts::FontError::Resource(ResourceError::Denied(_)))
+            )
+        })
+        .count();
+    assert_eq!(
+        denied, 1,
+        "the font-family after the recovered declaration requests the denied face: {:?}",
+        output.diagnostics
     );
-    assert!(matches!(
-        result,
-        Err(crate::Error::Css(StyleError::Resource(
-            ResourceError::Denied(_)
-        )))
-    ));
 }
 
 #[test]
