@@ -778,8 +778,9 @@ pub(crate) fn convert_element(node: SvgNode, state: &State, cache: &mut Cache, p
 
     // References, such as markers in the content of markers, can draw an element many times
     // over: past the node budget the rest of the content is left out.
+    work::count(work::Work::Conversion, 1);
     if cache.measuring == 0 {
-        if cache.converted >= MAX_SVG_NODES {
+        if cache.converted >= work::node_budget() {
             cache.truncated = true;
             return;
         }

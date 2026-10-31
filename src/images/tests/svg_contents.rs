@@ -1,5 +1,6 @@
 use crate::images::{Image, ImageCache, ImageError};
 use crate::resources::{FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver};
+use crate::svg::usvg::work::{self, Work};
 use std::cell::Cell;
 use std::fmt::Write;
 
@@ -1680,43 +1681,40 @@ fn svg_images_drawing_svg_images_nest_as_references() {
     assert_eq!(drawn, MAX_REFERENCE_DEPTH, "nested SVG images drawn");
 }
 
-/// What `convert` returns, which must finish within `bound`; `work` names what it converts.
-fn within<T: Send + 'static>(
-    work: &str,
-    bound: std::time::Duration,
-    convert: impl FnOnce() -> T + Send + 'static,
-) -> T {
-    let (sender, receiver) = std::sync::mpsc::channel();
-    std::thread::spawn(move || {
-        let _ = sender.send(convert());
-    });
-    receiver
-        .recv_timeout(bound)
-        .unwrap_or_else(|error| panic!("{work} not converted within {bound:?}: {error}"))
+/// Asserts that the work `measure` counts for content of `size`, and of twice that, grows
+/// linearly; `what` names the content.
+fn assert_linear(what: &str, size: usize, measure: impl Fn(usize) -> usize) {
+    const GROWTH: f64 = 2.2;
+    let [single, double] = [size, 2 * size].map(measure);
+    assert!(
+        single > 0 && double as f64 <= GROWTH * single as f64,
+        "{what}: {single} units of work for {size}, {double} for {}, more than {GROWTH} times \
+         as many",
+        2 * size
+    );
 }
 
 #[test]
 fn nested_fill_box_transforms_measure_each_element_once() {
     // Converting each element's content again after measuring it for its reference box takes
-    // time exponential in the nesting: centuries at this depth, against milliseconds.
-    const DEPTH: usize = 40;
-    const BOUND: std::time::Duration = std::time::Duration::from_secs(10);
+    // work exponential in the nesting.
+    const DEPTH: usize = 8;
     const SQUARE: [f32; 4] = [20.0, 30.0, 10.0, 10.0];
-    let open = "<g style='transform-box:fill-box;transform-origin:center' transform='rotate(90)'>";
     let [x, y, width, height] = SQUARE;
-    let body = format!(
-        "{}<rect x='{x}' y='{y}' width='{width}' height='{height}'/>{}",
-        open.repeat(DEPTH),
-        "</g>".repeat(DEPTH)
-    );
-    let bounds = within(
-        &format!("{DEPTH} nested fill-box groups"),
-        BOUND,
-        move || {
-            let rect = tree(&body).root().abs_bounding_box();
-            [rect.x(), rect.y(), rect.width(), rect.height()]
-        },
-    );
+    let body = |depth: usize| {
+        let open =
+            "<g style='transform-box:fill-box;transform-origin:center' transform='rotate(90)'>";
+        format!(
+            "{}<rect x='{x}' y='{y}' width='{width}' height='{height}'/>{}",
+            open.repeat(depth),
+            "</g>".repeat(depth)
+        )
+    };
+    assert_linear("nested fill-box groups", DEPTH, |depth| {
+        work::measured(Work::Conversion, || tree(&body(depth))).1
+    });
+    let rect = tree(&body(DEPTH)).root().abs_bounding_box();
+    let bounds = [rect.x(), rect.y(), rect.width(), rect.height()];
     // A quarter turn about the centre of each group's fill box leaves the square in place.
     for (actual, expected) in bounds.into_iter().zip(SQUARE) {
         assert!(
@@ -1728,30 +1726,36 @@ fn nested_fill_box_transforms_measure_each_element_once() {
 }
 
 #[test]
-fn the_clip_paths_of_many_markers_are_collected_in_linear_time() {
-    // Each marker clips to its viewport: comparing each clip path with every one collected
-    // before takes time quadratic in the markers, minutes for this many.
-    const MARKERS: usize = 200_000;
-    const BOUND: std::time::Duration = std::time::Duration::from_secs(30);
-    let vertices: String = (0..=MARKERS).map(|x| format!(" L{x} {}", x % 2)).collect();
-    let body = format!(
-        "<defs><marker id='m' markerWidth='2' markerHeight='2'><rect width='1' height='1'/>\
-         </marker></defs><path d='M0 0{vertices}' stroke='black' marker-mid='url(#m)'/>"
-    );
-    let clip_paths = within(&format!("{MARKERS} markers"), BOUND, move || {
-        tree(&body).clip_paths().len()
+fn a_clip_path_shared_by_many_groups_is_collected_once() {
+    // Walking a shared clip path's content again for each group it clips takes work quadratic
+    // where both grow.
+    const SIZE: usize = 100;
+    let body = |size: usize| {
+        let rects: String = (0..size)
+            .map(|index| format!("<rect x='{index}' width='1' height='50'/>"))
+            .collect();
+        let groups = "<g clip-path='url(#c)'><rect width='100' height='100'/></g>".repeat(size);
+        format!("<defs><clipPath id='c'>{rects}</clipPath></defs>{groups}")
+    };
+    assert_linear("groups sharing a clip path", SIZE, |size| {
+        let (tree, visits) = work::measured(Work::Visit, || tree(&body(size)));
+        assert_eq!(
+            tree.clip_paths().len(),
+            1,
+            "the groups' identical clips share one clip path"
+        );
+        visits
     });
-    assert_eq!(clip_paths, MARKERS, "one clip path per marker drawn");
 }
 
 #[test]
 fn markers_in_markers_stop_converting_at_the_node_budget() {
     // Each level of markers draws one at every inner vertex of the path in the level before:
-    // millions of paths at this depth, past the node budget, after which the rest is left out
-    // rather than converting for minutes.
+    // nine to the fourth paths at this depth, past the lowered node budget, after which the
+    // rest is left out.
     const VERTICES: usize = 10;
-    const DEPTH: usize = 7;
-    const BOUND: std::time::Duration = std::time::Duration::from_secs(60);
+    const DEPTH: usize = 4;
+    const BUDGET: usize = 1000;
     let path = |marker: usize| {
         let vertices: String = (0..VERTICES).map(|x| format!(" L{x} {}", x % 2)).collect();
         format!("<path d='M0 0{vertices}' stroke='black' marker-mid='url(#m{marker})'/>")
@@ -1765,12 +1769,14 @@ fn markers_in_markers_stop_converting_at_the_node_budget() {
         })
         .collect();
     let body = format!("{SVG_OPEN}<defs>{markers}</defs>{}</svg>", path(0));
-    let limits = within(&format!("{DEPTH} levels of markers"), BOUND, move || {
-        let mut cache = ImageCache::default();
-        cache
-            .inline_svg(body, &ResourceBase::default(), &FileResolver::default())
-            .expect("SVG content past the node budget renders limited");
-        cache.take_limited()
+    let (limits, conversions) = work::with_node_budget(BUDGET, || {
+        work::measured(Work::Conversion, || {
+            let mut cache = ImageCache::default();
+            cache
+                .inline_svg(body, &ResourceBase::default(), &FileResolver::default())
+                .expect("SVG content past the node budget renders limited");
+            cache.take_limited()
+        })
     });
     assert!(
         limits.iter().any(|diagnostic| matches!(
@@ -1782,6 +1788,11 @@ fn markers_in_markers_stop_converting_at_the_node_budget() {
             }
         )),
         "the node budget must be reported once reached, got {limits:?}"
+    );
+    // Past the budget each marker left out costs one element's check.
+    assert!(
+        conversions <= 2 * BUDGET,
+        "{conversions} elements converted under a budget of {BUDGET}"
     );
 }
 
@@ -1804,8 +1815,11 @@ fn a_chain_of_use_elements_in_definitions_expands_only_where_it_renders() {
     );
 }
 
-/// The glyphs of the tree's text in layout order: each one's characters, fill and origin.
-fn laid_out_glyphs(tree: &crate::svg::usvg::Tree) -> Vec<(String, [u8; 3], [f32; 2])> {
+/// A laid out glyph: its characters, fill and origin.
+type LaidOutGlyph = (String, [u8; 3], [f32; 2]);
+
+/// The glyphs of the tree's text in layout order.
+fn laid_out_glyphs(tree: &crate::svg::usvg::Tree) -> Vec<LaidOutGlyph> {
     let mut glyphs = Vec::new();
     for group in groups(tree) {
         for node in group.children() {
@@ -1824,15 +1838,13 @@ fn laid_out_glyphs(tree: &crate::svg::usvg::Tree) -> Vec<(String, [u8; 3], [f32;
     glyphs
 }
 
-/// The glyphs of `body`'s text, which must convert within a bound far below the minutes that
-/// work quadratic in its `work` takes.
-fn text_glyphs_within(work: &str, body: String) -> Vec<(String, [u8; 3], [f32; 2])> {
-    const BOUND: std::time::Duration = std::time::Duration::from_secs(10);
-    within(work, BOUND, move || laid_out_glyphs(&tree(&body)))
+/// The glyphs of the text in `body`, with the units of `work` laying it out took.
+fn text_work(work: Work, body: &str) -> (Vec<LaidOutGlyph>, usize) {
+    work::measured(work, || laid_out_glyphs(&tree(body)))
 }
 
 /// The characters of `glyphs` that are not white space.
-fn inked(glyphs: &[(String, [u8; 3], [f32; 2])]) -> String {
+fn inked(glyphs: &[LaidOutGlyph]) -> String {
     glyphs
         .iter()
         .flat_map(|(text, ..)| text.chars())
@@ -1842,16 +1854,20 @@ fn inked(glyphs: &[(String, [u8; 3], [f32; 2])]) -> String {
 
 #[test]
 fn svg_text_shapes_each_run_of_spans_once() {
-    // Shaping the whole chunk again for each of its spans takes time quadratic in the spans.
-    const PAIRS: usize = 2000;
+    // Shaping the whole chunk again for each of its spans takes work quadratic in the spans;
+    // the sizes keep each span from shaping on with the next.
+    const PAIRS: usize = 300;
     const BLACK: [u8; 3] = [0, 0, 0];
-    let glyphs = text_glyphs_within(
-        &format!("{} SVG text spans", 2 * PAIRS),
+    let body = |pairs: usize| {
         format!(
             "<text x='0' y='20' font-size='4'>{}</text>",
-            "<tspan>a</tspan><tspan fill='blue'>b</tspan>".repeat(PAIRS)
-        ),
-    );
+            "<tspan>a</tspan><tspan fill='blue' font-size='5'>b</tspan>".repeat(pairs)
+        )
+    };
+    assert_linear("SVG text spans", PAIRS, |pairs| {
+        text_work(Work::ShapedByte, &body(pairs)).1
+    });
+    let glyphs = text_work(Work::ShapedByte, &body(PAIRS)).0;
     assert_eq!(glyphs.len(), 2 * PAIRS, "one glyph per span");
     let mut previous = f32::NEG_INFINITY;
     for (index, (text, fill, [x, _])) in glyphs.iter().enumerate() {
@@ -1875,23 +1891,27 @@ fn svg_text_shapes_each_run_of_spans_once() {
 
 #[test]
 fn svg_text_autospaces_many_spans_in_linear_time() {
-    // Measuring the spacing at each boundary copied every span of the chunk.
-    const SPANS: usize = 6000;
+    // Measuring the spacing at each boundary in a copy of the whole chunk takes work
+    // quadratic in its spans.
+    const SPANS: usize = 300;
     const IDEOGRAPH: char = '\u{6f22}';
-    let text = |autospace: &str| {
+    let text = |autospace: &str, spans: usize| {
         format!(
             "<text x='0' y='20' font-size='4' style='text-autospace:{autospace}'>{}</text>",
-            format!("<tspan>{IDEOGRAPH}a</tspan>").repeat(SPANS)
+            format!("<tspan>{IDEOGRAPH}a</tspan>").repeat(spans)
         )
     };
-    let spaced = text_glyphs_within(&format!("{SPANS} autospaced spans"), text("normal"));
-    let unspaced = laid_out_glyphs(&tree(&text("no-autospace")));
+    assert_linear("autospaced spans", SPANS, |spans| {
+        text_work(Work::HeldSpan, &text("normal", spans)).1
+    });
+    let spaced = text_work(Work::HeldSpan, &text("normal", SPANS)).0;
+    let unspaced = laid_out_glyphs(&tree(&text("no-autospace", SPANS)));
     assert_eq!(
         inked(&spaced),
         format!("{IDEOGRAPH}a").repeat(SPANS),
         "every span's characters are laid out"
     );
-    let end = |glyphs: &[(String, [u8; 3], [f32; 2])]| glyphs.last().expect("laid out").2[0];
+    let end = |glyphs: &[LaidOutGlyph]| glyphs.last().expect("laid out").2[0];
     assert!(
         end(&spaced) > end(&unspaced),
         "CSS Text 4 §8.4: the boundaries of ideographs and letters are spaced, which moves \
@@ -1904,18 +1924,20 @@ fn svg_text_autospaces_many_spans_in_linear_time() {
 #[test]
 fn long_svg_text_on_a_path_is_positioned_in_linear_time() {
     // Counting the characters before each cluster to find its position's attributes takes
-    // time quadratic in the text.
-    const PAIRS: usize = 20_000;
-    let glyphs = text_glyphs_within(
-        &format!("{PAIRS} characters on a path"),
+    // work quadratic in the text.
+    const PAIRS: usize = 1000;
+    let body = |pairs: usize| {
         format!(
             "<defs><path id='p' d='M0 50 L1000000 50'/></defs><text font-size='4'>\
              <textPath href='#p'>{}</textPath></text>",
-            "ab ".repeat(PAIRS)
-        ),
-    );
+            "ab ".repeat(pairs)
+        )
+    };
+    assert_linear("characters on a path", PAIRS, |pairs| {
+        text_work(Work::CodePoint, &body(pairs)).1
+    });
     assert_eq!(
-        inked(&glyphs),
+        inked(&text_work(Work::CodePoint, &body(PAIRS)).0),
         "ab".repeat(PAIRS),
         "every character lies on the path"
     );
@@ -1923,18 +1945,20 @@ fn long_svg_text_on_a_path_is_positioned_in_linear_time() {
 
 #[test]
 fn ellipsized_svg_text_hides_its_overflow_in_linear_time() {
-    // Measuring what is left after hiding each character takes time quadratic in the text.
-    const WORDS: usize = 20_000;
+    // Measuring what is left after hiding each character takes work quadratic in the text.
+    const WORDS: usize = 1000;
     const ELLIPSIS: char = '\u{2026}';
-    let glyphs = text_glyphs_within(
-        &format!("a line of {WORDS} words"),
+    let body = |words: usize| {
         format!(
             "<text x='0' y='20' font-size='10' style='inline-size:100px;\
              text-overflow:ellipsis;white-space:nowrap;overflow:hidden'>{}</text>",
-            "word ".repeat(WORDS)
-        ),
-    );
-    let shown = inked(&glyphs);
+            "word ".repeat(words)
+        )
+    };
+    assert_linear("a line of words", WORDS, |words| {
+        text_work(Work::HiddenAdvance, &body(words)).1
+    });
+    let shown = inked(&text_work(Work::HiddenAdvance, &body(WORDS)).0);
     assert!(
         shown.ends_with(ELLIPSIS) && shown.starts_with("wordword"),
         "CSS Overflow 4 §4.1: the words that fit the line then an ellipsis show, got {shown:?}"

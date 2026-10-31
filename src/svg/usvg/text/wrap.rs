@@ -9,6 +9,7 @@ use unicode_linebreak::BreakOpportunity;
 
 use super::layout::{self, FontsCache};
 use crate::style::TextOverflow;
+use crate::svg::usvg::work::{self, Work};
 use crate::svg::usvg::{
     FontProvider, NonZeroRect, Strut, Text, TextAnchor, TextChunk, TextFlow, WrapWidth, Wrapping,
     WritingMode,
@@ -532,7 +533,14 @@ impl<'a> Paragraph<'a> {
             .collect();
         // The width left as each character is hidden, in double precision so that neither the
         // sum nor the subtractions drift.
-        let width_of = |range| self.advances_in(range).map(f64::from).sum::<f64>();
+        let width_of = |range| {
+            self.advances_in(range)
+                .map(|advance| {
+                    work::count(Work::HiddenAdvance, 1);
+                    f64::from(advance)
+                })
+                .sum::<f64>()
+        };
         let room = f64::from(room);
         let mut width = width_of(kept.clone());
         if logical_end {

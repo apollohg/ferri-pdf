@@ -2033,6 +2033,7 @@ fn has_text_nodes(root: &Group) -> bool {
 /// resource once however many nodes share it.
 fn for_each_node(group: &Group, entered: &mut HashSet<*const Group>, f: &mut dyn FnMut(&Node)) {
     for node in &group.children {
+        crate::svg::usvg::work::count(crate::svg::usvg::work::Work::Visit, 1);
         f(node);
         node.subroots(|subroot| {
             if entered.insert(std::ptr::from_ref(subroot)) {

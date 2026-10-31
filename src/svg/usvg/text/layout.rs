@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use std::collections::HashMap;
+
+use crate::svg::usvg::work::{self, Work};
 use std::num::NonZeroU16;
 use std::sync::Arc;
 
@@ -3047,6 +3049,7 @@ fn shape_text_with_font(
                     }
                     buffer.guess_segment_properties();
 
+                    work::count(Work::ShapedByte, sub_text.len());
                     let output = rustybuzz::shape(&rb_font, &shaper_features, buffer);
 
                     let positions = output.glyph_positions();
@@ -3431,11 +3434,14 @@ struct CodePoints(Vec<usize>);
 
 impl CodePoints {
     fn of(text: &str) -> Self {
-        Self(text.char_indices().map(|(start, _)| start).collect())
+        let starts: Vec<usize> = text.char_indices().map(|(start, _)| start).collect();
+        work::count(Work::CodePoint, starts.len());
+        Self(starts)
     }
 
     /// The code point position of `index`, a character boundary.
     fn at(&self, index: ByteIndex) -> usize {
+        work::count(Work::CodePoint, 1);
         self.0.partition_point(|&start| start < index.value())
     }
 }

@@ -74,6 +74,7 @@ and can focus just on the rendering part.
 mod parser;
 mod text;
 mod tree;
+pub(crate) mod work;
 
 pub(crate) use parser::*;
 pub(crate) use text::*;
