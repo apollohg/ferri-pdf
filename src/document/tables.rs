@@ -77,7 +77,8 @@ fn wrap_runs<T: Content>(
     anonymous: &impl Fn(Display, Vec<T>) -> T,
     wraps: impl Fn(&T) -> bool,
 ) -> Vec<T> {
-    let mut output = Vec::new();
+    // Formatted boxes keep this as their children, so it holds no spare capacity.
+    let mut output = Vec::with_capacity(children.len());
     let mut pending = Vec::new();
     let flush = |pending: &mut Vec<T>, output: &mut Vec<T>| {
         if !pending.is_empty() {
