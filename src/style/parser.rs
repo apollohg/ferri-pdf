@@ -95,6 +95,11 @@ pub(super) struct ImportRule {
 }
 pub(super) enum ContentRule {
     Style(Vec<RuleSelector>, Vec<Declaration>),
+    /// A style rule of a user-agent sheet, whose declarations are parsed once per process.
+    ParsedStyle(
+        Vec<RuleSelector>,
+        Vec<crate::style::declaration::PropertyDeclaration>,
+    ),
     Page {
         selectors: crate::style::page_rules::PageSelectors,
         items: Vec<crate::style::page_parser::PageItem>,
@@ -220,7 +225,9 @@ impl RuleSource {
                         | Rule::LayerStatement(_)
                         | Rule::CustomMedia(..)
                         | Rule::Inert => {}
-                        Rule::Content(ContentRule::FeatureValues { .. }) => {}
+                        Rule::Content(
+                            ContentRule::FeatureValues { .. } | ContentRule::ParsedStyle(..),
+                        ) => {}
                     }
                 }
                 Ok(rules)

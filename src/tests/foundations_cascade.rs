@@ -178,6 +178,46 @@ fn origin_importance_inline_and_hints_share_cascade() {
 }
 
 #[test]
+fn the_user_agent_sheet_is_prepared_once_for_every_render_on_every_thread() {
+    // Each thread counts its own work, so a sheet prepared per render or per thread shows up
+    // in the sum; one shared by the process is prepared once at most, or already was.
+    const RENDERS: usize = 3;
+    const THREADS: usize = 2;
+    let html = "<!doctype html><h1>Heading</h1><p>Text</p>";
+    let renders: Vec<_> = (0..THREADS)
+        .map(|_| {
+            std::thread::spawn(move || {
+                crate::work::measured(crate::work::Work::UserAgentSheet, || {
+                    (0..RENDERS)
+                        .map(|_| {
+                            let trace = render_html(html, &local_options())
+                                .expect("render")
+                                .layout
+                                .expect("layout requested");
+                            (trace.pages[0][0].font_size, trace.pages[0][1].font_size)
+                        })
+                        .collect::<Vec<_>>()
+                })
+            })
+        })
+        .collect();
+    let mut prepared = 0;
+    for render in renders {
+        let (sizes, work) = render.join().expect("render thread");
+        prepared += work;
+        for (heading, text) in sizes {
+            assert_pt(heading, 24.0);
+            assert_pt(text, 12.0);
+        }
+    }
+    assert!(
+        prepared <= 1,
+        "{} renders on {THREADS} threads prepared the user-agent sheets {prepared} times",
+        RENDERS * THREADS
+    );
+}
+
+#[test]
 fn important_ua_rules_outrank_user_and_author_important_rules() {
     let target = style(
         "form{display:block!important}",

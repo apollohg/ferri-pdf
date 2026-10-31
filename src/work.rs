@@ -41,10 +41,12 @@ pub(crate) enum Work {
     RuleCandidate,
     /// A pseudo-element whose style computes.
     PseudoStyle,
+    /// A user-agent style sheet parsed and prepared.
+    UserAgentSheet,
 }
 
 #[cfg(test)]
-const KINDS: usize = 18;
+const KINDS: usize = 19;
 
 #[cfg(test)]
 thread_local! {

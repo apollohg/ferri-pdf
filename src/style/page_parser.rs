@@ -10,11 +10,25 @@ use cssparser::{
 };
 use std::cell::RefCell;
 
-pub(super) enum PageItem {
-    Declaration(Declaration),
-    Margin(MarginLocation, Vec<Declaration>),
+pub(super) enum PageItem<D = Declaration> {
+    Declaration(D),
+    Margin(MarginLocation, Vec<D>),
     /// `@footnote`, the page's footnote area (CSS GCPM 3 §2.4).
-    Footnote(Vec<Declaration>),
+    Footnote(Vec<D>),
+}
+impl<D> PageItem<D> {
+    /// This item with each of its declarations converted by `convert`.
+    pub(super) fn map<E>(&self, mut convert: impl FnMut(&D) -> E) -> PageItem<E> {
+        match self {
+            Self::Declaration(declaration) => PageItem::Declaration(convert(declaration)),
+            Self::Margin(location, declarations) => {
+                PageItem::Margin(*location, declarations.iter().map(convert).collect())
+            }
+            Self::Footnote(declarations) => {
+                PageItem::Footnote(declarations.iter().map(convert).collect())
+            }
+        }
+    }
 }
 /// The at-rules a page context holds.
 pub(super) enum PageArea {

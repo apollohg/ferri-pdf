@@ -687,32 +687,29 @@ impl Stylesheet {
         {
             let layer = sheet.layers.id(node);
             let namespace = sheet.font_namespace(tree_scope);
+            let style_rule = |selectors, declarations: Vec<PropertyDeclaration>| StyleRule {
+                selectors,
+                scope,
+                container,
+                tree_context: crate::style::selector::tree_context(origin, tree_scope),
+                encapsulation_order,
+                declarations: declarations
+                    .into_iter()
+                    .map(|mut declaration| {
+                        declaration.origin = origin;
+                        declaration.layer = layer;
+                        declaration
+                    })
+                    .collect(),
+            };
             match rule {
                 ContentRule::Style(selectors, declarations) => {
-                    let index = sheet.rules.len();
-                    for selector in &selectors {
-                        sheet.rule_maps[selector.target_index()].insert(index, selector, container);
-                    }
-                    sheet.rules.push(StyleRule {
-                        selectors,
-                        scope,
-                        container,
-                        tree_context: crate::style::selector::tree_context(origin, tree_scope),
-                        encapsulation_order,
-                        declarations: parsed(
-                            declarations,
-                            &source_base,
-                            &sheet.diagnostics,
-                            namespace,
-                        )
-                        .into_iter()
-                        .map(|mut declaration| {
-                            declaration.origin = origin;
-                            declaration.layer = layer;
-                            declaration
-                        })
-                        .collect(),
-                    });
+                    let declarations =
+                        parsed(declarations, &source_base, &sheet.diagnostics, namespace);
+                    sheet.push_rule(style_rule(selectors, declarations));
+                }
+                ContentRule::ParsedStyle(selectors, declarations) => {
+                    sheet.push_rule(style_rule(selectors, declarations));
                 }
                 // CSS Paged Media 3 §3: page rules style page boxes, which continuous media lacks.
                 ContentRule::Page { .. }
@@ -866,6 +863,14 @@ impl Stylesheet {
             })
             .collect();
         sheet
+    }
+
+    fn push_rule(&mut self, rule: StyleRule) {
+        let index = self.rules.len();
+        for selector in &rule.selectors {
+            self.rule_maps[selector.target_index()].insert(index, selector, rule.container);
+        }
+        self.rules.push(rule);
     }
 
     /// The declarations of a `@position-try` rule (CSS Anchor Positioning 1 §6.4): only

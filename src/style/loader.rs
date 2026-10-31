@@ -12,11 +12,14 @@ use crate::style::{
     media::MediaQuery,
     parser::{ContentRule, ImportRule, Rule, rules},
     print::{Presentation, PrintEnvironment},
+    selector::NamespaceMap,
+    user_agent_sheet::{SharedRule, UserAgentSheet},
 };
 use std::{
     cell::RefCell,
     collections::{BTreeMap, HashMap},
-    sync::Arc,
+    rc::Rc,
+    sync::{Arc, LazyLock},
 };
 
 pub(super) const MAX_STYLESHEET_BYTES: usize = 64 * 1024 * 1024;
@@ -32,6 +35,7 @@ const DEPTH: &str = "import depth";
 const NESTING_WORK: &str = "stylesheet nesting work";
 const VISUAL_HEBREW_ENCODING: &str = "ISO-8859-8";
 const UA_SOURCE_ORDER: usize = 0;
+const USER_AGENT_ENCODING: &str = "UTF-8";
 
 pub(crate) struct DecodedStylesheet {
     pub text: String,
@@ -369,6 +373,43 @@ impl<'a> Loader<'a> {
                 ..
             } => (base, media, owner, fallback_encoding),
         };
+        let (context, slot) = self.context(base, media, *owner, encoding, origin, order)?;
+        match input {
+            StylesheetInput::Inline { text, .. } => {
+                if origin != Origin::UserAgent
+                    && let Err(error) = self.budget.bytes(text.len(), location(base))
+                {
+                    self.ignored(&error, IGNORED_STYLESHEET);
+                    return Ok(());
+                }
+                self.sheet(Arc::from(text.as_str()), &context);
+                Ok(())
+            }
+            StylesheetInput::External { reference, .. } => {
+                self.fetches.insert(
+                    context.order.clone(),
+                    Fetch {
+                        slot,
+                        reference: reference.clone(),
+                        location: location(base),
+                        context,
+                    },
+                );
+                Ok(())
+            }
+        }
+    }
+    /// The context of a style sheet with `base`, `media`, `owner` and fallback `encoding`, and
+    /// the slot of the alternative style sheet set it belongs to.
+    fn context(
+        &mut self,
+        base: &ResourceBase,
+        media: &str,
+        owner: Option<ElementId>,
+        encoding: &str,
+        origin: Origin,
+        order: Vec<usize>,
+    ) -> Result<(Context, Option<usize>), StyleError> {
         if owner.is_some_and(|owner| self.tree.element(owner).is_none()) {
             return Err(StyleError::Invalid(
                 "stylesheet owner belongs to another document".into(),
@@ -402,7 +443,7 @@ impl<'a> Loader<'a> {
             Some(self.condition(selection, None, RuleQuery::Media(MediaQuery::parse(media)?)));
         let context = Context {
             base: base.clone(),
-            encoding: encoding.clone(),
+            encoding: encoding.to_owned(),
             origin,
             scope,
             condition,
@@ -421,30 +462,47 @@ impl<'a> Loader<'a> {
                 owner.encapsulation_order()
             }),
         };
-        match input {
-            StylesheetInput::Inline { text, .. } => {
-                if origin != Origin::UserAgent
-                    && let Err(error) = self.budget.bytes(text.len(), location(base))
-                {
-                    self.ignored(&error, IGNORED_STYLESHEET);
-                    return Ok(());
-                }
-                self.sheet(Arc::from(text.as_str()), &context);
-                Ok(())
-            }
-            StylesheetInput::External { reference, .. } => {
-                self.fetches.insert(
-                    context.order.clone(),
-                    Fetch {
-                        slot,
-                        reference: reference.clone(),
-                        location: location(base),
-                        context,
-                    },
-                );
-                Ok(())
-            }
+        Ok((context, slot))
+    }
+    /// Adds the rules of user-agent `sheet` for a document whose base is `base`.
+    fn user_agent(
+        &mut self,
+        sheet: &UserAgentSheet,
+        base: &ResourceBase,
+        order: Vec<usize>,
+    ) -> Result<(), StyleError> {
+        let (context, _) = self.context(
+            base,
+            "",
+            None,
+            USER_AGENT_ENCODING,
+            Origin::UserAgent,
+            order,
+        )?;
+        let namespaces = Rc::new(RefCell::new(sheet.namespaces.clone()));
+        for (suffix, rule) in &sheet.rules {
+            let mut order = context.order.clone();
+            order.extend(suffix);
+            self.all.insert(
+                order,
+                PendingRule {
+                    kind: PendingKind::Content(rule.bind(
+                        base,
+                        &namespaces,
+                        &self.prepared.diagnostics,
+                    )),
+                    base: base.clone(),
+                    origin: context.origin,
+                    scope: context.scope,
+                    condition: context.condition,
+                    style_scope: None,
+                    container: None,
+                    tree_scope: context.tree_scope,
+                    encapsulation_order: context.encapsulation_order,
+                },
+            );
         }
+        Ok(())
     }
     /// Adds a stylesheet's rules. Past a stylesheet limit the rest of it is ignored: the
     /// rules before the limit apply.
@@ -1044,22 +1102,12 @@ pub(super) fn prepare_with_limits(
     let visual = sources
         .document_encoding
         .eq_ignore_ascii_case(VISUAL_HEBREW_ENCODING)
-        .then_some(include_str!("ua-visual.css"));
-    for (index, text) in std::iter::once(include_str!("ua.css"))
+        .then(|| &*VISUAL_USER_AGENT_SHEET);
+    for (index, sheet) in std::iter::once(&*USER_AGENT_SHEET)
         .chain(visual)
         .enumerate()
     {
-        loader.input(
-            &StylesheetInput::Inline {
-                text: text.into(),
-                base: sources.base.clone(),
-                media: String::new(),
-                owner: None,
-                fallback_encoding: "UTF-8".into(),
-            },
-            Origin::UserAgent,
-            vec![UA_SOURCE_ORDER, index],
-        )?;
+        loader.user_agent(sheet, &sources.base, vec![UA_SOURCE_ORDER, index])?;
     }
     let inputs = sources
         .user
@@ -1077,6 +1125,79 @@ pub(super) fn prepare_with_limits(
     }
     Ok(loader.finish())
 }
+static USER_AGENT_SHEET: LazyLock<UserAgentSheet> =
+    LazyLock::new(|| user_agent_sheet(include_str!("ua.css")));
+/// The sheet for documents in visual Hebrew, whose text is stored in display order.
+static VISUAL_USER_AGENT_SHEET: LazyLock<UserAgentSheet> =
+    LazyLock::new(|| user_agent_sheet(include_str!("ua-visual.css")));
+
+/// User-agent sheet `text`, parsed as every render would parse it. It holds only unconditional
+/// style and page rules and parses without diagnostics, so no render-specific state but what
+/// a render binds again enters it.
+fn user_agent_sheet(text: &str) -> UserAgentSheet {
+    crate::work::count(crate::work::Work::UserAgentSheet, 1);
+    let tree = DocumentTree::parse("");
+    let resolver = crate::resources::FileResolver::default();
+    let mut loader = Loader::new(
+        &tree,
+        &StylesheetSources::default(),
+        &resolver,
+        &PrintSettings::default(),
+        Presentation::Paged,
+        crate::document::encoding::stylesheet,
+        Limits::default(),
+    )
+    .expect("the default print environment is valid");
+    let order = vec![UA_SOURCE_ORDER];
+    loader
+        .input(
+            &StylesheetInput::Inline {
+                text: text.into(),
+                base: ResourceBase::default(),
+                media: String::new(),
+                owner: None,
+                fallback_encoding: USER_AGENT_ENCODING.into(),
+            },
+            Origin::UserAgent,
+            order.clone(),
+        )
+        .expect("a user-agent sheet has no owner");
+    assert!(
+        loader.prepared.diagnostics.borrow().is_empty()
+            && loader.prepared.style_scopes.is_empty()
+            && loader.prepared.container_rules.is_empty()
+            && loader.prepared.scopes.len() == 1
+            && loader.prepared.conditions.len() == 1,
+        "a user-agent sheet is valid and holds no conditional, scoped or layered rules: {:?}",
+        loader.prepared.diagnostics.borrow()
+    );
+    let mut namespaces = None;
+    let rules = std::mem::take(&mut loader.all)
+        .into_iter()
+        .map(|(key, rule)| {
+            let PendingKind::Content(content) = rule.kind else {
+                unreachable!("a user-agent sheet has no layers")
+            };
+            if let ContentRule::Style(_, declarations) = &content
+                && namespaces.is_none()
+            {
+                namespaces = declarations
+                    .iter()
+                    .find_map(|declaration| declaration.namespaces.clone());
+            }
+            let rule = SharedRule::of(content)
+                .expect("a user-agent sheet holds only style and page rules");
+            (key[order.len()..].to_vec(), rule)
+        })
+        .collect();
+    UserAgentSheet {
+        rules,
+        namespaces: namespaces.map_or_else(NamespaceMap::default, |namespaces| {
+            namespaces.borrow().clone()
+        }),
+    }
+}
+
 #[cfg(test)]
 pub(super) fn inline(
     author: &[crate::style::StylesheetSource],
