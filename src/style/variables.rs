@@ -938,8 +938,12 @@ impl Resolver {
         })
     }
 
+    /// The declared names, sorted so that they compute, and recascade, in the same order on
+    /// every run.
     pub(super) fn names(&self) -> Vec<String> {
-        self.values.borrow().keys().cloned().collect()
+        let mut names: Vec<String> = self.values.borrow().keys().cloned().collect();
+        names.sort_unstable();
+        names
     }
 
     #[expect(
