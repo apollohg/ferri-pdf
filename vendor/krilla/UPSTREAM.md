@@ -48,4 +48,9 @@ The local patch changes these source files:
   pair by bisection, nesting logarithmically, instead of a linear `ifelse` chain that
   upstream limits by resampling to 97 stops; every stop is kept.
 
+- `content.rs`, `graphics/graphics_state.rs` and `graphics/shading_function.rs`: content
+  whose transform takes it beyond finite coordinates no longer panics. It adds nothing to
+  its stream's bounding box, a clip path transformed that way clips everything, and a
+  shading with a degenerate transform covers only the box it fills.
+
 Canvas allocation uses checked arithmetic. Every other recorded upstream file matches the registry package.

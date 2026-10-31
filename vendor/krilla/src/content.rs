@@ -244,7 +244,10 @@ impl ContentBuilder {
     }
 
     pub(crate) fn expand_bbox(&mut self, new_bbox: Rect) {
-        let new_bbox = self.graphics_states.transform_bbox(new_bbox);
+        // Content transformed beyond finite coordinates covers no finite area.
+        let Some(new_bbox) = self.graphics_states.transform_bbox(new_bbox) else {
+            return;
+        };
         if let Some(bbox) = &mut self.bbox {
             bbox.expand(&new_bbox);
         } else {
@@ -420,12 +423,16 @@ impl ContentBuilder {
 
     pub(crate) fn push_clip_path(&mut self, path: &Path, clip_rule: &FillRule) {
         self.content_save_state();
-        self.content_draw_path(
-            path.clone()
-                .transform(self.cur_transform_with_root_transform().to_tsp())
-                .unwrap()
-                .segments(),
-        );
+        match path
+            .clone()
+            .transform(self.cur_transform_with_root_transform().to_tsp())
+        {
+            Some(path) => self.content_draw_path(path.segments()),
+            // A clip path transformed beyond finite coordinates clips everything.
+            None => {
+                self.content.rect(0.0, 0.0, 0.0, 0.0);
+            }
+        }
 
         match clip_rule {
             FillRule::NonZero => self.content.clip_nonzero(),

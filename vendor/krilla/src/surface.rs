@@ -516,6 +516,11 @@ impl<'a> Surface<'a> {
             .push(ContentBuilder::new(Transform::identity(), true, self.sc));
     }
 
+    /// The number of `push` instructions not yet popped.
+    pub fn push_depth(&self) -> usize {
+        self.push_instructions.len()
+    }
+
     /// Pop the last `push` instruction.
     ///
     /// # Panics
@@ -634,6 +639,10 @@ impl<'a> Surface<'a> {
 
 impl Drop for Surface<'_> {
     fn drop(&mut self) {
+        // Pushes a drawing interrupted by an error left open close as `pop` closes them.
+        while !self.push_instructions.is_empty() {
+            self.pop();
+        }
         let root_builder = std::mem::replace(
             &mut self.bd.root_builder,
             ContentBuilder::new(Transform::identity(), false, self.sc),
@@ -644,7 +653,6 @@ impl Drop for Surface<'_> {
         };
 
         assert!(self.bd.sub_builders.is_empty());
-        assert!(self.push_instructions.is_empty());
         assert!(!root_builder.active_marked_content);
 
         (self.finish_fn)(root_builder.finish(self.sc), num_mcids)

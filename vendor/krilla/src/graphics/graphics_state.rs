@@ -241,11 +241,12 @@ impl GraphicsStates {
         self.cur_mut().concat_transform(transform);
     }
 
-    pub(crate) fn transform_bbox(&self, bbox: Rect) -> Rect {
+    /// `None` where the transform takes the box beyond finite coordinates.
+    pub(crate) fn transform_bbox(&self, bbox: Rect) -> Option<Rect> {
         // Important: This does not take the root transform of the
         // corresponding ContentBuilder into account, because we
         // want it to be in krilla coordinates, not in PDF
         // coordinates.
-        bbox.transform(self.cur().transform()).unwrap()
+        bbox.transform(self.cur().transform())
     }
 }

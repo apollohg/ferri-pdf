@@ -112,7 +112,13 @@ fn get_expanded_bbox(mut bbox: Rect, shading_transform: Transform) -> Rect {
     // We need to make sure the shading covers the whole bbox of the object after
     // the transform as been applied. In order to know that, we need to calculate the
     // resulting bbox from the inverted transform.
-    bbox.expand(&bbox.transform(shading_transform.invert().unwrap()).unwrap());
+    // A degenerate shading transform maps no area the bbox must also cover.
+    if let Some(covered) = shading_transform
+        .invert()
+        .and_then(|inverse| bbox.transform(inverse))
+    {
+        bbox.expand(&covered);
+    }
     bbox
 }
 
