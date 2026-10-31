@@ -236,7 +236,6 @@ fn prepare_document(
         DocumentError::Resource(error) => Error::Css(StyleError::Resource(error)),
         DocumentError::Image(error) => Error::Image(error),
         DocumentError::Formatting(message) => Error::Document(message),
-        error @ DocumentError::TextExpansionLimit { .. } => Error::Document(error.to_string()),
     })?;
     let (document, trace) =
         layout::layout_document(document, resolver).map_err(|error| match error {

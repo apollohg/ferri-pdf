@@ -585,7 +585,7 @@ impl<'b> Builder<'b, '_> {
         let mut inline = crate::document::inline::InlineCollector::default();
         let decoration = self.resources.backgrounds(text_style);
         inline.open_box(text_style, decoration, Default::default(), false);
-        inline.append(if text.is_empty() { EMPTY_LINE } else { text }, text_style)?;
+        inline.append(if text.is_empty() { EMPTY_LINE } else { text }, text_style);
         inline.close_box();
         let children = match inline.finish(line)? {
             Ok(mut paragraph) => {
@@ -864,7 +864,7 @@ impl<'b> Builder<'b, '_> {
         if style.position.is_out_of_flow() || style.floating().is_some() {
             inline.anchor(button);
         } else if style.display.is_inline_level() {
-            inline.atomic(button, self.style)?;
+            inline.atomic(button, self.style);
         } else {
             return Ok(ControlContent {
                 image: None,

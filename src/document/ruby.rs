@@ -292,7 +292,7 @@ impl RubyStack {
             }
             // White space before the content begins the base or annotation it opens.
             if let Some((text, style)) = ruby.whitespace.take() {
-                inline.append(&text, &style)?;
+                inline.append(&text, &style);
             }
             return Ok(());
         }
@@ -356,11 +356,11 @@ impl RubyStack {
         let style = Arc::new(style.clone());
         match display {
             Display::RubyBase => {
-                ruby.classify(inline, Kind::Base)?;
+                ruby.classify(inline, Kind::Base);
                 ruby.open_base(inline, Some((style, decoration, navigation)))?;
             }
             Display::RubyText => {
-                ruby.classify(inline, Kind::Annotation)?;
+                ruby.classify(inline, Kind::Annotation);
                 while ruby
                     .parts
                     .last()
@@ -384,7 +384,7 @@ impl RubyStack {
                 inline.open_box(&element, decoration, navigation, false);
             }
             Display::RubyTextContainer => {
-                ruby.classify(inline, Kind::Level)?;
+                ruby.classify(inline, Kind::Level);
                 ruby.close_anonymous(inline)?;
                 ruby.parts.push(Part::Level {
                     explicit: true,
@@ -397,7 +397,7 @@ impl RubyStack {
                 ruby.previous = None;
             }
             Display::RubyBaseContainer => {
-                ruby.classify(inline, Kind::BaseContainer)?;
+                ruby.classify(inline, Kind::BaseContainer);
                 ruby.close_anonymous(inline)?;
                 ruby.end_segment(inline);
                 ruby.parts.push(Part::BaseContainer {
@@ -469,7 +469,7 @@ impl RubyStack {
         if let Some((text, style)) = trailing
             && !self.text(inline, &text, &style)?
         {
-            inline.append(&text, &style)?;
+            inline.append(&text, &style);
         }
         Ok(())
     }
@@ -523,9 +523,9 @@ impl OpenRuby {
     /// Classifies pending intra-ruby white space before a box of kind `next` (§2.2): leading,
     /// inter-level and other discarded white space goes, inter-base and inter-segment white
     /// space joins the base level, and inter-annotation white space its level.
-    fn classify(&mut self, inline: &mut InlineCollector, next: Kind) -> Result<(), DocumentError> {
+    fn classify(&mut self, inline: &mut InlineCollector, next: Kind) {
         let Some((text, style)) = self.whitespace.take() else {
-            return Ok(());
+            return;
         };
         match (self.previous, next) {
             (None, _) | (_, Kind::Level) => {}
@@ -547,10 +547,9 @@ impl OpenRuby {
                     self.close_anonymous_level();
                     self.end_segment(inline);
                 }
-                inline.append(&text, &style)?;
+                inline.append(&text, &style);
             }
         }
-        Ok(())
     }
 
     /// Closes an anonymous annotation container that the next base ends.

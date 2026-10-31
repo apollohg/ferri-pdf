@@ -95,7 +95,7 @@ fn annotation_copy(
         .annotation_block_mut(index)
         .annotation_contents_mut()
         .expect("an annotation box with a first-line source has contents");
-    let mut copy = source.restyled((root.clone(), spans, contents_boxes.clone()), contents)?;
+    let mut copy = source.restyled((root.clone(), spans, contents_boxes.clone()), contents);
     for nested in 0..copy.annotations().len() {
         let Some(source) = copy.annotation_block_mut(nested).take_annotation_source() else {
             continue;

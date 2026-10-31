@@ -1,7 +1,7 @@
 //! HTML loading, stylesheet discovery, and styled document construction.
 mod content;
 mod controls;
-mod counters;
+pub(crate) mod counters;
 mod element_images;
 mod embedded;
 pub(crate) mod encoding;
@@ -59,8 +59,6 @@ pub(crate) enum DocumentError {
     Resource(#[from] ResourceError),
     #[error("{0}")]
     Formatting(String),
-    #[error("formatted inline text exceeds {limit} bytes")]
-    TextExpansionLimit { limit: usize },
 }
 
 /// Recoverable input/source diagnostics retained with the rendering result.

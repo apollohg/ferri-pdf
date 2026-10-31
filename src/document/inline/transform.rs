@@ -1,5 +1,4 @@
 use super::{MAX_INLINE_TEXT_BYTES, Paragraph};
-use crate::document::DocumentError;
 use crate::style::{TextCase, TextTransform};
 use icu_casemap::{CaseMapper, ContextCase};
 use icu_locale_core::LanguageIdentifier;
@@ -192,29 +191,33 @@ pub(crate) fn transform_text(
     Some((output.0, units))
 }
 
-/// Applies the spans' `text-transform`, returning the output range of each source character
-/// where `record` asks for it.
-pub(super) fn apply(
-    paragraph: &mut Paragraph,
-    record: bool,
-) -> Result<Vec<Range<usize>>, DocumentError> {
+/// The output range of each source character of a paragraph left as it is, where `record`
+/// asks for them.
+fn unchanged(paragraph: &Paragraph, record: bool) -> Vec<Range<usize>> {
     let mut units = Vec::new();
+    if record {
+        for span in &paragraph.spans {
+            units.extend(paragraph.text[span.range.clone()].char_indices().map(
+                |(relative, ch)| {
+                    let start = span.range.start + relative;
+                    start..start + ch.len_utf8()
+                },
+            ));
+        }
+    }
+    units
+}
+
+/// Applies the spans' `text-transform`, returning the output range of each source character
+/// where `record` asks for it. A transform that would expand the text past the paragraph's
+/// limit leaves it untransformed, and the paragraph records that its text was limited.
+pub(super) fn apply(paragraph: &mut Paragraph, record: bool) -> Vec<Range<usize>> {
     if paragraph
         .spans
         .iter()
         .all(|span| span.style.text_transform == TextTransform::default())
     {
-        if record {
-            for span in &paragraph.spans {
-                units.extend(paragraph.text[span.range.clone()].char_indices().map(
-                    |(relative, ch)| {
-                        let start = span.range.start + relative;
-                        start..start + ch.len_utf8()
-                    },
-                ));
-            }
-        }
-        return Ok(units);
+        return unchanged(paragraph, record);
     }
     let runs: Vec<CaseRun<'_>> = paragraph
         .spans
@@ -227,10 +230,11 @@ pub(super) fn apply(
             single_character: span.single_character_source,
         })
         .collect();
-    let (output, units) =
-        transform_text(&paragraph.text, &runs).ok_or(DocumentError::TextExpansionLimit {
-            limit: MAX_INLINE_TEXT_BYTES,
-        })?;
+    let Some((output, units)) = transform_text(&paragraph.text, &runs) else {
+        drop(runs);
+        paragraph.text_limited = true;
+        return unchanged(paragraph, record);
+    };
     // The source offset of each unit, ascending as the spans are.
     let sources: Vec<usize> = runs
         .iter()
@@ -294,7 +298,7 @@ pub(super) fn apply(
     }
     paragraph.spans.retain(|span| !span.range.is_empty());
     paragraph.text = output;
-    Ok(if record { units } else { Vec::new() })
+    if record { units } else { Vec::new() }
 }
 
 fn language(value: &str) -> LanguageIdentifier {

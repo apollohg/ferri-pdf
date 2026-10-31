@@ -327,3 +327,32 @@ fn the_document_past_its_work_budget_is_left_out_and_reported() {
         "the content past the budget is left out: {kept:?}"
     );
 }
+
+#[test]
+fn a_text_transform_expanding_past_the_paragraph_limit_is_left_unapplied_and_reported() {
+    // Uppercasing this two-byte letter writes three two-byte characters (Unicode
+    // SpecialCasing), so its text fits the limit but its transform does not.
+    const LETTER: char = '\u{390}';
+    const EXPANSION: usize = 3;
+    let letters = crate::document::MAX_INLINE_TEXT_BYTES / (LETTER.len_utf8() * EXPANSION) + 1;
+    let html = format!(
+        "<p style='text-transform:uppercase'>{}</p>",
+        LETTER.to_string().repeat(letters)
+    );
+    let document = parse(&html, crate::document::MAX_FORMATTING_WORK)
+        .unwrap_or_else(|error| panic!("an over-expanding transform must not fail: {error}"));
+    assert!(
+        document.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::document::DocumentDiagnostic::FormattingLimit { limit, .. }
+                if *limit == crate::document::MAX_INLINE_TEXT_BYTES
+        )),
+        "the limited text is reported: {:?}",
+        document.diagnostics
+    );
+    let texts = texts(document.root());
+    assert!(
+        texts.len() == 1 && texts[0].chars().all(|ch| ch == LETTER),
+        "the paragraph keeps its untransformed text"
+    );
+}

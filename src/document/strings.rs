@@ -136,7 +136,7 @@ impl StringAssignments {
                 Ok(PendingValue {
                     name: assignment.name.clone(),
                     content: assignment.content.clone(),
-                    counters: counters.snapshot(&assignment.content)?,
+                    counters: counters.snapshot(&assignment.content),
                 })
             })
             .collect::<Result<_, StyleError>>()?;

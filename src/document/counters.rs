@@ -9,8 +9,8 @@ use std::{
     sync::Arc,
 };
 
-const MAX_COUNTER_WORK: usize = 10_000_000;
-const COUNTER_WORK_RESOURCE: &str = "counter evaluation work";
+pub(crate) const MAX_COUNTER_WORK: usize = 10_000_000;
+pub(crate) const COUNTER_WORK_RESOURCE: &str = "counter evaluation work";
 
 #[derive(Clone)]
 struct Counter {
@@ -93,15 +93,15 @@ impl Counters {
             page_resets: Vec::new(),
         }
     }
-    fn charge(&mut self, amount: usize) -> Result<(), StyleError> {
+    /// Charges `amount` units of counter work; false once the budget is spent, past which
+    /// counters are no longer created, updated or inherited, and read as zero.
+    fn charge(&mut self, amount: usize) -> bool {
         self.work.set(self.work.get().saturating_add(amount));
-        if self.work.get() > MAX_COUNTER_WORK {
-            return Err(StyleError::GrammarLimit {
-                resource: COUNTER_WORK_RESOURCE,
-                limit: MAX_COUNTER_WORK,
-            });
-        }
-        Ok(())
+        !self.exhausted()
+    }
+    /// Whether counter evaluation ran out of work.
+    pub(crate) fn exhausted(&self) -> bool {
+        self.work.get() > MAX_COUNTER_WORK
     }
     pub(crate) fn enter(
         &mut self,
@@ -110,7 +110,7 @@ impl Counters {
         display: &Display,
         scoping: bool,
     ) -> Result<(), StyleError> {
-        self.inherit(target, scoping)?;
+        self.inherit(target, scoping);
         self.apply(target, properties, display)
     }
     /// Enters an element where pages start: pages starting at it start with the counters it
@@ -124,10 +124,11 @@ impl Counters {
         starts: &[crate::document::PageStart],
         snapshots: &mut Vec<(usize, CounterSnapshot)>,
     ) -> Result<(), StyleError> {
-        self.inherit(target, scoping)?;
-        self.start_pages(starts.iter().filter(|start| !start.inside), snapshots)?;
+        self.inherit(target, scoping);
+        self.start_pages(starts.iter().filter(|start| !start.inside), snapshots);
         self.apply(target, properties, display)?;
-        self.start_pages(starts.iter().filter(|start| start.inside), snapshots)
+        self.start_pages(starts.iter().filter(|start| start.inside), snapshots);
+        Ok(())
     }
     /// Applies each page context's changes to the footnote counter where its page starts (CSS
     /// GCPM 3 §2.5.2) and records the document's counters there, which page-margin boxes see
@@ -136,10 +137,10 @@ impl Counters {
         &mut self,
         starts: impl Iterator<Item = &'s crate::document::PageStart>,
         snapshots: &mut Vec<(usize, CounterSnapshot)>,
-    ) -> Result<(), StyleError> {
+    ) {
         for start in starts {
             for reset in start.footnote.reset.iter() {
-                let counter = self.updated(reset.name.clone())?;
+                let counter = self.updated(reset.name.clone());
                 for open in self
                     .page_resets
                     .iter_mut()
@@ -164,23 +165,23 @@ impl Counters {
                 });
                 counter.set(value);
             }
-            self.update(&start.footnote)?;
+            self.update(&start.footnote);
             snapshots.push((start.page, self.capture()));
         }
-        self.update_previous()
+        self.update_previous();
     }
     /// Applies the increments, then the sets, of `properties` to the counters they update,
     /// which the page resets of those counters accumulate.
-    fn update(&mut self, properties: &CounterProperties) -> Result<(), StyleError> {
+    fn update(&mut self, properties: &CounterProperties) {
         let mut increments = Vec::new();
         for change in properties.increment.iter() {
-            let value = self.updated(change.name.clone())?;
+            let value = self.updated(change.name.clone());
             value.set(value.get().saturating_add(change.value));
             increments.push((value, change.value));
         }
         let mut sets = Vec::new();
         for change in properties.set.iter() {
-            let value = self.updated(change.name.clone())?;
+            let value = self.updated(change.name.clone());
             value.set(change.value);
             sets.push((value, change.value));
         }
@@ -202,7 +203,6 @@ impl Counters {
                 );
             }
         }
-        Ok(())
     }
     /// The initial value each page context's reset without one gives the counter it resets, as
     /// a reversed counter, by page.
@@ -239,7 +239,7 @@ impl Counters {
                             StyleError::Invalid("automatic counter values were not prepared".into())
                         })?,
                 };
-                self.instantiate(change.name.clone(), value, change.reversed, automatic)?;
+                self.instantiate(change.name.clone(), value, change.reversed, automatic);
             }
             let implicit = if display.is_list_item()
                 && !properties
@@ -267,34 +267,39 @@ impl Counters {
                 None
             };
             if self.collecting {
-                self.track_updates(properties, implicit)?;
+                self.track_updates(properties, implicit);
             }
             if let Some(increment) = implicit {
-                let value = self.updated(Arc::from(LIST_ITEM_COUNTER))?;
+                let value = self.updated(Arc::from(LIST_ITEM_COUNTER));
                 value.set(value.get().saturating_add(increment));
             }
-            self.update(properties)?;
+            self.update(properties);
         }
-        self.update_previous()?;
+        self.update_previous();
         Ok(())
     }
-    fn inherit(&mut self, target: PageStyleTarget, scoping: bool) -> Result<(), StyleError> {
+    fn inherit(&mut self, target: PageStyleTarget, scoping: bool) {
         let count = self.frames.last().map_or(0, |parent| {
             parent.sibling.as_ref().unwrap_or(&parent.counters).len()
         });
-        self.charge(count.saturating_mul(self.previous.len()))?;
-        let counters = self.frames.last().map_or_else(Vec::new, |parent| {
-            let source = parent.sibling.as_ref().unwrap_or(&parent.counters);
-            self.previous
-                .iter()
-                .filter(|counter| {
-                    source.iter().any(|candidate| {
-                        counter.name == candidate.name && counter.creator == candidate.creator
-                    })
-                })
-                .cloned()
-                .collect()
-        });
+        let counters = if self.charge(count.saturating_add(self.previous.len())) {
+            self.frames.last().map_or_else(Vec::new, |parent| {
+                let source: HashSet<(&str, PageStyleTarget)> = parent
+                    .sibling
+                    .as_ref()
+                    .unwrap_or(&parent.counters)
+                    .iter()
+                    .map(|candidate| (candidate.name.as_ref(), candidate.creator))
+                    .collect();
+                self.previous
+                    .iter()
+                    .filter(|counter| source.contains(&(counter.name.as_ref(), counter.creator)))
+                    .cloned()
+                    .collect()
+            })
+        } else {
+            Vec::new()
+        };
         let scope = self
             .frames
             .last()
@@ -306,7 +311,6 @@ impl Counters {
             scope,
             scoping,
         });
-        Ok(())
     }
     fn enter_scopes(
         &mut self,
@@ -314,20 +318,20 @@ impl Counters {
         scopes: &crate::style::CounterScopes,
         display: &Display,
         scoping: bool,
-    ) -> Result<(), StyleError> {
-        self.inherit(target, scoping)?;
+    ) {
+        self.inherit(target, scoping);
         if !matches!(display, Display::None | Display::Contents) {
             for name in &scopes.reset {
-                self.instantiate(name.clone(), INITIAL_COUNTER_VALUE, false, None)?;
+                self.instantiate(name.clone(), INITIAL_COUNTER_VALUE, false, None);
             }
             for name in &scopes.updates {
-                self.updated(name.clone())?;
+                self.updated(name.clone());
             }
             if display.is_list_item() {
-                self.updated(Arc::from(LIST_ITEM_COUNTER))?;
+                self.updated(Arc::from(LIST_ITEM_COUNTER));
             }
         }
-        self.update_previous()
+        self.update_previous();
     }
     fn enter_selected(
         &mut self,
@@ -341,16 +345,13 @@ impl Counters {
             return self.enter(target, &CounterProperties::default(), display, scoping);
         }
         if scopes_only {
-            self.enter_scopes(target, &styles.counter_scopes(target)?, display, scoping)
+            self.enter_scopes(target, &styles.counter_scopes(target)?, display, scoping);
+            Ok(())
         } else {
             self.enter(target, &styles.counters(target)?, display, scoping)
         }
     }
-    fn track_updates(
-        &mut self,
-        properties: &CounterProperties,
-        implicit: Option<i128>,
-    ) -> Result<(), StyleError> {
+    fn track_updates(&mut self, properties: &CounterProperties, implicit: Option<i128>) {
         let mut names: HashSet<Arc<str>> = properties
             .increment
             .iter()
@@ -367,7 +368,9 @@ impl Counters {
                 .saturating_add(properties.increment.len())
                 .saturating_add(properties.set.len()),
         );
-        self.charge(work)?;
+        if !self.charge(work) {
+            return;
+        }
         for name in names {
             let Some(initial) = self
                 .frames
@@ -401,7 +404,6 @@ impl Counters {
                 .map(|change| change.value);
             initial.borrow_mut().update(increment, set);
         }
-        Ok(())
     }
     pub(crate) fn leave(&mut self) {
         let frame = self
@@ -412,11 +414,11 @@ impl Counters {
             parent.sibling = Some(frame.counters);
         }
     }
-    fn update_previous(&mut self) -> Result<(), StyleError> {
+    fn update_previous(&mut self) {
         let count = self.frames.last().unwrap().counters.len();
-        self.charge(count)?;
-        self.previous = self.frames.last().unwrap().counters.clone();
-        Ok(())
+        if self.charge(count) {
+            self.previous = self.frames.last().unwrap().counters.clone();
+        }
     }
     fn instantiate(
         &mut self,
@@ -424,9 +426,11 @@ impl Counters {
         value: i128,
         reversed: bool,
         automatic: Option<Rc<RefCell<AutomaticInitial>>>,
-    ) -> Result<Rc<Cell<i128>>, StyleError> {
+    ) -> Rc<Cell<i128>> {
         let count = self.frames.last().unwrap().counters.len();
-        self.charge(count.saturating_add(1))?;
+        if !self.charge(count.saturating_add(1)) {
+            return Rc::new(Cell::new(value));
+        }
         let parent = self.frames.iter().rev().nth(1).map(|frame| frame.target);
         let frame = self.frames.last_mut().unwrap();
         if let Some(index) = frame
@@ -448,13 +452,15 @@ impl Counters {
             automatic,
             scope: frame.scope,
         });
-        Ok(value)
+        value
     }
     /// The counter an increment or set updates: the innermost of its name created inside the
     /// element's innermost style containment scope, or else a new one (CSS Containment 2
     /// §3.3). Reading counter values is not scoped.
-    fn updated(&mut self, name: Arc<str>) -> Result<Rc<Cell<i128>>, StyleError> {
-        self.charge(self.frames.last().unwrap().counters.len())?;
+    fn updated(&mut self, name: Arc<str>) -> Rc<Cell<i128>> {
+        if !self.charge(self.frames.last().unwrap().counters.len()) {
+            return Rc::new(Cell::new(INITIAL_COUNTER_VALUE));
+        }
         let frame = self.frames.last().unwrap();
         if let Some(counter) = frame
             .counters
@@ -463,12 +469,14 @@ impl Counters {
             .find(|counter| counter.name == name)
             .filter(|counter| counter.scope == frame.scope)
         {
-            return Ok(counter.value.clone());
+            return counter.value.clone();
         }
         self.instantiate(name, INITIAL_COUNTER_VALUE, false, None)
     }
-    fn value(&mut self, name: Arc<str>) -> Result<Rc<Cell<i128>>, StyleError> {
-        self.charge(self.frames.last().unwrap().counters.len())?;
+    fn value(&mut self, name: Arc<str>) -> Rc<Cell<i128>> {
+        if !self.charge(self.frames.last().unwrap().counters.len()) {
+            return Rc::new(Cell::new(INITIAL_COUNTER_VALUE));
+        }
         if let Some(counter) = self
             .frames
             .last()
@@ -478,24 +486,21 @@ impl Counters {
             .rev()
             .find(|counter| counter.name == name)
         {
-            return Ok(counter.value.clone());
+            return counter.value.clone();
         }
         self.instantiate(name, INITIAL_COUNTER_VALUE, false, None)
     }
-    pub(crate) fn ordinal(&mut self) -> Result<i128, StyleError> {
-        let value = self.value(Arc::from(LIST_ITEM_COUNTER))?.get();
-        self.update_previous()?;
-        Ok(value)
+    pub(crate) fn ordinal(&mut self) -> i128 {
+        let value = self.value(Arc::from(LIST_ITEM_COUNTER)).get();
+        self.update_previous();
+        value
     }
-    pub(crate) fn snapshot(
-        &mut self,
-        content: &crate::style::GeneratedContent,
-    ) -> Result<CounterSnapshot, StyleError> {
+    pub(crate) fn snapshot(&mut self, content: &crate::style::GeneratedContent) -> CounterSnapshot {
         for request in content.counter_requests() {
-            self.value(request.name.clone())?;
+            self.value(request.name.clone());
         }
-        self.update_previous()?;
-        Ok(self.capture())
+        self.update_previous();
+        self.capture()
     }
     pub(crate) fn capture(&self) -> CounterSnapshot {
         CounterSnapshot(
@@ -512,7 +517,7 @@ impl Counters {
         &mut self,
         request: &CounterRequest,
     ) -> Result<crate::style::Representation, StyleError> {
-        self.value(request.name.clone())?;
+        self.value(request.name.clone());
         let text = render_counter(
             request,
             self.frames
@@ -523,7 +528,7 @@ impl Counters {
                 .filter(|counter| counter.name == request.name)
                 .map(|counter| counter.value.get()),
         )?;
-        self.update_previous()?;
+        self.update_previous();
         Ok(text)
     }
 }
@@ -570,7 +575,7 @@ impl Counters {
         use crate::dom::TreeRelation;
         let mut events = vec![Some(element)];
         while let Some(event) = events.pop() {
-            self.charge(1)?;
+            self.charge(1);
             let Some(element) = event else {
                 self.leave();
                 continue;
@@ -584,7 +589,7 @@ impl Counters {
             visit(element, &assignments, self)?;
             events.push(None);
             for child in element.children(TreeRelation::Formatting).rev() {
-                self.charge(1)?;
+                self.charge(1);
                 events.push(Some(child));
             }
         }
@@ -622,7 +627,7 @@ impl Counters {
         let mut state = self;
         let mut events = vec![Event::Element(document.root_element(), None)];
         while let Some(event) = events.pop() {
-            state.charge(1)?;
+            state.charge(1);
             match event {
                 Event::Leave => state.leave(),
                 Event::Element(element, parent_display) => {
@@ -658,7 +663,7 @@ impl Counters {
                     if display == Display::None {
                         state.visit_hidden(element, styles, |_, assignments, counters| {
                             for assignment in assignments {
-                                counters.snapshot(&assignment.content)?;
+                                counters.snapshot(&assignment.content);
                             }
                             Ok(())
                         })?;
@@ -669,10 +674,10 @@ impl Counters {
                         return Ok(state);
                     }
                     for assignment in styles.string_set(target)?.iter() {
-                        state.snapshot(&assignment.content)?;
+                        state.snapshot(&assignment.content);
                     }
                     if let Some(label) = styles.bookmark_label(target)? {
-                        state.snapshot(&label)?;
+                        state.snapshot(&label);
                     }
                     events.push(Event::Leave);
                     if (display == Display::Contents || !replaced)
@@ -700,7 +705,7 @@ impl Counters {
                             events.push(Event::Content(element, content));
                         } else if element.name() != "br" {
                             for child in element.children(TreeRelation::Formatting).rev() {
-                                state.charge(1)?;
+                                state.charge(1);
                                 events.push(Event::Element(child, Some(block_display.clone())));
                             }
                         }
@@ -720,12 +725,12 @@ impl Counters {
                 }
                 Event::Content(element, content) => {
                     for request in content.counter_requests() {
-                        state.value(request.name.clone())?;
+                        state.value(request.name.clone());
                     }
                     for child in element.children(TreeRelation::Formatting) {
                         state.visit_hidden(child, styles, |_, assignments, counters| {
                             for assignment in assignments {
-                                counters.snapshot(&assignment.content)?;
+                                counters.snapshot(&assignment.content);
                             }
                             Ok(())
                         })?;
@@ -748,7 +753,7 @@ impl Counters {
                     if display == Display::None {
                         state.visit_hidden(element, styles, |_, assignments, counters| {
                             for assignment in assignments {
-                                counters.snapshot(&assignment.content)?;
+                                counters.snapshot(&assignment.content);
                             }
                             Ok(())
                         })?;
@@ -759,9 +764,9 @@ impl Counters {
                         return Ok(state);
                     }
                     for request in content.counter_requests() {
-                        state.value(request.name.clone())?;
+                        state.value(request.name.clone());
                     }
-                    state.update_previous()?;
+                    state.update_previous();
                     state.leave();
                 }
             }
@@ -846,6 +851,8 @@ mod tests {
 
     #[test]
     fn independent_counter_scans_share_the_selection_work_limit() {
+        const CHAPTER: i128 = 5;
+        const SCAN_WORK: usize = 2;
         let document = crate::dom::DocumentTree::parse("<p>Counter scans</p>");
         let target = PageStyleTarget {
             element: document.root_element().id(),
@@ -854,12 +861,11 @@ mod tests {
         let properties = CounterProperties {
             reset: Arc::from([CounterReset {
                 name: Arc::from("chapter"),
-                value: Some(INITIAL_COUNTER_VALUE),
+                value: Some(CHAPTER),
                 reversed: false,
             }]),
             ..Default::default()
         };
-        const SCAN_WORK: usize = 2;
         let work = Rc::new(Cell::new(MAX_COUNTER_WORK - SCAN_WORK));
         let mut first = Counters {
             work: work.clone(),
@@ -868,21 +874,24 @@ mod tests {
         first
             .enter(target, &properties, &Display::Block, false)
             .expect("the first scan fits the remaining work budget");
+        assert!(!first.exhausted(), "the first scan fits the budget");
         first.leave();
         drop(first);
         let mut second = Counters {
             work,
             ..Default::default()
         };
+        second
+            .enter(target, &properties, &Display::Block, false)
+            .expect("counters past the work budget degrade instead of failing");
         assert!(
-            matches!(
-                second.enter(target, &properties, &Display::Block, false),
-                Err(StyleError::GrammarLimit {
-                    resource: COUNTER_WORK_RESOURCE,
-                    limit: MAX_COUNTER_WORK
-                })
-            ),
+            second.exhausted(),
             "a later scan must not regain the work consumed by an earlier scan"
+        );
+        let chapter = second.value(Arc::from("chapter")).get();
+        assert_eq!(
+            chapter, INITIAL_COUNTER_VALUE,
+            "past the budget the reset of chapter to {CHAPTER} is not evaluated, so it reads zero"
         );
     }
 }

@@ -101,8 +101,18 @@ pub(crate) struct Paragraph {
     /// Where `first_line`, whose `text-transform` may encode characters differently, places
     /// this paragraph's offsets.
     first_line_offsets: OffsetMap,
+    /// Text past the paragraph's text limit was left out, or a `text-transform` expanding it
+    /// past the limit was not applied.
+    text_limited: bool,
 }
 impl Paragraph {
+    pub(crate) fn text_limited(&self) -> bool {
+        self.text_limited
+            || self
+                .first_line
+                .as_ref()
+                .is_some_and(|variant| variant.text_limited)
+    }
     pub(super) fn reflow(&mut self) -> Vec<&mut crate::document::BlockBox> {
         use crate::style::logical::{self, Flow};
         let reflow = |style: &Style| logical::reflowed(style, Flow::of(style).horizontal());
@@ -268,6 +278,7 @@ impl Paragraph {
             events: Vec::new(),
             first_line: None,
             first_line_offsets: OffsetMap::default(),
+            text_limited: self.text_limited,
         };
         let mut styles = atomics.into_iter();
         let mut restyled = |anchors: &[Anchor]| -> Vec<Anchor> {
@@ -290,7 +301,7 @@ impl Paragraph {
     }
     pub(crate) fn generated(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
         let mut collector = InlineCollector::default();
-        collector.append(text, style)?;
+        collector.append(text, style);
         Ok(collector.finish(style)?.ok())
     }
 
@@ -360,6 +371,7 @@ impl Paragraph {
             events: Vec::new(),
             first_line: None,
             first_line_offsets: OffsetMap::default(),
+            text_limited: false,
         }
     }
 
@@ -369,7 +381,7 @@ impl Paragraph {
         style: &Style,
     ) -> Result<Option<Self>, DocumentError> {
         let mut collector = InlineCollector::default();
-        collector.append_generated(output, images, style)?;
+        collector.append_generated(output, images, style);
         Ok(collector.finish(style)?.ok())
     }
 
@@ -381,7 +393,8 @@ impl Paragraph {
         style: &Style,
     ) -> Result<Option<Self>, DocumentError> {
         Self::marker_with(style, |collector, style| {
-            collector.append_generated(output, images, style)
+            collector.append_generated(output, images, style);
+            Ok(())
         })
     }
     fn marker_with(
@@ -398,10 +411,7 @@ impl Paragraph {
         }))
     }
     /// An image marker: the image followed by a space, which never starts its line.
-    pub(crate) fn image_marker(
-        image: crate::graphics::BackgroundImage,
-        style: &Style,
-    ) -> Result<Self, DocumentError> {
+    pub(crate) fn image_marker(image: crate::graphics::BackgroundImage, style: &Style) -> Self {
         let style = Self::marker_style(style);
         let text = String::from(' ');
         let span = TextSpan {
@@ -433,9 +443,10 @@ impl Paragraph {
             events: Vec::new(),
             first_line: None,
             first_line_offsets: OffsetMap::default(),
+            text_limited: false,
         };
-        transform::apply(&mut paragraph, false)?;
-        Ok(paragraph)
+        transform::apply(&mut paragraph, false);
+        paragraph
     }
     /// The marker box is a block container whose lone line starts at its start edge.
     fn marker_style(style: &Style) -> Style {
@@ -607,7 +618,7 @@ impl Paragraph {
             Vec<(Style, crate::graphics::BoxDecoration)>,
         ),
         contents: &mut Self,
-    ) -> Result<Self, DocumentError> {
+    ) -> Self {
         let mut copy = self.first_line_copy(root, Vec::new(), spans, boxes, Vec::new());
         let share = |placeholders: Vec<Anchor>,
                      anchored: &mut [Anchor],
@@ -632,8 +643,8 @@ impl Paragraph {
             crate::document::BlockBox::shared_stand_in,
         );
         copy.annotations = self.annotations;
-        transform::apply(&mut copy, false)?;
-        Ok(copy)
+        transform::apply(&mut copy, false);
+        copy
     }
     /// The paragraph of ruby annotation box `index`'s contents, if it has any.
     pub(crate) fn annotation_contents(&self, index: usize) -> Option<&Self> {
@@ -810,6 +821,8 @@ pub(crate) struct InlineCollector {
     /// Where a sunken initial letter ends, after which collapsible white space is collapsed
     /// away (CSS Inline 3 §7.8.1).
     sunken_letter_end: Option<usize>,
+    /// Content past `MAX_INLINE_TEXT_BYTES` of text was left out.
+    text_limited: bool,
 }
 impl InlineCollector {
     /// How much content the collector holds, where content collected later starts.
@@ -890,8 +903,8 @@ impl InlineCollector {
         output: &crate::style::GeneratedOutput,
         images: &[GeneratedImage],
         style: &Style,
-    ) -> Result<(), DocumentError> {
-        self.append_generated_from(output, images, 0, style)
+    ) {
+        self.append_generated_from(output, images, 0, style);
     }
     /// Appends the generated text after its first `start` bytes, which hold no leader and
     /// precede its images, and each image as an anonymous inline replaced element (CSS
@@ -902,7 +915,7 @@ impl InlineCollector {
         images: &[GeneratedImage],
         start: usize,
         style: &Style,
-    ) -> Result<(), DocumentError> {
+    ) {
         let text = output.text();
         let mut from = start;
         let mut leaders = output.leaders().iter().peekable();
@@ -918,7 +931,7 @@ impl InlineCollector {
             };
             if image_next {
                 let image = images.next().expect("an image is next");
-                self.append(&text[from..image.offset], style)?;
+                self.append(&text[from..image.offset], style);
                 self.atomic(
                     crate::document::BlockBox::anonymous_replaced(
                         style.anonymous(crate::style::Display::Inline),
@@ -926,16 +939,16 @@ impl InlineCollector {
                         None,
                     ),
                     style,
-                )?;
+                );
                 from = image.offset;
             } else {
                 let range = leaders.next().expect("a leader is next");
-                self.append(&text[from..range.start], style)?;
-                self.append_inner(&text[range.clone()], style, true)?;
+                self.append(&text[from..range.start], style);
+                self.append_inner(&text[range.clone()], style, true);
                 from = range.end;
             }
         }
-        self.append(&text[from..], style)
+        self.append(&text[from..], style);
     }
     /// Whether no in-flow content but an inside marker precedes the next content on the first
     /// line, where a first letter can begin (CSS Pseudo-Elements 4 §2.2.2).
@@ -987,14 +1000,14 @@ impl InlineCollector {
         block: crate::document::BlockBox,
         style: &Style,
         marker: bool,
-    ) -> Result<(), DocumentError> {
+    ) {
         let sunken = block
             .style()
             .initial_letter
             .is_some_and(|initial| initial.sink > 1);
         let start = self.text.len();
         let ancestors = std::mem::take(&mut self.open_box);
-        self.atomic(block, style)?;
+        self.atomic(block, style);
         self.open_box = ancestors;
         for inline_box in &mut self.boxes {
             if inline_box.range.start == start {
@@ -1007,7 +1020,6 @@ impl InlineCollector {
         if sunken {
             self.sunken_letter_end = Some(self.text.len());
         }
-        Ok(())
     }
     /// Gives the collected content, which the first formatted line alone holds, the styles
     /// `restyle` computes through `::first-line`, decorating its inline boxes with
@@ -1029,17 +1041,12 @@ impl InlineCollector {
         }
         Ok(())
     }
-    pub(crate) fn append(&mut self, text: &str, style: &Style) -> Result<(), DocumentError> {
-        self.append_inner(text, style, false)
+    pub(crate) fn append(&mut self, text: &str, style: &Style) {
+        self.append_inner(text, style, false);
     }
-    fn append_inner(
-        &mut self,
-        text: &str,
-        style: &Style,
-        leader: bool,
-    ) -> Result<(), DocumentError> {
+    fn append_inner(&mut self, text: &str, style: &Style, leader: bool) {
         if leader {
-            self.emit_pending_space()?;
+            self.emit_pending_space();
         }
         let first_span = self.spans.len();
         let index = self.style_index(style);
@@ -1049,7 +1056,7 @@ impl InlineCollector {
         for ch in text.chars() {
             if ch == '\n' && style.white_space.preserves_breaks() {
                 self.drop_pending_space();
-                self.push('\n', index, source, single_character_source, inline_box)?;
+                self.push('\n', index, source, single_character_source, inline_box);
             } else if collapses_character(ch, style.white_space.collapse) {
                 // Collapsible white space after an inside marker is discarded, as its `pre`
                 // white space intends (CSS Lists 3 §3.1.1, issues 4448 and 4891).
@@ -1067,22 +1074,21 @@ impl InlineCollector {
                     });
                 }
             } else if style.white_space.collapse.converts_to_spaces() && matches!(ch, '\n' | '\t') {
-                self.emit_pending_space()?;
-                self.push(' ', index, source, single_character_source, inline_box)?;
+                self.emit_pending_space();
+                self.push(' ', index, source, single_character_source, inline_box);
             } else {
-                self.emit_pending_space()?;
-                self.push(ch, index, source, single_character_source, inline_box)?;
+                self.emit_pending_space();
+                self.push(ch, index, source, single_character_source, inline_box);
             }
         }
         if leader {
-            self.emit_pending_space()?;
+            self.emit_pending_space();
             for span in &mut self.spans[first_span..] {
                 span.leader = true;
             }
         }
-        Ok(())
     }
-    fn emit_pending_space(&mut self) -> Result<(), DocumentError> {
+    fn emit_pending_space(&mut self) {
         if let Some(space) = self.pending_space.take() {
             self.push(
                 ' ',
@@ -1090,7 +1096,7 @@ impl InlineCollector {
                 space.source,
                 space.single_character_source,
                 space.inline_box,
-            )?;
+            );
             let end = self.text.len();
             for mark in std::mem::take(&mut self.after_space) {
                 match mark {
@@ -1104,7 +1110,6 @@ impl InlineCollector {
                 }
             }
         }
-        Ok(())
     }
     pub(crate) fn drop_pending_space(&mut self) {
         self.pending_space = None;
@@ -1125,7 +1130,7 @@ impl InlineCollector {
     }
     /// Appends `other`, collected apart with every box and link closed, as if its content had
     /// been appended here (CSS Display 3 §5 run-in boxes).
-    pub(crate) fn extend(&mut self, other: Self) -> Result<(), DocumentError> {
+    pub(crate) fn extend(&mut self, other: Self) {
         debug_assert!(
             other.open_box.is_none() && other.open_links.is_empty(),
             "a collector is appended after its boxes close"
@@ -1136,18 +1141,18 @@ impl InlineCollector {
             && other.annotations.is_empty()
             && other.events.is_empty()
         {
-            return Ok(());
+            return;
         }
-        self.emit_pending_space()?;
+        self.emit_pending_space();
         let offset = self.text.len();
         if offset
             .checked_add(other.text.len())
             .is_none_or(|length| length > MAX_INLINE_TEXT_BYTES)
         {
-            return Err(DocumentError::TextExpansionLimit {
-                limit: MAX_INLINE_TEXT_BYTES,
-            });
+            self.text_limited = true;
+            return;
         }
+        self.text_limited |= other.text_limited;
         let parent = self.open_box;
         let boxes = self.boxes.len();
         let anchors = self.anchors.len();
@@ -1231,7 +1236,6 @@ impl InlineCollector {
                     event: event.event,
                 }),
         );
-        Ok(())
     }
     fn mark(&mut self, mark: Mark) {
         if self.pending_space.is_some() {
@@ -1399,11 +1403,7 @@ impl InlineCollector {
         self.open_continued(Arc::new(style.clone()), decoration, navigation, true, false);
     }
     /// Places an atomic inline in the line, as a placeholder styled by its parent `style`.
-    pub(crate) fn atomic(
-        &mut self,
-        block: crate::document::BlockBox,
-        style: &Style,
-    ) -> Result<(), DocumentError> {
+    pub(crate) fn atomic(&mut self, block: crate::document::BlockBox, style: &Style) {
         let collapses_spaces = block.is_unadorned_image_fallback()
             && block.children().is_empty()
             && [&block.style().min_width, &block.style().min_height]
@@ -1413,7 +1413,7 @@ impl InlineCollector {
         // Keep the pending space across an invisible replacement, while retaining its
         // placeholder for destinations, semantic events and phantom-line handling.
         if !collapses_spaces {
-            self.emit_pending_space()?;
+            self.emit_pending_space();
         }
         let index = self.style_index(style);
         let source = self.next_source();
@@ -1424,7 +1424,7 @@ impl InlineCollector {
             source,
             false,
             self.open_box,
-        )?;
+        );
         let span = self
             .spans
             .last_mut()
@@ -1435,7 +1435,6 @@ impl InlineCollector {
             block,
             inline_box: self.open_box,
         });
-        Ok(())
     }
     /// Styles of the open inline boxes, outermost first, which block-level content splits
     /// (CSS 2.1 §9.2.1.1).
@@ -1467,16 +1466,15 @@ impl InlineCollector {
     pub(crate) fn is_between_blocks(&self) -> bool {
         self.text.is_empty() && self.open_box.is_none()
     }
-    pub(crate) fn line_break(&mut self, style: &Style) -> Result<(), DocumentError> {
+    pub(crate) fn line_break(&mut self, style: &Style) {
         self.drop_pending_space();
         let index = self.style_index(style);
         let source = self.next_source();
-        self.push('\n', index, source, false, self.open_box)?;
+        self.push('\n', index, source, false, self.open_box);
         if style.clear != Clear::None {
             self.clearances
                 .push((self.text.len(), style.clear, style.rtl));
         }
-        Ok(())
     }
     pub(crate) fn optional_break(&mut self, style: &Style) {
         if style.white_space.wraps() {
@@ -1491,16 +1489,15 @@ impl InlineCollector {
         source: usize,
         single_character_source: bool,
         inline_box: Option<usize>,
-    ) -> Result<(), DocumentError> {
+    ) {
         if self
             .text
             .len()
             .checked_add(ch.len_utf8())
             .is_none_or(|length| length > MAX_INLINE_TEXT_BYTES)
         {
-            return Err(DocumentError::TextExpansionLimit {
-                limit: MAX_INLINE_TEXT_BYTES,
-            });
+            self.text_limited = true;
+            return;
         }
         let style = &self.styles[index];
         let start = self.text.len();
@@ -1521,7 +1518,6 @@ impl InlineCollector {
                 single_character_source,
             });
         }
-        Ok(())
     }
     /// Returns the paragraph, or the anchors of an empty run as block-level boxes.
     pub(crate) fn finish(
@@ -1572,14 +1568,15 @@ impl InlineCollector {
             events: self.events,
             first_line: None,
             first_line_offsets: OffsetMap::default(),
+            text_limited: self.text_limited,
         };
         let variant = first_line(&mut paragraph)?;
         for annotation in &mut paragraph.annotations {
             annotation.block.take_annotation_source();
         }
-        let units = transform::apply(&mut paragraph, variant.is_some())?;
+        let units = transform::apply(&mut paragraph, variant.is_some());
         if let Some(mut variant) = variant {
-            let copy = transform::apply(&mut variant, true)?;
+            let copy = transform::apply(&mut variant, true);
             paragraph.first_line_offsets =
                 OffsetMap::between([&copy, &units], [&variant.text, &paragraph.text]);
             paragraph.first_line = Some(Box::new(variant));

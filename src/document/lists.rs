@@ -31,7 +31,7 @@ pub(super) fn marker(
             Ok::<_, std::convert::Infallible>(resources.load_decoded(request, item))
         });
         if image.is_displayable() {
-            return Ok(Some(Paragraph::image_marker(image, style)?));
+            return Ok(Some(Paragraph::image_marker(image, style)));
         }
     }
     let Some(representation) = item.list_style_type.marker(ordinal, style.rtl) else {
