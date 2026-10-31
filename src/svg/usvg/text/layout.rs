@@ -3,7 +3,7 @@
 
 use std::collections::HashMap;
 
-use crate::svg::usvg::work::{self, Work};
+use crate::work::{self, Work};
 use std::num::NonZeroU16;
 use std::sync::Arc;
 

@@ -1,6 +1,6 @@
 use crate::images::{Image, ImageCache, ImageError};
 use crate::resources::{FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver};
-use crate::svg::usvg::work::{self, Work};
+use crate::work::{self, Work};
 use std::cell::Cell;
 use std::fmt::Write;
 
@@ -1681,19 +1681,6 @@ fn svg_images_drawing_svg_images_nest_as_references() {
     assert_eq!(drawn, MAX_REFERENCE_DEPTH, "nested SVG images drawn");
 }
 
-/// Asserts that the work `measure` counts for content of `size`, and of twice that, grows
-/// linearly; `what` names the content.
-fn assert_linear(what: &str, size: usize, measure: impl Fn(usize) -> usize) {
-    const GROWTH: f64 = 2.2;
-    let [single, double] = [size, 2 * size].map(measure);
-    assert!(
-        single > 0 && double as f64 <= GROWTH * single as f64,
-        "{what}: {single} units of work for {size}, {double} for {}, more than {GROWTH} times \
-         as many",
-        2 * size
-    );
-}
-
 #[test]
 fn nested_fill_box_transforms_measure_each_element_once() {
     // Converting each element's content again after measuring it for its reference box takes
@@ -1710,7 +1697,7 @@ fn nested_fill_box_transforms_measure_each_element_once() {
             "</g>".repeat(depth)
         )
     };
-    assert_linear("nested fill-box groups", DEPTH, |depth| {
+    work::assert_linear("nested fill-box groups", DEPTH, |depth| {
         work::measured(Work::Conversion, || tree(&body(depth))).1
     });
     let rect = tree(&body(DEPTH)).root().abs_bounding_box();
@@ -1737,7 +1724,7 @@ fn a_clip_path_shared_by_many_groups_is_collected_once() {
         let groups = "<g clip-path='url(#c)'><rect width='100' height='100'/></g>".repeat(size);
         format!("<defs><clipPath id='c'>{rects}</clipPath></defs>{groups}")
     };
-    assert_linear("groups sharing a clip path", SIZE, |size| {
+    work::assert_linear("groups sharing a clip path", SIZE, |size| {
         let (tree, visits) = work::measured(Work::Visit, || tree(&body(size)));
         assert_eq!(
             tree.clip_paths().len(),
@@ -1769,7 +1756,7 @@ fn markers_in_markers_stop_converting_at_the_node_budget() {
         })
         .collect();
     let body = format!("{SVG_OPEN}<defs>{markers}</defs>{}</svg>", path(0));
-    let (limits, conversions) = work::with_node_budget(BUDGET, || {
+    let (limits, conversions) = crate::svg::usvg::with_node_budget(BUDGET, || {
         work::measured(Work::Conversion, || {
             let mut cache = ImageCache::default();
             cache
@@ -1864,7 +1851,7 @@ fn svg_text_shapes_each_run_of_spans_once() {
             "<tspan>a</tspan><tspan fill='blue' font-size='5'>b</tspan>".repeat(pairs)
         )
     };
-    assert_linear("SVG text spans", PAIRS, |pairs| {
+    work::assert_linear("SVG text spans", PAIRS, |pairs| {
         text_work(Work::ShapedByte, &body(pairs)).1
     });
     let glyphs = text_work(Work::ShapedByte, &body(PAIRS)).0;
@@ -1901,7 +1888,7 @@ fn svg_text_autospaces_many_spans_in_linear_time() {
             format!("<tspan>{IDEOGRAPH}a</tspan>").repeat(spans)
         )
     };
-    assert_linear("autospaced spans", SPANS, |spans| {
+    work::assert_linear("autospaced spans", SPANS, |spans| {
         text_work(Work::HeldSpan, &text("normal", spans)).1
     });
     let spaced = text_work(Work::HeldSpan, &text("normal", SPANS)).0;
@@ -1933,7 +1920,7 @@ fn long_svg_text_on_a_path_is_positioned_in_linear_time() {
             "ab ".repeat(pairs)
         )
     };
-    assert_linear("characters on a path", PAIRS, |pairs| {
+    work::assert_linear("characters on a path", PAIRS, |pairs| {
         text_work(Work::CodePoint, &body(pairs)).1
     });
     assert_eq!(
@@ -1955,7 +1942,7 @@ fn ellipsized_svg_text_hides_its_overflow_in_linear_time() {
             "word ".repeat(words)
         )
     };
-    assert_linear("a line of words", WORDS, |words| {
+    work::assert_linear("a line of words", WORDS, |words| {
         text_work(Work::HiddenAdvance, &body(words)).1
     });
     let shown = inked(&text_work(Work::HiddenAdvance, &body(WORDS)).0);

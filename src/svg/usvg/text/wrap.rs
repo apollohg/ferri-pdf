@@ -9,11 +9,11 @@ use unicode_linebreak::BreakOpportunity;
 
 use super::layout::{self, FontsCache};
 use crate::style::TextOverflow;
-use crate::svg::usvg::work::{self, Work};
 use crate::svg::usvg::{
     FontProvider, NonZeroRect, Strut, Text, TextAnchor, TextChunk, TextFlow, WrapWidth, Wrapping,
     WritingMode,
 };
+use crate::work::{self, Work};
 
 /// CSS Overflow 4 §4.1: the ellipsis `text-overflow: ellipsis` renders.
 const ELLIPSIS: &str = "\u{2026}";

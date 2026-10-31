@@ -641,7 +641,7 @@ impl TextChunk {
 
     /// The chunk placed and flowing as this one, holding `text` in `spans`.
     pub(crate) fn holding(&self, text: String, spans: Vec<TextSpan>) -> Self {
-        crate::svg::usvg::work::count(crate::svg::usvg::work::Work::HeldSpan, spans.len());
+        crate::work::count(crate::work::Work::HeldSpan, spans.len());
         Self {
             x: self.x,
             y: self.y,

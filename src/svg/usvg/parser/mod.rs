@@ -21,6 +21,8 @@ mod units;
 mod use_node;
 
 mod text;
+#[cfg(test)]
+pub(crate) use converter::with_node_budget;
 pub(crate) use converter::{Cache, MAX_REFERENCE_DEPTH, Nesting};
 pub(crate) use image::ImageHrefResolver;
 pub(crate) use options::Options;

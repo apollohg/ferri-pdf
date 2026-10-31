@@ -35,6 +35,7 @@ mod table;
 #[cfg(test)]
 mod tests;
 mod text;
+mod work;
 mod writer;
 
 pub use multipart::{

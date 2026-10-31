@@ -538,6 +538,29 @@ impl SvgColorExt for svgtypes::Color {
     }
 }
 
+#[cfg(test)]
+thread_local! {
+    static NODE_BUDGET: std::cell::Cell<Option<usize>> = const { std::cell::Cell::new(None) };
+}
+
+/// The most elements conversion converts, each as many times as references draw it.
+fn node_budget() -> usize {
+    #[cfg(test)]
+    if let Some(budget) = NODE_BUDGET.with(std::cell::Cell::get) {
+        return budget;
+    }
+    MAX_SVG_NODES
+}
+
+/// What `run` returns converting at most `budget` elements on this thread.
+#[cfg(test)]
+pub(crate) fn with_node_budget<T>(budget: usize, run: impl FnOnce() -> T) -> T {
+    let outer = NODE_BUDGET.with(|limit| limit.replace(Some(budget)));
+    let output = run();
+    NODE_BUDGET.with(|limit| limit.set(outer));
+    output
+}
+
 /// Converts an input `Document` into a `Tree`.
 ///
 /// # Errors
@@ -778,9 +801,9 @@ pub(crate) fn convert_element(node: SvgNode, state: &State, cache: &mut Cache, p
 
     // References, such as markers in the content of markers, can draw an element many times
     // over: past the node budget the rest of the content is left out.
-    work::count(work::Work::Conversion, 1);
+    crate::work::count(crate::work::Work::Conversion, 1);
     if cache.measuring == 0 {
-        if cache.converted >= work::node_budget() {
+        if cache.converted >= node_budget() {
             cache.truncated = true;
             return;
         }
