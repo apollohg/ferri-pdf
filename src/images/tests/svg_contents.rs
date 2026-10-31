@@ -1726,3 +1726,55 @@ fn nested_fill_box_transforms_measure_each_element_once() {
         );
     }
 }
+
+#[test]
+fn svg_text_shapes_each_run_of_spans_once() {
+    // Shaping the whole chunk again for each of its spans takes time quadratic in the spans:
+    // minutes for this many, against about a second.
+    const PAIRS: usize = 2000;
+    const BOUND: std::time::Duration = std::time::Duration::from_secs(10);
+    const BLACK: [u8; 3] = [0, 0, 0];
+    let body = format!(
+        "<text x='0' y='20' font-size='4'>{}</text>",
+        "<tspan>a</tspan><tspan fill='blue'>b</tspan>".repeat(PAIRS)
+    );
+    let glyphs = within(&format!("{} SVG text spans", 2 * PAIRS), BOUND, move || {
+        let tree = tree(&body);
+        let mut glyphs = Vec::new();
+        for group in groups(&tree) {
+            for node in group.children() {
+                let crate::svg::usvg::Node::Text(text) = node else {
+                    continue;
+                };
+                for span in text.layouted() {
+                    let fill = paint_color(span.fill.as_ref().expect("filled text").paint());
+                    glyphs.extend(
+                        span.positioned_glyphs
+                            .iter()
+                            .map(|glyph| (glyph.text.clone(), fill, glyph.transform().tx)),
+                    );
+                }
+            }
+        }
+        glyphs
+    });
+    assert_eq!(glyphs.len(), 2 * PAIRS, "one glyph per span");
+    let mut previous = f32::NEG_INFINITY;
+    for (index, (text, fill, x)) in glyphs.iter().enumerate() {
+        let expected = if index % 2 == 0 {
+            ("a", BLACK)
+        } else {
+            ("b", BLUE)
+        };
+        assert_eq!(
+            (text.as_str(), *fill),
+            expected,
+            "glyph {index} must show its span's character in its span's fill"
+        );
+        assert!(
+            *x > previous,
+            "glyph {index} at {x} must follow the glyph before at {previous}"
+        );
+        previous = *x;
+    }
+}

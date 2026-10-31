@@ -1,7 +1,7 @@
 // Copyright 2022 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::num::NonZeroU16;
 use std::sync::Arc;
 
@@ -382,16 +382,19 @@ pub(crate) fn layout_text(
         }
 
         let skipped = skipped_clusters(chunk, &clusters);
+        let owned = owned_clusters(chunk, &clusters);
+        let chunk_ts = text_ts.pre_translate(x, y);
+        let extent = clusters_extent(&clusters, chunk_ts);
         for (span_index, span) in chunk.spans.iter().enumerate() {
             let font = match fonts_cache.get(&span.font) {
                 Some(v) => v,
                 None => continue,
             };
+            let owned = &owned[span_index];
 
-            let decoration_spans = collect_decoration_spans(span, &clusters, &skipped);
+            let decoration_spans = collect_decoration_spans(owned, &clusters, &skipped);
 
-            let mut span_ts = text_ts;
-            span_ts = span_ts.pre_translate(x, y);
+            let mut span_ts = chunk_ts;
             if let TextFlow::Linear = chunk.text_flow {
                 let shift = lines.baseline(line, span, font, text_node.writing_mode);
 
@@ -428,7 +431,7 @@ pub(crate) fn layout_text(
 
             let mut emphasis = emphasis_marks(
                 span,
-                &clusters,
+                owned.iter().map(|&index| &clusters[index]),
                 font,
                 text_node.writing_mode,
                 span_ts,
@@ -448,11 +451,20 @@ pub(crate) fn layout_text(
                 fill.rule = FillRule::NonZero;
             }
 
-            if let Some((span_fragments, span_bbox)) = convert_span(span, &clusters, span_ts) {
-                bbox = bbox.expand(span_bbox);
+            // The extent of the chunk's clusters on the span's baseline.
+            if let Some(extent) = extent.and_then(|extent| {
+                extent.translate_to(
+                    extent.x() + span_ts.tx - chunk_ts.tx,
+                    extent.y() + span_ts.ty - chunk_ts.ty,
+                )
+            }) {
+                bbox = bbox.expand(extent);
 
-                let positioned_glyphs: Vec<PositionedGlyph> = span_fragments
-                    .into_iter()
+                let positioned_glyphs: Vec<PositionedGlyph> = owned
+                    .iter()
+                    .map(|&index| &clusters[index])
+                    .filter(|cluster| cluster.visible)
+                    .cloned()
                     .flat_map(|mut gc| {
                         let cluster_ts = gc.transform();
                         gc.glyphs.iter_mut().for_each(|pg| {
@@ -530,9 +542,9 @@ pub(crate) fn layout_text(
 /// document's text places them: the mark string in the span's font at half size with the
 /// `ruby` feature, or the synthesized shape no font has, filled in `text-emphasis-color`.
 /// Vertical text keeps marks upright beside its column.
-fn emphasis_marks(
+fn emphasis_marks<'c>(
     span: &TextSpan,
-    clusters: &[GlyphCluster],
+    clusters: impl Iterator<Item = &'c GlyphCluster>,
     font: &ResolvedFont,
     writing_mode: WritingMode,
     span_ts: Transform,
@@ -543,10 +555,8 @@ fn emphasis_marks(
     let style = &span.style;
     let text = style.text_paint.emphasis.mark()?;
     let marked: Vec<&GlyphCluster> = clusters
-        .iter()
         .filter(|cluster| {
             cluster.visible
-                && span_contains(span, cluster.byte_idx)
                 && cluster.glyphs.first().is_some_and(|glyph| {
                     emphasis::marked(&glyph.text, style.text_paint.emphasis_skip)
                 })
@@ -886,12 +896,7 @@ fn apply_autospace(
     fontdb: &mut Arc<Database>,
 ) {
     use crate::text::autospace::{Spacing, replaceable};
-    let span_index = |cluster: &GlyphCluster| {
-        chunk
-            .spans
-            .iter()
-            .position(|span| span_contains(span, cluster.byte_idx))
-    };
+    let span_index = |cluster: &GlyphCluster| chunk_span_index(chunk, cluster.byte_idx);
     let replaceable_at = |cluster: Option<&GlyphCluster>| {
         cluster
             .and_then(|cluster| cluster.glyphs.first())
@@ -992,59 +997,63 @@ fn apply_autospace(
     }
 }
 
-fn convert_span(
-    span: &TextSpan,
-    clusters: &[GlyphCluster],
-    text_ts: Transform,
-) -> Option<(Vec<GlyphCluster>, NonZeroRect)> {
-    let mut span_clusters = vec![];
-    let mut bboxes_builder = tiny_skia_path::PathBuilder::new();
-
-    for cluster in clusters {
-        if !cluster.visible {
-            continue;
-        }
-
-        if span_contains(span, cluster.byte_idx) {
-            span_clusters.push(cluster.clone());
-        }
-
-        let mut advance = cluster.advance;
-        if advance <= 0.0 {
-            advance = 1.0;
-        }
-
-        // We have to calculate text bbox using font metrics and not glyph shape.
-        if let Some(r) = NonZeroRect::from_xywh(0.0, -cluster.ascent, advance, cluster.height()) {
-            if let Some(r) = r.transform(cluster.transform()) {
-                bboxes_builder.push_rect(r.to_rect());
-            }
+/// The indices of the clusters of `chunk` in each of its spans, in visual order.
+fn owned_clusters(chunk: &TextChunk, clusters: &[GlyphCluster]) -> Vec<Vec<usize>> {
+    let mut owned = vec![Vec::new(); chunk.spans.len()];
+    for (index, cluster) in clusters.iter().enumerate() {
+        if let Some(span) = chunk_span_index(chunk, cluster.byte_idx) {
+            owned[span].push(index);
         }
     }
-
-    let mut bboxes = bboxes_builder.finish()?;
-    bboxes = bboxes.transform(text_ts)?;
-    let bbox = bboxes.compute_tight_bounds()?.to_non_zero_rect()?;
-
-    Some((span_clusters, bbox))
+    owned
 }
 
-/// The pieces of the decoration lines over `span`'s clusters, which split where a relative
+/// The extent of the font metrics of the visible clusters, not their glyph shapes, through
+/// `transform`.
+fn clusters_extent(clusters: &[GlyphCluster], transform: Transform) -> Option<NonZeroRect> {
+    let mut bboxes_builder = tiny_skia_path::PathBuilder::new();
+    for cluster in clusters.iter().filter(|cluster| cluster.visible) {
+        let advance = if cluster.advance <= 0.0 {
+            1.0
+        } else {
+            cluster.advance
+        };
+        if let Some(r) = NonZeroRect::from_xywh(0.0, -cluster.ascent, advance, cluster.height())
+            .and_then(|r| r.transform(cluster.transform()))
+        {
+            bboxes_builder.push_rect(r.to_rect());
+        }
+    }
+    bboxes_builder
+        .finish()?
+        .transform(transform)?
+        .compute_tight_bounds()?
+        .to_non_zero_rect()
+}
+
+/// The pieces of the decoration lines over the clusters a span `owns`, which split where a relative
 /// shift moves a cluster or `skipped` keeps lines from it. A skipped piece takes the spacing
 /// after the cluster before it too, as the document's decorations skip spacers.
 fn collect_decoration_spans(
-    span: &TextSpan,
+    owns: &[usize],
     clusters: &[GlyphCluster],
     skipped: &[bool],
 ) -> Vec<DecorationSpan> {
     let mut spans = Vec::new();
     let mut current: Option<DecorationSpan> = None;
-    for (index, cluster) in clusters.iter().enumerate() {
-        let contained = span_contains(span, cluster.byte_idx);
-        if contained && cluster.has_relative_shift {
+    for &index in owns {
+        let cluster = &clusters[index];
+        // A cluster of another span ends the piece.
+        if current
+            .as_ref()
+            .is_some_and(|piece| piece.clusters.end != index)
+        {
             spans.extend(current.take());
         }
-        if contained && !skipped[index] {
+        if cluster.has_relative_shift {
+            spans.extend(current.take());
+        }
+        if !skipped[index] {
             match &mut current {
                 Some(piece) => {
                     piece.width += cluster.advance;
@@ -1059,10 +1068,8 @@ fn collect_decoration_spans(
                 }
             }
         } else if let Some(mut piece) = current.take() {
-            if contained {
-                let before = &clusters[index - 1];
-                piece.width -= before.advance - before.width;
-            }
+            let before = &clusters[index - 1];
+            piece.width -= before.advance - before.width;
             spans.push(piece);
         }
     }
@@ -1913,43 +1920,6 @@ fn shape_chunk(
     resolver: &dyn FontProvider,
     fontdb: &mut Arc<Database>,
 ) -> Option<Vec<Glyph>> {
-    // The way this function works is a bit tricky.
-    //
-    // The first problem is BIDI reordering.
-    // We cannot shape text span-by-span, because glyph clusters are not guarantee to be continuous.
-    //
-    // For example:
-    // <text>Hel<tspan fill="url(#lg1)">lo של</tspan>ום.</text>
-    //
-    // Would be shaped as:
-    // H e l l o   ש ל  ו  ם .   (characters)
-    // 0 1 2 3 4 5 12 10 8 6 14  (cluster indices in UTF-8)
-    //       ---         ---     (green span)
-    //
-    // As you can see, our continuous `lo של` span was split into two separated one.
-    // So our 3 spans: black - green - black, become 5 spans: black - green - black - green - black.
-    // If we shape `Hel`, then `lo של` an then `ום` separately - we would get an incorrect output.
-    // To properly handle this we simply shape the whole chunk.
-    //
-    // But this introduces another issue - what to do when we have multiple fonts?
-    // The easy solution would be to simply shape text with each font,
-    // where the first font output is used as a base one and all others overwrite it.
-    // This way in case of:
-    // <text font-family="Arial">Hello <tspan font-family="Helvetica">world</tspan></text>
-    // we would replace Arial glyphs for `world` with Helvetica one. Pretty simple.
-    //
-    // Well, it would work most of the time, but not always.
-    // This is because different fonts can produce different amount of glyphs for the same text.
-    // The most common example are ligatures. Some fonts can shape `fi` as two glyphs `f` and `i`,
-    // but some can use `ﬁ` (U+FB01) instead.
-    // Meaning that during merging we have to overwrite not individual glyphs, but clusters.
-
-    // Glyph splitting assigns distinct glyphs to the same index in the original text, we need to
-    // store previously used indices to make sure we do not re-use the same index while overwriting
-    // span glyphs.
-    let mut positions = HashSet::new();
-
-    let mut glyphs = Vec::new();
     // CSS Writing Modes 4 §2.4: the embeddings, isolates and overrides of `unicode-bidi` on the
     // text element and its inline boxes, upright typesetting and combinations take part.
     let paragraph = document_paragraph(chunk);
@@ -1966,74 +1936,69 @@ fn shape_chunk(
             .collect::<Vec<_>>()
     });
     let orientations = orientation_spans.as_deref();
-    for span in &chunk.spans {
-        let font = match fonts_cache.get(&span.font) {
-            Some(v) => v.clone(),
-            None => continue,
-        };
-
-        let tmp_glyphs = shape_text(
-            &chunk.text,
-            &bidi,
-            orientations,
-            span.start..span.end,
-            font,
-            SpanShaping {
-                request: &span.font,
-                style: &span.style,
-                font_size: span.font_size.get(),
-                optical_sizing: span.font_optical_sizing,
-                tracked: crate::text::shaping::tracked(span.letter_spacing, span.font_size.get()),
-            },
-            resolver,
-            fontdb,
-        );
-
-        // Do nothing with the first run.
-        if glyphs.is_empty() {
-            glyphs = tmp_glyphs;
+    // Each run of spans styled alike shapes once, in the context of the chunk's text; its
+    // glyphs follow the visual order of the bidi runs they fall in.
+    let mut runs = Vec::new();
+    let mut spans = chunk.spans.iter().peekable();
+    while let Some(span) = spans.next() {
+        let mut end = span.end;
+        while let Some(next) = spans.next_if(|next| next.start == end && shapes_alike(span, next)) {
+            end = next.end;
+        }
+        let Some(font) = fonts_cache.get(&span.font).filter(|_| span.start < end) else {
             continue;
-        }
-
-        positions.clear();
-
-        // Overwrite span's glyphs.
-        let mut iter = tmp_glyphs.into_iter();
-        while let Some(new_glyph) = iter.next() {
-            if !span_contains(span, new_glyph.byte_idx) {
-                continue;
-            }
-
-            let Some(idx) = glyphs
-                .iter()
-                .position(|g| g.byte_idx == new_glyph.byte_idx)
-                .filter(|pos| !positions.contains(pos))
-            else {
-                continue;
-            };
-
-            positions.insert(idx);
-
-            let prev_cluster_len = glyphs[idx].cluster_len;
-            if prev_cluster_len < new_glyph.cluster_len {
-                // If the new font represents the same cluster with fewer glyphs
-                // then remove remaining glyphs.
-                for _ in 1..new_glyph.cluster_len {
-                    glyphs.remove(idx + 1);
-                }
-            } else if prev_cluster_len > new_glyph.cluster_len {
-                // If the new font represents the same cluster with more glyphs
-                // then insert them after the current one.
-                for j in 1..prev_cluster_len {
-                    if let Some(g) = iter.next() {
-                        glyphs.insert(idx + j, g);
-                    }
-                }
-            }
-
-            glyphs[idx] = new_glyph;
-        }
+        };
+        runs.push((
+            span.start,
+            shape_text(
+                &chunk.text,
+                &bidi,
+                orientations,
+                span.start..end,
+                font.clone(),
+                SpanShaping {
+                    request: &span.font,
+                    style: &span.style,
+                    font_size: span.font_size.get(),
+                    optical_sizing: span.font_optical_sizing,
+                    tracked: crate::text::shaping::tracked(
+                        span.letter_spacing,
+                        span.font_size.get(),
+                    ),
+                },
+                resolver,
+                fontdb,
+            ),
+        ));
     }
+    if runs.is_empty() {
+        return Some(Vec::new());
+    }
+    let mut visual_runs: Vec<_> = bidi
+        .visual_runs(0..chunk.text.len())
+        .into_iter()
+        .enumerate()
+        .map(|(order, (range, rtl))| (range.start, order, rtl))
+        .collect();
+    visual_runs.sort_unstable();
+    let placement = |offset: usize| {
+        let index = visual_runs
+            .partition_point(|&(start, ..)| start <= offset)
+            .saturating_sub(1);
+        visual_runs
+            .get(index)
+            .map_or((0, false), |&(_, order, rtl)| (order, rtl))
+    };
+    let mut glyphs: Vec<_> = runs
+        .into_iter()
+        .flat_map(|(start, glyphs)| glyphs.into_iter().map(move |glyph| (start, glyph)))
+        .collect();
+    // Within a bidi run, the runs of spans follow its direction.
+    glyphs.sort_by_cached_key(|(start, glyph)| {
+        let (order, rtl) = placement(glyph.byte_idx.value());
+        (order, if rtl { usize::MAX - start } else { *start })
+    });
+    let mut glyphs: Vec<Glyph> = glyphs.into_iter().map(|(_, glyph)| glyph).collect();
 
     if writing_mode == WritingMode::TopToBottom {
         for group in crate::text::combine::groups(&paragraph) {
@@ -2686,6 +2651,20 @@ impl DatabaseExt for Database {
     }
 }
 
+/// Whether the text of `next`, which follows that of `span`, shapes on with it: shaping is not
+/// broken where formatting changes nothing the glyphs depend on (CSS Text 3 §7.3).
+fn shapes_alike(span: &TextSpan, next: &TextSpan) -> bool {
+    span.font == next.font
+        && span.font_size == next.font_size
+        && span.font_optical_sizing == next.font_optical_sizing
+        && span.letter_spacing == next.letter_spacing
+        && span.text_orientation == next.text_orientation
+        && span.dominant_baseline == next.dominant_baseline
+        && span.alignment_baseline == next.alignment_baseline
+        && span.baseline_shift == next.baseline_shift
+        && span.style.same_text_style(&next.style)
+}
+
 /// A span's text as it shapes with each face (SVG 2 §11.10, CSS Fonts 4 §6–§7).
 #[derive(Clone, Copy)]
 pub(crate) struct SpanShaping<'a> {
@@ -2721,7 +2700,7 @@ pub(crate) fn shape_text(
             fontdb,
         )
     };
-    let mut glyphs = shape(fontdb, &font, 0..text.len()).unwrap_or_default();
+    let mut glyphs = shape(fontdb, &font, active.clone()).unwrap_or_default();
     struct FallbackRun {
         start: usize,
         end: usize,
@@ -2935,9 +2914,8 @@ fn shape_text_with_font(
             |tag| crate::fonts::has_feature(&rb_font, tag),
             style.font_synthesis.small_caps,
         );
-        for (run, _) in bidi.visual_runs(0..text.len()) {
-            let run = run.start.max(source.start)..run.end.min(source.end);
-            if run.start >= run.end {
+        for (run, _) in bidi.visual_runs(source.clone()) {
+            if run.is_empty() {
                 continue;
             }
             let mut pieces: Vec<(std::ops::Range<usize>, bool)> = Vec::new();
@@ -3272,10 +3250,20 @@ pub(crate) struct ResolvedFont {
 }
 
 pub(crate) fn chunk_span_at(chunk: &TextChunk, byte_offset: ByteIndex) -> Option<&TextSpan> {
+    chunk_span_index(chunk, byte_offset).map(|index| &chunk.spans[index])
+}
+
+/// The index of the span of `chunk`, whose spans follow each other in its text, that contains
+/// `byte_offset`.
+fn chunk_span_index(chunk: &TextChunk, byte_offset: ByteIndex) -> Option<usize> {
+    let index = chunk
+        .spans
+        .partition_point(|span| span.end <= byte_offset.value());
     chunk
         .spans
-        .iter()
-        .find(|&span| span_contains(span, byte_offset))
+        .get(index)
+        .filter(|span| span_contains(span, byte_offset))
+        .map(|_| index)
 }
 
 pub(crate) fn span_contains(span: &TextSpan, byte_offset: ByteIndex) -> bool {
