@@ -656,6 +656,42 @@ body{{margin:0;line-height:0}}svg,img{{display:block}}{css}</style>{body}''')
             self.assertSpan(self.ink_columns(pixels, 0, 3 * cell, cell, cell, GREEN), 0, half,
                             'a mask element masks with the CSS mask layers of its content')
 
+    def test_each_painted_mask_image_keeps_its_own_pixels(self):
+        """CSS Masking 1 §7.1: shapes masked by different images each show their own mask, and
+        shapes sharing an image show it alike. Each shape's mask is painted anew, so a mask
+        painted earlier and dropped must not stand in for a later one."""
+        cell = 30
+        half = cell // 2
+        sides = {'left': 0, 'right': 1}
+
+        def mask(column):
+            canvas = Image.new('RGBA', (2, 1))
+            canvas.putpixel((column, 0), (0, 0, 0, 255))
+            encoded = io.BytesIO()
+            canvas.save(encoded, 'PNG')
+            return (f'mask-image:url(data:image/png;base64,'
+                    f'{base64.b64encode(encoded.getvalue()).decode()});'
+                    'mask-size:100% 100%;image-rendering:pixelated')
+
+        order = ['left', 'right', 'right', 'left']
+        width = len(order) * cell
+        with tempfile.TemporaryDirectory(prefix='ferri-pdf-svg-mask-images-') as directory:
+            pixels = self.render(
+                Path(directory),
+                ''.join(f'.{side}{{{mask(column)}}}' for side, column in sides.items()),
+                f'<svg width="{width}pt" height="{cell}pt" viewBox="0 0 {width} {cell}">'
+                + ''.join(f'<rect class="{side}" x="{index * cell}" width="{cell}" '
+                          f'height="{cell}" fill="rgb(0,160,0)"/>'
+                          for index, side in enumerate(order))
+                + '</svg>',
+                CAIRO)
+            for index, side in enumerate(order):
+                start = index * cell + sides[side] * half
+                with self.subTest(shape=index, mask=side):
+                    self.assertSpan(self.ink_columns(pixels, index * cell, 0, cell, cell, GREEN),
+                                    start, start + half,
+                                    f'shape {index} shows the {side} half its own mask keeps')
+
     def assertProjectedEdges(self, pixels, project, rect, inside, label):
         """Pixels just inside each projected corner region of `rect` show `inside`, and pixels
         just outside it the page."""

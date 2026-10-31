@@ -3,7 +3,7 @@ use std::borrow::Cow;
 
 pub(crate) const RGB_CHANNELS: usize = 3;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Hash)]
 pub enum PixelDepth {
     Eight,
     Sixteen,
@@ -17,7 +17,7 @@ impl PixelDepth {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Hash)]
 pub struct PixelImage {
     pub(crate) width: u32,
     pub(crate) height: u32,

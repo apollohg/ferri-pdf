@@ -6,13 +6,10 @@ use std::{
     sync::Arc,
 };
 
-#[derive(Clone)]
+/// Decoded or painted pixels, identified by content: an address names other pixels once
+/// these are dropped.
+#[derive(Clone, Hash)]
 pub(super) struct Pixels(pub Arc<PixelImage>);
-impl Hash for Pixels {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        Arc::as_ptr(&self.0).hash(state);
-    }
-}
 impl CustomImage for Pixels {
     fn color_channel(&self) -> &[u8] {
         self.0.color()

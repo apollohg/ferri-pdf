@@ -9,6 +9,7 @@ use krilla::{
 };
 use std::{
     collections::{HashMap, HashSet},
+    hash::{Hash, Hasher},
     sync::Arc,
 };
 
@@ -79,17 +80,33 @@ pub(super) fn draw_placed(
     Ok(errors.into_inner())
 }
 
+/// An image identified by its allocation. The key holds the image, so that no image made
+/// while painting, as a mask's pixels are, takes the address while the entry stands.
+#[derive(Clone)]
+struct AssetKey(Arc<Asset>);
+impl PartialEq for AssetKey {
+    fn eq(&self, other: &Self) -> bool {
+        Arc::ptr_eq(&self.0, &other.0)
+    }
+}
+impl Eq for AssetKey {}
+impl Hash for AssetKey {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        Arc::as_ptr(&self.0).hash(state);
+    }
+}
+
 pub(super) struct ImageWriter {
-    failed: HashMap<usize, String>,
-    reported: HashSet<usize>,
+    failed: HashMap<AssetKey, String>,
+    reported: HashSet<AssetKey>,
     diagnostics: Vec<String>,
     paint_diagnostics: Vec<crate::writer::PaintDiagnostic>,
     /// Rasters by image and whether viewers interpolate them.
-    images: HashMap<(usize, bool), Image>,
+    images: HashMap<(AssetKey, bool), Image>,
     /// Those rasters enlarged by whole multiples, as `pixelated` draws them.
-    enlargements: HashMap<(usize, (u32, u32)), Image>,
-    vectors: HashMap<(usize, u32, u32), Arc<crate::svg::usvg::Tree>>,
-    opaque: HashMap<usize, bool>,
+    enlargements: HashMap<(AssetKey, (u32, u32)), Image>,
+    vectors: HashMap<(AssetKey, u32, u32), Arc<crate::svg::usvg::Tree>>,
+    opaque: HashMap<AssetKey, bool>,
     /// The density images composited in pixels resolve at.
     pub(super) pixels_per_point: f32,
     /// The page points one unit of the current drawing space spans, which renderings drawn as
@@ -124,7 +141,7 @@ impl ImageWriter {
     pub(super) fn opaque(&mut self, image: &Arc<Asset>) -> bool {
         *self
             .opaque
-            .entry(Arc::as_ptr(image) as usize)
+            .entry(AssetKey(image.clone()))
             .or_insert_with(|| image.opaque())
     }
     /// The image-decoding and painting diagnostics of the part written since the last call.
@@ -145,9 +162,9 @@ impl ImageWriter {
             self.paint_diagnostics.push(diagnostic);
         }
     }
-    fn report_failure(&mut self, key: usize) {
-        if self.reported.insert(key) {
-            self.diagnostics.push(self.failed[&key].clone());
+    fn report_failure(&mut self, key: &AssetKey) {
+        if self.reported.insert(key.clone()) {
+            self.diagnostics.push(self.failed[key].clone());
         }
     }
 
@@ -231,7 +248,7 @@ impl ImageWriter {
         let Some(multiples) = paint.rendering.nearest_multiples(image.size(), target) else {
             return image.clone();
         };
-        let key = (Arc::as_ptr(&paint.image) as usize, multiples);
+        let key = (AssetKey(paint.image.clone()), multiples);
         if let Some(enlarged) = self.enlargements.get(&key) {
             return enlarged.clone();
         }
@@ -250,16 +267,20 @@ impl ImageWriter {
     /// Decodes `paint`'s image once, or its SVG tree at the paint's size; `None` when it fails
     /// to decode, which is reported.
     pub(super) fn decode(&mut self, paint: &ImagePaint) -> Result<Option<Decoded>, PdfError> {
-        let key = Arc::as_ptr(&paint.image) as usize;
+        let key = AssetKey(paint.image.clone());
         let interpolate = paint.rendering.interpolates();
         let source_size = [paint.rect.width, paint.rect.height].map(|v| v / paint.source_scale);
-        let vector_key = (key, source_size[0].to_bits(), source_size[1].to_bits());
+        let vector_key = (
+            key.clone(),
+            source_size[0].to_bits(),
+            source_size[1].to_bits(),
+        );
         if self.failed.contains_key(&key) {
-            self.report_failure(key);
+            self.report_failure(&key);
             return Ok(None);
         }
         if let std::collections::hash_map::Entry::Vacant(entry) =
-            self.images.entry((key, interpolate))
+            self.images.entry((key.clone(), interpolate))
         {
             let loaded = match paint.image.as_ref() {
                 Asset::Raster(raster) => {
@@ -293,8 +314,8 @@ impl ImageWriter {
                         entry.insert(image);
                     }
                     Err(error) => {
-                        self.failed.insert(key, error);
-                        self.report_failure(key);
+                        self.failed.insert(key.clone(), error);
+                        self.report_failure(&key);
                         return Ok(None);
                     }
                 }
@@ -316,8 +337,8 @@ impl ImageWriter {
                         match svg.tree(size) {
                             Ok(tree) => entry.insert(Arc::new(tree)).clone(),
                             Err(error) => {
-                                self.failed.insert(key, error.to_string());
-                                self.report_failure(key);
+                                self.failed.insert(key.clone(), error.to_string());
+                                self.report_failure(&key);
                                 return Ok(None);
                             }
                         }
@@ -353,7 +374,7 @@ impl ImageWriter {
         paint: &ImagePaint,
         errors: std::collections::BTreeSet<String>,
     ) {
-        if !errors.is_empty() && self.reported.insert(Arc::as_ptr(&paint.image) as usize) {
+        if !errors.is_empty() && self.reported.insert(AssetKey(paint.image.clone())) {
             self.diagnostics.extend(errors);
         }
     }
