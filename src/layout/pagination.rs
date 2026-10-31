@@ -210,6 +210,9 @@ fn positioned_layer(
 
 /// Fixed boxes repeat on every page; this bounds boxes × pages.
 const MAX_FIXED_PLACEMENTS: usize = 100_000;
+/// The display items whose ink checking a page for content takes per unit of layout work,
+/// a unit being about one visit of a source box.
+const INK_CHECKS_PER_UNIT: usize = 32;
 /// Retain common page geometries without keeping one alignment vector per physical page.
 const MAX_TABLE_ALIGNMENT_GEOMETRIES: usize = 8;
 /// Rounding noise in summed `f32` geometry, so that `(H - edges) + edges` still fits `H`.
@@ -1465,8 +1468,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         paginator
     }
     /// Places the document canvas and the page borders over it on `page` (CSS Page 3 §3.1).
-    fn canvas(&mut self, page: usize) {
-        let painting = match &self.fragmentainers {
+    /// The canvas and border paint of fragmentainer `page`, where it is a physical page.
+    fn page_painting(&self, page: usize) -> Option<crate::layout::page_paint::PagePaint> {
+        match &self.fragmentainers {
             Fragmentainers::Pages(pages) => Some(
                 crate::layout::page_paint::PagePaint::in_flow(
                     &pages.boxes[page],
@@ -1476,7 +1480,17 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 .expect("resolved physical pages have valid paint geometry"),
             ),
             Fragmentainers::Columns(_) => None,
-        };
+        }
+    }
+    fn canvas(&mut self, page: usize) {
+        let painting = self.page_painting(page);
+        self.paint_canvas(page, painting);
+    }
+    fn paint_canvas(
+        &mut self,
+        page: usize,
+        painting: Option<crate::layout::page_paint::PagePaint>,
+    ) {
         let canvas = match &painting {
             Some(painting) if page != self.page => painting.canvas.clone(),
             _ => self.canvas.clone(),
@@ -1591,9 +1605,14 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     }
 
     fn page_has_ink(&self, page: usize) -> bool {
+        if !self.pages[page].is_empty() {
+            return true;
+        }
+        // Each item checked is charged, as pages are checked whenever layout enters them.
+        let checked = std::cell::Cell::new(0_usize);
+        let check = |_: &_| checked.set(checked.get() + 1);
         let page_rect = self.fragmentainers.rect(page);
-        !self.pages[page].is_empty()
-            || self.foreground[page].iter().any(|paint| match &paint.item {
+        let inked = self.foreground[page].iter().inspect(check).any(|paint| match &paint.item {
                 DisplayItem::Frame(frame) => !frame.items.is_empty(),
                 DisplayItem::Scene(scene) => !scene.planes.is_empty(),
                 DisplayItem::Image(image) => image.visible_rect().intersects(page_rect),
@@ -1618,6 +1637,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             })
             || self.display_lists[page]
                 .iter()
+                .inspect(check)
                 .enumerate()
                 .filter(|(slot, _)| !self.page_slots[page].contains(&Some(*slot)))
                 .any(|(_, item)| match &item.item {
@@ -1644,11 +1664,15 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             // Table track and track group backgrounds behind cells.
             || self.underlays.iter().any(|(&(underlay_page, _), paints)| {
                 underlay_page == page
-                    && paints.iter().any(|paint| {
+                    && paints.iter().inspect(check).any(|paint| {
                         matches!(&paint.item, DisplayItem::Box(fragment)
                             if fragment.has_ink() && fragment.rect.intersects(page_rect))
                     })
-            })
+            });
+        self.measurer
+            .work
+            .charge(checked.get().div_ceil(INK_CHECKS_PER_UNIT));
+        inked
     }
     /// The sides of the current fragment's first and last formatted lines that trim: those of
     /// a cloned box continuing from an earlier fragment, or else of every column (CSS
@@ -1680,6 +1704,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     }
     /// Moves to fragmentainer `page`, recording how far the flow reached in the one left.
     fn enter(&mut self, page: usize) {
+        self.measurer.work.charge(1);
         if self.unbroken == 0 {
             let end = self.trimmed_flow_end();
             if let Fragmentainers::Columns(rows) = &mut self.fragmentainers {
@@ -1695,19 +1720,14 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             fragmentainer_height(self.fragmentainers.height(page) - self.footnote_reserve(page));
         self.page_rect = self.fragmentainers.rect(page);
         self.canvas_rect = self.fragmentainers.content_box(page);
-        if let Fragmentainers::Pages(pages) = &self.fragmentainers {
+        let painting = self.page_painting(page);
+        if let Some(painting) = &painting {
             self.top = self.canvas_rect.y;
             self.measurer.page_height = self.fragmentainers.height(page);
-            self.canvas = crate::layout::page_paint::PagePaint::in_flow(
-                &pages.boxes[page],
-                pages.document.canvas_background(),
-                crate::style::logical::Flow::used(pages.document.root().style()),
-            )
-            .expect("resolved physical pages have valid paint geometry")
-            .canvas;
+            self.canvas = painting.canvas.clone();
         }
         if page < self.display_lists.len() {
-            self.canvas(page);
+            self.paint_canvas(page, painting);
         }
     }
     pub(super) fn record_baselines(&mut self, page: usize, baselines: [Option<f32>; 2]) {
@@ -1811,6 +1831,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         area: Rect,
         extra: Option<&ActiveGeometry<'a>>,
     ) -> Result<Vec<Option<ActiveGeometry<'a>>>, LayoutError> {
+        self.measurer.work.spend(self.boxes.len() + 1)?;
         let mut containing = match &self.fragmentainers {
             Fragmentainers::Pages(_) => (
                 area.x,
@@ -2234,7 +2255,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         forced_break: Option<Forced>,
         preserve_empty: bool,
     ) -> Result<(), LayoutError> {
-        self.measurer.work.spend(1)?;
+        self.measurer.work.spend(self.boxes.len().max(1))?;
         if self.places_footnotes() {
             self.place_recorded_footnotes()?;
         }
@@ -4720,6 +4741,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         extend(&self.key, (0, order))
     }
     fn select_page(&mut self, page: usize, y: f32) {
+        self.measurer.work.charge(self.boxes.len());
         self.enter(page);
         self.y = y;
         self.pending.clear();
@@ -4795,7 +4817,6 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         if !self.continuation_flow() {
             return Ok(space);
         }
-        self.measurer.work.spend(self.boxes.len().max(1))?;
         let path = self.flow_geometry(page, self.fragmentainers.content_box(page), None)?;
         space.height = path
             .last()

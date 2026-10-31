@@ -1110,6 +1110,7 @@ pub(super) fn render<'t>(
                 else {
                     continue;
                 };
+                measurer.work.spend(1)?;
                 let mut prepared = prepare(
                     margin,
                     decoration,

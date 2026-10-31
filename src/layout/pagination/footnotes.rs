@@ -387,7 +387,9 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
 
     fn content_height(&self, page: usize) -> Option<f32> {
         let area = self.area(page)?;
-        self.area_content(self.footnotes.parts(page), &area, self.footnotes_only(page))
+        let parts = self.footnotes.parts(page);
+        self.measurer.work.charge(parts.len());
+        self.area_content(parts, &area, self.footnotes_only(page))
             .map(|content| content.height())
     }
 

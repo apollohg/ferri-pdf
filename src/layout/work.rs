@@ -258,7 +258,7 @@ mod tests {
 
     #[test]
     fn column_candidates_share_the_jobs_budget_without_poisoning_later_jobs() {
-        const LIMIT: usize = 4096;
+        const LIMIT: usize = 8192;
         let resolver = FileResolver::default();
         let content = "<div class=item></div>".repeat(320);
         let parse = |columns| {
