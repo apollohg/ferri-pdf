@@ -26,16 +26,30 @@ pub(crate) fn convert(
         return;
     }
 
-    let placement = converter::element_transform(node, state, cache, parent, &|cache, probe| {
+    let collect = |cache: &mut converter::Cache, probe: &mut Group| {
         convert_instance(node, child, state, cache, probe, Transform::default());
-    });
+    };
+    let mut content = converter::Content::new(node, converter::Measured::Instance, &collect);
+    let placement = converter::element_transform(node, state, cache, parent, &mut content);
     // The `use` element's own group carries a 3D placement.
     let transform = match placement {
         super::motion::Placement::Affine(transform) => transform,
         super::motion::Placement::Matrix(_) => Transform::default(),
         super::motion::Placement::Hidden => return,
     };
-    convert_instance(node, child, state, cache, parent, transform);
+    match content.reused(cache) {
+        Some(instance) => {
+            let mut g = Group {
+                transform,
+                abs_transform: parent.abs_transform.pre_concat(transform),
+                children: instance.children,
+                ..Group::empty()
+            };
+            g.calculate_bounding_boxes();
+            parent.children.push(Node::Group(Box::new(g)));
+        }
+        None => convert_instance(node, child, state, cache, parent, transform),
+    }
 }
 
 /// The `use` element's instance of `child` under the element's own `transform`, which is

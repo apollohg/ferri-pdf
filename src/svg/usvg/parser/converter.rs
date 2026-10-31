@@ -153,6 +153,11 @@ pub(crate) struct Cache {
     image_index: usize,
     /// The perspective, in points, that each converted element with one gives its children.
     pub(crate) perspectives: HashMap<svgtree::NodeKey, crate::style::transform::Matrix3d>,
+    /// The fill and stroke bounding boxes of the content of each element measured so far for
+    /// its reference box, in the tree or resource converting.
+    measured: HashMap<(svgtree::NodeKey, Measured), [Rect; 2]>,
+    /// How many measurements converting content nest, each inside the last.
+    measuring: usize,
 }
 
 macro_rules! font_lookup {
@@ -202,6 +207,8 @@ impl Cache {
             filter_index: 0,
             image_index: 0,
             perspectives: HashMap::new(),
+            measured: HashMap::new(),
+            measuring: 0,
         }
     }
 
@@ -228,6 +235,8 @@ impl Cache {
 
     /// What `convert` makes of the content of a resource that an element references, which
     /// is omitted, as an invalid reference is, past `MAX_REFERENCE_DEPTH` nested references.
+    /// The resource converts whole, for the caches that keep it, and measures its own content:
+    /// its elements convert again in other contexts.
     pub(crate) fn referenced<T>(
         &mut self,
         convert: impl FnOnce(&mut Self) -> Option<T>,
@@ -236,9 +245,13 @@ impl Cache {
             self.limited = true;
             return None;
         }
+        let measured = std::mem::take(&mut self.measured);
+        let measuring = std::mem::replace(&mut self.measuring, 0);
         self.references += 1;
         let converted = convert(self);
         self.references -= 1;
+        self.measured = measured;
+        self.measuring = measuring;
         converted
     }
 
@@ -990,32 +1003,93 @@ fn vector_effect(node: SvgNode, parent: Transform, own: Transform) -> Transform 
         .map_or(own, |to_parent| to_parent.pre_concat(constrained))
 }
 
-/// The placement of an element whose content `collect` converts untransformed: CSS
-/// transform properties, or the `transform` attribute about an origin that, per CSS
-/// Transforms 1 §2, lies in the element's object or stroke bounding box when
-/// `transform-box` selects one, measured before the transform applies.
+/// Which content of an element a measurement converts.
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
+pub(super) enum Measured {
+    /// The element's children.
+    Children,
+    /// The instance a `use` element places.
+    Instance,
+}
+
+/// The content of an element, which `collect` converts, measured for the reference box its
+/// transform or perspective takes (CSS Transforms 1 §3) before it converts. The content
+/// converts once to measure it and once more where it renders, and each element's is measured
+/// once: content measured inside a measurement is used as converted, as only its extent
+/// matters there, so nested measured elements convert in linear rather than exponential time.
+pub(super) struct Content<'f> {
+    key: (svgtree::NodeKey, Measured),
+    collect: &'f dyn Fn(&mut Cache, &mut Group),
+    measured: Option<Group>,
+}
+
+impl<'f> Content<'f> {
+    pub(super) fn new(
+        node: SvgNode,
+        measured: Measured,
+        collect: &'f dyn Fn(&mut Cache, &mut Group),
+    ) -> Self {
+        Self {
+            key: (node.key(), measured),
+            collect,
+            measured: None,
+        }
+    }
+
+    /// The fill and stroke bounding boxes of the content, converted untransformed in the
+    /// space of `parent`.
+    pub(super) fn boxes(&mut self, cache: &mut Cache, parent: &Group) -> [Rect; 2] {
+        if let Some(group) = &self.measured {
+            return [group.bounding_box, group.stroke_bounding_box];
+        }
+        if let Some(boxes) = cache.measured.get(&self.key) {
+            return *boxes;
+        }
+        let mut probe = Group::empty();
+        probe.abs_transform = parent.abs_transform;
+        cache.measuring += 1;
+        (self.collect)(cache, &mut probe);
+        cache.measuring -= 1;
+        probe.calculate_bounding_boxes();
+        let boxes = [probe.bounding_box, probe.stroke_bounding_box];
+        cache.measured.insert(self.key, boxes);
+        self.measured = Some(probe);
+        boxes
+    }
+
+    /// The content this element measured, where it is used as converted: inside a measurement.
+    pub(super) fn reused(&mut self, cache: &Cache) -> Option<Group> {
+        self.measured.take().filter(|_| cache.measuring > 0)
+    }
+
+    /// Converts the content into `group`.
+    pub(super) fn convert(mut self, cache: &mut Cache, group: &mut Group) {
+        match self.reused(cache) {
+            Some(measured) => group.children.extend(measured.children),
+            None => (self.collect)(cache, group),
+        }
+    }
+}
+
+/// The placement of an element whose content converts untransformed: CSS transform
+/// properties, or the `transform` attribute about an origin that, per CSS Transforms 1 §2,
+/// lies in the element's object or stroke bounding box when `transform-box` selects one,
+/// measured before the transform applies.
 pub(super) fn element_transform(
     node: SvgNode,
     state: &State,
     cache: &mut Cache,
     parent: &Group,
-    collect: &dyn Fn(&mut Cache, &mut Group),
+    content: &mut Content,
 ) -> Placement {
-    let own = match super::motion::transform(node, state, cache, parent, collect) {
+    let own = match super::motion::transform(node, state, cache, parent, content) {
         Some(Placement::Affine(own)) => own,
         // CSS Transforms 2 §11: no vector effect applies in 3D.
         Some(placement) => return placement,
         None => match node.attribute::<&str>(AId::TransformBox) {
             Some(reference @ (FILL_BOX | STROKE_BOX)) => {
-                let mut probe = Group::empty();
-                probe.abs_transform = parent.abs_transform;
-                collect(cache, &mut probe);
-                probe.calculate_bounding_boxes();
-                let bounds = if reference == FILL_BOX {
-                    probe.bounding_box
-                } else {
-                    probe.stroke_bounding_box
-                };
+                let [fill, stroke] = content.boxes(cache, parent);
+                let bounds = if reference == FILL_BOX { fill } else { stroke };
                 node.resolve_transform_in(AId::Transform, state, Some(bounds))
             }
             _ => node.resolve_transform(AId::Transform, state),
@@ -1025,18 +1099,18 @@ pub(super) fn element_transform(
 }
 
 /// Records the perspective `node` gives its children (CSS Transforms 2 §8), measuring its
-/// content with `collect` where its reference box needs it.
+/// content where its reference box needs it.
 pub(super) fn record_perspective(
     node: SvgNode,
     state: &State,
     cache: &mut Cache,
     parent: &Group,
-    collect: &dyn Fn(&mut Cache, &mut Group),
+    content: &mut Content,
 ) {
     let key = node.key();
     // Content measured for the reference box lies flat, without the perspective it sets up.
     cache.perspectives.remove(&key);
-    if let Some(perspective) = super::motion::perspective(node, state, cache, parent, collect) {
+    if let Some(perspective) = super::motion::perspective(node, state, cache, parent, content) {
         cache.perspectives.insert(key, perspective);
     }
 }
@@ -1093,8 +1167,9 @@ fn nested_group(
         group.calculate_bounding_boxes();
         return (!group.children.is_empty()).then_some(group);
     }
-    let mut g = open_group(node, state, cache, parent, collect_children)?;
-    collect_children(cache, &mut g);
+    let mut content = Content::new(node, Measured::Children, collect_children);
+    let mut g = open_group(node, state, cache, parent, &mut content)?;
+    content.convert(cache, &mut g);
     close_group(node, state, force, cache, parent, g)
 }
 
@@ -1105,7 +1180,7 @@ fn open_group(
     state: &State,
     cache: &mut Cache,
     parent: &Group,
-    collect_children: &dyn Fn(&mut Cache, &mut Group),
+    content: &mut Content,
 ) -> Option<Box<Group>> {
     // A `clipPath` child cannot have an opacity.
     let opacity = if state.parent_clip_path.is_none() {
@@ -1115,13 +1190,12 @@ fn open_group(
         Opacity::ONE
     };
 
-    let (transform, matrix) = match element_transform(node, state, cache, parent, collect_children)
-    {
+    let (transform, matrix) = match element_transform(node, state, cache, parent, content) {
         Placement::Affine(transform) => (transform, None),
         Placement::Matrix(matrix) => (Transform::default(), Some(matrix)),
         Placement::Hidden => return None,
     };
-    record_perspective(node, state, cache, parent, collect_children);
+    record_perspective(node, state, cache, parent, content);
     let preserves_3d = super::motion::preserves_3d(node, state);
     // CSS Masking 1 §6.1: a clipping path's children contribute geometry only.
     let in_clip_path = state.parent_clip_path.is_some();

@@ -127,7 +127,7 @@ pub(super) fn transform(
     state: &converter::State<'_>,
     cache: &mut converter::Cache,
     parent: &crate::svg::usvg::Group,
-    collect: &dyn Fn(&mut converter::Cache, &mut crate::svg::usvg::Group),
+    content: &mut converter::Content,
 ) -> Option<Placement> {
     let css_transform = node
         .attribute::<&str>(svgtree::AId::Transform)
@@ -144,7 +144,7 @@ pub(super) fn transform(
     if node.is_contents() || !(css_transform || css_properties || plane) {
         return None;
     }
-    match transform_impl(node, state, cache, parent, collect, plane) {
+    match transform_impl(node, state, cache, parent, content, plane) {
         Ok(transform) => transform,
         Err(error) => {
             cache.style_error.get_or_insert(Arc::new(error));
@@ -234,7 +234,7 @@ pub(super) fn perspective(
     state: &converter::State<'_>,
     cache: &mut converter::Cache,
     parent: &crate::svg::usvg::Group,
-    collect: &dyn Fn(&mut converter::Cache, &mut crate::svg::usvg::Group),
+    content: &mut converter::Content,
 ) -> Option<Matrix3d> {
     use svgtree::AId;
     let depth = node
@@ -261,32 +261,26 @@ pub(super) fn perspective(
     };
     style.effective_zoom = node.effective_zoom();
     let mut style = style.used();
-    let boxes = reference_boxes(&mut style, false, state, cache, parent, collect);
+    let boxes = reference_boxes(&mut style, false, state, cache, parent, content);
     style.parent_3d(&boxes).map(|parent| parent.perspective)
 }
 
 /// The areas whose content box is the reference box `style.transform_box` selects, measuring
-/// the element's content with `collect` when it or `measure` needs its bounds (CSS Transforms
-/// 1 §3); `style.transform_box` then selects that content box.
+/// the element's content when it or `measure` needs its bounds (CSS Transforms 1 §3);
+/// `style.transform_box` then selects that content box.
 fn reference_boxes(
     style: &mut crate::style::Style,
     measure: bool,
     state: &converter::State<'_>,
     cache: &mut converter::Cache,
     parent: &crate::svg::usvg::Group,
-    collect: &dyn Fn(&mut converter::Cache, &mut crate::svg::usvg::Group),
+    content: &mut converter::Content,
 ) -> crate::paint::BoxAreas<crate::paint::Rect> {
     use crate::style::TransformBox;
     let view = points(state.view_box.to_rect());
     let (fill, stroke) = if measure || style.transform_box != TransformBox::ViewBox {
-        let mut probe = crate::svg::usvg::Group::empty();
-        probe.abs_transform = parent.abs_transform;
-        collect(cache, &mut probe);
-        probe.calculate_bounding_boxes();
-        (
-            points(probe.bounding_box),
-            points(probe.stroke_bounding_box),
-        )
+        let [fill, stroke] = content.boxes(cache, parent);
+        (points(fill), points(stroke))
     } else {
         (view, view)
     };
@@ -334,7 +328,7 @@ fn transform_impl(
     state: &converter::State<'_>,
     cache: &mut converter::Cache,
     parent: &crate::svg::usvg::Group,
-    collect: &dyn Fn(&mut converter::Cache, &mut crate::svg::usvg::Group),
+    content: &mut converter::Content,
     plane: bool,
 ) -> Result<Option<Placement>, crate::style::StyleError> {
     use crate::paint::POINTS_PER_PIXEL;
@@ -410,7 +404,7 @@ fn transform_impl(
                 ..
             }
         );
-    let boxes = reference_boxes(&mut style, measure, state, cache, parent, collect);
+    let boxes = reference_boxes(&mut style, measure, state, cache, parent, content);
     let mut reference = Reference::rect(points(state.view_box.to_rect()));
     reference.border_radius = Some(style.decoration.radii.clone());
     if let OffsetPath::Path {

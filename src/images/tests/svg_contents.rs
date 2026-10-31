@@ -1679,3 +1679,50 @@ fn svg_images_drawing_svg_images_nest_as_references() {
     }
     assert_eq!(drawn, MAX_REFERENCE_DEPTH, "nested SVG images drawn");
 }
+
+/// What `convert` returns, which must finish within `bound`; `work` names what it converts.
+fn within<T: Send + 'static>(
+    work: &str,
+    bound: std::time::Duration,
+    convert: impl FnOnce() -> T + Send + 'static,
+) -> T {
+    let (sender, receiver) = std::sync::mpsc::channel();
+    std::thread::spawn(move || {
+        let _ = sender.send(convert());
+    });
+    receiver
+        .recv_timeout(bound)
+        .unwrap_or_else(|error| panic!("{work} not converted within {bound:?}: {error}"))
+}
+
+#[test]
+fn nested_fill_box_transforms_measure_each_element_once() {
+    // Converting each element's content again after measuring it for its reference box takes
+    // time exponential in the nesting: centuries at this depth, against milliseconds.
+    const DEPTH: usize = 40;
+    const BOUND: std::time::Duration = std::time::Duration::from_secs(10);
+    const SQUARE: [f32; 4] = [20.0, 30.0, 10.0, 10.0];
+    let open = "<g style='transform-box:fill-box;transform-origin:center' transform='rotate(90)'>";
+    let [x, y, width, height] = SQUARE;
+    let body = format!(
+        "{}<rect x='{x}' y='{y}' width='{width}' height='{height}'/>{}",
+        open.repeat(DEPTH),
+        "</g>".repeat(DEPTH)
+    );
+    let bounds = within(
+        &format!("{DEPTH} nested fill-box groups"),
+        BOUND,
+        move || {
+            let rect = tree(&body).root().abs_bounding_box();
+            [rect.x(), rect.y(), rect.width(), rect.height()]
+        },
+    );
+    // A quarter turn about the centre of each group's fill box leaves the square in place.
+    for (actual, expected) in bounds.into_iter().zip(SQUARE) {
+        assert!(
+            (actual - expected).abs() <= EPSILON,
+            "the square must stay at {SQUARE:?} under {DEPTH} turns about its centre, got \
+             {bounds:?}"
+        );
+    }
+}
