@@ -462,18 +462,26 @@ fn coverage(region: Rect, size: [usize; 2], pitch: [f32; 2], shape: (Rect, Radii
     let [columns, rows] = size;
     let mut values = vec![0.0; columns * rows];
     let weight = 1.0 / COVERAGE_SUBROWS as f32;
+    let mut previous = None;
     for row in 0..rows {
-        for sample in 0..COVERAGE_SUBROWS {
+        let spans: [_; COVERAGE_SUBROWS] = std::array::from_fn(|sample| {
             let y = region.y + (row as f32 + (sample as f32 + 0.5) * weight) * pitch[1];
-            let Some([x0, x1]) = row_span(shape.0, shape.1, y) else {
-                continue;
-            };
+            row_span(shape.0, shape.1, y)
+        });
+        let (done, rest) = values.split_at_mut(row * columns);
+        let line = &mut rest[..columns];
+        // A row sampling the same spans as the row above has its coverage.
+        let bits = spans.map(|span| span.map(|ends| ends.map(f32::to_bits)));
+        if previous.replace(bits) == Some(bits) {
+            line.copy_from_slice(&done[(row - 1) * columns..]);
+            continue;
+        }
+        for [x0, x1] in spans.into_iter().flatten() {
             let from = ((x0 - region.x) / pitch[0]).max(0.0);
             let to = ((x1 - region.x) / pitch[0]).min(columns as f32);
             if from >= to {
                 continue;
             }
-            let line = &mut values[row * columns..(row + 1) * columns];
             for (column, value) in line
                 .iter_mut()
                 .enumerate()
@@ -499,30 +507,45 @@ fn gaussian_kernel(sigma: f32) -> Vec<f32> {
 }
 
 /// Convolves `values` along one axis; samples beyond the grid are zero. Each tap is added
-/// across a whole row at once, so every pixel sums its products in kernel order.
+/// across a whole row at once, so every pixel sums its products in kernel order. A row whose
+/// taps read the same input rows as the row before it has that row's sums, and copies them.
 fn convolve(values: &[f32], size: [usize; 2], kernel: &[f32], vertical: bool) -> Vec<f32> {
     let [columns, rows] = size;
     let radius = kernel.len() / 2;
+    // Input rows an output row reads on either side of its own.
+    let reach = if vertical { radius } else { 0 };
+    let line = |row: usize| &values[row * columns..][..columns];
+    // How many consecutive input rows, ending at each row, equal the row before them.
+    let mut repeats = vec![0; rows];
+    for row in 1..rows {
+        if line(row) == line(row - 1) {
+            repeats[row] = repeats[row - 1] + 1;
+        }
+    }
     let mut output = vec![0.0; values.len()];
     let accumulate = |output: &mut [f32], input: &[f32], weight: f32| {
         for (sum, value) in output.iter_mut().zip(input) {
             *sum += weight * value;
         }
     };
-    for (row, (line, input)) in output
-        .chunks_exact_mut(columns)
-        .zip(values.chunks_exact(columns))
-        .enumerate()
-    {
+    for row in 0..rows {
+        let (done, rest) = output.split_at_mut(row * columns);
+        let sums = &mut rest[..columns];
+        if row > reach && row + reach < rows && repeats[row + reach] > 2 * reach {
+            sums.copy_from_slice(&done[(row - 1) * columns..]);
+            continue;
+        }
         for (tap, &weight) in kernel.iter().enumerate() {
             if vertical {
                 if let Some(source) = (row + tap).checked_sub(radius).filter(|&at| at < rows) {
-                    accumulate(line, &values[source * columns..][..columns], weight);
+                    accumulate(sums, line(source), weight);
                 }
             } else {
                 // Output `at` reads input `at + tap - radius`.
                 let (start, source) = (radius.saturating_sub(tap), tap.saturating_sub(radius));
-                if let (Some(target), Some(input)) = (line.get_mut(start..), input.get(source..)) {
+                if let (Some(target), Some(input)) =
+                    (sums.get_mut(start..), line(row).get(source..))
+                {
                     accumulate(target, input, weight);
                 }
             }
@@ -1025,6 +1048,52 @@ mod tests {
             "pixel budget exceeded: {:?} has {pixels} pixels",
             capped.size
         );
+    }
+
+    #[test]
+    fn convolving_repeated_rows_matches_every_pixel_summed_in_kernel_order() {
+        // Runs of equal rows longer and shorter than the kernel, at the edges and inside.
+        let [columns, rows] = [7, 40];
+        let pattern = |row: usize| match row {
+            0..4 | 36.. => 0.0,
+            4..6 => 0.25,
+            6..25 => 1.0,
+            25..27 => 0.5,
+            _ => 0.75,
+        };
+        let values: Vec<f32> = (0..rows)
+            .flat_map(|row| (0..columns).map(move |column| pattern(row) * (column + 1) as f32))
+            .collect();
+        let kernel = gaussian_kernel(1.7);
+        let radius = kernel.len() / 2;
+        for vertical in [false, true] {
+            let actual = convolve(&values, [columns, rows], &kernel, vertical);
+            for row in 0..rows {
+                for column in 0..columns {
+                    let mut expected = 0.0;
+                    for (tap, weight) in kernel.iter().enumerate() {
+                        let [x, y] = if vertical {
+                            [Some(column), (row + tap).checked_sub(radius)]
+                        } else {
+                            [(column + tap).checked_sub(radius), Some(row)]
+                        };
+                        if let (Some(x), Some(y)) = (x.filter(|&x| x < columns), y)
+                            && y < rows
+                        {
+                            expected += weight * values[y * columns + x];
+                        }
+                    }
+                    let index = row * columns + column;
+                    assert_eq!(
+                        actual[index].to_bits(),
+                        expected.to_bits(),
+                        "vertical {vertical}, row {row}, column {column}: {} but summing the \
+                         taps in order gives {expected}",
+                        actual[index]
+                    );
+                }
+            }
+        }
     }
 
     #[test]
