@@ -83,6 +83,7 @@ pub(super) struct ImageWriter {
     failed: HashMap<usize, String>,
     reported: HashSet<usize>,
     diagnostics: Vec<String>,
+    paint_diagnostics: Vec<crate::writer::PaintDiagnostic>,
     /// Rasters by image and whether viewers interpolate them.
     images: HashMap<(usize, bool), Image>,
     /// Those rasters enlarged by whole multiples, as `pixelated` draws them.
@@ -105,6 +106,7 @@ impl ImageWriter {
             failed: HashMap::new(),
             reported: HashSet::new(),
             diagnostics: Vec::new(),
+            paint_diagnostics: Vec::new(),
             images: HashMap::new(),
             enlargements: HashMap::new(),
             vectors: HashMap::new(),
@@ -122,9 +124,23 @@ impl ImageWriter {
             .entry(Arc::as_ptr(image) as usize)
             .or_insert_with(|| image.opaque())
     }
-    pub(crate) fn take_diagnostics(&mut self) -> Vec<String> {
+    /// The image-decoding and painting diagnostics of the part written since the last call.
+    pub(crate) fn take_diagnostics(&mut self) -> Vec<crate::document::DocumentDiagnostic> {
         self.reported.clear();
         std::mem::take(&mut self.diagnostics)
+            .into_iter()
+            .map(|error| crate::document::DocumentDiagnostic::ImageDecode { error })
+            .chain(
+                std::mem::take(&mut self.paint_diagnostics)
+                    .into_iter()
+                    .map(crate::document::DocumentDiagnostic::Paint),
+            )
+            .collect()
+    }
+    pub(super) fn record(&mut self, diagnostic: crate::writer::PaintDiagnostic) {
+        if !self.paint_diagnostics.contains(&diagnostic) {
+            self.paint_diagnostics.push(diagnostic);
+        }
     }
     fn report_failure(&mut self, key: usize) {
         if self.reported.insert(key) {

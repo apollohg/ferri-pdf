@@ -78,6 +78,8 @@ pub enum DocumentDiagnostic {
     TreeLimit(crate::dom::DomError),
     #[error("{0}")]
     Layout(#[from] crate::layout::LayoutDiagnostic),
+    #[error("{0}")]
+    Paint(#[from] crate::writer::PaintDiagnostic),
     #[error("decoding {reference:?} as {encoding} replaced malformed byte sequences")]
     Decoding {
         base: crate::resources::ResourceBase,

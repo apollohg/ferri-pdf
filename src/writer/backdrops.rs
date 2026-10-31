@@ -227,10 +227,7 @@ fn clipped_input(
     let (columns, rows) = (image.pixmap.width(), image.pixmap.height());
     let width = columns as f32 + 2.0 * margin;
     let height = rows as f32 + 2.0 * margin;
-    let limit = f32::from(u16::MAX);
-    if width > limit || height > limit {
-        return Err(PdfError::RasterSize { width, height });
-    }
+    raster::fits(width, height)?;
     let mut pixmap = tiny_skia::Pixmap::new(width as u32, height as u32).ok_or(PdfError::Raster)?;
     let area = Rect {
         x: image.area.x - margin / density,

@@ -103,6 +103,18 @@ impl Raster {
     }
 }
 
+/// Pixels a raster holds at most, whose memory would otherwise grow without bound.
+const MAX_RASTER_PIXELS: f32 = 1.0e8;
+
+/// Whether a raster of `width` by `height` pixels is within the rasterizer's limits.
+pub(super) fn fits(width: f32, height: f32) -> Result<(), PdfError> {
+    let side = f32::from(u16::MAX);
+    if width > side || height > side || width * height > MAX_RASTER_PIXELS {
+        return Err(PdfError::RasterSize { width, height });
+    }
+    Ok(())
+}
+
 /// Renders `items` as they would draw at `area` of the current drawing space, or `None`
 /// when the area covers no pixel.
 pub(super) fn rasterize(
@@ -142,13 +154,7 @@ pub(super) fn render_surface(
     if !(columns >= 1.0 && rows >= 1.0) {
         return Ok(None);
     }
-    let limit = f32::from(u16::MAX);
-    if columns > limit || rows > limit {
-        return Err(PdfError::RasterSize {
-            width: columns,
-            height: rows,
-        });
-    }
+    fits(columns, rows)?;
     // The renderer truncates page sizes to whole pixels; half a pixel more keeps the count.
     const HALF_PIXEL: f32 = 0.5;
     // The page measures pixels, as the renderer mishandles pages under a few units across; a

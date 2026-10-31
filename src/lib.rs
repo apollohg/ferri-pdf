@@ -75,7 +75,8 @@ pub use crate::style::{
 };
 pub use crate::text::{GlyphRun, PositionedGlyph};
 pub use crate::writer::{
-    ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PdfError,
+    ImageDpi, ImageOptions, InvalidImageDpi, InvalidJpegQuality, JpegQuality, PaintDiagnostic,
+    PdfError,
 };
 
 /// Settings for a rendering job. CSS controls page size and formatting.
@@ -215,13 +216,7 @@ fn render_document(
     .map_err(pdf_error)?;
     let headings = trace.heading_locations(&document.navigation().headings);
     let mut diagnostics = document.into_diagnostics();
-    diagnostics.extend(
-        encoded
-            .image_diagnostics
-            .into_iter()
-            .flatten()
-            .map(|error| RenderDiagnostic::ImageDecode { error }),
-    );
+    diagnostics.extend(encoded.diagnostics.into_iter().flatten());
     Ok(RenderOutput {
         pdf: encoded.pdf,
         headings,

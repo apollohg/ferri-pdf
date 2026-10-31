@@ -542,9 +542,12 @@ fn draw_source(
     }
     painter.images.mask_element_draws += 1;
     if painter.images.mask_element_draws > MAX_MASK_ELEMENT_DRAWS_PER_PAGE {
-        return Err(PdfError::MaskElementDrawLimit {
-            limit: MAX_MASK_ELEMENT_DRAWS_PER_PAGE,
-        });
+        painter
+            .images
+            .record(crate::writer::PaintDiagnostic::MaskElementDrawLimit {
+                limit: MAX_MASK_ELEMENT_DRAWS_PER_PAGE,
+            });
+        return Ok(());
     }
     let Some(mask) = painter
         .raster

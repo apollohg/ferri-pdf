@@ -141,7 +141,7 @@ pub fn render_parts_with_resolver(
         .collect();
     let encoded = crate::writer::encode_parts_with_diagnostics(&writer_parts, &options.images)
         .map_err(pdf_error)?;
-    let mut image_diagnostics = encoded.image_diagnostics.into_iter();
+    let mut writer_diagnostics = encoded.diagnostics.into_iter();
     let mut page_count = 0;
     let parts = prepared
         .into_iter()
@@ -152,11 +152,9 @@ pub fn render_parts_with_resolver(
             }
             let mut diagnostics = document.into_diagnostics();
             diagnostics.extend(
-                image_diagnostics
+                writer_diagnostics
                     .next()
-                    .expect("writer returns diagnostics for every part")
-                    .into_iter()
-                    .map(|error| RenderDiagnostic::ImageDecode { error }),
+                    .expect("writer returns diagnostics for every part"),
             );
             let result = PartOutput {
                 first_page: page_count + 1,

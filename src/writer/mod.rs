@@ -85,11 +85,37 @@ pub enum PdfError {
     /// The CSS mask layers of SVG content draw through the display list that places it.
     #[error("SVG content with CSS mask layers drawn outside a display list")]
     DetachedSvgMasks,
-    /// Shared `mask` references can multiply with each level of nesting.
-    #[error("a page draws more than {limit} mask elements")]
-    MaskElementDrawLimit { limit: usize },
     #[error("{0}")]
     Serialization(#[from] krilla::error::KrillaError),
+}
+
+impl PdfError {
+    /// Whether the error breaks an invariant of the layout being written, rather than
+    /// following from what the document asks to paint.
+    pub(super) fn is_internal(&self) -> bool {
+        matches!(
+            self,
+            Self::EmptyParts
+                | Self::InvalidFontId(_)
+                | Self::DisplayListPageCount { .. }
+                | Self::LinkPageCount { .. }
+                | Self::PageRecordCount { .. }
+                | Self::InvalidTextReference { .. }
+        )
+    }
+}
+
+/// A painting degradation retained with the rendering result.
+#[derive(Clone, Debug, PartialEq, thiserror::Error)]
+pub enum PaintDiagnostic {
+    /// A display item whose geometry or effect could not be drawn is omitted with the
+    /// content it groups.
+    #[error("a painted item is omitted: {reason}")]
+    Omitted { reason: String },
+    /// Shared `mask` references multiply with each level of nesting; past a page's budget,
+    /// each draws as a transparent black layer.
+    #[error("mask elements drawn past {limit} on a page are transparent black layers")]
+    MaskElementDrawLimit { limit: usize },
 }
 
 /// An independently laid-out document to append to a shared PDF.
@@ -101,10 +127,10 @@ pub(crate) struct PdfPart<'a> {
     pub definitions: &'a crate::document::svg::SvgDefinitions,
 }
 
-/// PDF bytes and recoverable image-decoding diagnostics for each input part.
+/// PDF bytes and the recoverable image-decoding and painting diagnostics of each input part.
 pub(crate) struct EncodedPdf {
     pub pdf: Vec<u8>,
-    pub image_diagnostics: Vec<Vec<String>>,
+    pub diagnostics: Vec<Vec<crate::document::DocumentDiagnostic>>,
 }
 
 #[cfg(test)]
@@ -185,7 +211,7 @@ pub(crate) fn encode_parts_with_diagnostics(
         .collect();
     let links = navigation::resolve_links(parts, &destinations);
     let mut images = images::ImageWriter::new(raster::pixels_per_point(settings_dpi));
-    let mut image_diagnostics = Vec::with_capacity(parts.len());
+    let mut diagnostics = Vec::with_capacity(parts.len());
     let mut outline = krilla::outline::Outline::new();
     for (part_index, part) in parts.iter().enumerate() {
         let trace = part.trace;
@@ -261,7 +287,7 @@ pub(crate) fn encode_parts_with_diagnostics(
             navigation::annotate(&mut page, &trace.links[page_index], &links[part_index])?;
             page.finish();
         }
-        image_diagnostics.push(images.take_diagnostics());
+        diagnostics.push(images.take_diagnostics());
         navigation::append_outline(
             &mut outline,
             &part.navigation.bookmarks,
@@ -272,6 +298,6 @@ pub(crate) fn encode_parts_with_diagnostics(
     document.set_outline(outline);
     Ok(EncodedPdf {
         pdf: document.finish()?,
-        image_diagnostics,
+        diagnostics,
     })
 }

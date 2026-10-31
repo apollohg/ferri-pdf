@@ -175,183 +175,215 @@ impl Painter<'_, '_, '_> {
             density: self.density(space, surface),
         };
         let mut index = 0;
-        while let Some(item) = items.get(index) {
-            index += 1;
-            match item {
-                DisplayItem::Image(paint) => {
-                    self.images.scale = space.scale;
-                    match paint.image.as_ref() {
-                        crate::images::Image::Svg(svg) if svg.has_layer_masks() => {
-                            crate::writer::masks::draw_svg(self, paint, space, surface)?;
-                        }
-                        _ => self.images.draw(paint, space.viewport, surface)?,
+        while index < items.len() {
+            let depth = surface.push_depth();
+            match self.draw_item(items, index, space, scopes, frame, surface) {
+                Ok(next) => (index, space) = next,
+                Err(error) if error.is_internal() => return Err(error),
+                Err(error) => {
+                    // The item, with the content it groups, is omitted.
+                    while surface.push_depth() > depth {
+                        surface.pop();
                     }
-                }
-                DisplayItem::Frame(frame) => {
-                    let mut context = FlowContext {
-                        page: self.page,
-                        text: self.text,
-                        fonts: self.fonts,
-                        raster: self.raster,
-                    };
-                    draw_flow(frame, &mut context, self.images, space, surface)?;
-                }
-                DisplayItem::Box(box_paint) => {
-                    self.images.scale = space.scale;
-                    let mut context = FlowContext {
-                        page: self.page,
-                        text: self.text,
-                        fonts: self.fonts,
-                        raster: self.raster,
-                    };
-                    painting::draw(
-                        box_paint,
-                        self.page_area,
-                        space.viewport,
-                        surface,
-                        self.images,
-                        &mut |area, images, surface| {
-                            draw_flow(area, &mut context, images, space, surface)
-                        },
-                    )?;
-                }
-                DisplayItem::Text { line } => {
-                    let fragment = self
-                        .lines
-                        .get(*line)
-                        .ok_or(PdfError::InvalidTextReference {
-                            page: self.page,
-                            line: *line,
-                        })?;
-                    self.text.draw(fragment, surface)?;
-                }
-                DisplayItem::TextShadow(shadow) => crate::writer::text_shadows::draw(
-                    shadow,
-                    self.text,
-                    self.fonts,
-                    space.viewport,
-                    surface,
-                )?,
-                DisplayItem::Decoration(decoration) => {
-                    for fill in decoration.fills() {
-                        painting::draw_fill(fill, space.viewport, surface)?;
+                    self.images.record(crate::writer::PaintDiagnostic::Omitted {
+                        reason: error.to_string(),
+                    });
+                    index += 1;
+                    if items[index - 1].is_push() {
+                        index += group_length(&items[index..])? + 1;
                     }
-                }
-                DisplayItem::Backdrop(backdrop) => {
-                    crate::writer::backdrops::draw(self, backdrop, item, space, surface)?;
-                }
-                DisplayItem::PushClip(clip) => {
-                    scopes.push(Scope {
-                        pops: painting::push_clip(clip, space.viewport, surface)?,
-                        space,
-                        kind: Kind::Clip,
-                    });
-                }
-                DisplayItem::PushTransform(matrix) => {
-                    let [a, b, c, d, e, f] = *matrix;
-                    surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
-                    scopes.push(Scope {
-                        pops: 1,
-                        space,
-                        kind: Kind::Transform(*matrix),
-                    });
-                }
-                DisplayItem::Scene(scene) => {
-                    crate::writer::scene::draw(self, scene, space, surface)?;
-                }
-                DisplayItem::PushProjection(projection) => {
-                    let end = index + group_length(&items[index..])?;
-                    crate::writer::projection::draw(
-                        self,
-                        *projection,
-                        &items[index..end],
-                        space,
-                        surface,
-                    )?;
-                    index = end + 1;
-                }
-                DisplayItem::PushOpacity(alpha) => {
-                    let opacity =
-                        NormalizedF32::new(*alpha).ok_or(PdfError::InvalidAlpha(*alpha))?;
-                    let nested = if opacity == NormalizedF32::ONE {
-                        space
-                    } else {
-                        space.nested(surface)?
-                    };
-                    surface.push_opacity(opacity);
-                    scopes.push(Scope {
-                        pops: 1,
-                        space,
-                        kind: Kind::Group(Origin {
-                            index,
-                            density: self.density(nested, surface),
-                        }),
-                    });
-                    space = nested;
-                }
-                DisplayItem::PushBlend(mode @ (BlendMode::PlusDarker | BlendMode::PlusLighter)) => {
-                    let end = index + group_length(&items[index..])?;
-                    let open = Scopes {
-                        frame,
-                        open: scopes,
-                    };
-                    crate::writer::backdrops::additive(
-                        self,
-                        *mode,
-                        items,
-                        index - 1..end,
-                        &open,
-                        space,
-                        surface,
-                    )?;
-                    index = end + 1;
-                }
-                DisplayItem::PushBlend(mode) => {
-                    let nested = space.nested(surface)?;
-                    let pops = painting::push_blend(*mode, surface)?;
-                    scopes.push(Scope {
-                        pops,
-                        space,
-                        kind: Kind::Group(Origin {
-                            index,
-                            density: self.density(nested, surface),
-                        }),
-                    });
-                    space = nested;
-                }
-                DisplayItem::PushBackdropRoot => {
-                    let open = Scopes {
-                        frame,
-                        open: scopes,
-                    };
-                    crate::writer::backdrops::prepare(self, items, index - 1, &open)?;
-                    scopes.push(Scope {
-                        pops: 0,
-                        space,
-                        kind: Kind::Root(Origin {
-                            index,
-                            density: self.density(space, surface),
-                        }),
-                    });
-                }
-                DisplayItem::PushFilter(filter) => {
-                    let end = index + group_length(&items[index..])?;
-                    crate::writer::filters::draw(self, filter, &items[index..end], space, surface)?;
-                    index = end + 1;
-                }
-                DisplayItem::PushMask(mask) => {
-                    let end = index + group_length(&items[index..])?;
-                    crate::writer::masks::draw(self, mask, &items[index..end], space, surface)?;
-                    index = end + 1;
-                }
-                DisplayItem::Pop => {
-                    let scope = scopes.pop().ok_or(PdfError::InvalidGeometry)?;
-                    painting::pop_clips(scope.pops, surface);
-                    space = scope.space;
                 }
             }
         }
         Ok(())
+    }
+
+    /// Draws the item at `index` of `items` in `space`; returns the index of the next item to
+    /// draw and the space it draws in.
+    fn draw_item(
+        &mut self,
+        items: &[DisplayItem],
+        mut index: usize,
+        mut space: Space,
+        scopes: &mut Vec<Scope>,
+        frame: Origin,
+        surface: &mut Surface<'_>,
+    ) -> Result<(usize, Space), PdfError> {
+        let item = &items[index];
+        index += 1;
+        match item {
+            DisplayItem::Image(paint) => {
+                self.images.scale = space.scale;
+                match paint.image.as_ref() {
+                    crate::images::Image::Svg(svg) if svg.has_layer_masks() => {
+                        crate::writer::masks::draw_svg(self, paint, space, surface)?;
+                    }
+                    _ => self.images.draw(paint, space.viewport, surface)?,
+                }
+            }
+            DisplayItem::Frame(frame) => {
+                let mut context = FlowContext {
+                    page: self.page,
+                    text: self.text,
+                    fonts: self.fonts,
+                    raster: self.raster,
+                };
+                draw_flow(frame, &mut context, self.images, space, surface)?;
+            }
+            DisplayItem::Box(box_paint) => {
+                self.images.scale = space.scale;
+                let mut context = FlowContext {
+                    page: self.page,
+                    text: self.text,
+                    fonts: self.fonts,
+                    raster: self.raster,
+                };
+                painting::draw(
+                    box_paint,
+                    self.page_area,
+                    space.viewport,
+                    surface,
+                    self.images,
+                    &mut |area, images, surface| {
+                        draw_flow(area, &mut context, images, space, surface)
+                    },
+                )?;
+            }
+            DisplayItem::Text { line } => {
+                let fragment = self
+                    .lines
+                    .get(*line)
+                    .ok_or(PdfError::InvalidTextReference {
+                        page: self.page,
+                        line: *line,
+                    })?;
+                self.text.draw(fragment, surface)?;
+            }
+            DisplayItem::TextShadow(shadow) => crate::writer::text_shadows::draw(
+                shadow,
+                self.text,
+                self.fonts,
+                space.viewport,
+                surface,
+            )?,
+            DisplayItem::Decoration(decoration) => {
+                for fill in decoration.fills() {
+                    painting::draw_fill(fill, space.viewport, surface)?;
+                }
+            }
+            DisplayItem::Backdrop(backdrop) => {
+                crate::writer::backdrops::draw(self, backdrop, item, space, surface)?;
+            }
+            DisplayItem::PushClip(clip) => {
+                scopes.push(Scope {
+                    pops: painting::push_clip(clip, space.viewport, surface)?,
+                    space,
+                    kind: Kind::Clip,
+                });
+            }
+            DisplayItem::PushTransform(matrix) => {
+                let [a, b, c, d, e, f] = *matrix;
+                surface.push_transform(&Transform::from_row(a, b, c, d, e, f));
+                scopes.push(Scope {
+                    pops: 1,
+                    space,
+                    kind: Kind::Transform(*matrix),
+                });
+            }
+            DisplayItem::Scene(scene) => {
+                crate::writer::scene::draw(self, scene, space, surface)?;
+            }
+            DisplayItem::PushProjection(projection) => {
+                let end = index + group_length(&items[index..])?;
+                crate::writer::projection::draw(
+                    self,
+                    *projection,
+                    &items[index..end],
+                    space,
+                    surface,
+                )?;
+                index = end + 1;
+            }
+            DisplayItem::PushOpacity(alpha) => {
+                let opacity = NormalizedF32::new(*alpha).ok_or(PdfError::InvalidAlpha(*alpha))?;
+                let nested = if opacity == NormalizedF32::ONE {
+                    space
+                } else {
+                    space.nested(surface)?
+                };
+                surface.push_opacity(opacity);
+                scopes.push(Scope {
+                    pops: 1,
+                    space,
+                    kind: Kind::Group(Origin {
+                        index,
+                        density: self.density(nested, surface),
+                    }),
+                });
+                space = nested;
+            }
+            DisplayItem::PushBlend(mode @ (BlendMode::PlusDarker | BlendMode::PlusLighter)) => {
+                let end = index + group_length(&items[index..])?;
+                let open = Scopes {
+                    frame,
+                    open: scopes,
+                };
+                crate::writer::backdrops::additive(
+                    self,
+                    *mode,
+                    items,
+                    index - 1..end,
+                    &open,
+                    space,
+                    surface,
+                )?;
+                index = end + 1;
+            }
+            DisplayItem::PushBlend(mode) => {
+                let nested = space.nested(surface)?;
+                let pops = painting::push_blend(*mode, surface)?;
+                scopes.push(Scope {
+                    pops,
+                    space,
+                    kind: Kind::Group(Origin {
+                        index,
+                        density: self.density(nested, surface),
+                    }),
+                });
+                space = nested;
+            }
+            DisplayItem::PushBackdropRoot => {
+                let open = Scopes {
+                    frame,
+                    open: scopes,
+                };
+                crate::writer::backdrops::prepare(self, items, index - 1, &open)?;
+                scopes.push(Scope {
+                    pops: 0,
+                    space,
+                    kind: Kind::Root(Origin {
+                        index,
+                        density: self.density(space, surface),
+                    }),
+                });
+            }
+            DisplayItem::PushFilter(filter) => {
+                let end = index + group_length(&items[index..])?;
+                crate::writer::filters::draw(self, filter, &items[index..end], space, surface)?;
+                index = end + 1;
+            }
+            DisplayItem::PushMask(mask) => {
+                let end = index + group_length(&items[index..])?;
+                crate::writer::masks::draw(self, mask, &items[index..end], space, surface)?;
+                index = end + 1;
+            }
+            DisplayItem::Pop => {
+                let scope = scopes.pop().ok_or(PdfError::InvalidGeometry)?;
+                painting::pop_clips(scope.pops, surface);
+                space = scope.space;
+            }
+        }
+        Ok((index, space))
     }
 }
 
