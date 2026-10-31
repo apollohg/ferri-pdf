@@ -346,8 +346,10 @@ mod tests {
     #[test]
     fn mixed_native_css_layout_and_raw_paint_share_a_bounded_measurement_cache() {
         const SEGMENTS: usize = 8;
-        const OVER_BUDGET_SEGMENTS: usize = 12;
         const LIMIT: usize = 1_000_000;
+        // Formatting flattens orthogonal flows nested deeper, so a smaller budget, not more
+        // segments, is what the same measurements must exhaust.
+        const SMALLER_LIMIT: usize = LIMIT / 1000;
         let resolver = FileResolver::default();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
@@ -378,10 +380,12 @@ mod tests {
         check();
         assert!(
             matches!(
-                layout_with_work_limit(&parse(OVER_BUDGET_SEGMENTS), &resolver, LIMIT),
-                Err(LayoutError::WorkLimit { limit: LIMIT })
+                layout_with_work_limit(&document, &resolver, SMALLER_LIMIT),
+                Err(LayoutError::WorkLimit {
+                    limit: SMALLER_LIMIT
+                })
             ),
-            "more auto-sized orthogonal candidates must exhaust the same shared budget with the typed error"
+            "the same auto-sized orthogonal candidates must exhaust a smaller shared budget with the typed error"
         );
         check();
     }

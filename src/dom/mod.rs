@@ -7,6 +7,8 @@ pub(crate) use controls::{GaugeRegion, InputAttribute, InputType, non_negative_i
 mod language;
 mod selector;
 mod shadow;
+#[cfg(test)]
+pub(crate) use shadow::MAX_SHADOW_DEPTH;
 mod state;
 mod tree;
 pub(crate) use attributes::{integer_digits, non_negative_integer_digits};

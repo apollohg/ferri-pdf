@@ -240,10 +240,12 @@ fn assert_restyled_at_every_level(document: &StyledDocument, depth: usize) {
 #[test]
 fn deep_first_line_nesting_formats_in_linear_work_on_a_library_thread() {
     const LIBRARY_STACK_BYTES: usize = 2 * 1024 * 1024;
-    const SHALLOW: usize = 16;
-    const DEEP: usize = 64;
+    use crate::document::formatting::{ATOMIC_INLINE_DEPTH, BOX_DEPTH, MAX_FORMATTING_DEPTH};
     // Each level nests a block and an atomic inline in it, below the root and the body.
-    const DEEPEST: usize = (crate::document::formatting::MAX_FORMATTING_DEPTH - 1) / 2;
+    const LEVEL_DEPTH: usize = 2 * BOX_DEPTH + ATOMIC_INLINE_DEPTH;
+    const DEEPEST: usize = (MAX_FORMATTING_DEPTH - BOX_DEPTH) / LEVEL_DEPTH;
+    const SHALLOW: usize = DEEPEST / 4;
+    const DEEP: usize = SHALLOW * 4;
     std::thread::Builder::new()
         .stack_size(LIBRARY_STACK_BYTES)
         .spawn(|| {

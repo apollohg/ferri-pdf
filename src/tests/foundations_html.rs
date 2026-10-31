@@ -241,18 +241,30 @@ fn shadow_root_host_validation_and_ascii_mode_matching() {
 
 #[test]
 fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
-    use crate::document::{BlockContent, DocumentDiagnostic, StyledDocument};
-    const FORMATTING_LIMIT: usize = 512;
-    const DOCUMENT_AND_PARAGRAPH_LEVELS: usize = 2;
-    for (opening, closing) in [
-        ("<div>", "</div>"),
-        ("<span>", "</span>"),
-        ("<div style='display:inline-block'>", "</div>"),
-        ("<div style='position:absolute'>", "</div>"),
+    use crate::document::{
+        ATOMIC_INLINE_DEPTH, BOX_DEPTH, BlockContent, DocumentDiagnostic,
+        MAX_FORMATTING_DEPTH as FORMATTING_LIMIT, POSITIONED_DEPTH, StyledDocument,
+    };
+    // The body and the paragraph take a box's depth each.
+    const BODY_AND_PARAGRAPH_DEPTH: usize = 2 * BOX_DEPTH;
+    for (opening, closing, depth) in [
+        ("<div>", "</div>", BOX_DEPTH),
+        ("<span>", "</span>", BOX_DEPTH),
+        (
+            "<div style='display:inline-block'>",
+            "</div>",
+            BOX_DEPTH + ATOMIC_INLINE_DEPTH,
+        ),
+        (
+            "<div style='position:absolute'>",
+            "</div>",
+            BOX_DEPTH + POSITIONED_DEPTH,
+        ),
     ] {
+        let deepest_levels = (FORMATTING_LIMIT - BODY_AND_PARAGRAPH_DEPTH) / depth;
         for (levels, flattened) in [
-            (FORMATTING_LIMIT - DOCUMENT_AND_PARAGRAPH_LEVELS, false),
-            (FORMATTING_LIMIT - DOCUMENT_AND_PARAGRAPH_LEVELS + 1, true),
+            (deepest_levels, false),
+            (deepest_levels + 1, true),
             (2 * FORMATTING_LIMIT, true),
         ] {
             eprintln!("checking formatting boundary: {levels} levels of {opening}");

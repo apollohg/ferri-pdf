@@ -7,7 +7,26 @@ use first_line_copies::FirstLineBox;
 
 mod first_line_copies;
 
-pub(super) const MAX_FORMATTING_DEPTH: usize = 512;
+pub(crate) const MAX_FORMATTING_DEPTH: usize = 512;
+/// The formatting depth of a box laid out in its container's flow, whose nesting layout
+/// handles without recursion or with small stack frames.
+pub(crate) const BOX_DEPTH: usize = 1;
+/// The formatting depth a box adds for each way of laying it out apart from its container's
+/// flow, in proportion to the stack each nesting level of it takes, so that the deepest
+/// nesting of any of them renders on a 2 MiB thread.
+pub(crate) const ATOMIC_INLINE_DEPTH: usize = 13;
+pub(super) const TABLE_DEPTH: usize = 19;
+pub(super) const FLEX_DEPTH: usize = 14;
+pub(super) const GRID_DEPTH: usize = 16;
+pub(super) const FLOAT_DEPTH: usize = 14;
+pub(crate) const POSITIONED_DEPTH: usize = 11;
+/// Multi-column containers, filters and orthogonal flows take more for the work their nesting
+/// multiplies: balancing lays columns out again for each level, filters rasterize their
+/// content again, and an orthogonal flow without a definite size is measured again for each
+/// such level around it.
+pub(super) const MULTICOL_DEPTH: usize = 127;
+pub(super) const FILTER_DEPTH: usize = 20;
+pub(super) const ORTHOGONAL_DEPTH: usize = 63;
 /// Formatting-work units per formatting of a document, shared by the subtree copies it formats
 /// again. Units count formatted text bytes and, `ELEMENT_WORK` each, formatted elements.
 pub(crate) const MAX_FORMATTING_WORK: usize = 100_000_000;
@@ -3127,6 +3146,54 @@ fn text_limited<'a>(blocks: impl Iterator<Item = &'a BlockBox>) -> bool {
     false
 }
 
+/// The formatting depth a box with `style` takes below its parent box, styled `parent`.
+/// `MathML` content, whose own nesting limit bounds it, takes a box's.
+fn formatting_depth(style: &Style, parent: &Style, math: bool) -> usize {
+    if math || style.display == Display::Contents {
+        return BOX_DEPTH;
+    }
+    let display = &style.display;
+    [
+        (display.is_atomic_inline(), ATOMIC_INLINE_DEPTH),
+        (
+            display.is_table() || generates_anonymous_table(display, &parent.display),
+            TABLE_DEPTH,
+        ),
+        (
+            style.writing_mode.vertical() != parent.writing_mode.vertical()
+                && [&style.width, &style.height]
+                    .into_iter()
+                    .any(|size| size.resolve_definite(None).is_none()),
+            ORTHOGONAL_DEPTH,
+        ),
+        (display.is_flex(), FLEX_DEPTH),
+        (display.is_grid(), GRID_DEPTH),
+        (style.multicol.is_multicol(), MULTICOL_DEPTH),
+        (style.floating().is_some(), FLOAT_DEPTH),
+        (style.position.is_out_of_flow(), POSITIONED_DEPTH),
+        (
+            style.is_filtered() || style.has_backdrop_filter(),
+            FILTER_DEPTH,
+        ),
+    ]
+    .into_iter()
+    .filter_map(|(applies, depth)| applies.then_some(depth))
+    .sum::<usize>()
+        + BOX_DEPTH
+}
+
+/// Whether an internal table box with `display` in a box with display `parent` generates an
+/// anonymous table around it (CSS 2.1 §17.2.1).
+fn generates_anonymous_table(display: &Display, parent: &Display) -> bool {
+    match display {
+        Display::TableCell => {
+            !(*parent == Display::TableRow || parent.is_row_group() || parent.is_table())
+        }
+        Display::TableRow => !(parent.is_row_group() || parent.is_table()),
+        part => part.is_table_part() && !parent.is_table(),
+    }
+}
+
 pub(super) fn normalize_child_display(display: &mut Display, replaced: bool, parent: &Display) {
     if replaced && let Display::RunIn(inner) = display {
         normalize_child_display(inner, true, &Display::Block);
@@ -3923,7 +3990,11 @@ fn block<'a>(
             crate::document::frameset::used_style(child, &mut child_style, sheet);
             // Elements past the nesting limits generate no boxes of their own: their contents
             // lie in the deepest box allowed, as `display: contents` places them.
-            let exceeded = if frames[index].depth >= MAX_FORMATTING_DEPTH {
+            let parent_style = &frames[block_index].style;
+            let exceeded = if frames[index].depth
+                + formatting_depth(&child_style, parent_style, math_depth.is_some())
+                > MAX_FORMATTING_DEPTH
+            {
                 Some((FORMATTING_NESTING_RESOURCE, MAX_FORMATTING_DEPTH))
             } else if math_depth.is_some_and(|depth| depth >= crate::document::mathml::MAX_DEPTH) {
                 Some((MATHML_NESTING_RESOURCE, crate::document::mathml::MAX_DEPTH))
@@ -3977,7 +4048,12 @@ fn block<'a>(
                 traversal.generated.page_starts(child.id()),
                 &mut traversal.page_counters,
             )?;
-            let child_depth = frames[index].depth + 1;
+            let child_depth = frames[index].depth
+                + formatting_depth(
+                    &child_style,
+                    &frames[block_index].style,
+                    math_depth.is_some(),
+                );
             let ancestor_page = frames[index].page_scope.clone();
             let math_cell = crate::document::mathml::table::is_cell(
                 frames[block_index].element,
