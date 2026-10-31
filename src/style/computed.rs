@@ -1488,6 +1488,24 @@ impl Stylesheet {
         ancestors: &crate::style::QueryContainers,
         resolver: &dyn ResourceResolver,
     ) -> Result<(Cascaded, usize), StyleError> {
+        // A rule that matches another element's while this one's match, as a container query
+        // can, starts a filter of its own.
+        let mut filter = self.ancestor_filter.take().unwrap_or_default();
+        let winners =
+            self.filtered_rule_winners(element, pseudo, ancestors, resolver, filter.of(element));
+        self.ancestor_filter.set(Some(filter));
+        winners
+    }
+
+    /// `filter` holds the hashes of `element`'s shadow-including ancestors.
+    fn filtered_rule_winners(
+        &self,
+        element: Element<'_>,
+        pseudo: Option<crate::style::PseudoElement>,
+        ancestors: &crate::style::QueryContainers,
+        resolver: &dyn ResourceResolver,
+        filter: &selectors::bloom::BloomFilter,
+    ) -> Result<(Cascaded, usize), StyleError> {
         let mut winners = Cascaded::default();
         let mut order = 0;
         let mut scopes = crate::style::scope::ScopeCache::new(element);
@@ -1521,7 +1539,7 @@ impl Stylesheet {
                         .roots(rule.scope, &self.scopes, selector)
                         .filter_map(|(root, proximity)| {
                             selector
-                                .matches(&element, pseudo, root, rule.tree_context)
+                                .matches(&element, pseudo, root, rule.tree_context, Some(filter))
                                 .map(|specificity| (specificity, proximity))
                         })
                         .max_by_key(|(specificity, proximity)| {

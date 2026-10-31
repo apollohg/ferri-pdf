@@ -90,6 +90,8 @@ pub(crate) struct Stylesheet {
     pub(super) anchor_frames: crate::style::anchor_values::AnchorFrames,
     /// Custom property registrations from `@property` rules.
     pub(super) registrations: Arc<crate::style::registration::Registrations>,
+    /// The ancestors of the element whose rules matched last; taken while rules match.
+    pub(super) ancestor_filter: std::cell::Cell<Option<crate::dom::AncestorFilter>>,
 }
 
 fn anchor_order(tree: &crate::dom::DocumentTree) -> HashMap<crate::dom::ElementId, [usize; 3]> {
@@ -395,6 +397,7 @@ impl Stylesheet {
             anchor_nodes: self.anchor_nodes.clone(),
             anchor_order: self.anchor_order.clone(),
             registrations: self.registrations.clone(),
+            ancestor_filter: std::cell::Cell::default(),
         }
     }
 
@@ -657,6 +660,7 @@ impl Stylesheet {
             anchor_nodes: RefCell::default(),
             anchor_order: tree.map(anchor_order).unwrap_or_default(),
             registrations: Arc::default(),
+            ancestor_filter: std::cell::Cell::default(),
         };
         let mut fonts = Vec::new();
         let mut feature_values = Vec::new();

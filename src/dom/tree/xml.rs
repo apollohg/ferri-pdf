@@ -132,6 +132,7 @@ impl<'doc, 'input> XmlTree<'doc, 'input> {
                 &mut self.caches.borrow_mut(),
                 SelectorScope::default(),
                 TreeContext::Root(context.unwrap_or_else(|| element.tree_scope())),
+                None,
             )
         })
     }

@@ -186,6 +186,7 @@ impl<'a> ScopeCache<'a> {
                                                         origin: None,
                                                     },
                                                     scope.tree_context,
+                                                    None,
                                                 )
                                                 .is_some()
                                         })
@@ -215,6 +216,7 @@ impl<'a> ScopeCache<'a> {
                                                     origin: None,
                                                 },
                                                 scope.tree_context,
+                                                None,
                                             )
                                             .is_some()
                                     })

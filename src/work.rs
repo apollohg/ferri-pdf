@@ -21,10 +21,12 @@ pub(crate) enum Work {
     BoxAncestor,
     /// A text span a search for the span at an offset of a paragraph compares.
     SpanProbe,
+    /// An ancestor selector matching, or the ancestor filter of the element it matches, steps to.
+    SelectorAncestor,
 }
 
 #[cfg(test)]
-const KINDS: usize = 9;
+const KINDS: usize = 10;
 
 #[cfg(test)]
 thread_local! {

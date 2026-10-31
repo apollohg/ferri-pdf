@@ -300,3 +300,32 @@ fn xml_namespace_declarations_are_local_attributes_with_normalized_values() {
     assert_eq!(declarations(children[2]), owned(&[("xmlns", "")]));
     assert_eq!(declarations(children[3]), owned(&[("t", "urn:t")]));
 }
+
+#[test]
+fn has_selectors_keep_matching_once_their_subtree_filters_are_built() {
+    // An anchor builds a filter of its subtree's hashes the second time a relative selector
+    // searches it with the same caches, as a two-argument `:has()` and a repeated pass do; a
+    // hash the filter lacked would reject a present descendant or sibling.
+    let source = roxmltree::Document::parse("<svg xmlns='http://www.w3.org/2000/svg'><g id='outer'><g id='inner' class='Box'><circle id='dot' class='dot'/></g><rect id='after'/></g><g id='empty'/></svg>").unwrap();
+    let tree = XmlTree::new(&source);
+    // The caches key relative selectors by address, so every selector outlives the matching.
+    let selectors = [
+        ("g:has(.absent, .dot)", &["outer", "inner"][..]),
+        ("g:has(#absent, #dot)", &["outer", "inner"]),
+        ("g:has(> line, > circle)", &["inner"]),
+        ("g:has(.absent, .Box)", &["outer"]),
+        ("g:has(+ line, + rect)", &["inner"]),
+        ("g:has(~ line, ~ g)", &["outer"]),
+    ]
+    .map(|(selector, expected)| (selector, Selector::parse(selector).unwrap(), expected));
+    for (selector, parsed, expected) in &selectors {
+        for pass in 0..2 {
+            let matched: Vec<_> = source
+                .descendants()
+                .filter(|node| node.is_element() && tree.matches(*node, parsed))
+                .filter_map(|node| node.attribute("id"))
+                .collect();
+            assert_eq!(&matched, expected, "{selector} on pass {pass}");
+        }
+    }
+}

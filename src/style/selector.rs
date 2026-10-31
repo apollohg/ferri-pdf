@@ -200,15 +200,17 @@ impl RuleSelector {
             .scope_origins(element, tree)
             .map(move |(origin, hops)| (origin, hops + generated))
     }
+    /// `ancestors`, if given, holds the hashes of `element`'s shadow-including ancestors.
     pub(super) fn matches(
         &self,
         element: &Element<'_>,
         pseudo: Option<PseudoElement>,
         scope: crate::dom::SelectorScope,
         tree: TreeContext,
+        ancestors: Option<&selectors::bloom::BloomFilter>,
     ) -> Option<u32> {
         (self.pseudo == pseudo
-            && element.matches_in_selector_scope(&self.selector, tree, scope)
+            && element.matches_in_selector_scope(&self.selector, tree, scope, ancestors)
             && self
                 .states
                 .as_ref()

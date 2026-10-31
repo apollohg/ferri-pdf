@@ -1,8 +1,9 @@
 use crate::dom::{
     Directionality, Element, ElementId, QuirksMode, TargetPosition, TreeRelation, TreeScopeId,
 };
+use crate::work::{self, Work};
 use cssparser::{CowRcStr, ParseError, Parser, ParserInput, SourceLocation, ToCss, Token};
-use html5ever::Namespace;
+use html5ever::{LocalName, Namespace};
 use scraper::{
     ElementRef,
     selector::{CssLocalName, CssString},
@@ -10,9 +11,11 @@ use scraper::{
 use selectors::{
     Element as SelectorElement, OpaqueElement,
     attr::{AttrSelectorOperation, CaseSensitivity, NamespaceConstraint},
-    bloom::BloomFilter,
+    bloom::{BLOOM_HASH_MASK, BloomFilter},
     matching::{self, MatchingContext, SelectorCaches},
-    parser::{self, ParseRelative, SelectorList, SelectorParseErrorKind},
+    parser::{
+        self, AncestorHashes, Combinator, ParseRelative, SelectorList, SelectorParseErrorKind,
+    },
     visitor::{SelectorListKind, SelectorVisitor},
 };
 use std::{collections::HashMap, fmt};
@@ -193,12 +196,60 @@ impl SelectorVisitor for MetricsVisitor {
     }
 }
 
+/// The hashes of the compounds a complex selector's subject needs ancestors to match, which
+/// a filter of the subject's ancestors can reject it by, in a no-quirks or limited-quirks
+/// document and in a quirks-mode one, whose IDs and classes match case-insensitively.
+#[derive(Debug, Clone, Eq, PartialEq)]
+struct SelectorHashes {
+    standards: AncestorHashes,
+    quirks: AncestorHashes,
+}
+impl SelectorHashes {
+    /// `None` for a selector with a column, `::slotted()` or `::part()` combinator, even in an
+    /// argument: the compounds left of it match column elements, slots or hosts and their
+    /// ancestors, which need not be the subject's.
+    fn new(selector: &parser::Selector<StaticSelector>) -> Option<Self> {
+        selector.visit(&mut AncestorCombinators).then(|| Self {
+            standards: AncestorHashes::new(selector, matching::QuirksMode::NoQuirks),
+            quirks: AncestorHashes::new(selector, matching::QuirksMode::Quirks),
+        })
+    }
+    fn get(&self, quirks: matching::QuirksMode) -> &AncestorHashes {
+        if quirks == matching::QuirksMode::Quirks {
+            &self.quirks
+        } else {
+            &self.standards
+        }
+    }
+}
+/// Visits a selector up to a column, `::slotted()` or `::part()` combinator.
+struct AncestorCombinators;
+impl SelectorVisitor for AncestorCombinators {
+    type Impl = StaticSelector;
+    fn visit_complex_selector(&mut self, combinator: Option<Combinator>) -> bool {
+        !matches!(
+            combinator,
+            Some(Combinator::Column | Combinator::SlotAssignment | Combinator::Part)
+        )
+    }
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub(crate) struct Selector {
     selectors: SelectorList<StaticSelector>,
     metrics: SelectorMetrics,
+    /// Each complex selector's ancestor hashes.
+    hashes: Box<[Option<SelectorHashes>]>,
 }
 impl Selector {
+    fn new(selectors: SelectorList<StaticSelector>, metrics: SelectorMetrics) -> Self {
+        Self {
+            hashes: selectors.slice().iter().map(SelectorHashes::new).collect(),
+            selectors,
+            metrics,
+        }
+    }
+
     pub(crate) fn parse(input: &str) -> Result<Self, SelectorError<'_>> {
         Self::parse_with_namespaces(input, &NamespaceMap::new(), true)
     }
@@ -243,14 +294,14 @@ impl Selector {
         if mode == SelectorMode::Nesting {
             return self;
         }
-        self.resolve_parent(&Self {
-            selectors: SelectorList::implicit_scope(),
-            metrics: SelectorMetrics {
+        self.resolve_parent(&Self::new(
+            SelectorList::implicit_scope(),
+            SelectorMetrics {
                 depth: ROOT_SELECTOR_DEPTH,
                 components: 1,
                 ..Default::default()
             },
-        })
+        ))
     }
 
     fn parse_unresolved<'i>(
@@ -273,9 +324,9 @@ impl Selector {
         } else {
             SelectorList::parse_disallow_pseudo(parser, input, relative)
         };
-        parsed.map(|selectors| Self {
-            metrics: SelectorMetrics::parsed(&selectors),
-            selectors,
+        parsed.map(|selectors| {
+            let metrics = SelectorMetrics::parsed(&selectors);
+            Self::new(selectors, metrics)
         })
     }
 
@@ -292,10 +343,10 @@ impl Selector {
             .iter()
             .flat_map(|selector| selector.selectors.slice().iter().cloned())
             .collect();
-        Some(Self {
-            selectors: SelectorList::from_iter(selectors.into_iter()),
+        Some(Self::new(
+            SelectorList::from_iter(selectors.into_iter()),
             metrics,
-        })
+        ))
     }
 
     pub(crate) fn nesting_work(&self, parent_work: usize) -> usize {
@@ -310,10 +361,10 @@ impl Selector {
 
     #[must_use]
     pub(crate) fn resolve_parent(&self, parent: &Self) -> Self {
-        Self {
-            selectors: self.selectors.replace_parent_selector(&parent.selectors),
-            metrics: self.metrics.resolved(parent.metrics),
-        }
+        Self::new(
+            self.selectors.replace_parent_selector(&parent.selectors),
+            self.metrics.resolved(parent.metrics),
+        )
     }
 
     /// The pseudo-element selector `pseudo`, with the pseudo-classes following it, of the
@@ -353,15 +404,19 @@ impl Selector {
                 origin: None,
             },
             TreeContext::Root(element.tree_scope()),
+            None,
         )
     }
 
+    /// `ancestors`, if given, holds the hashes of `element`'s shadow-including ancestors, or
+    /// of more elements, as an [`AncestorFilter`] keeps them.
     pub(crate) fn matches_context(
         &self,
         element: Element<'_>,
         caches: &mut SelectorCaches,
         scope: SelectorScope,
         tree_context: TreeContext,
+        ancestors: Option<&BloomFilter>,
     ) -> bool {
         let host = tree_context.host(element);
         let is_host = host.is_some_and(|host| host.id() == element.id());
@@ -386,7 +441,7 @@ impl Selector {
         let quirks = matching_quirks(element);
         let mut context = MatchingContext::new(
             matching::MatchingMode::Normal,
-            None,
+            ancestors,
             caches,
             quirks,
             matching::NeedsSelectorFlags::No,
@@ -411,29 +466,34 @@ impl Selector {
         });
         let element = MatchingElement::new(element, virtual_root);
         context.with_featureless(is_host, |context| {
-            self.selectors.slice().iter().any(|selector| {
-                let (subject, subject_visible) =
-                    match pseudo_host.filter(|_| selector.pseudo_element().is_some()) {
-                        Some(host) => (element.with_element(host), pseudo_visible),
-                        None => (element, visible),
-                    };
-                if selector.is_part() || selector.is_slotted() {
-                    matching::originating_elements(selector, &subject, context.current_host)
-                        .filter(|origin| {
-                            tree_context.contains(origin.element)
-                                && scope.origin.is_none_or(|id| origin.element.id() == id)
-                        })
-                        .any(|origin| {
-                            matching::matches_selector_from_origin(
-                                selector, 0, None, &element, &origin, context,
-                            )
-                        })
-                } else {
-                    subject_visible
-                        && scope.origin.is_none_or(|id| subject.element.id() == id)
-                        && matching::matches_selector(selector, 0, None, &element, context)
-                }
-            })
+            self.selectors
+                .slice()
+                .iter()
+                .zip(&self.hashes)
+                .any(|(selector, hashes)| {
+                    let (subject, subject_visible) =
+                        match pseudo_host.filter(|_| selector.pseudo_element().is_some()) {
+                            Some(host) => (element.with_element(host), pseudo_visible),
+                            None => (element, visible),
+                        };
+                    if selector.is_part() || selector.is_slotted() {
+                        matching::originating_elements(selector, &subject, context.current_host)
+                            .filter(|origin| {
+                                tree_context.contains(origin.element)
+                                    && scope.origin.is_none_or(|id| origin.element.id() == id)
+                            })
+                            .any(|origin| {
+                                matching::matches_selector_from_origin(
+                                    selector, 0, None, &element, &origin, context,
+                                )
+                            })
+                    } else {
+                        let hashes = hashes.as_ref().map(|hashes| hashes.get(quirks));
+                        subject_visible
+                            && scope.origin.is_none_or(|id| subject.element.id() == id)
+                            && matching::matches_selector(selector, 0, hashes, &element, context)
+                    }
+                })
         })
     }
 
@@ -1293,6 +1353,7 @@ impl SelectorElement for MatchingElement<'_> {
         if self.document {
             return None;
         }
+        work::count(Work::SelectorAncestor, 1);
         self.element
             .parent(TreeRelation::Selector)
             .map(|parent| self.with_element(parent))
@@ -1323,6 +1384,7 @@ impl SelectorElement for MatchingElement<'_> {
                 .is_some_and(|parent| parent.value().is_fragment())
     }
     fn containing_shadow_host(&self) -> Option<Self> {
+        work::count(Work::SelectorAncestor, 1);
         (!self.document)
             .then(|| self.element.shadow_host())
             .flatten()
@@ -1581,7 +1643,77 @@ impl SelectorElement for MatchingElement<'_> {
                 .parent()
                 .is_some_and(|parent| parent.value().is_document())
     }
-    fn add_element_unique_hashes(&self, _: &mut BloomFilter) -> bool {
-        false
+    fn add_element_unique_hashes(&self, filter: &mut BloomFilter) -> bool {
+        if !self.document {
+            element_hashes(self.element, |hash| filter.insert_hash(hash));
+        }
+        true
+    }
+}
+
+/// Calls `each` with the hash of every local name, namespace, ID and class a selector's
+/// ancestor hashes can require `element` to have.
+fn element_hashes(element: Element<'_>, mut each: impl FnMut(u32)) {
+    let value = element.value();
+    each(value.name.local.get_hash() & BLOOM_HASH_MASK);
+    each(value.name.ns.get_hash() & BLOOM_HASH_MASK);
+    if let Some(id) = value.id() {
+        each(LocalName::from(id).get_hash() & BLOOM_HASH_MASK);
+    }
+    for class in value.classes() {
+        each(LocalName::from(class).get_hash() & BLOOM_HASH_MASK);
+    }
+}
+
+/// A Bloom filter of the hashes of an element's shadow-including ancestors, as Servo's
+/// `StyleBloom`, which rejects a selector none of whose ancestors can match its ancestor
+/// compounds without walking them. It keeps the last element's ancestors as a stack, so asking
+/// in document order pushes and pops each element once; any other order stays correct.
+///
+/// Combinators, element-backed pseudo-elements and shadow hosts lead matching only to
+/// shadow-including ancestors; the slots and column elements `::slotted()`, `::part()` and
+/// `||` lead to need not be, and those selectors are matched without the filter.
+#[derive(Default)]
+pub(crate) struct AncestorFilter {
+    filter: Box<BloomFilter>,
+    /// The ancestors the filter holds, outermost first, each with where its hashes start.
+    ancestors: Vec<(ElementId, usize)>,
+    /// Each held ancestor's index in `ancestors`.
+    depths: HashMap<ElementId, usize>,
+    hashes: Vec<u32>,
+}
+impl AncestorFilter {
+    /// The filter holding the hashes of `element`'s shadow-including ancestors.
+    pub(crate) fn of(&mut self, element: Element<'_>) -> &BloomFilter {
+        let mut missing = Vec::new();
+        let mut ancestor = element.shadow_including_parent();
+        let held = loop {
+            let Some(current) = ancestor else {
+                break 0;
+            };
+            work::count(Work::SelectorAncestor, 1);
+            if let Some(depth) = self.depths.get(&current.id()) {
+                break depth + 1;
+            }
+            missing.push(current);
+            ancestor = current.shadow_including_parent();
+        };
+        if let Some(&(_, start)) = self.ancestors.get(held) {
+            for hash in self.hashes.drain(start..) {
+                self.filter.remove_hash(hash);
+            }
+            for (id, _) in self.ancestors.drain(held..) {
+                self.depths.remove(&id);
+            }
+        }
+        for ancestor in missing.into_iter().rev() {
+            self.depths.insert(ancestor.id(), self.ancestors.len());
+            self.ancestors.push((ancestor.id(), self.hashes.len()));
+            element_hashes(ancestor, |hash| {
+                self.filter.insert_hash(hash);
+                self.hashes.push(hash);
+            });
+        }
+        &self.filter
     }
 }

@@ -436,6 +436,7 @@ impl<'a> Element<'a> {
         selector: &Selector,
         context: crate::dom::TreeContext,
         scope: crate::dom::SelectorScope,
+        ancestors: Option<&selectors::bloom::BloomFilter>,
     ) -> bool {
         if let Some(crate::dom::ScopeRoot::Element(id)) = scope.root
             && self.tree.element(id).is_none()
@@ -448,7 +449,13 @@ impl<'a> Element<'a> {
         {
             return false;
         }
-        selector.matches_context(self, &mut SelectorCaches::default(), scope, context)
+        selector.matches_context(
+            self,
+            &mut SelectorCaches::default(),
+            scope,
+            context,
+            ancestors,
+        )
     }
     #[cfg(test)]
     pub(crate) fn template_contents(self) -> Option<Node<'a>> {

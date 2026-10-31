@@ -1551,3 +1551,124 @@ fn static_link_and_target_selectors_use_the_original_document_url() {
         "fragment targets and hierarchical local links use document context without inventing visit history"
     );
 }
+
+const RED: [u8; 3] = [255, 0, 0];
+
+/// Every element's color, computed one after another in `order` with one style sheet, whose
+/// ancestor filter carries over from each element to the next.
+fn colors_in_order<'a>(
+    sheet: &Stylesheet,
+    order: impl Iterator<Item = crate::dom::Element<'a>>,
+) -> Vec<(crate::dom::ElementId, [u8; 3])> {
+    let mut colors: Vec<_> = order
+        .map(|element| {
+            let style = sheet
+                .computed(element, &Style::default())
+                .expect("compute an element's style");
+            (element.id(), style.color.rgb)
+        })
+        .collect();
+    colors.sort_by_key(|(id, _)| format!("{id:?}"));
+    colors
+}
+
+#[test]
+fn rejected_descendant_selectors_cost_work_linear_in_the_depth_of_a_list() {
+    // No ancestor of any list element matches these rules' ancestor compounds. Finding that
+    // out by walking every ancestor of every element is quadratic in the nesting depth.
+    const DEPTH: usize = 64;
+    let sheet = Stylesheet::parse(&[StylesheetSource {
+        text: ".missing li,nav ol,#absent li ol,ol.unused>li li{color:red}".into(),
+        base: Default::default(),
+    }])
+    .expect("descendant selector style sheet");
+    crate::work::assert_linear("nested list items", DEPTH, |depth| {
+        let tree = DocumentTree::parse(&format!(
+            "<!doctype html><ol>{}</ol>",
+            "<li><ol>".repeat(depth)
+        ));
+        let (colors, work) = crate::work::measured(crate::work::Work::SelectorAncestor, || {
+            colors_in_order(&sheet, tree.elements())
+        });
+        assert!(
+            colors.iter().all(|(_, color)| *color != RED),
+            "no element of a list {depth} deep has the ancestors the rules require: {colors:?}"
+        );
+        work
+    });
+}
+
+#[test]
+fn selectors_reaching_past_the_parent_chain_match_with_the_ancestor_filter() {
+    let html = format!(
+        "<!doctype html><style>{}.outer details::details-content,colgroup.group col||td span,.outer .contents p,::part(label){{color:#123456}}@scope(.outer) to (.limit){{.card p{{color:#123456}}}}</style><section class=outer><details open><summary>Summary</summary><p>Details content</p></details><x-host><template shadowrootmode=open><style>.box ::slotted(p){{color:#123456}}</style><div class=box><slot></slot><p part=label>Part</p></div></template><p>Slotted</p></x-host><table><colgroup class=group><col></colgroup><tr><td><span>Column cell</span></td></tr></table><div class=contents style=display:contents><p>Contents child</p></div><div class=card><p>Scoped</p><div class=limit><div class=card><p>Past limit</p></div></div></div></section>",
+        common::PROFILE
+    );
+    let trace = crate::render_html(&html, &local_options())
+        .unwrap()
+        .layout
+        .unwrap();
+    let lines: Vec<_> = trace
+        .pages
+        .iter()
+        .flatten()
+        .map(|line| (line.text.as_str(), line.runs[0].color.rgb))
+        .collect();
+    let black = [0, 0, 0];
+    assert_eq!(
+        lines,
+        [
+            ("▾ Summary", black),
+            ("Details content", MARKED),
+            ("Slotted", MARKED),
+            ("Part", MARKED),
+            ("Column cell", MARKED),
+            ("Contents child", MARKED),
+            ("Scoped", MARKED),
+            ("Past limit", black),
+        ],
+        "an element-backed pseudo-element's originating element, a slot, a shadow host and a \
+         column element are not on the subject's parent chain, which a scope limit cuts"
+    );
+}
+
+#[test]
+fn the_ancestor_filter_matches_alike_in_any_order_across_tree_scopes() {
+    let tree = DocumentTree::parse(
+        "<!doctype html><section class=outer><details open><summary>S</summary><ol><li>Item<ol><li>Nested</li></ol></li></ol></details><x-host class=host><template shadowrootmode=open><div class=box><p part=label>Part</p><slot></slot></div></template><p class=light>Slotted</p></x-host><table><colgroup class=group><col></colgroup><tr><td><span>Cell</span></td></tr></table></section><aside><p>Aside</p></aside>",
+    );
+    let sheet = Stylesheet::parse(&[StylesheetSource {
+        text: ".outer details::details-content,.outer ol li li,.outer .host::part(label),.outer .host p.light,colgroup.group col||td span,aside p{color:#123456}.missing p,aside li{color:red}".into(),
+        base: Default::default(),
+    }])
+    .expect("ancestor selector style sheet");
+    let forward = colors_in_order(&sheet, tree.shadow_including_elements());
+    let elements: Vec<_> = tree.shadow_including_elements().collect();
+    let backward = colors_in_order(&sheet, elements.iter().rev().copied());
+    let alternating = colors_in_order(
+        &sheet,
+        elements
+            .iter()
+            .step_by(2)
+            .chain(elements.iter().skip(1).step_by(2))
+            .copied(),
+    );
+    let marked = forward.iter().filter(|(_, color)| *color == MARKED).count();
+    assert_eq!(
+        marked, 6,
+        "the details content, the nested item, the part, the slotted paragraph, the cell's span \
+         and the aside paragraph match: {forward:?}"
+    );
+    assert!(
+        forward.iter().all(|(_, color)| *color != RED),
+        "rules no ancestor satisfies match nothing: {forward:?}"
+    );
+    assert_eq!(
+        backward, forward,
+        "reverse document order matches as document order does"
+    );
+    assert_eq!(
+        alternating, forward,
+        "jumping between subtrees and tree scopes matches as document order does"
+    );
+}
