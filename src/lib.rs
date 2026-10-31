@@ -240,9 +240,14 @@ fn prepare_document(
     })?;
     let (document, trace) =
         layout::layout_document(document, resolver).map_err(|error| match error {
-            LayoutError::Text(TextError::Font(FontError::InvalidFont(_))) => Error::InvalidFont,
-            LayoutError::Text(TextError::Font(error)) => Error::Css(StyleError::Font(error)),
-            LayoutError::Style(error @ StyleError::Font(_)) => Error::Css(error),
+            LayoutError::Text(error) => match *error {
+                TextError::Font(FontError::InvalidFont(_)) => Error::InvalidFont,
+                TextError::Font(error) => Error::Css(StyleError::Font(error)),
+                error => Error::Layout(error.to_string()),
+            },
+            LayoutError::Style(error) if matches!(*error, StyleError::Font(_)) => {
+                Error::Css(*error)
+            }
             error => Error::Layout(error.to_string()),
         })?;
     Ok((document, trace))

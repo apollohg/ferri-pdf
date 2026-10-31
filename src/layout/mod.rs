@@ -887,16 +887,19 @@ impl LayoutError {
     /// Whether the error follows from one box's geometry or structure, which layout cannot
     /// form.
     fn fails_at_box(&self) -> bool {
+        if let Self::Text(error) = self {
+            return matches!(
+                **error,
+                TextError::NonFiniteGeometry
+                    | TextError::GlyphMatchingLimit { .. }
+                    | TextError::BidiExpansionLimit { .. }
+                    | TextError::CaseExpansionLimit
+                    | TextError::LeaderExpansionLimit { .. }
+            );
+        }
         matches!(
             self,
             Self::NonFiniteBlockGeometry { .. }
-                | Self::Text(
-                    TextError::NonFiniteGeometry
-                        | TextError::GlyphMatchingLimit { .. }
-                        | TextError::BidiExpansionLimit { .. }
-                        | TextError::CaseExpansionLimit
-                        | TextError::LeaderExpansionLimit { .. },
-                )
                 | Self::Table(_)
                 | Self::Flex(_)
                 | Self::Grid(_)
@@ -934,11 +937,11 @@ pub(crate) enum LayoutError {
         location: crate::style::MarginLocation,
     },
     #[error("{0}")]
-    Style(#[from] crate::style::StyleError),
+    Style(Box<crate::style::StyleError>),
     #[error("{0}")]
-    Document(#[from] crate::document::DocumentError),
+    Document(Box<crate::document::DocumentError>),
     #[error("{0}")]
-    Image(#[from] crate::images::ImageError),
+    Image(Box<crate::images::ImageError>),
     /// Content needs a page past the page limit; pagination omits it.
     #[error("layout exceeds {limit} pages")]
     PageLimit { limit: usize },
@@ -949,17 +952,17 @@ pub(crate) enum LayoutError {
         block: *const crate::document::BlockBox,
     },
     #[error("{0}")]
-    Text(#[from] TextError),
+    Text(Box<TextError>),
     #[error("{0}")]
-    Table(#[from] crate::table::TableError),
+    Table(Box<crate::table::TableError>),
     #[error("{0}")]
-    Flex(#[from] crate::flex::FlexError),
+    Flex(Box<crate::flex::FlexError>),
     #[error("unsupported flex formatting: {feature}")]
     UnsupportedFlex { feature: &'static str },
     #[error("invalid normalized table structure")]
     InvalidTableStructure,
     #[error("{0}")]
-    Grid(#[from] crate::grid::GridError),
+    Grid(Box<crate::grid::GridError>),
     #[error("invalid normalized grid structure")]
     InvalidGridStructure,
     #[error("overflow clip has no box fragment on page {page}")]
@@ -967,3 +970,19 @@ pub(crate) enum LayoutError {
     #[error("containing block has no fragment on anchor page {page}")]
     MissingContainingFragment { page: usize },
 }
+// Errors from other stages stay boxed: every `?` in nested layout's deep recursion holds
+// layout errors in its stack frame.
+macro_rules! boxed_layout_error {
+    ($($variant:ident($error:ty)),* $(,)?) => { $(impl From<$error> for LayoutError {
+        fn from(error: $error) -> Self { Self::$variant(Box::new(error)) }
+    })* };
+}
+boxed_layout_error!(
+    Style(crate::style::StyleError),
+    Document(crate::document::DocumentError),
+    Image(crate::images::ImageError),
+    Text(TextError),
+    Table(crate::table::TableError),
+    Flex(crate::flex::FlexError),
+    Grid(crate::grid::GridError),
+);
