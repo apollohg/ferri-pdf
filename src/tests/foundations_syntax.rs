@@ -2,8 +2,8 @@ use super::common;
 
 use crate::style::{Degradation, StyleDiagnosticKind};
 use crate::{
-    RenderDiagnostic, Resource, ResourceBase, ResourceError, ResourceResolver, StyleError, Url,
-    render_html, render_with_resolver,
+    RenderDiagnostic, Resource, ResourceBase, ResourceError, ResourceResolver, Url, render_html,
+    render_with_resolver,
 };
 use common::{assert_pt, local_options};
 
@@ -178,29 +178,24 @@ fn stylesheet_diagnostic_keeps_final_base_and_css_line() {
 }
 
 #[test]
-fn syntax_recovery_does_not_swallow_parse_limits() {
+fn syntax_recovery_drops_declarations_past_parse_limits() {
     const OVERSIZED_NESTING: usize = 300;
-    let css = format!(
+    let output = render_css(&format!(
         "p{{--deep:{}0{};font-size:18pt}}",
         "f(".repeat(OVERSIZED_NESTING),
         ")".repeat(OVERSIZED_NESTING)
-    );
-    let error = render_html(
-        &format!("<style>{css}</style><p>bounded</p>"),
-        &local_options(),
-    )
-    .err()
-    .expect("component bound must fail");
+    ));
     assert!(
-        matches!(
-            error,
-            crate::Error::Css(StyleError::GrammarLimit {
-                resource: "component nesting",
-                ..
-            })
-        ),
-        "typed parse limit must propagate: {error:?}"
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            RenderDiagnostic::Css(diagnostic)
+                if diagnostic.kind == StyleDiagnosticKind::LimitExceeded
+                    && diagnostic.context.starts_with("--deep:")
+        )),
+        "the declaration past the component bound is reported: {:?}",
+        output.diagnostics
     );
+    assert_pt(output.layout.unwrap().pages[0][0].font_size, 18.0);
 }
 
 #[test]

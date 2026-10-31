@@ -906,13 +906,12 @@ pub(super) fn recover<'i>(
     kind: StyleDiagnosticKind,
     diagnostics: &RefCell<Vec<StyleDiagnostic>>,
 ) -> Result<(), ParseError<'i, StyleError>> {
-    if !matches!(
-        &error.kind,
-        cssparser::ParseErrorKind::Basic(_)
-            | cssparser::ParseErrorKind::Custom(StyleError::Invalid(_))
-    ) {
-        return Err(error);
-    }
+    // An exhausted stylesheet budget ignores the rest of the stylesheet, not one construct.
+    let kind = match &error.kind {
+        cssparser::ParseErrorKind::Custom(StyleError::StylesheetLimit { .. }) => return Err(error),
+        cssparser::ParseErrorKind::Custom(error) => StyleDiagnosticKind::of(error, kind),
+        cssparser::ParseErrorKind::Basic(_) => kind,
+    };
     diagnostics.borrow_mut().push(StyleDiagnostic {
         location: SourceLocation::new(base, error.location),
         kind,
@@ -1527,24 +1526,63 @@ impl RuleBodyItemParser<'_, Rule, StyleError> for CssParser<'_> {
 mod tests {
     use super::*;
 
+    const GROUP_NESTING: &str = "stylesheet group nesting";
+
+    /// Parsing `source` must succeed, ignoring the nested rule whose selector resolves past
+    /// the selector nesting bound with a limit diagnostic.
+    fn past_resolved_selector_bound(source: String) {
+        let mut sheet = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
+            text: source,
+            base: Default::default(),
+        }])
+        .unwrap_or_else(|error| panic!("a selector past the bound must not fail: {error}"));
+        let diagnostics = sheet.take_diagnostics();
+        assert!(
+            diagnostics.iter().any(|diagnostic| {
+                diagnostic.kind == StyleDiagnosticKind::LimitExceeded
+                    && diagnostic.context.contains("resolved selector nesting")
+            }),
+            "the selector past the bound must be reported: {diagnostics:?}"
+        );
+    }
+
+    /// The style rules of a sheet without author rules: the user agent's.
+    fn user_agent_rules() -> usize {
+        crate::style::Stylesheet::parse(&[])
+            .expect("the user agent sheet parses")
+            .rules
+            .len()
+    }
+
+    /// Parsing `source` must succeed, ignoring the rule nested past the group bound with a
+    /// limit diagnostic.
+    fn past_group_bound(source: String) {
+        let mut sheet = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
+            text: source,
+            base: Default::default(),
+        }])
+        .unwrap_or_else(|error| panic!("a rule past the group bound must not fail: {error}"));
+        let diagnostics = sheet.take_diagnostics();
+        assert!(
+            diagnostics.iter().any(|diagnostic| {
+                diagnostic.kind == StyleDiagnosticKind::LimitExceeded
+                    && diagnostic.context.contains(GROUP_NESTING)
+            }),
+            "the rule past the group bound must be reported: {diagnostics:?}"
+        );
+        assert_eq!(
+            sheet.rules.len(),
+            user_agent_rules(),
+            "the rule past the group bound is ignored"
+        );
+    }
+
     #[test]
     fn nesting_style_depth_has_a_typed_bound() {
         let depth = MAX_GROUP_DEPTH + 2;
         let source = format!("{}color:red{}", ".item{".repeat(depth), "}".repeat(depth));
-        let result = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
-            text: source,
-            base: Default::default(),
-        }]);
-        assert!(
-            matches!(
-                result,
-                Err(StyleError::GrammarLimit {
-                    resource: "stylesheet group nesting",
-                    limit: MAX_GROUP_DEPTH
-                })
-            ),
-            "nested style rules must be bounded before recursive selector preparation"
-        );
+        // Nested style rules are bounded before recursive selector preparation.
+        past_group_bound(source);
     }
     #[test]
     fn nesting_resolved_selector_depth_is_bounded_before_ast_binding() {
@@ -1560,20 +1598,9 @@ mod tests {
             format!("{selector}{{").repeat(STYLE_DEPTH),
             "}".repeat(STYLE_DEPTH)
         );
-        let result = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
-            text: source,
-            base: Default::default(),
-        }]);
-        assert!(
-            matches!(
-                result,
-                Err(StyleError::GrammarLimit {
-                    resource: "resolved selector nesting",
-                    ..
-                })
-            ),
-            "bounded source groups/functions must not combine into an unbounded resolved selector stack"
-        );
+        // Bounded source groups/functions must not combine into an unbounded resolved selector
+        // stack.
+        past_resolved_selector_bound(source);
     }
     #[test]
     fn nesting_resolved_depth_limit_is_inclusive() {
@@ -1585,12 +1612,13 @@ mod tests {
                 ")".repeat(PARENT_FUNCTION_DEPTH)
             );
             let child = format!("{}&{}", ":is(".repeat(child_depth), ")".repeat(child_depth));
-            let result = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
-                text: format!("{parent}{{{child}{{color:red}}}}"),
-                base: Default::default(),
-            }]);
+            let source = format!("{parent}{{{child}{{color:red}}}}");
             if allowed {
-                let sheet = result.expect("a selector at the inclusive resolved limit parses");
+                let sheet = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
+                    text: source,
+                    base: Default::default(),
+                }])
+                .expect("a selector at the inclusive resolved limit parses");
                 let tree = crate::dom::DocumentTree::parse("<!doctype html><html class=item>")
                     .expect("parse test HTML");
                 let style = sheet
@@ -1602,16 +1630,8 @@ mod tests {
                     "a resolved selector at the inclusive depth limit remains usable"
                 );
             } else {
-                assert!(
-                    matches!(
-                        result,
-                        Err(StyleError::GrammarLimit {
-                            resource: "resolved selector nesting",
-                            ..
-                        })
-                    ),
-                    "one additional resolved selector level is rejected before binding"
-                );
+                // One additional resolved selector level is ignored before binding.
+                past_resolved_selector_bound(source);
             }
         }
     }
@@ -1639,16 +1659,17 @@ mod tests {
     #[test]
     fn scope_nesting_uses_the_common_group_bound_and_matches_without_recursion() {
         for (depth, allowed) in [(MAX_GROUP_DEPTH, true), (MAX_GROUP_DEPTH + 1, false)] {
-            let result = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
-                text: format!(
-                    "{}p{{color:red}}{}",
-                    "@scope (:scope){".repeat(depth),
-                    "}".repeat(depth)
-                ),
-                base: Default::default(),
-            }]);
+            let source = format!(
+                "{}p{{color:red}}{}",
+                "@scope (:scope){".repeat(depth),
+                "}".repeat(depth)
+            );
             if allowed {
-                let sheet = result.expect("scope groups at the inclusive bound parse");
+                let sheet = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
+                    text: source,
+                    base: Default::default(),
+                }])
+                .expect("scope groups at the inclusive bound parse");
                 let tree = crate::dom::DocumentTree::parse("<!doctype html><p>Scoped</p>")
                     .expect("parse test HTML");
                 let target = tree
@@ -1664,16 +1685,8 @@ mod tests {
                     "scope ancestry must not overflow or lose the innermost rule at the inclusive bound"
                 );
             } else {
-                assert!(
-                    matches!(
-                        result,
-                        Err(StyleError::GrammarLimit {
-                            resource: "stylesheet group nesting",
-                            limit: MAX_GROUP_DEPTH
-                        })
-                    ),
-                    "a further scope level uses the existing typed group bound"
-                );
+                // A further scope level uses the existing typed group bound.
+                past_group_bound(source);
             }
         }
     }
@@ -1686,20 +1699,19 @@ mod tests {
                 "@layer{".repeat(depth),
                 "}".repeat(depth)
             );
-            let result = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
-                text: source,
-                base: Default::default(),
-            }]);
             if allowed {
-                assert!(result.is_ok());
+                let sheet = crate::style::Stylesheet::parse(&[crate::style::StylesheetSource {
+                    text: source,
+                    base: Default::default(),
+                }])
+                .expect("layer groups at the inclusive bound parse");
+                assert_eq!(
+                    sheet.rules.len(),
+                    user_agent_rules() + 1,
+                    "the innermost rule at the bound applies"
+                );
             } else {
-                assert!(matches!(
-                    result,
-                    Err(StyleError::GrammarLimit {
-                        resource: "stylesheet group nesting",
-                        limit: MAX_GROUP_DEPTH
-                    })
-                ));
+                past_group_bound(source);
             }
         }
     }

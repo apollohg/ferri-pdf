@@ -1,6 +1,6 @@
 use crate::fonts::FontNamespace;
 use crate::style::{
-    MarginLocation, SourceLocation, StyleDiagnostic, StyleError, Stylesheet,
+    MarginLocation, SourceLocation, StyleDiagnostic, StyleDiagnosticKind, StyleError, Stylesheet,
     cascade::{self, Candidate, Cascaded, DeclarationContext, choose, sort},
     component::Component,
     declaration::{self, PropertyDeclaration, Specified},
@@ -297,7 +297,7 @@ impl PageRule {
         paper_qualified: bool,
         diagnostics: &RefCell<Vec<StyleDiagnostic>>,
         order: &mut usize,
-    ) -> Result<Self, StyleError> {
+    ) -> Self {
         let mut rule = Self {
             selectors,
             declarations: Vec::new(),
@@ -313,8 +313,23 @@ impl PageRule {
                         if paper_qualified && descriptor == Descriptor::PageSize {
                             continue;
                         }
-                        let Some(value) = page_value(descriptor, &declaration, namespace)? else {
-                            continue;
+                        let value = match page_value(descriptor, &declaration, namespace) {
+                            Ok(Some(value)) => value,
+                            Ok(None) => continue,
+                            Err(error) => {
+                                diagnostics.borrow_mut().push(StyleDiagnostic {
+                                    kind: StyleDiagnosticKind::of(
+                                        &error,
+                                        StyleDiagnosticKind::InvalidDeclaration,
+                                    ),
+                                    context: format!(
+                                        "{}: {} ({error})",
+                                        declaration.name, declaration.value
+                                    ),
+                                    location: declaration.location,
+                                });
+                                continue;
+                            }
                         };
                         rule.contextual_descriptors |= matches!(&value,PageValue::Pending{value,..} if value.requires_context());
                         let context = DeclarationContext {
@@ -330,7 +345,7 @@ impl PageRule {
                     } else {
                         let base = declaration.location.base.clone();
                         rule.declarations.extend(ordered(
-                            parsed(vec![declaration], &base, diagnostics, namespace)?,
+                            parsed(vec![declaration], &base, diagnostics, namespace),
                             context,
                             order,
                         ));
@@ -340,7 +355,7 @@ impl PageRule {
                     for declaration in declarations {
                         let base = declaration.location.base.clone();
                         rule.margins[location as usize].extend(ordered(
-                            parsed(vec![declaration], &base, diagnostics, namespace)?,
+                            parsed(vec![declaration], &base, diagnostics, namespace),
                             context,
                             order,
                         ));
@@ -350,7 +365,7 @@ impl PageRule {
                     for declaration in declarations {
                         let base = declaration.location.base.clone();
                         rule.footnote.extend(ordered(
-                            parsed(vec![declaration], &base, diagnostics, namespace)?,
+                            parsed(vec![declaration], &base, diagnostics, namespace),
                             context,
                             order,
                         ));
@@ -358,7 +373,7 @@ impl PageRule {
                 }
             }
         }
-        Ok(rule)
+        rule
     }
 }
 

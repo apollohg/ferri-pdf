@@ -142,7 +142,7 @@ pub(super) fn parsed(
     base: &ResourceBase,
     diagnostics: &RefCell<Vec<StyleDiagnostic>>,
     namespace: FontNamespace,
-) -> Result<Vec<PropertyDeclaration>, StyleError> {
+) -> Vec<PropertyDeclaration> {
     let mut output = Vec::new();
     for mut declaration in declarations {
         let before = output.len();
@@ -157,19 +157,18 @@ pub(super) fn parsed(
         for parsed in &mut output[before..] {
             parsed.font_namespace = namespace;
         }
-        match result {
-            Ok(()) if output.len() > before => {}
-            Ok(()) | Err(StyleError::Invalid(_)) => {
-                diagnostics.borrow_mut().push(StyleDiagnostic {
-                    location: declaration.location.clone(),
-                    kind: StyleDiagnosticKind::InvalidDeclaration,
-                    context: format!("{}: {}", declaration.name, declaration.value),
-                });
-            }
-            Err(error) => return Err(error),
-        }
+        let kind = match result {
+            Ok(()) if output.len() > before => continue,
+            Ok(()) => StyleDiagnosticKind::InvalidDeclaration,
+            Err(error) => StyleDiagnosticKind::of(&error, StyleDiagnosticKind::InvalidDeclaration),
+        };
+        diagnostics.borrow_mut().push(StyleDiagnostic {
+            location: declaration.location.clone(),
+            kind,
+            context: format!("{}: {}", declaration.name, declaration.value),
+        });
     }
-    Ok(output)
+    output
 }
 
 /// A valid descriptor the engine does not implement is an error unless it is initial.
@@ -404,8 +403,15 @@ impl Stylesheet {
         declarations: &[Declaration],
         location: &crate::style::SourceLocation,
         base: &ResourceBase,
-    ) -> Result<(), StyleError> {
-        let (registration, invalid) = crate::style::registration::parse(declarations, base, &name)?;
+    ) {
+        let (registration, invalid) =
+            match crate::style::registration::parse(declarations, base, &name) {
+                Ok(parsed) => parsed,
+                Err(error) => {
+                    self.ignore_rule(location.clone(), &format!("@property {name}"), &error);
+                    return;
+                }
+            };
         let mut diagnostics = self.diagnostics.borrow_mut();
         for declaration in invalid {
             diagnostics.push(StyleDiagnostic {
@@ -425,7 +431,21 @@ impl Stylesheet {
                 context: format!("@property {name}"),
             }),
         }
-        Ok(())
+    }
+
+    /// Reports a rule or descriptor the engine ignores because computing it failed with
+    /// `error`: an invalid, unsupported or over-limit construct (CSS Syntax 3 §2.2).
+    fn ignore_rule(
+        &self,
+        location: crate::style::SourceLocation,
+        context: &str,
+        error: &StyleError,
+    ) {
+        self.diagnostics.borrow_mut().push(StyleDiagnostic {
+            location,
+            kind: StyleDiagnosticKind::of(error, StyleDiagnosticKind::InvalidRule),
+            context: format!("{context}: {error}"),
+        });
     }
 
     pub(crate) fn first_page_request(&self) -> &crate::style::PageRequest {
@@ -679,7 +699,7 @@ impl Stylesheet {
                             &source_base,
                             &sheet.diagnostics,
                             namespace,
-                        )?
+                        )
                         .into_iter()
                         .map(|mut declaration| {
                             declaration.origin = origin;
@@ -711,7 +731,7 @@ impl Stylesheet {
                             paper_qualified,
                             &sheet.diagnostics,
                             &mut page_order,
-                        )?);
+                        ));
                 }
                 ContentRule::Font(declarations, location) => {
                     fonts.push((
@@ -753,7 +773,7 @@ impl Stylesheet {
                         &declarations,
                         &location,
                         &source_base,
-                    )?;
+                    );
                 }
                 ContentRule::PositionTry(name, declarations, location) => {
                     position_try.push((
@@ -780,13 +800,16 @@ impl Stylesheet {
                 &name,
                 &declarations,
                 namespace,
-            )? {
-                Some(rule) => rules.push(rule),
-                None => sheet.diagnostics.borrow_mut().push(StyleDiagnostic {
+            ) {
+                Ok(Some(rule)) => rules.push(rule),
+                Ok(None) => sheet.diagnostics.borrow_mut().push(StyleDiagnostic {
                     location,
                     kind: StyleDiagnosticKind::InvalidRule,
                     context: format!("@counter-style {name}"),
                 }),
+                Err(error) => {
+                    sheet.ignore_rule(location, &format!("@counter-style {name}"), &error);
+                }
             }
         }
         sheet.counter_styles = Arc::new(crate::style::counter_style::CounterStyles::new(
@@ -797,12 +820,8 @@ impl Stylesheet {
         // do, the last in cascade order winning whole.
         position_try.sort_by_key(|(priority, ..)| *priority);
         for (_, name, declarations, location, source_base, namespace) in position_try {
-            let declarations = sheet.position_try_declarations(
-                declarations,
-                &source_base,
-                &location,
-                namespace,
-            )?;
+            let declarations =
+                sheet.position_try_declarations(declarations, &source_base, &location, namespace);
             sheet.position_try.insert(
                 crate::style::anchor_values::AnchorName {
                     name: Arc::from(name),
@@ -813,16 +832,8 @@ impl Stylesheet {
         }
         fonts.sort_by_key(|(priority, ..)| *priority);
         for (_, declarations, location, source_base, namespace) in fonts {
-            match sheet.font_face(&declarations, source_base, namespace) {
-                Ok(()) => {}
-                Err(StyleError::Invalid(context)) => {
-                    sheet.diagnostics.borrow_mut().push(StyleDiagnostic {
-                        location,
-                        kind: StyleDiagnosticKind::InvalidRule,
-                        context,
-                    });
-                }
-                Err(error) => return Err(error),
+            if let Err(error) = sheet.font_face(&declarations, source_base, namespace) {
+                sheet.ignore_rule(location, FONT_FACE_AT_RULE, &error);
             }
         }
         feature_values.sort_by_key(|(priority, ..)| *priority);
@@ -861,9 +872,9 @@ impl Stylesheet {
         base: &ResourceBase,
         location: &crate::style::SourceLocation,
         namespace: FontNamespace,
-    ) -> Result<Arc<[PropertyDeclaration]>, StyleError> {
+    ) -> Arc<[PropertyDeclaration]> {
         let mut accepted = Vec::new();
-        for declaration in parsed(declarations, base, &self.diagnostics, namespace)? {
+        for declaration in parsed(declarations, base, &self.diagnostics, namespace) {
             let property = match &declaration.declared {
                 Declared::Longhand(property, _) | Declared::Pending(property, _) => Some(*property),
                 Declared::Custom(..) => None,
@@ -882,7 +893,7 @@ impl Stylesheet {
                 });
             }
         }
-        Ok(Arc::from(accepted))
+        Arc::from(accepted)
     }
 
     /// The `@position-try` rule a tree-scoped reference names: the rule of that name in its
@@ -981,14 +992,11 @@ impl Stylesheet {
             for rule in &rules {
                 match Self::palette_values(rule, root, &relative) {
                     Ok(definition) => definitions.push(definition),
-                    Err(StyleError::Invalid(context)) => {
-                        self.diagnostics.borrow_mut().push(StyleDiagnostic {
-                            location: rule.location.clone(),
-                            kind: StyleDiagnosticKind::InvalidRule,
-                            context,
-                        });
-                    }
-                    Err(error) => return Err(error),
+                    Err(error) => self.ignore_rule(
+                        rule.location.clone(),
+                        &format!("@font-palette-values {}", rule.name),
+                        &error,
+                    ),
                 }
             }
         }
@@ -1106,10 +1114,26 @@ impl Stylesheet {
             let Some(descriptor) = Descriptor::find(FONT_FACE_AT_RULE, &d.name) else {
                 continue;
             };
-            let Some(value) = declaration::descriptor(descriptor, &d.value)? else {
-                continue;
+            let value = match declaration::descriptor(descriptor, &d.value).and_then(|value| {
+                value
+                    .map(|value| face_value(descriptor, &value, &relative))
+                    .transpose()
+            }) {
+                Ok(Some(value)) => value,
+                Ok(None) => continue,
+                Err(error) => {
+                    self.diagnostics.borrow_mut().push(StyleDiagnostic {
+                        location: d.location.clone(),
+                        kind: StyleDiagnosticKind::of(
+                            &error,
+                            StyleDiagnosticKind::InvalidDeclaration,
+                        ),
+                        context: format!("{FONT_FACE_AT_RULE} {}: {} ({error})", d.name, d.value),
+                    });
+                    continue;
+                }
             };
-            match face_value(descriptor, &value, &relative)? {
+            match value {
                 FaceValue::Family(value) => family = Some(value),
                 FaceValue::Weight(value) => weight = value,
                 FaceValue::Width(value) => width = value,

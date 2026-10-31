@@ -1380,7 +1380,7 @@ impl Stylesheet {
                 &self.document_base,
                 &self.diagnostics,
                 self.font_namespace(Some(element.tree_scope())),
-            )?;
+            );
             for d in &parsed {
                 order += 1;
                 insert(

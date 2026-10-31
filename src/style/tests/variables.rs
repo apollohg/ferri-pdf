@@ -240,21 +240,30 @@ fn deeply_nested_values_are_rejected_during_stylesheet_parsing() {
         "var(--missing,".repeat(NESTING_DEPTH),
         ")".repeat(NESTING_DEPTH)
     );
-    let error = Stylesheet::parse(&[StylesheetSource {
+    let mut sheet = Stylesheet::parse(&[StylesheetSource {
         text: source,
         base: Default::default(),
     }])
-    .err()
-    .expect("nested source must be bounded before variable evaluation");
+    .expect("a declaration past the nesting bound must not fail parsing");
+    let diagnostics = sheet.take_diagnostics();
     assert!(
-        matches!(
-            error,
-            crate::style::StyleError::GrammarLimit {
-                resource: "component nesting",
-                ..
-            }
-        ),
-        "parse limit must retain its type: {error:?}"
+        diagnostics.iter().any(|diagnostic| {
+            diagnostic.kind == crate::style::StyleDiagnosticKind::LimitExceeded
+                && diagnostic.context.starts_with("--deep:")
+        }),
+        "nested source must be bounded and reported before variable evaluation: {diagnostics:?}"
+    );
+    let html = DocumentTree::parse("<p id=root>X</p>").expect("parse test HTML");
+    let element = html
+        .select(&Selector::parse("#root").unwrap())
+        .next()
+        .unwrap();
+    let style = sheet
+        .computed_with_resolver(element, &Style::default(), &FileResolver::default())
+        .expect("the remaining sheet computes");
+    assert!(
+        style.custom_properties.get("--deep").is_none(),
+        "the bounded declaration is dropped"
     );
 }
 

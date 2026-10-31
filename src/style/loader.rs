@@ -20,6 +20,9 @@ use std::{
 };
 
 pub(super) const MAX_STYLESHEET_BYTES: usize = 64 * 1024 * 1024;
+const IGNORED_STYLESHEET: &str = "the stylesheet is ignored";
+const IGNORED_RULE: &str = "the rule is ignored";
+const TRUNCATED_STYLESHEET: &str = "the rest of the stylesheet is ignored";
 pub(super) const MAX_IMPORT_DEPTH: usize = 64;
 pub(super) const MAX_STYLESHEET_RULES: usize = 1_000_000;
 const MAX_STYLESHEET_WORK: usize = MAX_STYLESHEET_RULES;
@@ -420,10 +423,14 @@ impl<'a> Loader<'a> {
         };
         match input {
             StylesheetInput::Inline { text, .. } => {
-                if origin != Origin::UserAgent {
-                    self.budget.bytes(text.len(), location(base))?;
+                if origin != Origin::UserAgent
+                    && let Err(error) = self.budget.bytes(text.len(), location(base))
+                {
+                    self.ignored(error, IGNORED_STYLESHEET);
+                    return Ok(());
                 }
-                self.sheet(Arc::from(text.as_str()), &context)
+                self.sheet(Arc::from(text.as_str()), &context);
+                Ok(())
             }
             StylesheetInput::External { reference, .. } => {
                 self.fetches.insert(
@@ -439,7 +446,22 @@ impl<'a> Loader<'a> {
             }
         }
     }
-    fn sheet(&mut self, text: Arc<str>, context: &Context) -> Result<(), StyleError> {
+    /// Adds a stylesheet's rules. Past a stylesheet limit the rest of it is ignored: the
+    /// rules before the limit apply.
+    fn sheet(&mut self, text: Arc<str>, context: &Context) {
+        if let Err(error) = self.sheet_rules(text, context) {
+            self.ignored(error, TRUNCATED_STYLESHEET);
+        }
+    }
+    /// Reports stylesheet content ignored for `error`, at the limit's location.
+    fn ignored(&self, error: StyleError, consequence: &str) {
+        let location = match &error {
+            StyleError::StylesheetLimit { location, .. } => (**location).clone(),
+            _ => location(&self.prepared.document_base),
+        };
+        ignored(&self.prepared.diagnostics, location, &error, consequence);
+    }
+    fn sheet_rules(&mut self, text: Arc<str>, context: &Context) -> Result<(), StyleError> {
         let budget = if context.origin == Origin::UserAgent {
             &mut self.trusted_budget
         } else {
@@ -569,7 +591,20 @@ impl<'a> Loader<'a> {
                     if nearest_style.is_some() {
                         budget.nesting(rule.work(ancestors), || rule.location())?;
                     }
-                    for prepared in crate::style::nesting::prepare_nested(ancestors, &rule)? {
+                    // A nested rule whose selectors resolve past the selector limits is invalid.
+                    let nested = match crate::style::nesting::prepare_nested(ancestors, &rule) {
+                        Ok(nested) => nested,
+                        Err(error) => {
+                            ignored(
+                                &self.prepared.diagnostics,
+                                rule.location(),
+                                &error,
+                                IGNORED_RULE,
+                            );
+                            continue;
+                        }
+                    };
+                    for prepared in nested {
                         let parsed = prepared.source.parse(&self.prepared.diagnostics, budget)?;
                         let child = chains.len();
                         chains.push(None);
@@ -868,8 +903,14 @@ impl<'a> Loader<'a> {
             self.cycle(&fetch, &identity);
             return Ok(());
         }
-        self.budget
-            .bytes(resource.resource.bytes.len(), fetch.location.clone())?;
+        if let Err(error) = self
+            .budget
+            .bytes(resource.resource.bytes.len(), fetch.location.clone())
+        {
+            self.unavailable(fetch.slot);
+            self.ignored(error, IGNORED_STYLESHEET);
+            return Ok(());
+        }
         if !self.css_type(resource.metadata.media_type.as_deref(), &identity) {
             self.unavailable(fetch.slot);
             self.prepared
@@ -891,11 +932,15 @@ impl<'a> Loader<'a> {
             resource.metadata.charset.as_deref(),
             Some(&fetch.context.encoding),
         );
-        if decoded.text.len() > resource.resource.bytes.len() {
-            self.budget.bytes(
+        if decoded.text.len() > resource.resource.bytes.len()
+            && let Err(error) = self.budget.bytes(
                 decoded.text.len() - resource.resource.bytes.len(),
                 fetch.location.clone(),
-            )?;
+            )
+        {
+            self.unavailable(fetch.slot);
+            self.ignored(error, IGNORED_STYLESHEET);
+            return Ok(());
         }
         if decoded.had_errors {
             self.prepared
@@ -911,7 +956,8 @@ impl<'a> Loader<'a> {
         context.encoding = decoded.encoding;
         context.path.push(requested);
         context.path.push(identity);
-        self.sheet(Arc::from(decoded.text), &context)
+        self.sheet(Arc::from(decoded.text), &context);
+        Ok(())
     }
     fn unavailable_source(&mut self, fetch: Fetch, error: ResourceError) {
         self.unavailable(fetch.slot);
@@ -956,6 +1002,19 @@ impl<'a> Loader<'a> {
         self.prepared.all = self.all.into_values().collect();
         Ok(self.prepared)
     }
+}
+/// Reports stylesheet content at `location` ignored for `error`.
+fn ignored(
+    diagnostics: &RefCell<Vec<StyleDiagnostic>>,
+    location: SourceLocation,
+    error: &StyleError,
+    consequence: &str,
+) {
+    diagnostics.borrow_mut().push(StyleDiagnostic {
+        location,
+        kind: StyleDiagnosticKind::of(error, StyleDiagnosticKind::InvalidRule),
+        context: format!("{error}; {consequence}"),
+    });
 }
 fn location(base: &ResourceBase) -> SourceLocation {
     SourceLocation {
@@ -1162,14 +1221,9 @@ mod tests {
             },
         );
         assert!(
-            matches!(
-                result,
-                Err(StyleError::StylesheetLimit {
-                    resource: "stylesheet rules",
-                    limit: 4,
-                    ..
-                })
-            ),
+            limit_exceeded(result)
+                .context
+                .contains("stylesheet rules exceeds 4"),
             "implicit declaration runs must not bypass the same prepared-rule limit as authored rules"
         );
     }
@@ -1200,13 +1254,9 @@ mod tests {
             Limits::default(),
         );
         assert!(
-            matches!(
-                result,
-                Err(StyleError::StylesheetLimit {
-                    resource: "stylesheet nesting work",
-                    ..
-                })
-            ),
+            limit_exceeded(result)
+                .context
+                .contains("stylesheet nesting work exceeds"),
             "a compact sheet with a large parent/child product must be rejected before allocating/binding the expansion"
         );
     }
@@ -1232,15 +1282,22 @@ mod tests {
             Limits::default(),
         );
         assert!(
-            matches!(
-                result,
-                Err(StyleError::StylesheetLimit {
-                    resource: "stylesheet nesting work",
-                    ..
-                })
-            ),
+            limit_exceeded(result)
+                .context
+                .contains("stylesheet nesting work exceeds"),
             "sharing the selector AST must not hide exponential logical work from repeated ampersands"
         );
+    }
+    /// The limit a preparation reports instead of failing: the input past it is ignored.
+    fn limit_exceeded(result: Result<PreparedStylesheets, StyleError>) -> StyleDiagnostic {
+        let prepared =
+            result.unwrap_or_else(|error| panic!("a stylesheet limit must not fail: {error}"));
+        let diagnostics = prepared.diagnostics.into_inner();
+        diagnostics
+            .iter()
+            .find(|diagnostic| diagnostic.kind == StyleDiagnosticKind::LimitExceeded)
+            .cloned()
+            .unwrap_or_else(|| panic!("a reported stylesheet limit: {diagnostics:?}"))
     }
     struct Resolver {
         calls: Cell<usize>,
@@ -1300,8 +1357,11 @@ mod tests {
                 ..limits
             },
         );
+        let diagnostic = limit_exceeded(result);
         assert!(
-            matches!(result,Err(StyleError::StylesheetLimit {resource:"stylesheet bytes",location,..}) if location.base==ResourceBase::default())
+            diagnostic.context.contains("stylesheet bytes exceeds")
+                && diagnostic.location.base == ResourceBase::default(),
+            "{diagnostic}"
         );
         let result = prepare_with_limits(
             &tree,
@@ -1312,7 +1372,7 @@ mod tests {
             decode,
             limits,
         );
-        assert!(matches!(result, Err(StyleError::StylesheetLimit { .. })));
+        limit_exceeded(result);
         let result = prepare_with_limits(
             &tree,
             &source("p{color:red}p{color:blue}"),
@@ -1325,14 +1385,11 @@ mod tests {
                 ..limits
             },
         );
-        assert!(matches!(
-            result,
-            Err(StyleError::StylesheetLimit {
-                resource: "stylesheet rules",
-                limit: 1,
-                ..
-            })
-        ));
+        assert!(
+            limit_exceeded(result)
+                .context
+                .contains("stylesheet rules exceeds 1")
+        );
         assert_eq!(resolver.calls.get(), 0);
     }
     #[test]
@@ -1458,13 +1515,9 @@ mod tests {
                 },
             );
             assert!(
-                matches!(
-                    result,
-                    Err(StyleError::StylesheetLimit {
-                        resource: "stylesheet rules",
-                        ..
-                    })
-                ),
+                limit_exceeded(result)
+                    .context
+                    .contains("stylesheet rules exceeds"),
                 "nested rule budget must cover {css}"
             );
         }
@@ -1500,9 +1553,10 @@ mod tests {
                     ..Default::default()
                 },
             );
+            let diagnostic = limit_exceeded(result);
             assert!(
-                matches!(result,Err(StyleError::StylesheetLimit {location,..}) if location.base==expected && location.line==line),
-                "source-aware nested limit: {css}"
+                diagnostic.location.base == expected && diagnostic.location.line == line,
+                "source-aware nested limit: {css}: {diagnostic}"
             );
         }
     }
@@ -1557,14 +1611,9 @@ mod tests {
             },
         );
         assert!(
-            matches!(
-                result,
-                Err(StyleError::StylesheetLimit {
-                    resource: "stylesheet bytes",
-                    limit: 1,
-                    ..
-                })
-            ),
+            limit_exceeded(result)
+                .context
+                .contains("stylesheet bytes exceeds 1"),
             "rejected types must not accumulate unaccounted response bodies in the job cache"
         );
     }

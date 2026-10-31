@@ -23,6 +23,25 @@ pub enum StyleDiagnosticKind {
     InvalidDeclaration,
     UnavailableSource,
     ImportCycle,
+    /// A valid rule or descriptor the engine does not implement, which it ignores.
+    Unsupported,
+    /// Input past a resource limit, which the engine ignores.
+    LimitExceeded,
+}
+impl StyleDiagnosticKind {
+    /// What ignoring a construct for `error` reports: `invalid` unless the construct is
+    /// unsupported or past a limit.
+    pub(crate) fn of(error: &crate::style::StyleError, invalid: Self) -> Self {
+        use crate::style::StyleError;
+        match error {
+            StyleError::Unsupported(_) => Self::Unsupported,
+            StyleError::StylesheetLimit { .. }
+            | StyleError::GrammarLimit { .. }
+            | StyleError::VariableLimit { .. }
+            | StyleError::GeneratedContentLimit { .. } => Self::LimitExceeded,
+            _ => invalid,
+        }
+    }
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
