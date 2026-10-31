@@ -71,7 +71,7 @@ pub use rounded::{CornerShape, Radii};
 mod image;
 pub(crate) use raster::{bounds as shape_bounds, cover, opaque, outline as shape_outline, within};
 use serde::Serialize;
-pub(crate) use shadow::{BoxShadow, ShadowMask, blurred_shadow, outset, outset_radii};
+pub(crate) use shadow::{BoxShadow, ShadowMask, ShadowMasks, blurred_shadow, outset, outset_radii};
 pub use shadow::{ShadowPaint, ShadowShape};
 pub(crate) use shape::{
     AxisRadius, BasicShape, CircleRadius, ClipPath, CornerRadii, EllipseRadii, GeometryBox,

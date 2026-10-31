@@ -1121,6 +1121,58 @@ fn sliced_shadows_stop_at_the_fragment_edge_and_blur_into_a_mask() {
 }
 
 #[test]
+fn blurred_shadow_masks_rasterize_once_per_distinct_box_in_a_render() {
+    const BOXES: usize = 12;
+    const WIDTHS_PT: [usize; 3] = [40, 55, 70];
+    const SOFT_MASK: &[u8] = b"/Type/Mask";
+    // Half the boxes go on a second page: the masks are shared across the whole render.
+    let render = |widths: &[usize]| {
+        let divs: String = widths
+            .iter()
+            .enumerate()
+            .map(|(index, width)| {
+                let page = if index == widths.len() / 2 {
+                    "break-before:page;"
+                } else {
+                    ""
+                };
+                format!("<div style='{page}width:{width}pt'></div>")
+            })
+            .collect();
+        let html = format!(
+            "<style>{PROFILE}div{{height:20pt;margin:12pt;border-radius:6pt;\
+             box-shadow:0 2pt 6pt 1pt rgba(0,0,0,.4),inset 1pt 1pt 3pt navy}}</style>{divs}"
+        );
+        let (output, masks) = crate::work::measured(crate::work::Work::ShadowMask, || {
+            render_html(&html, &options()).unwrap()
+        });
+        let soft_masks = output
+            .pdf
+            .windows(SOFT_MASK.len())
+            .filter(|window| *window == SOFT_MASK)
+            .count();
+        (output.page_count, masks, soft_masks)
+    };
+    let (pages, masks, soft_masks) = render(&[WIDTHS_PT[0]; BOXES]);
+    assert_eq!(pages, 2, "the boxes are split over two pages");
+    assert_eq!(
+        (masks, soft_masks),
+        (2, 2),
+        "{BOXES} identical boxes rasterize one outer and one inset mask, and the PDF holds \
+         each once: {masks} rasterized, {soft_masks} soft masks written"
+    );
+    let cycled: Vec<_> = WIDTHS_PT.iter().copied().cycle().take(BOXES).collect();
+    let (_, masks, soft_masks) = render(&cycled);
+    assert_eq!(
+        (masks, soft_masks),
+        (2 * WIDTHS_PT.len(), 2 * WIDTHS_PT.len()),
+        "{BOXES} boxes of {} widths rasterize and write two masks per width: {masks} \
+         rasterized, {soft_masks} soft masks written",
+        WIDTHS_PT.len()
+    );
+}
+
+#[test]
 fn border_image_shorthand_sizes_the_area_and_slices_from_the_cascade() {
     let paint = first_paint(
         "div{width:100pt;height:20pt;border:12pt solid navy;border-image:url(../assets/border-image-nine.png) 10 fill / 6pt 2 / 3pt 0.5 round space}",

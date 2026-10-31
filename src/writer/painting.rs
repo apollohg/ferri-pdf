@@ -149,7 +149,7 @@ fn draw_box(
     images: &mut crate::writer::images::ImageWriter,
     text: &mut TextAreas<'_>,
 ) -> Result<(), PdfError> {
-    for shadow in paint.shadows(false) {
+    for shadow in paint.cached_shadows(false, &mut images.shadow_masks) {
         crate::writer::shadows::draw(&shadow, surface)?;
     }
     // Blended layers mix only with the box's own background, as an isolated group
@@ -195,7 +195,7 @@ fn draw_box(
     })();
     pop_clips(groups, surface);
     background?;
-    for shadow in paint.shadows(true) {
+    for shadow in paint.cached_shadows(true, &mut images.shadow_masks) {
         crate::writer::shadows::draw(&shadow, surface)?;
     }
     // A border image replaces the border styles (Backgrounds 3 §6).

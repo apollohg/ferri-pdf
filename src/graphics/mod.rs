@@ -2,7 +2,8 @@
 use crate::images::Image;
 pub(crate) use crate::paint::{
     BackgroundClip, BackgroundGeometry, BoxArea, BoxAreas, ImageRendering, LegendCut,
-    POINTS_PER_PIXEL, ResolvedGradient, Shading, ShadowMask, UnresolvedImage, image_size,
+    POINTS_PER_PIXEL, ResolvedGradient, Shading, ShadowMask, ShadowMasks, UnresolvedImage,
+    image_size,
 };
 pub use crate::paint::{
     BlendMode, Border, BorderStyle, Clip, ClipBounds, Color, Contour, CornerShape, DecorationLine,

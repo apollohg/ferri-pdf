@@ -34,10 +34,12 @@ pub(crate) enum Work {
     PlacedStep,
     /// A run of text the shaper shapes.
     ShapedRun,
+    /// A blurred shadow mask rasterized.
+    ShadowMask,
 }
 
 #[cfg(test)]
-const KINDS: usize = 15;
+const KINDS: usize = 16;
 
 #[cfg(test)]
 thread_local! {

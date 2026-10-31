@@ -99,6 +99,8 @@ pub(super) struct ImageWriter {
     pub(super) elements: HashMap<crate::dom::ElementId, Arc<crate::layout::ViewportPaint>>,
     /// The `mask` elements drawn on the current page, at every level of nesting.
     pub(super) mask_element_draws: usize,
+    /// The blurred box shadow masks rasterized so far.
+    pub(super) shadow_masks: crate::graphics::ShadowMasks,
 }
 impl ImageWriter {
     pub(super) fn new(pixels_per_point: f32) -> Self {
@@ -115,6 +117,7 @@ impl ImageWriter {
             scale: 1.0,
             mask_element_draws: 0,
             elements: HashMap::new(),
+            shadow_masks: crate::graphics::ShadowMasks::default(),
         }
     }
     /// Whether every pixel of `image` is opaque, decoding it once.

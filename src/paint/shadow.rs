@@ -2,6 +2,7 @@
 use crate::paint::rounded::{Radii, inset, rounded_rect};
 use crate::paint::{BoxPaint, Color, Contour, CornerShape, Rect};
 use serde::Serialize;
+use std::collections::HashMap;
 use std::sync::Arc;
 
 /// The blur is a Gaussian with a standard deviation of half the blur radius (§7.1.1).
@@ -16,6 +17,13 @@ const MAX_MASK_PIXELS: f32 = 4.0e6;
 /// Vertical coverage samples per mask row; horizontal coverage is exact.
 const COVERAGE_SUBROWS: usize = 4;
 const ALPHA_MAX: f32 = 255.0;
+/// Alpha bytes a render job keeps of the masks it has rasterized; past this it forgets them.
+const MAX_CACHED_MASK_BYTES: usize = 4 << 20;
+/// Tags of the shapes and segments in a mask's cache key.
+const ROUNDED_KEY: u32 = 0;
+const CONTOURS_KEY: u32 = 1;
+const LINE_KEY: u32 = 0;
+const CUBIC_KEY: u32 = 1;
 
 #[derive(Clone, Copy, Debug, PartialEq, Serialize)]
 pub struct BoxShadow {
@@ -42,6 +50,43 @@ pub struct ShadowMask {
     pub rect: Rect,
     pub size: [u32; 2],
     pub alpha: Vec<u8>,
+}
+
+/// The blurred masks a render job has rasterized, by every input of their pixels. The writer
+/// paints shadowed boxes from their own origin, so equal boxes on any page share a mask.
+#[derive(Default)]
+pub(crate) struct ShadowMasks {
+    masks: HashMap<Vec<u32>, Arc<ShadowMask>>,
+    bytes: usize,
+}
+
+impl ShadowMasks {
+    fn blurred(
+        &mut self,
+        region: Rect,
+        shape: Option<ShadowArea>,
+        sigma: f32,
+        invert: bool,
+    ) -> Arc<ShadowMask> {
+        let mut key: Vec<u32> = [region.x, region.y, region.width, region.height, sigma]
+            .map(f32::to_bits)
+            .into();
+        key.push(u32::from(invert));
+        if let Some(shape) = &shape {
+            shape.push_key(&mut key);
+        }
+        if let Some(mask) = self.masks.get(&key) {
+            return mask.clone();
+        }
+        let mask = Arc::new(blurred_mask(region, shape, sigma, invert));
+        if self.bytes + mask.alpha.len() > MAX_CACHED_MASK_BYTES {
+            self.masks.clear();
+            self.bytes = 0;
+        }
+        self.bytes += mask.alpha.len();
+        self.masks.insert(key, mask.clone());
+        mask
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -118,6 +163,44 @@ impl ShadowArea {
         }
     }
 
+    /// Appends the shape's bits to a mask's cache key.
+    fn push_key(&self, key: &mut Vec<u32>) {
+        let length = |length: usize| u32::try_from(length).unwrap_or(u32::MAX);
+        let points = |points: &[crate::paint::Point], key: &mut Vec<u32>| {
+            key.extend(points.iter().flatten().map(|value| value.to_bits()));
+        };
+        match self {
+            Self::Rounded(rect, radii) => {
+                key.push(ROUNDED_KEY);
+                key.extend(
+                    [rect.x, rect.y, rect.width, rect.height]
+                        .iter()
+                        .chain(radii.as_flattened())
+                        .map(|value| value.to_bits()),
+                );
+            }
+            Self::Contours(contours) => {
+                key.extend([CONTOURS_KEY, length(contours.len())]);
+                for contour in contours {
+                    key.extend([u32::from(contour.closed), length(contour.segments.len())]);
+                    points(&[contour.start], key);
+                    for segment in &contour.segments {
+                        match segment {
+                            crate::paint::Segment::Line(end) => {
+                                key.push(LINE_KEY);
+                                points(&[*end], key);
+                            }
+                            crate::paint::Segment::Cubic(controls) => {
+                                key.push(CUBIC_KEY);
+                                points(controls, key);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     fn contours(self) -> Vec<Contour> {
         match self {
             Self::Rounded(rect, radii) => vec![rounded_rect(rect, radii)],
@@ -186,6 +269,15 @@ impl<I> BoxPaint<I> {
     /// Outer or inset shadows in painting order, the last listed first (§7.1). A sliced
     /// fragment casts the shadow of its unbroken box, cut at its sliced edges.
     pub fn shadows(&self, inset_shadows: bool) -> Vec<ShadowPaint> {
+        self.cached_shadows(inset_shadows, &mut ShadowMasks::default())
+    }
+
+    /// `shadows`, reusing the blurred masks in `masks` and adding those it rasterizes.
+    pub(crate) fn cached_shadows(
+        &self,
+        inset_shadows: bool,
+        masks: &mut ShadowMasks,
+    ) -> Vec<ShadowPaint> {
         let rect = self.decoration_rect();
         if is_empty(rect) {
             return Vec::new();
@@ -194,9 +286,9 @@ impl<I> BoxPaint<I> {
         self.cast_shadows(inset_shadows)
             .filter_map(|shadow| {
                 if shadow.inset {
-                    self.inset_shadow(shadow, rect, radii)
+                    self.inset_shadow(shadow, rect, radii, masks)
                 } else {
-                    self.outer_shadow(shadow, rect, radii)
+                    self.outer_shadow(shadow, rect, radii, masks)
                 }
             })
             .collect()
@@ -229,6 +321,7 @@ impl<I> BoxPaint<I> {
         shadow: &BoxShadow,
         unbroken: Rect,
         radii: Radii,
+        masks: &mut ShadowMasks,
     ) -> Option<ShadowPaint> {
         let (unbroken_padding, padding_radii) = inset(unbroken, radii, self.inner_widths());
         let bounds = self.slice_bounds(unbroken_padding);
@@ -256,7 +349,7 @@ impl<I> BoxPaint<I> {
         let hole = (!hole.is_empty()).then_some(hole);
         let shape = if shadow.blur > 0.0 {
             let region = outset(unbroken_padding, [shadow.extent(); 4]);
-            ShadowShape::Blurred(Arc::new(blurred_mask(region, hole, shadow.sigma(), true)))
+            ShadowShape::Blurred(masks.blurred(region, hole, shadow.sigma(), true))
         } else {
             let mut contours = vec![Contour::polygon(&corners(unbroken_padding))];
             contours.extend(hole.into_iter().flat_map(ShadowArea::contours));
@@ -269,15 +362,16 @@ impl<I> BoxPaint<I> {
             color: shadow.color,
         })
     }
-    fn outer_shadow(&self, shadow: &BoxShadow, rect: Rect, radii: Radii) -> Option<ShadowPaint> {
+    fn outer_shadow(
+        &self,
+        shadow: &BoxShadow,
+        rect: Rect,
+        radii: Radii,
+        masks: &mut ShadowMasks,
+    ) -> Option<ShadowPaint> {
         let (ink, area, bounds) = self.outer_shadow_area(shadow, rect, radii)?;
         let shape = if shadow.blur > 0.0 {
-            ShadowShape::Blurred(Arc::new(blurred_mask(
-                ink,
-                Some(area),
-                shadow.sigma(),
-                false,
-            )))
+            ShadowShape::Blurred(masks.blurred(ink, Some(area), shadow.sigma(), false))
         } else {
             ShadowShape::Sharp(area.contours())
         };
@@ -487,6 +581,7 @@ fn blurred(
     invert: bool,
     coverage: impl FnOnce([usize; 2], [f32; 2]) -> Vec<f32>,
 ) -> ShadowMask {
+    crate::work::count(crate::work::Work::ShadowMask, 1);
     let (size, pitch) = mask_grid(region, sigma);
     let mut values = coverage(size, pitch);
     for (axis, vertical) in [(0, false), (1, true)] {
