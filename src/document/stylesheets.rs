@@ -19,8 +19,10 @@ pub(super) fn discover(
                 && element.attr("href").is_some()
         })
         .and_then(|element| element.attr("href"))
-        // HTML §2.4.2: a `base` URL that fails to parse leaves the fallback base URL.
+        // HTML §4.2.3: a `base` URL that fails to parse, or is a `data:` or `javascript:` URL,
+        // leaves the fallback base URL; neither scheme can be a base.
         .and_then(|reference| base.resolve(reference).ok())
+        .filter(|url| !url.cannot_be_a_base())
         .map(ResourceBase::Url);
     let effective = declared.as_ref().unwrap_or(base);
     let mut candidates = Vec::new();

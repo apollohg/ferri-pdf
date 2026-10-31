@@ -643,3 +643,32 @@ fn unavailable_style_sheets_and_nested_documents_are_skipped() {
         }
     }
 }
+
+#[test]
+fn unusable_base_urls_leave_the_document_base() {
+    const IMAGE: &str = "pattern.png";
+    let mut corpus = Corpus::default();
+    corpus.insert(
+        IMAGE,
+        include_bytes!("oracle/assets/image-pattern.png").to_vec(),
+    );
+    for href in ["http://[unparsable", "data:,base", "javascript:void(0)"] {
+        let output = render(
+            href,
+            &format!(
+                "<!doctype html><base href='{href}'><style>{}</style><p>Before</p><img src='{IMAGE}' alt='{ALT}'><p>After</p>",
+                common::PROFILE
+            ),
+            &corpus,
+        );
+        assert!(
+            output.diagnostics.is_empty(),
+            "{href}: the image resolves against the document base: {:?}",
+            output.diagnostics
+        );
+        assert!(
+            !texts(&output).iter().any(|text| text.contains(ALT)),
+            "{href}: the image loads rather than showing its alt text"
+        );
+    }
+}
