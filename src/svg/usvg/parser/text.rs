@@ -108,7 +108,7 @@ pub(crate) fn convert(
     let writing_mode = convert_writing_mode(text_node);
     let wrapping = wrapping(text_node, writing_mode, state);
     let mut pos_list = resolve_positions_list(text_node, state);
-    let mut rotate_list = resolve_rotate_list(text_node);
+    let mut rotate_list = resolve_rotate_list(text_node, state.opt);
     // SVG 2 §11.7: wrapped text takes only its initial current text position from the
     // positioning attributes.
     if wrapping.is_some() {
@@ -129,7 +129,7 @@ pub(crate) fn convert(
             .first_element_child()
             .filter(SvgNode::is_first_line)
             .unwrap_or(variant);
-        if count_chars(variant) != pos_list.len() {
+        if count_chars(variant, state.opt) != pos_list.len() {
             return None;
         }
         let line_chunks = collect_text_chunks(variant, &pos_list, wrapping.is_some(), state, cache);
@@ -318,8 +318,8 @@ fn collect_text_chunks_impl(
 ) {
     for child in parent.children() {
         if child.is_element() {
+            // The characters of an element that renders nothing are not addressable.
             if !child.is_visible_element(state.opt) {
-                iter_state.chars_count += count_chars(child);
                 continue;
             }
             let is_path = child.tag_name() == Some(EId::TextPath) && !child.is_contents();
@@ -332,7 +332,7 @@ fn collect_text_chunks_impl(
                     != Some(EId::Text)
                 {
                     // `textPath` can be set only as a direct `text` element child.
-                    iter_state.chars_count += count_chars(child);
+                    iter_state.chars_count += count_chars(child, state.opt);
                     continue;
                 }
 
@@ -344,7 +344,7 @@ fn collect_text_chunks_impl(
                         // Skip an invalid text path and all it's children.
                         // We have to update the chars count,
                         // because `pos_list` was calculated including this text path.
-                        iter_state.chars_count += count_chars(child);
+                        iter_state.chars_count += count_chars(child, state.opt);
                         continue;
                     }
                 }
@@ -379,11 +379,6 @@ fn collect_text_node(
     cache: &mut Cache,
     iter_state: &mut IterState,
 ) {
-    if !parent.is_visible_element(state.opt) {
-        iter_state.chars_count += child.text().chars().count();
-        return;
-    }
-
     let text_orientation = parent
         .find_attribute::<&str>(AId::TextOrientation)
         .and_then(crate::style::logical::TextOrientation::from_name)
@@ -1174,7 +1169,7 @@ fn resolve_font_weight(node: SvgNode) -> crate::fonts::FontWeight {
 /// The result should be: `[100, 50, 120, None]`
 fn resolve_positions_list(text_node: SvgNode, state: &converter::State) -> Vec<CharacterPosition> {
     // Allocate a list that has all characters positions set to `None`.
-    let total_chars = count_chars(text_node);
+    let total_chars = count_chars(text_node, state.opt);
     let mut list = vec![
         CharacterPosition {
             x: None,
@@ -1186,7 +1181,7 @@ fn resolve_positions_list(text_node: SvgNode, state: &converter::State) -> Vec<C
     ];
 
     let mut offset = 0;
-    for child in text_node.descendants() {
+    for child in std::iter::once(text_node).chain(addressable(text_node, state.opt)) {
         if child.is_element() {
             // We must ignore text positions on `textPath`.
             if child.is_contents()
@@ -1195,7 +1190,7 @@ fn resolve_positions_list(text_node: SvgNode, state: &converter::State) -> Vec<C
                 continue;
             }
 
-            let child_chars = count_chars(child);
+            let child_chars = count_chars(child, state.opt);
             macro_rules! push_list {
                 ($aid:expr, $field:ident) => {
                     if let Some(num_list) = super::units::convert_list(child, child, $aid, state) {
@@ -1230,15 +1225,15 @@ fn resolve_positions_list(text_node: SvgNode, state: &converter::State) -> Vec<C
 /// ![](https://www.w3.org/TR/SVG11/images/text/tspan05-diagram.png)
 ///
 /// Note: this algorithm differs from the position resolving one.
-fn resolve_rotate_list(text_node: SvgNode) -> Vec<f32> {
+fn resolve_rotate_list(text_node: SvgNode, opt: &Options) -> Vec<f32> {
     // Allocate a list that has all characters angles set to `0.0`.
-    let mut list = vec![0.0; count_chars(text_node)];
+    let mut list = vec![0.0; count_chars(text_node, opt)];
     let mut last = 0.0;
     let mut offset = 0;
-    for child in text_node.descendants() {
+    for child in std::iter::once(text_node).chain(addressable(text_node, opt)) {
         if child.is_element() && !child.is_contents() {
             if let Some(rotate) = child.attribute::<Vec<f32>>(AId::Rotate) {
-                for i in 0..count_chars(child) {
+                for i in 0..count_chars(child, opt) {
                     if let Some(a) = rotate.get(i).cloned() {
                         list[offset + i] = a;
                         last = a;
@@ -1394,10 +1389,36 @@ fn strut(node: SvgNode, state: &converter::State) -> Strut {
     }
 }
 
-fn count_chars(node: SvgNode) -> usize {
-    node.descendants()
+/// The addressable characters in `node` (SVG 2 §11.1): those outside the elements inside it
+/// that render nothing.
+fn count_chars(node: SvgNode, opt: &Options) -> usize {
+    addressable(node, opt)
         .filter(|n| n.is_text())
         .fold(0, |w, n| w + n.text().chars().count())
+}
+
+/// The descendants of `node` in tree order outside the elements inside it that render
+/// nothing, whose characters positioning attributes do not address (SVG 2 §11.1).
+fn addressable<'a, 'input: 'a>(
+    node: SvgNode<'a, 'input>,
+    opt: &'a Options,
+) -> impl Iterator<Item = SvgNode<'a, 'input>> + 'a {
+    let mut pending: Vec<_> = node.children().collect();
+    pending.reverse();
+    std::iter::from_fn(move || {
+        while let Some(next) = pending.pop() {
+            if next.is_element() {
+                if !next.is_visible_element(opt) {
+                    continue;
+                }
+                let start = pending.len();
+                pending.extend(next.children());
+                pending[start..].reverse();
+            }
+            return Some(next);
+        }
+        None
+    })
 }
 
 /// Converts the writing mode.

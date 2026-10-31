@@ -574,11 +574,14 @@ fn trim_text_nodes(text_elem_id: NodeId, xmlspace: WhiteSpaceCollapse, doc: &mut
     // TODO: find a way to remove all empty text nodes
 }
 
+/// The text nodes in `parent` that white space collapses across, with their depths: those
+/// outside elements that render nothing.
 fn collect_text_nodes(parent: SvgNode, depth: usize, nodes: &mut Vec<(NodeId, usize)>) {
     for child in parent.children() {
         if child.is_text() {
             nodes.push((child.id, depth));
-        } else if child.is_element() {
+        } else if child.is_element() && child.attribute::<&str>(AId::Display) != Some(DISPLAY_NONE)
+        {
             collect_text_nodes(child, depth + 1, nodes);
         }
     }

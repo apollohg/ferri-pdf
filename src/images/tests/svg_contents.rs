@@ -157,6 +157,34 @@ fn boxless_text_children_ignore_position_rotation_length_and_path_layout() {
 }
 
 #[test]
+fn text_of_elements_that_render_nothing_is_neither_addressed_nor_collapsed_across() {
+    // SVG 2 §11.1: the characters of a `display: none` element are not addressable, so the
+    // positions address the rendered characters; nor do they keep the space after them from
+    // collapsing at the start of the text.
+    for body in [
+        "<text x='10 30' y='20'><tspan display='none'>X</tspan><tspan> <a href='#'>link</a></tspan></text>",
+        "<text x='10 30' y='20'><tspan display='none'>XYZ</tspan>link</text>",
+    ] {
+        let tree = tree(body);
+        let chunks: Vec<_> = groups(&tree)
+            .into_iter()
+            .flat_map(crate::svg::usvg::Group::children)
+            .filter_map(|node| match node {
+                crate::svg::usvg::Node::Text(text) => Some(text),
+                _ => None,
+            })
+            .flat_map(|text| text.chunks())
+            .map(|chunk| (chunk.text.as_str(), chunk.x, chunk.y))
+            .collect();
+        assert_eq!(
+            chunks,
+            [("l", Some(10.0), Some(20.0)), ("ink", Some(30.0), None)],
+            "chunks of {body}"
+        );
+    }
+}
+
+#[test]
 fn contents_on_svg_shapes_images_and_text_roots_hides_their_content() {
     for body in [
         "<rect display='contents' width='100' height='100'/>",
