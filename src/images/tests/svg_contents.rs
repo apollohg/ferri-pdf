@@ -41,6 +41,33 @@ fn groups(tree: &crate::svg::usvg::Tree) -> Vec<&crate::svg::usvg::Group> {
     output
 }
 
+/// The raster and vector images `tree` draws.
+fn image_count(tree: &crate::svg::usvg::Tree) -> usize {
+    groups(tree)
+        .into_iter()
+        .flat_map(crate::svg::usvg::Group::children)
+        .filter(|node| matches!(node, crate::svg::usvg::Node::Image(_)))
+        .count()
+}
+
+/// `xml` loaded through `resolver`, with the image failures it reported.
+fn svg_with_failures(
+    xml: String,
+    resolver: &dyn ResourceResolver,
+) -> (crate::svg::usvg::Tree, Vec<crate::images::ImageFailure>) {
+    let mut cache = ImageCache::default();
+    let image = cache
+        .inline_svg(xml, &ResourceBase::default(), resolver)
+        .expect("an SVG whose resources fail still loads");
+    let Image::Svg(svg) = image.as_ref() else {
+        panic!("inline SVG must use the vector pipeline")
+    };
+    (
+        svg.tree(SIZE).expect("SVG contents fixture must convert"),
+        cache.take_failures(),
+    )
+}
+
 fn paths(tree: &crate::svg::usvg::Tree) -> Vec<&crate::svg::usvg::Path> {
     groups(tree)
         .into_iter()
@@ -144,7 +171,7 @@ fn contents_on_svg_shapes_images_and_text_roots_hides_their_content() {
 }
 
 #[test]
-fn unused_boxless_svg_resources_are_not_loaded_and_active_denials_stay_typed() {
+fn unused_boxless_svg_resources_are_not_loaded_and_active_denials_are_reported() {
     const DENIED: &str = "https://denied.example/image.png";
     #[derive(Default)]
     struct Policy {
@@ -187,22 +214,26 @@ fn unused_boxless_svg_resources_are_not_loaded_and_active_denials_stay_typed() {
         ),
     ] {
         let policy = Policy::default();
-        let result = ImageCache::default().inline_svg(
-            format!("{SVG_OPEN}{body}</svg>"),
-            &ResourceBase::default(),
-            &policy,
+        let (tree, failures) = svg_with_failures(format!("{SVG_OPEN}{body}</svg>"), &policy);
+        assert_eq!(
+            image_count(&tree),
+            0,
+            "a denied image is in error and not rendered: {body}"
         );
         if active {
             assert!(
-                matches!(result, Err(ImageError::Resource(ResourceError::Denied(_)))),
-                "active SVG resource denial must remain typed"
+                matches!(
+                    failures.as_slice(),
+                    [failure] if matches!(failure.error, ImageError::Resource(ResourceError::Denied(_)))
+                        && failure.reference == DENIED
+                ),
+                "an active SVG resource denial is reported once: {failures:?}"
             );
             assert_eq!(policy.requests.get(), 1);
         } else {
             assert!(
-                result.is_ok(),
-                "unboxed or inactive SVG resources must not be requested: {:?}",
-                result.err()
+                failures.is_empty(),
+                "unboxed or inactive SVG resources must not be requested: {failures:?}"
             );
             assert_eq!(policy.requests.get(), 0);
         }
@@ -410,16 +441,21 @@ fn active_svg_data_urls_obey_the_callers_resource_budget() {
         max_resource_bytes: RESOURCE_LIMIT,
         ..Default::default()
     };
-    let result = ImageCache::default().inline_svg(xml, &ResourceBase::default(), &resolver);
+    let (tree, failures) = svg_with_failures(xml, &resolver);
     assert!(
         matches!(
-            result,
-            Err(ImageError::Resource(ResourceError::TooLarge {
+            failures.as_slice(),
+            [failure] if matches!(failure.error, ImageError::Resource(ResourceError::TooLarge {
                 limit: RESOURCE_LIMIT,
                 ..
             }))
         ),
-        "data references must pass through ResourceResolver before native decoding"
+        "data references must pass through ResourceResolver before native decoding: {failures:?}"
+    );
+    assert_eq!(
+        image_count(&tree),
+        0,
+        "an image over the budget is in error and not rendered"
     );
 }
 

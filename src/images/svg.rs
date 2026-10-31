@@ -99,6 +99,8 @@ impl SvgImage {
         } = parsed
             .natural_dimensions(&options, Some(&provider))
             .map_err(ImageError::Svg)?;
+        // A `use` element referencing another document is in error and not rendered (SVG 2
+        // §5.6.1); the tree builder resolves references within this document only.
         for node in root
             .descendants()
             .filter(|node| node.has_tag_name((SVG_NAMESPACE, "use")))
@@ -108,7 +110,11 @@ impl SvgImage {
                 .or_else(|| node.attribute((XLINK_NAMESPACE, "href")))
                 && !href.starts_with('#')
             {
-                return Err(ImageError::ExternalSvgSymbol(href.into()));
+                cache.record_failure(
+                    &source.base,
+                    href,
+                    ImageError::ExternalSvgSymbol(href.into()),
+                );
             }
         }
         let initial_size = pixel_size(
@@ -119,46 +125,44 @@ impl SvgImage {
             },
             crate::images::DEFAULT_OBJECT_SIZE[0],
         );
-        let resources = RefCell::new(HashMap::<String, ImageKind>::new());
+        // An image that cannot be loaded or decoded leaves its element in error, which is not
+        // rendered (SVG 2 §12.3), with a diagnostic.
+        let resources = RefCell::new(HashMap::<String, Option<ImageKind>>::new());
         let documents = RefCell::new(HashMap::<String, Option<LinkedDocument>>::new());
         let jpeg_images = RefCell::new(HashSet::new());
-        let failure = RefCell::new(None::<ImageError>);
         let cache = RefCell::new(cache);
         let resolve = |href: &str, _: &crate::svg::usvg::Options<'_>| {
-            if href.starts_with('#') || failure.borrow().is_some() {
+            if href.starts_with('#') {
                 return None;
             }
             if let Some(kind) = resources.borrow().get(href) {
-                return Some(kind.clone());
+                return kind.clone();
             }
-            let loaded = cache
+            let loaded =
+                cache
+                    .borrow_mut()
+                    .load_nested(href, &source.base, resolver, depth + 1, namespace);
+            let loaded = loaded
+                .and_then(|image| image_kind(&image, &mut jpeg_images.borrow_mut()))
+                .map_err(|error| cache.borrow_mut().record_failure(&source.base, href, error))
+                .ok();
+            resources
                 .borrow_mut()
-                .load_nested(href, &source.base, resolver, depth + 1, namespace)
-                .and_then(|image| image_kind(&image, &mut jpeg_images.borrow_mut()));
-            match loaded {
-                Ok(kind) => {
-                    resources.borrow_mut().insert(href.to_owned(), kind.clone());
-                    Some(kind)
-                }
-                Err(error) => {
-                    *failure.borrow_mut() = Some(error);
-                    None
-                }
-            }
+                .insert(href.to_owned(), loaded.clone());
+            loaded
         };
         options.default_size = crate::svg::usvg::Size::from_wh(initial_size[0], initial_size[1])
             .ok_or(ImageError::SvgSize)?;
         let resolve_document = |reference: &str| {
-            if failure.borrow().is_some() {
-                return None;
-            }
             let document = cache
-                .borrow_mut()
-                .linked_document(reference, &source.base, resolver)
-                .unwrap_or_else(|error| {
-                    *failure.borrow_mut() = Some(error);
-                    None
-                });
+                .borrow()
+                .linked_document(reference, &source.base, resolver);
+            let document = document.unwrap_or_else(|error| {
+                cache
+                    .borrow_mut()
+                    .record_failure(&source.base, reference, error);
+                None
+            });
             documents
                 .borrow_mut()
                 .insert(reference.to_owned(), document.clone());
@@ -174,11 +178,12 @@ impl SvgImage {
             )
         });
         let fonts = provider.finish()?;
-        if let Some(error) = failure.into_inner() {
-            return Err(error);
-        }
         let initial_tree = initial_tree.map_err(ImageError::Svg)?;
-        let resources = resources.into_inner();
+        let resources = resources
+            .into_inner()
+            .into_iter()
+            .filter_map(|(href, kind)| Some((href, kind?)))
+            .collect();
         Ok(Self {
             source,
             fonts,

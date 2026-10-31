@@ -75,16 +75,41 @@ fn invalid_nested_bitmap_is_omitted_with_a_diagnostic() {
 }
 
 #[test]
-fn external_svg_symbols_are_not_silently_dropped() {
-    let result = ferri_pdf::render_html(
-        "<style>img{display:block}</style><img src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2240%22%3E%3Cuse href=%22external.svg%23icon%22/%3E%3C/svg%3E'>",
-        &Default::default(),
+fn external_svg_symbols_are_reported_and_the_rest_of_the_image_renders() {
+    let output = ferri_pdf::render_html(
+        "<style>img{display:block}</style><img src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2240%22%3E%3Cuse href=%22external.svg%23icon%22/%3E%3Crect width=%2210%22 height=%2210%22/%3E%3C/svg%3E'>",
+        &ferri_pdf::RenderOptions {
+            include_layout: true,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let reported: Vec<_> = output
+        .diagnostics
+        .iter()
+        .map(|diagnostic| match diagnostic {
+            ferri_pdf::RenderDiagnostic::UnavailableImage(failure) => match &failure.error {
+                ferri_pdf::ImageError::ExternalSvgSymbol(reference) => reference.as_str(),
+                ferri_pdf::ImageError::Resource(_) => failure.reference.as_str(),
+                error => panic!("unexpected image failure {error}"),
+            },
+            diagnostic => panic!("unexpected diagnostic {diagnostic}"),
+        })
+        .collect();
+    assert_eq!(
+        reported,
+        ["external.svg#icon", "external.svg"],
+        "the external symbol is in error, and the document it names is unavailable"
     );
-    let output = result.unwrap();
     assert!(
-        matches!(output.diagnostics.as_slice(), [ferri_pdf::RenderDiagnostic::UnavailableImage(failure)]
-        if matches!(&failure.error, ferri_pdf::ImageError::ExternalSvgSymbol(_))),
-        "unsupported external symbols must retain their typed diagnostic"
+        output
+            .layout
+            .unwrap()
+            .display_lists
+            .iter()
+            .flatten()
+            .any(|item| matches!(item, ferri_pdf::DisplayItem::Image(_))),
+        "the image still paints its other content"
     );
 }
 

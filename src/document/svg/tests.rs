@@ -4,12 +4,8 @@ use crate::resources::FileResolver;
 use crate::style::StylesheetSource;
 
 /// Mask layers as loaded without their images, which serialization does not read.
-#[expect(
-    clippy::unnecessary_wraps,
-    reason = "serialization takes a mask loader that can fail"
-)]
-fn unloaded(style: &Style) -> Result<Arc<crate::graphics::LoadedMasks>, DocumentError> {
-    Ok(Arc::new(style.decoration.masks.with_image_type()))
+fn unloaded(style: &Style) -> Arc<crate::graphics::LoadedMasks> {
+    Arc::new(style.decoration.masks.with_image_type())
 }
 
 /// The document's first `<svg>` serialized, styled by `css` as the document's style sheet.

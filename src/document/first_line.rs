@@ -44,7 +44,7 @@ pub(super) fn variant(
         .collect::<Result<Vec<_>, _>>()?;
     let mut boxes = Vec::with_capacity(box_styles.len());
     for style in box_styles {
-        let decoration = resources.backgrounds(&style)?;
+        let decoration = resources.backgrounds(&style);
         boxes.push((style, decoration));
     }
     // Each ruby annotation box's contents inherit through the box from `::first-line`.
@@ -64,7 +64,7 @@ pub(super) fn variant(
         let mut contents_boxes = Vec::with_capacity(source.boxes().len());
         for inline_box in source.boxes() {
             let style = restyle.style(&inline_box.style)?;
-            let decoration = resources.backgrounds(&style)?;
+            let decoration = resources.backgrounds(&style);
             contents_boxes.push((style, decoration));
         }
         let contents = source.restyled(root.clone(), contents_spans, contents_boxes)?;
@@ -166,7 +166,7 @@ impl<'a> FirstLineStyles<'a> {
             boxed.margin = [Size::ZERO; 4];
             boxed.padding = [crate::style::LengthPercentage::ZERO; 4];
             boxed.decoration = crate::document::formatting::background_only(&line.decoration);
-            let decoration = resources.backgrounds(&boxed)?;
+            let decoration = resources.backgrounds(&boxed);
             lines.push((boxed, decoration));
             parent = line;
         }

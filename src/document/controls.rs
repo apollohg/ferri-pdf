@@ -435,18 +435,14 @@ impl<'b> Builder<'b, '_> {
     }
 
     /// A box with its own decoration, such as an option's.
-    fn styled_block(
-        &mut self,
-        style: Style,
-        children: Vec<BlockContent>,
-    ) -> Result<BlockContent, DocumentError> {
-        let decoration = self.resources.backgrounds(&style)?;
-        Ok(BlockContent::Block(BlockBox::with_decoration(
+    fn styled_block(&mut self, style: Style, children: Vec<BlockContent>) -> BlockContent {
+        let decoration = self.resources.backgrounds(&style);
+        BlockContent::Block(BlockBox::with_decoration(
             style,
             children,
             decoration,
             self.page_scope.cloned(),
-        )))
+        ))
     }
 
     fn block(&self, style: Style, children: Vec<BlockContent>) -> BlockContent {
@@ -587,7 +583,7 @@ impl<'b> Builder<'b, '_> {
         text_style: &Style,
     ) -> Result<BlockContent, DocumentError> {
         let mut inline = crate::document::inline::InlineCollector::default();
-        let decoration = self.resources.backgrounds(text_style)?;
+        let decoration = self.resources.backgrounds(text_style);
         inline.open_box(text_style, decoration, Default::default(), false);
         inline.append(if text.is_empty() { EMPTY_LINE } else { text }, text_style)?;
         inline.close_box();
@@ -689,7 +685,7 @@ impl<'b> Builder<'b, '_> {
                 Self::collapsed(&style)
             };
             let label = Self::label(&item.option_label(), &style)?;
-            let row = self.styled_block(style, label)?;
+            let row = self.styled_block(style, label);
             if shown && !list_box {
                 shown_row = Some(row);
             } else {
@@ -857,7 +853,7 @@ impl<'b> Builder<'b, '_> {
         style.width = style
             .width
             .with_automatic(Size::Intrinsic(IntrinsicSizing::FitContent));
-        let decoration = self.resources.backgrounds(&style)?;
+        let decoration = self.resources.backgrounds(&style);
         let button = BlockBox::with_decoration(
             style.clone(),
             Self::label(FILE_BUTTON_LABEL, &style)?,

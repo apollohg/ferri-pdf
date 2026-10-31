@@ -946,7 +946,7 @@ impl InlineCollector {
     pub(crate) fn restyle(
         &mut self,
         mut restyle: impl FnMut(&Style) -> Result<Style, DocumentError>,
-        mut decorate: impl FnMut(&Style) -> Result<crate::graphics::BoxDecoration, DocumentError>,
+        mut decorate: impl FnMut(&Style) -> crate::graphics::BoxDecoration,
     ) -> Result<(), DocumentError> {
         for style in &mut self.styles {
             *style = restyle(style)?;
@@ -956,7 +956,7 @@ impl InlineCollector {
         }
         for inline_box in &mut self.boxes {
             inline_box.style = restyle(&inline_box.style)?.into();
-            inline_box.decoration = decorate(&inline_box.style)?;
+            inline_box.decoration = decorate(&inline_box.style);
         }
         Ok(())
     }

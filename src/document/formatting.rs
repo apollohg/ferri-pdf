@@ -1292,29 +1292,25 @@ pub(crate) struct ImageResources<'a> {
     pub elements: &'a crate::document::element_images::ElementImages,
 }
 impl ImageResources<'_> {
-    /// The image `reference` names as the element `style` uses it (CSS Images 4 §2.5, §2.7).
-    /// A `url()` that cannot be loaded aborts the document; an `image()` is then invalid, with
-    /// a diagnostic.
+    /// The image `reference` names as the element `style` uses it (CSS Images 4 §2.5, §2.7):
+    /// `None`, an invalid image, with a diagnostic when it cannot be loaded or decoded (CSS
+    /// Images 4 §2.4).
     fn load(
         &mut self,
         reference: &crate::paint::ImageReference<'_>,
         style: &Style,
-    ) -> Result<Option<std::sync::Arc<crate::images::Image>>, crate::images::ImageError> {
+    ) -> Option<std::sync::Arc<crate::images::Image>> {
         let request = match reference {
             crate::paint::ImageReference::Url(request) => request,
-            crate::paint::ImageReference::Element(id) => return Ok(self.element(id, style)),
+            crate::paint::ImageReference::Element(id) => return self.element(id, style),
         };
-        let namespace = style.element_font_namespace();
-        let image = if request.function.is_some() {
-            self.cache
-                .load_optional(request.url, self.base, self.resolver, namespace)
-        } else {
-            Some(
-                self.cache
-                    .load_in_namespace(request.url, self.base, self.resolver, namespace)?,
-            )
-        };
-        Ok(image.and_then(|image| self.view(image, request, style)))
+        let image = self.cache.load_optional(
+            request.url,
+            self.base,
+            self.resolver,
+            style.element_font_namespace(),
+        )?;
+        self.view(image, request, style)
     }
     /// An image whose fallback is chosen before layout, as a list marker's or a float shape's
     /// is: `None` when it cannot be loaded or decoded, with a diagnostic.
@@ -1474,31 +1470,33 @@ impl ImageResources<'_> {
     }
     /// Loads the box's `url()` background layers and border image; inline style URLs use the
     /// document base.
-    pub(crate) fn backgrounds(&mut self, style: &Style) -> Result<BoxDecoration, DocumentError> {
-        self.link_documents(style)?;
-        Ok(style
+    pub(crate) fn backgrounds(&mut self, style: &Style) -> BoxDecoration {
+        self.link_documents(style);
+        let Ok(decoration) = style
             .decoration
-            .load_images(style.image_rendering(), |request| self.load(request, style))?)
+            .load_images(style.image_rendering(), |request| {
+                Ok::<_, std::convert::Infallible>(self.load(request, style))
+            });
+        decoration
     }
     /// Loads the CSS mask layer images of SVG content, and the other SVG documents its masks
     /// reference.
-    pub(crate) fn masks(
-        &mut self,
-        style: &Style,
-    ) -> Result<std::sync::Arc<crate::graphics::LoadedMasks>, DocumentError> {
-        self.link_documents(style)?;
+    pub(crate) fn masks(&mut self, style: &Style) -> std::sync::Arc<crate::graphics::LoadedMasks> {
+        self.link_documents(style);
         let masks = crate::paint::BoxDecoration {
             masks: style.decoration.masks.clone(),
             ..crate::paint::BoxDecoration::default()
         };
-        Ok(masks
-            .load_images(style.image_rendering(), |request| self.load(request, style))?
-            .masks)
+        let Ok(loaded) = masks.load_images(style.image_rendering(), |request| {
+            Ok::<_, std::convert::Infallible>(self.load(request, style))
+        });
+        loaded.masks
     }
     /// Loads the other SVG documents whose elements the box's filters, masks and clip path
     /// reference (Filter Effects 1 §5, CSS Masking 1 §6.1, §7.1), with the documents those
-    /// reference in turn, for painting to find.
-    fn link_documents(&mut self, style: &Style) -> Result<(), DocumentError> {
+    /// reference in turn, for painting to find. One that cannot be loaded names no element,
+    /// with a diagnostic.
+    fn link_documents(&mut self, style: &Style) {
         let masks = &style.decoration.masks;
         let references = style
             .filter
@@ -1514,12 +1512,12 @@ impl ImageResources<'_> {
             if reference.starts_with(SAME_DOCUMENT) {
                 continue;
             }
-            let failure = std::cell::RefCell::new(None);
+            let failures = std::cell::RefCell::new(Vec::new());
             let load = |url: &str| {
                 self.cache
                     .linked_document(url, self.base, self.resolver)
                     .unwrap_or_else(|error| {
-                        failure.borrow_mut().get_or_insert(error);
+                        failures.borrow_mut().push((url.to_owned(), error));
                         None
                     })
             };
@@ -1532,11 +1530,10 @@ impl ImageResources<'_> {
                 None,
                 &load,
             );
-            if let Some(error) = failure.into_inner() {
-                return Err(error.into());
+            for (url, error) in failures.into_inner() {
+                self.cache.record_failure(self.base, &url, error);
             }
         }
-        Ok(())
     }
 }
 
@@ -1690,7 +1687,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                     self.resources.resolver,
                 )?
                 .used();
-            let decoration = self.resources.backgrounds(&pseudo)?;
+            let decoration = self.resources.backgrounds(&pseudo);
             let outer = std::mem::replace(&mut parent, inline_pseudo_style(pseudo.clone()));
             if floated.is_none() && initial.is_none() {
                 if pseudo.floating().is_some() {
@@ -1943,7 +1940,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 |style| resources.backgrounds(style),
             )?;
             style = styles.style(&style)?;
-            decoration = self.resources.backgrounds(&style)?;
+            decoration = self.resources.backgrounds(&style);
         }
         // `text-indent` applies to block containers, which the letter is not (CSS Text 3 §8.1).
         style.text_indent = crate::style::TextIndent::default();
@@ -2118,7 +2115,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                     )?
                     .used(),
             );
-            let decoration = self.resources.backgrounds(&parent)?;
+            let decoration = self.resources.backgrounds(&parent);
             self.inline.open_box(
                 &parent,
                 decoration,
@@ -2379,7 +2376,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         let decoration = if style.display == Display::Contents {
             BoxDecoration::default()
         } else {
-            self.resources.backgrounds(&style)?
+            self.resources.backgrounds(&style)
         };
         self.traversal.counters.prepare(
             &style.counters,
@@ -2714,7 +2711,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         let decoration = if style.display == Display::Contents {
             BoxDecoration::default()
         } else {
-            self.resources.backgrounds(&style)?
+            self.resources.backgrounds(&style)
         };
         let navigation = self.traversal.navigation.descendant();
         // `running()` moves the group to page-margin boxes (CSS GCPM 3 §1.2.1).
@@ -3386,7 +3383,7 @@ fn block<'a>(
                 // CSS Containment 2 §4: an element skipping its contents generates no boxes,
                 // pseudo-elements or replaced fallback for them.
                 let skips = frame.style.skips_contents() && frame.style.containment().layout;
-                block.decoration = resources.backgrounds(&frame.style)?;
+                block.decoration = resources.backgrounds(&frame.style);
                 block.shape_outside = resources.shape_outside(&frame.style);
                 if index == 0 {
                     traversal.canvas = canvas_background(&block.decoration);
@@ -3615,7 +3612,7 @@ fn block<'a>(
                 if style.display == Display::Contents {
                     builder.inline.open_contents(navigation.link);
                 } else {
-                    let decoration = builder.resources.backgrounds(style)?;
+                    let decoration = builder.resources.backgrounds(style);
                     builder.open_inline(style, decoration, navigation, canvas_source)?;
                     if let Some(marker) = marker {
                         builder.place_inside_marker(marker)?;
@@ -3726,7 +3723,7 @@ fn block<'a>(
                 traversal.canvas = if child_style.display == Display::None {
                     BoxDecoration::default()
                 } else {
-                    canvas_background(&resources.backgrounds(&child_style)?)
+                    canvas_background(&resources.backgrounds(&child_style))
                 };
             }
             validate_box(&child_style)?;

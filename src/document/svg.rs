@@ -56,8 +56,7 @@ pub(crate) struct Styling<'a> {
 
 /// Loads the CSS mask layers of an SVG element with the computed style, and the documents
 /// they reference.
-pub(crate) type MaskLoader<'a> =
-    dyn FnMut(&Style) -> Result<Arc<crate::graphics::LoadedMasks>, DocumentError> + 'a;
+pub(crate) type MaskLoader<'a> = dyn FnMut(&Style) -> Arc<crate::graphics::LoadedMasks> + 'a;
 
 /// An SVG document written from styled SVG content, and what the document attaches to it.
 pub(crate) struct SerializedSvg {
@@ -574,7 +573,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
         let mask = if let Some(mask) = presentation::mask(&style.decoration.masks) {
             mask
         } else {
-            self.layer_masks.push((self.load_masks)(style)?);
+            self.layer_masks.push((self.load_masks)(style));
             crate::svg::layer_mask_value(self.layer_masks.len() - 1)
         };
         attribute(

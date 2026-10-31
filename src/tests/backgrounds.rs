@@ -761,7 +761,7 @@ fn hidden_canvas_sources_do_not_load_images_or_suppress_page_paint() {
 }
 
 #[test]
-fn active_page_and_margin_images_preserve_resource_policy_errors() {
+fn page_and_margin_images_over_the_resource_limit_are_invalid_images() {
     const RESOURCE_LIMIT_BYTES: usize = 1;
     let resolver = crate::FileResolver {
         max_resource_bytes: RESOURCE_LIMIT_BYTES,
@@ -775,18 +775,38 @@ fn active_page_and_margin_images_preserve_resource_policy_errors() {
             &format!("<!doctype html><style>{css}</style>"),
             &options(),
             &resolver,
-        );
+        )
+        .unwrap_or_else(|error| panic!("{css}: an image over the limit must not fail: {error}"));
         assert!(
             matches!(
-                output,
-                Err(crate::Error::Image(crate::ImageError::Resource(
-                    crate::ResourceError::TooLarge {
-                        limit: RESOURCE_LIMIT_BYTES,
-                        ..
-                    }
-                )))
+                output.diagnostics.as_slice(),
+                [crate::RenderDiagnostic::UnavailableImage(failure)]
+                    if matches!(failure.error, crate::ImageError::Resource(
+                        crate::ResourceError::TooLarge { limit: RESOURCE_LIMIT_BYTES, .. }
+                    ))
             ),
-            "{css}: page images must propagate the original resource size policy error"
+            "{css}: the size policy failure is reported once: {:?}",
+            output.diagnostics
+        );
+        let trace = output.layout.expect("layout requested");
+        let layers: Vec<_> = trace
+            .display_lists
+            .iter()
+            .flatten()
+            .filter_map(|item| match item {
+                DisplayItem::Box(paint) => Some(&paint.decoration.backgrounds.images),
+                _ => None,
+            })
+            .flatten()
+            .collect();
+        assert!(
+            layers
+                .iter()
+                .any(|layer| matches!(layer, BackgroundImage::Invalid))
+                && !layers
+                    .iter()
+                    .any(|layer| matches!(layer, BackgroundImage::Image { .. })),
+            "{css}: the layer is an invalid image, which paints nothing: {layers:?}"
         );
     }
 }
