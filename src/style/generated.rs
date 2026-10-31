@@ -245,6 +245,10 @@ pub(crate) enum TargetReferenceError {
     MissingFragment,
     #[error("fragment does not identify an element ID")]
     MissingId,
+    /// The target's page counters need a page, which a target that generates no box in the
+    /// page flow lacks.
+    #[error("target lies on no page")]
+    NoPage,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, serde::Serialize)]

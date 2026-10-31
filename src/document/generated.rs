@@ -432,15 +432,21 @@ impl GeneratedReferences {
             })?;
             let text = match &request.value {
                 TargetValue::Counter(counter) if counter.is_page_counter() => {
-                    let page = element_page(*owner).ok_or_else(|| {
-                        StyleError::Invalid(format!(
-                            "target {:?} has no committed page",
-                            request.reference
-                        ))
-                    })?;
-                    counter
-                        .page_text(numbers(page), pages)
-                        .expect("page counter")
+                    match element_page(*owner) {
+                        Some(page) => counter
+                            .page_text(numbers(page), pages)
+                            .expect("page counter"),
+                        None => {
+                            self.bindings.degradations.record(
+                                crate::style::Degradation::UnresolvedTarget {
+                                    reference: request.reference.to_string(),
+                                    reason: crate::style::TargetReferenceError::NoPage
+                                        .to_string(),
+                                },
+                            );
+                            String::new()
+                        }
+                    }
                 }
                 TargetValue::Counter(counter) => target.counters.text(counter).into_text(),
                 TargetValue::Text(source) => ElementText::new(

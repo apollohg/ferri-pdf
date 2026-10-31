@@ -324,6 +324,51 @@ fn unresolved_target_references_render_empty_and_retain_the_reason_without_loadi
 }
 
 #[test]
+fn page_counters_of_targets_without_a_box_render_empty_and_retain_the_reason() {
+    use crate::style::{Degradation, TargetReferenceError};
+    for (content, target, expected) in [
+        (
+            "target-counter('#t',page)",
+            "<div id=t style=display:none>Hidden</div>",
+            "See[]",
+        ),
+        (
+            "target-counters('#t',page,'.')",
+            "<div style=display:none><span id=t>Hidden</span></div>",
+            "See[]",
+        ),
+        (
+            "target-counter('#t',c) target-text('#t') target-counter('#t',page)",
+            "<div id=t style=display:none>Hidden</div>",
+            "See[5Hidden]",
+        ),
+    ] {
+        let html = format!(
+            "<style>body{{counter-reset:c 5}}p::after{{content:'[' {content} ']'}}</style><p>See</p>{target}"
+        );
+        let output = render_html(&html, &local_options()).unwrap_or_else(|error| {
+            panic!("{content} to the boxless target {target} must render: {error}")
+        });
+        assert!(
+            output.diagnostics.iter().any(|diagnostic| matches!(
+                diagnostic,
+                crate::RenderDiagnostic::Degraded(Degradation::UnresolvedTarget {
+                    reference,
+                    reason,
+                }) if reference == "#t" && *reason == TargetReferenceError::NoPage.to_string()
+            )),
+            "{content} to {target} must report the page it lacks: {:?}",
+            output.diagnostics
+        );
+        assert_eq!(
+            output.layout.unwrap().pages[0][0].text,
+            expected,
+            "{content} to {target}: only the page counter renders as empty text"
+        );
+    }
+}
+
+#[test]
 fn page_targets_use_multi_digit_values_and_final_page_totals() {
     const TARGET_PAGE: usize = 10;
     let mut body = String::from("<p class=reference>See </p>");
