@@ -1393,9 +1393,10 @@ class PagePaint(unittest.TestCase):
                         left = (index % count) * 180 if columns else 0
                         window = (left, 20, left + 180, 180)
                         # Same paper and device origin keep Poppler's image/edge sampling identical.
-                        whole = self.render(css + f".box{{position:absolute;left:{left}pt;top:{top}pt}}",
+                        # Size containment makes the absolute reference monolithic (CSS Containment 2 §3.1).
+                        whole = self.render(css + f".box{{position:absolute;left:{left}pt;top:{top}pt;contain:size}}",
                                             body.replace("<div class=lead></div>", ""), size)
-                        self.assertEqual(len(whole), 1, "the absolute reference must remain unbroken")
+                        self.assertEqual(len(whole), 1, "the monolithic absolute reference must remain unbroken")
                         difference = ImageChops.difference(fragmented[page].crop(window), whole[0].crop(window))
                         maximum = max(high for _, high in difference.getextrema())
                         self.assertLessEqual(maximum, PIXEL_TOLERANCE,
