@@ -2164,6 +2164,15 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             .map(|active| active.end_space)
             .sum()
     }
+    /// Whether a break `request` leaves the current fragmentainer: one that holds no content
+    /// is kept, so the content after the break starts it and the flow progresses (CSS Break 3
+    /// §4).
+    fn leaves_page(&self, request: BreakRequest) -> bool {
+        request.forced.is_some()
+            || request.preserve_empty
+            || self.page_content
+            || self.flow_content[self.page]
+    }
     fn new_page(
         &mut self,
         forced_break: Option<Forced>,
@@ -2215,7 +2224,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             active.record_float_fragment(self.page, self.top, false);
             self.flow_content[self.page] |= Self::normal_box_has_ink(active, self.page_rect);
         }
-        if forced || self.page_content || self.flow_content[self.page] || preserve_empty {
+        if self.leaves_page(BreakRequest {
+            forced: forced_break,
+            preserve_empty,
+        }) {
             let candidate = if forced && self.parallel_depth == 0 {
                 self.furthest_page + 1
             } else {

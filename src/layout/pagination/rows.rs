@@ -846,8 +846,12 @@ impl<'a> Paginator<'a, '_, 'a> {
                         // Alignment can place a lane beyond an otherwise empty fragment.
                         request.preserve_empty |= lane.position().0 > *frontier;
                         self.select_page(*frontier, *frontier_y);
-                        *yielded = true;
-                        return Ok(Some(request));
+                        // A frontier holding no content is not left, so the lane resumes on it
+                        // and starts it with the content it broke before.
+                        if self.leaves_page(request) {
+                            *yielded = true;
+                            return Ok(Some(request));
+                        }
                     }
                 }
                 let (mut continuation, stretch, after, paint_start, backgrounds, grid_cell) =

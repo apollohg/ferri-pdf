@@ -608,6 +608,55 @@ mod tests {
         );
     }
 
+    /// Pages whose margins leave a content box of no height, so each fragmentainer has the
+    /// 1px minimum that guarantees progress (CSS Break 3 §4).
+    const NO_ROOM_PAGE: &str = "@page{size:200pt 100pt;margin:50pt 0}";
+
+    /// The text of each page's lines.
+    fn page_text(trace: &crate::layout::LayoutTrace) -> Vec<Vec<&str>> {
+        trace
+            .pages
+            .iter()
+            .map(|lines| lines.iter().map(|line| line.text.as_str()).collect())
+            .collect()
+    }
+
+    #[test]
+    fn row_lanes_start_fragmentainers_without_room_instead_of_yielding_them_again() {
+        const LIMIT: usize = 65_536;
+        let resolver = FileResolver::default();
+        let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        // Each flex item lane breaks before its first line, which the body's margin pushes past
+        // the 1px fragmentainer; a fragmentainer that holds nothing yet is not left, so the
+        // lanes resume on it and start it with their lines.
+        let document = StyledDocument::parse(
+            &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}{NO_ROOM_PAGE}body{{margin:10pt 0 0;font:10pt/10pt Fixed}}</style><div style=\"display:flex\"><div>a1<br>a2<br>a3</div><div>b1<br>b2</div></div>"),
+            &base, &[], &resolver,
+        )
+        .unwrap();
+        let output = layout_with_work_limit(&document, &resolver, LIMIT).unwrap_or_else(|error| {
+            panic!(
+                "lanes yielding a fragmentainer that holds no content never progress, so they \
+                 exhaust any budget: {error}"
+            )
+        });
+        let pages = page_text(&output);
+        let lines: Vec<_> = pages.iter().flatten().copied().collect();
+        for lane in [["a1", "a2", "a3"].as_slice(), &["b1", "b2"]] {
+            let placed: Vec<_> = lines
+                .iter()
+                .copied()
+                .filter(|text| lane.contains(text))
+                .collect();
+            assert_eq!(
+                placed, lane,
+                "each lane places its lines once, in order: {pages:?}"
+            );
+        }
+    }
+
     #[test]
     fn fixed_column_overflow_without_room_for_cloned_edges_truncates_before_exhausting_work() {
         const LIMIT: usize = 4096;
