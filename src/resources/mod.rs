@@ -96,6 +96,9 @@ pub enum ResourceError {
     UnsupportedScheme(String),
     #[error("invalid data URL: {0}")]
     InvalidDataUrl(#[from] DataUrlError),
+    /// A caller-supplied resolver could not supply the resource, for its own reason.
+    #[error("resolver could not supply {url}: {reason}")]
+    Unavailable { url: Url, reason: Box<str> },
 }
 impl ResourceError {
     /// Whether the renderer's own limits left the resource out; a resolver's caps, such as
@@ -117,7 +120,8 @@ impl ResourceError {
             | Self::TooLarge { .. }
             | Self::OutsideRoot(_)
             | Self::UnsupportedScheme(_)
-            | Self::InvalidDataUrl(_) => false,
+            | Self::InvalidDataUrl(_)
+            | Self::Unavailable { .. } => false,
         }
     }
 }
