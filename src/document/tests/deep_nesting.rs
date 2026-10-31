@@ -335,6 +335,18 @@ const CONSTRUCTS: &[Construct] = &[
         FormattingNest::level("<div>", "</div>", BOX_DEPTH + GRID_DEPTH)
             .styled("div{display:grid}")
     ),
+    // MathML elements with a CSS display are laid out as CSS boxes, inside math that each
+    // level opens.
+    formatting_construct!(
+        "MathML grid containers",
+        FormattingNest::level("<math><mrow>", "</mrow></math>", 2 * BOX_DEPTH + GRID_DEPTH)
+            .styled("mrow{display:grid}")
+    ),
+    formatting_construct!(
+        "MathML flex containers",
+        FormattingNest::level("<math><mrow>", "</mrow></math>", 2 * BOX_DEPTH + FLEX_DEPTH)
+            .styled("mrow{display:flex}")
+    ),
     formatting_construct!(
         "multi-column containers",
         FormattingNest::level("<div>", "</div>", BOX_DEPTH + MULTICOL_DEPTH)

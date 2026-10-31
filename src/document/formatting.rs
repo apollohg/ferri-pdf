@@ -3187,9 +3187,19 @@ fn text_limits<'a>(blocks: impl Iterator<Item = &'a BlockBox>) -> TextLimits {
 }
 
 /// The formatting depth a box with `style` takes below its parent box, styled `parent`.
-/// `MathML` content, whose own nesting limit bounds it, takes a box's.
-fn formatting_depth(style: &Style, parent: &Style, math: bool) -> usize {
-    if math || style.display == Display::Contents {
+/// `MathML` content laid out as math, whose own nesting limit bounds it, takes a box's;
+/// `MathML` elements with another display are laid out, and weigh, as CSS boxes. `math` names
+/// the element of `MathML` content.
+fn formatting_depth(style: &Style, parent: &Style, math: Option<&str>) -> usize {
+    let math_layout = math.is_some_and(|name| match style.display {
+        Display::BlockMath | Display::InlineMath => true,
+        // MathML Core §4.1 gives math tables, rows and cells their table displays.
+        Display::Table | Display::InlineTable => name == "mtable",
+        Display::TableRow => name == "mtr",
+        Display::TableCell => name == "mtd",
+        _ => false,
+    });
+    if math_layout || style.display == Display::Contents {
         return BOX_DEPTH;
     }
     let display = &style.display;
@@ -4071,7 +4081,7 @@ fn block<'a>(
             // lie in the deepest box allowed, as `display: contents` places them.
             let parent_style = &frames[block_index].style;
             let exceeded = if frames[index].depth
-                + formatting_depth(&child_style, parent_style, math_depth.is_some())
+                + formatting_depth(&child_style, parent_style, math_depth.map(|_| child.name()))
                 > MAX_FORMATTING_DEPTH
             {
                 Some((FORMATTING_NESTING_RESOURCE, MAX_FORMATTING_DEPTH))
@@ -4131,7 +4141,7 @@ fn block<'a>(
                 + formatting_depth(
                     &child_style,
                     &frames[block_index].style,
-                    math_depth.is_some(),
+                    math_depth.map(|_| child.name()),
                 );
             let ancestor_page = frames[index].page_scope.clone();
             let math_cell = crate::document::mathml::table::is_cell(
