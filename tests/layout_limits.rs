@@ -233,6 +233,24 @@ fn boxes_whose_padding_overflows_their_border_box_are_omitted_alone() {
 }
 
 #[test]
+fn math_boxes_whose_geometry_is_not_finite_are_omitted_alone() {
+    let (texts, omitted) = texts_and_omitted_boxes(
+        "<!doctype html><p>before</p><math display=block><mfrac \
+         style='padding-block:calc(1e30% * 1e30)'><mi>x</mi><mn>2</mn></mfrac></math><p>after</p>",
+    );
+    assert_eq!(
+        omitted,
+        ["block geometry is not finite"],
+        "the math box whose fraction's padding overflows its extent is reported omitted"
+    );
+    assert_eq!(
+        texts,
+        ["after", "before"],
+        "only the math box is lost, not the paragraphs around it"
+    );
+}
+
+#[test]
 fn empty_footnotes_on_pages_without_room_render() {
     // The page area is 0pt tall, so not even the footnote's empty body fits below the line.
     let (texts, omitted) = texts_and_omitted_boxes(

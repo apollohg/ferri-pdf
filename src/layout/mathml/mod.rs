@@ -128,6 +128,24 @@ pub(super) fn measure<'a>(
     let vertical = super::geometry::VerticalBox::new(style, &geometry, containing)
         .with_used_height(used_height);
     let height = vertical.used_height(top + natural_height + bottom);
+    let placements = content.paint.iter().flat_map(|paint| match paint {
+        Paint::Child { x, y, .. } => [*x, *y],
+        Paint::Text(paint) => [paint.x, paint.baseline],
+        Paint::Box(paint) => [
+            paint.rect.x + paint.rect.width,
+            paint.rect.y + paint.rect.height,
+        ],
+    });
+    if ![width, height, content_x, content.ascent]
+        .into_iter()
+        .chain(placements)
+        .all(f32::is_finite)
+    {
+        return Err(crate::layout::LayoutError::NonFiniteBlockGeometry {
+            block: std::ptr::from_ref(source.block),
+        }
+        .into());
+    }
     let mut cells = Vec::new();
     let mut after = Vec::new();
     for paint in std::mem::take(&mut content.paint) {
