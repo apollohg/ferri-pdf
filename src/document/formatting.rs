@@ -15,6 +15,7 @@ pub(crate) const MAX_FORMATTING_WORK: usize = 100_000_000;
 pub(super) const ELEMENT_WORK: usize = 64;
 const DEFAULT_DENSITY: f32 = 1.0;
 pub(super) const FORMATTING_NESTING_RESOURCE: &str = "formatting nesting";
+const MATHML_NESTING_RESOURCE: &str = "MathML nesting";
 const FLATTENED_NESTING: &str = "elements nested deeper generate no boxes of their own, their contents lying in the deepest box";
 
 /// The background colour and images of `decoration`, without its borders, outline or shadows.
@@ -871,8 +872,9 @@ pub(crate) struct Traversal<'a> {
     first_lines: std::rc::Rc<std::cell::RefCell<first_line_copies::FirstLineCopies>>,
     /// The first-line copies a first-line copy requests, formatted after it.
     requests: Vec<first_line_copies::CopyRequest<'a>>,
-    /// Elements past the nesting limit were formatted without boxes of their own.
-    flattened: bool,
+    /// The nesting limits, by resource, past which elements were formatted without boxes of
+    /// their own.
+    flattened: std::collections::BTreeSet<(&'static str, usize)>,
 }
 
 /// What a traversal formats.
@@ -995,7 +997,7 @@ impl Traversal<'_> {
                 first_line_copies::FirstLineCopies::new(self.first_lines.borrow().enabled()),
             )),
             requests: Vec::new(),
-            flattened: false,
+            flattened: std::collections::BTreeSet::new(),
         }
     }
     /// The state formatting a copy of the subtree starting here, of `kind`: it continues the
@@ -1031,7 +1033,7 @@ impl Traversal<'_> {
             kind,
             first_lines: self.first_lines.clone(),
             requests: Vec::new(),
-            flattened: false,
+            flattened: std::collections::BTreeSet::new(),
         }
     }
 }
@@ -3774,14 +3776,25 @@ fn block<'a>(
             if replaced && child_style.display == Display::Contents {
                 child_style.display = Display::None;
             }
-            // Elements past the nesting limit generate no boxes of their own: their contents
+            let math_depth = frames[index]
+                .math_depth
+                .map(|depth| depth + 1)
+                .or_else(|| (child.namespace() == crate::dom::MATHML_NAMESPACE).then_some(0));
+            // Elements past the nesting limits generate no boxes of their own: their contents
             // lie in the deepest box allowed, as `display: contents` places them.
-            if frames[index].depth >= MAX_FORMATTING_DEPTH
+            let exceeded = if frames[index].depth >= MAX_FORMATTING_DEPTH {
+                Some((FORMATTING_NESTING_RESOURCE, MAX_FORMATTING_DEPTH))
+            } else if math_depth.is_some_and(|depth| depth >= crate::document::mathml::MAX_DEPTH) {
+                Some((MATHML_NESTING_RESOURCE, crate::document::mathml::MAX_DEPTH))
+            } else {
+                None
+            };
+            if let Some(limit) = exceeded
                 && !replaced
                 && child_style.display != Display::None
             {
                 child_style.display = Display::Contents;
-                traversal.flattened = true;
+                traversal.flattened.insert(limit);
             }
             normalize_child_display(
                 &mut child_style.display,
@@ -3831,16 +3844,6 @@ fn block<'a>(
                 &mut traversal.page_counters,
             )?;
             let child_depth = frames[index].depth + 1;
-            let math_depth = frames[index]
-                .math_depth
-                .map(|depth| depth + 1)
-                .or_else(|| (child.namespace() == crate::dom::MATHML_NAMESPACE).then_some(0));
-            if math_depth.is_some_and(|depth| depth >= crate::document::mathml::MAX_DEPTH) {
-                return Err(DocumentError::Formatting(format!(
-                    "MathML nesting exceeds {}",
-                    crate::document::mathml::MAX_DEPTH
-                )));
-            }
             let ancestor_page = frames[index].page_scope.clone();
             let math_cell = crate::document::mathml::table::is_cell(
                 frames[block_index].element,
@@ -4530,7 +4533,7 @@ fn format_root(
             first_line_copies::FirstLineCopies::new(first_line_copies),
         )),
         requests: Vec::new(),
-        flattened: false,
+        flattened: std::collections::BTreeSet::new(),
         canvas_body: (style.decoration.background.alpha == 0.0
             && !style.decoration.backgrounds.has_images())
         .then(|| html.body_element().map(Element::id))
@@ -4634,12 +4637,14 @@ fn format_root(
         ..
     } = traversal;
     let diagnostics = flattened
-        .then_some(crate::document::DocumentDiagnostic::FormattingLimit {
-            resource: FORMATTING_NESTING_RESOURCE,
-            limit: MAX_FORMATTING_DEPTH,
-            fallback: FLATTENED_NESTING,
-        })
         .into_iter()
+        .map(
+            |(resource, limit)| crate::document::DocumentDiagnostic::FormattingLimit {
+                resource,
+                limit,
+                fallback: FLATTENED_NESTING,
+            },
+        )
         .collect();
     Ok(Formatted {
         root,

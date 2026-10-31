@@ -955,11 +955,20 @@ fn overscript_top_accent_attachment_uses_logical_inline_start_edges() {
     );
 }
 
+fn math_flattened(output: &crate::RenderOutput) -> bool {
+    output.diagnostics.iter().any(|diagnostic| {
+        matches!(
+            diagnostic,
+            crate::RenderDiagnostic::FormattingLimit { resource: "MathML nesting", limit, .. }
+                if *limit == crate::document::mathml::MAX_DEPTH
+        )
+    })
+}
+
 #[test]
-fn math_nesting_limit_returns_an_error_without_overflowing_a_library_thread() {
+fn math_nesting_limit_flattens_deeper_elements_without_overflowing_a_library_thread() {
     const CHILD_ENV: &str = "FERRI_MATH_NESTING_CHILD";
-    const TEST_NAME: &str =
-        "tests::mathml::math_nesting_limit_returns_an_error_without_overflowing_a_library_thread";
+    const TEST_NAME: &str = "tests::mathml::math_nesting_limit_flattens_deeper_elements_without_overflowing_a_library_thread";
     const MATH_NESTING_LIMIT: usize = 256;
     const LIBRARY_STACK_BYTES: usize = 2 * 1024 * 1024;
     if std::env::var_os(CHILD_ENV).is_none() {
@@ -977,22 +986,17 @@ fn math_nesting_limit_returns_an_error_without_overflowing_a_library_thread() {
     std::thread::Builder::new()
         .stack_size(LIBRARY_STACK_BYTES)
         .spawn(|| {
-            for (levels, allowed) in [(MATH_NESTING_LIMIT - 2, true), (MATH_NESTING_LIMIT - 1, false)] {
+            for (levels, flattened) in [(MATH_NESTING_LIMIT - 2, false), (MATH_NESTING_LIMIT - 1, true)] {
                 eprintln!("checking native MathML boundary: {levels} mrows on a {LIBRARY_STACK_BYTES}-byte stack");
                 let html = format!("<math>{}<mn>1</mn>{}</math>", "<mrow>".repeat(levels), "</mrow>".repeat(levels));
-                let result = render_html(&html, &local_options());
-                if allowed {
-                    let output = result.expect("the inclusive MathML nesting boundary must render");
-                    assert!(output.layout.unwrap().pages.iter().flatten().any(|line| line.text == "1"), "valid deep math must retain canonical selectable native text");
-                } else {
-                    let error = result.err().expect("one further native math level must return its nesting error");
-                    assert!(error.to_string().contains(&format!("MathML nesting exceeds {MATH_NESTING_LIMIT}")), "native math must report its explicit resource boundary: {error}");
-                }
+                let output = render_html(&html, &local_options()).unwrap_or_else(|error| panic!("{levels} nested rows must render: {error}"));
+                assert_eq!(math_flattened(&output), flattened, "native math reports flattening past its explicit resource boundary: {:?}", output.diagnostics);
+                assert!(output.layout.unwrap().pages.iter().flatten().any(|line| line.text == "1"), "deep math must retain canonical selectable native text");
             }
             const ELEMENTS_PER_MIXED_SEGMENT: usize = 4;
             const MIXED_SEGMENTS: usize = (MATH_NESTING_LIMIT - 1) / ELEMENTS_PER_MIXED_SEGMENT;
             const REMAINING_ROWS: usize = MATH_NESTING_LIMIT - 2 - MIXED_SEGMENTS * ELEMENTS_PER_MIXED_SEGMENT;
-            for (rows, allowed) in [(REMAINING_ROWS, true), (REMAINING_ROWS + 1, false)] {
+            for (rows, flattened) in [(REMAINING_ROWS, false), (REMAINING_ROWS + 1, true)] {
                 const MIXED_CSS_SIZE_PT: usize = 30;
                 let open = format!("<mrow><mtext><span style='display:block;width:{MIXED_CSS_SIZE_PT}pt;height:{MIXED_CSS_SIZE_PT}pt;writing-mode:vertical-rl;opacity:.9'><math>");
                 let close = "</math></span></mtext></mrow>";
@@ -1002,14 +1006,9 @@ fn math_nesting_limit_returns_an_error_without_overflowing_a_library_thread() {
                     "</mrow>".repeat(rows), close.repeat(MIXED_SEGMENTS)
                 );
                 eprintln!("checking mixed Math/CSS/writing boundary: {MIXED_SEGMENTS} four-element segments plus {rows} rows on a {LIBRARY_STACK_BYTES}-byte stack");
-                let result = render_html(&html, &local_options());
-                if allowed {
-                    let output = result.expect("mixed source/native boundaries must preserve the same inclusive depth and default stack");
-                    assert_eq!(output.layout.unwrap().pages.iter().flatten().filter(|line| line.text == "1").count(), 1, "mixed native/CSS transport must retain the single canonical token exactly once");
-                } else {
-                    let error = result.err().expect("a Math/CSS/writing boundary must not reset the scoped depth counter");
-                    assert!(error.to_string().contains(&format!("MathML nesting exceeds {MATH_NESTING_LIMIT}")), "mixed sources must report the same typed formatting boundary: {error}");
-                }
+                let output = render_html(&html, &local_options()).unwrap_or_else(|error| panic!("mixed source/native boundaries must render on the default stack: {error}"));
+                assert_eq!(math_flattened(&output), flattened, "a Math/CSS/writing boundary must not reset the scoped depth counter: {:?}", output.diagnostics);
+                assert_eq!(output.layout.unwrap().pages.iter().flatten().filter(|line| line.text == "1").count(), 1, "mixed native/CSS transport must retain the single canonical token exactly once");
             }
         })
         .expect("bounded-stack library thread must start")

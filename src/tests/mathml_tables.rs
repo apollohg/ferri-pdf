@@ -21,32 +21,28 @@ fn nested_math_tables_keep_canonical_text_on_the_default_library_stack() {
             "<mtable><mtr><mtd>".repeat(levels),
             "</mtd></mtr></mtable>".repeat(levels),
         );
-        let result = render_html(&html, &local_options());
-        if levels <= limit {
-            let output = result.unwrap_or_else(|error| {
-                panic!("{levels} valid nested tables must render: {error}")
-            });
-            let layout = output.layout.expect("layout tracing is enabled");
-            assert_eq!(
-                layout
-                    .pages
-                    .iter()
-                    .flatten()
-                    .filter(|line| line.text == "1")
-                    .count(),
-                1,
-                "{levels} nested tables retain the canonical token once"
-            );
-        } else {
-            let error = result
-                .err()
-                .expect("the first excessive semantic table depth must fail");
-            assert!(
-                error
-                    .to_string()
-                    .contains(&format!("MathML nesting exceeds {MAX_DEPTH}")),
-                "anonymous cell rows do not replace the established semantic depth limit: {error}"
-            );
-        }
+        let output = render_html(&html, &local_options())
+            .unwrap_or_else(|error| panic!("{levels} nested tables must render: {error}"));
+        assert_eq!(
+            output.diagnostics.iter().any(|diagnostic| matches!(
+                diagnostic,
+                crate::RenderDiagnostic::FormattingLimit { resource: "MathML nesting", limit, .. }
+                    if *limit == MAX_DEPTH
+            )),
+            levels > limit,
+            "anonymous cell rows do not replace the established semantic depth limit: {:?}",
+            output.diagnostics
+        );
+        let layout = output.layout.expect("layout tracing is enabled");
+        assert_eq!(
+            layout
+                .pages
+                .iter()
+                .flatten()
+                .filter(|line| line.text == "1")
+                .count(),
+            1,
+            "{levels} nested tables retain the canonical token once"
+        );
     }
 }

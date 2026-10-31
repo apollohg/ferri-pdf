@@ -113,6 +113,16 @@ impl StyleOrigin {
         }
     }
 }
+/// Releases the chain of origins a loop at a time: dropping it recursively would overflow the
+/// stack for the origins of very deep trees.
+impl Drop for StyleOrigin {
+    fn drop(&mut self) {
+        let mut next = self.0.take();
+        while let Some(node) = next {
+            next = Arc::into_inner(node).and_then(|mut node| node.parent.0.take());
+        }
+    }
+}
 impl PartialEq for StyleOrigin {
     fn eq(&self, _: &Self) -> bool {
         true
