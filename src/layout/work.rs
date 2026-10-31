@@ -895,4 +895,56 @@ mod tests {
             blue.iter().map(|paint| paint.rect.x).collect::<Vec<_>>()
         );
     }
+
+    #[test]
+    fn paginating_a_table_takes_work_linear_in_its_rows() {
+        const ROWS: usize = 96;
+        let resolver = FileResolver::default();
+        let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        // Each page repeats the header and footer, and two of every three body rows share a
+        // row-spanning cell. Resolving the table's column widths or row geometry, aligning all
+        // its cells where row heights depend on each other, or searching a row's siblings for
+        // the events after it, again for every row placed is quadratic in the rows.
+        let work = |collapse: &str, css: &str, rows: usize| {
+            let body = "<tr><td rowspan=2>span</td><td>first</td><td>x</td></tr><tr><td>second</td><td>y</td></tr><tr class=third><td>third</td><td>z</td><td>w</td></tr>"
+                .repeat(rows / 6);
+            let document = StyledDocument::parse(
+                &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}@page{{size:200pt 200pt;margin:10pt}}html,body{{margin:0;font:8pt/10pt Fixed}}table{{width:100%;border-collapse:{collapse}}}td,th{{border:1pt solid;padding:1pt}}{css}</style><table><thead><tr><th>head</th><th>a</th><th>b</th></tr></thead><tfoot><tr><td>foot</td><td>c</td><td>d</td></tr></tfoot><tbody>{body}</tbody><tbody>{body}</tbody></table>"),
+                &base, &[], &resolver,
+            )
+            .unwrap();
+            let budget = Budget::new(MAX_LAYOUT_WORK);
+            let trace = crate::layout::layout_pass(&document, &resolver, budget.clone())
+                .unwrap_or_else(|error| {
+                    panic!("{collapse} table of {rows} rows with `{css}` failed: {error}")
+                })
+                .trace;
+            let heads = trace
+                .pages
+                .iter()
+                .filter(|page| page.iter().any(|line| line.text == "head"))
+                .count();
+            assert!(
+                trace.pages.len() > 1 && heads == trace.pages.len(),
+                "fixture: the {collapse} table of {rows} rows with `{css}` spans pages that \
+                 each repeat its header, but {heads} of {} pages show it",
+                trace.pages.len()
+            );
+            budget.spent()
+        };
+        for (collapse, css) in [
+            ("separate", ""),
+            ("collapse", ""),
+            ("separate", "td{height:12pt}"),
+            ("collapse", ".third{visibility:collapse}"),
+        ] {
+            crate::work::assert_linear(
+                &format!("rows of a {collapse} table with `{css}`"),
+                ROWS,
+                |rows| work(collapse, css, rows),
+            );
+        }
+    }
 }
