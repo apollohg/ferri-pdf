@@ -517,6 +517,18 @@ const GEOMETRY: &[&str] = &[
     "tab-size:{}",
     "aspect-ratio:1e30/1e-30",
     "zoom:1e30",
+    "column-count:1000",
+];
+/// Page geometry declarations, with `{}` where each takes an extreme length; page areas
+/// that leave no room for content are among them.
+const PAGE_GEOMETRY: &[&str] = &[
+    "size:{} {}",
+    "size:100pt 0.01pt",
+    "size:0.01pt 100pt",
+    "margin:{}",
+    "margin:50pt 0",
+    "padding:{}",
+    "border:{} solid red",
 ];
 /// Formatting contexts and positioning schemes: the start of an opening tag whose `style`
 /// attribute the generated declarations continue, and the markup closing it.
@@ -550,10 +562,10 @@ const CONTEXTS: &[(&str, &str)] = &[
 const MAX_BOXES: usize = 8;
 
 impl Generator {
-    fn geometry_declarations(&mut self) -> String {
+    fn geometry_declarations(&mut self, choices: &[&str]) -> String {
         (0..=self.below(MAX_DECLARATIONS))
             .map(|_| {
-                let mut declaration = self.pick(GEOMETRY).to_owned();
+                let mut declaration = self.pick(choices).to_owned();
                 while let Some(slot) = declaration.find("{}") {
                     let length = self.pick(EXTREME_LENGTHS);
                     declaration.replace_range(slot..slot + 2, length);
@@ -564,9 +576,13 @@ impl Generator {
     }
 
     /// Nested and sibling boxes with extreme geometry in every formatting context, around
-    /// text that breaks across lines.
+    /// text that breaks across lines, on pages of extreme geometry.
     fn geometry_document(&mut self) -> String {
         let mut html = String::from("<!doctype html>");
+        if self.chance(2) {
+            let page = self.geometry_declarations(PAGE_GEOMETRY);
+            let _ = write!(html, "<style>@page{{{page}}}</style>");
+        }
         let mut closing = Vec::new();
         for _ in 0..=self.below(MAX_BOXES) {
             if self.chance(3)
@@ -578,7 +594,7 @@ impl Generator {
             let _ = write!(
                 html,
                 "{open}{}\">words that wrap across lines ",
-                self.geometry_declarations()
+                self.geometry_declarations(GEOMETRY)
             );
             closing.push(close);
         }
