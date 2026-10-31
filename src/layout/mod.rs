@@ -366,20 +366,15 @@ fn stabilize(
             measured_markers.push(scroll_markers.clone());
             document.measured_scroll_markers(scroll_markers);
         }
-        let reformatted = budget
-            .spend(1)
-            .map_err(crate::document::DocumentError::from);
-        match reformatted.and_then(|()| document.reformat(values, resolver)) {
-            Ok(()) => completed = Some((trace, diagnostics)),
-            Err(crate::document::DocumentError::FormattingWorkLimit { limit }) => {
-                diagnostics.push(LayoutDiagnostic::WorkLimit {
-                    limit,
-                    kept: WorkFallback::LastPass,
-                });
-                return Ok(kept(document, trace, diagnostics));
-            }
-            Err(error) => return Err(error.into()),
+        if let Err(work::Exhausted { limit }) = budget.spend(1) {
+            diagnostics.push(LayoutDiagnostic::WorkLimit {
+                limit,
+                kept: WorkFallback::LastPass,
+            });
+            return Ok(kept(document, trace, diagnostics));
         }
+        document.reformat(values, resolver)?;
+        completed = Some((trace, diagnostics));
     }
 }
 
@@ -911,6 +906,7 @@ impl LayoutError {
                 | Self::MissingClipFragment { .. }
                 | Self::MissingContainingFragment { .. }
                 | Self::Raster(_)
+                | Self::Image(_)
         )
     }
 
