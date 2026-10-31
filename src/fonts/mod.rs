@@ -602,8 +602,6 @@ pub enum FontError {
     InvalidWidth(f32),
     #[error("font slant must be between -90 and 90 degrees: {0}")]
     InvalidSlant(f32),
-    #[error("adjusted font size is not finite: {0}")]
-    InvalidSize(f32),
     #[error("no font face in the family list is available")]
     NoAvailableFace,
 }

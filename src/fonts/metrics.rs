@@ -213,15 +213,16 @@ impl FontBook {
             .settings
             .size_adjust;
         // `size-adjust` scales the metric `font-size-adjust` reads as much as the size, so
-        // the normalized size does not depend on it.
-        let used = adjustments.size_adjust.map_or(size * descriptor, |adjust| {
-            size * adjust.scale(&FaceMetrics::of(&instance.face))
-        });
+        // the normalized size does not depend on it. A size past the finite range clamps to
+        // it, as an infinite `calc()` length does (CSS Values 4 §10.9).
+        let used = adjustments
+            .size_adjust
+            .map_or(size * descriptor, |adjust| {
+                size * adjust.scale(&FaceMetrics::of(&instance.face))
+            })
+            .min(f32::MAX);
         if used == size {
             return Ok(Some((instance, size)));
-        }
-        if !used.is_finite() {
-            return Err(FontError::InvalidSize(used));
         }
         let optical = adjustments.optical_sizing
             && instance

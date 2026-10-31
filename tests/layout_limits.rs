@@ -82,3 +82,38 @@ fn page_boxes_without_finite_geometry_take_the_initial_page_geometry() {
         "the content renders on the initial page"
     );
 }
+
+#[test]
+fn font_size_adjust_past_finite_sizes_omits_only_its_text_box() {
+    for adjust in ["1e38", "cap-height 1e38", "ex-height 3e38"] {
+        let output = render_html(
+            &format!(
+                "<!doctype html><style>.huge{{font-size-adjust:{adjust}}}</style>\
+                 <p>before</p><p class=huge>Hello</p><p>after</p>"
+            ),
+            &local_options(),
+        )
+        .unwrap_or_else(|error| panic!("font-size-adjust:{adjust} must render: {error}"));
+        assert!(
+            output.diagnostics.iter().any(|diagnostic| matches!(
+                diagnostic,
+                RenderDiagnostic::Layout(LayoutDiagnostic::OmittedBox { .. })
+            )),
+            "font-size-adjust:{adjust}: the omitted box is reported, got {:?}",
+            output.diagnostics
+        );
+        let texts: Vec<_> = output
+            .layout
+            .unwrap()
+            .pages
+            .into_iter()
+            .flatten()
+            .map(|line| line.text)
+            .collect();
+        assert_eq!(
+            texts,
+            ["before", "after"],
+            "font-size-adjust:{adjust}: only the box whose text would be infinitely large is omitted"
+        );
+    }
+}
