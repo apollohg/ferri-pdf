@@ -23,10 +23,16 @@ pub(crate) enum Work {
     SpanProbe,
     /// An ancestor selector matching, or the ancestor filter of the element it matches, steps to.
     SelectorAncestor,
+    /// An open formatting frame a lookup on behalf of the element being formatted reads.
+    OpenFrame,
+    /// A node a style evaluation looks up among those it has open, to find dependency cycles.
+    ActiveNode,
+    /// A counter that work on an element's counters steps over, as the counter budget charges.
+    CounterStep,
 }
 
 #[cfg(test)]
-const KINDS: usize = 10;
+const KINDS: usize = 13;
 
 #[cfg(test)]
 thread_local! {

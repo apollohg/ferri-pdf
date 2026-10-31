@@ -1138,10 +1138,9 @@ impl Traversal<'_> {
 
 /// The nearest scroll container among `frames`, or around the subtree `traversal` formats.
 fn marker_scroller(frames: &[Frame<'_>], traversal: &Traversal<'_>) -> Option<MarkerScroller> {
-    frames
-        .iter()
-        .rev()
-        .find(|frame| frame.scroll_container)
+    nearest(frames)
+        .scroller
+        .map(|index| &frames[index])
         .map(|frame| MarkerScroller {
             element: frame.element.id(),
             group: frame
@@ -1175,10 +1174,7 @@ fn record_scroll_marker_box(
         groups.target(element.id(), style);
     }
     if let Some(target) = traversal.navigation.scroll_target(element.id())
-        && let Some(container) = frames
-            .iter()
-            .rev()
-            .find(|frame| frame.style.scroll_markers.target_group)
+        && let Some(container) = nearest(frames).target_group.map(|index| &frames[index])
     {
         groups.anchor(container.element.id(), element.id(), target);
     }
@@ -3363,6 +3359,45 @@ struct Frame<'d> {
     /// The style of the `::scroll-marker-group` the scroll container generates (CSS Overflow 5
     /// §3.1.4).
     marker_group: Option<Box<Style>>,
+    nearest: Nearest,
+}
+
+/// What a frame finds among itself and the frames around it, kept as frames open so that no
+/// lookup walks the formatting stack.
+#[derive(Clone, Copy, Default)]
+struct Nearest {
+    /// The index of the frame of the nearest scroll container.
+    scroller: Option<usize>,
+    /// The index of the frame of the nearest `scroll-target-group` container (CSS Overflow 5
+    /// §3.1.2).
+    target_group: Option<usize>,
+    /// The element's children are its block's children: it holds the block, or it and every
+    /// element up to the block generate no boxes.
+    block_children: bool,
+}
+
+/// What the frame on top of `frames` finds among the frames.
+fn nearest(frames: &[Frame<'_>]) -> Nearest {
+    crate::work::count(crate::work::Work::OpenFrame, 1);
+    frames.last().map(|frame| frame.nearest).unwrap_or_default()
+}
+
+/// Opens `frame` on top of `frames`.
+fn push_frame<'d>(frames: &mut Vec<Frame<'d>>, mut frame: Frame<'d>) {
+    let index = frames.len();
+    let parent = nearest(frames);
+    frame.nearest = Nearest {
+        scroller: frame.scroll_container.then_some(index).or(parent.scroller),
+        target_group: frame
+            .style
+            .scroll_markers
+            .target_group
+            .then_some(index)
+            .or(parent.target_group),
+        block_children: frame.block.is_some()
+            || (frame.style.display == Display::Contents && parent.block_children),
+    };
+    frames.push(frame);
 }
 impl<'d> Frame<'d> {
     fn new(
@@ -3409,6 +3444,7 @@ impl<'d> Frame<'d> {
             ordinal,
             scroll_container: false,
             marker_group: None,
+            nearest: Nearest::default(),
         }
     }
     /// The root of a copy of this frame's subtree, styled `style`. Its used page name is its
@@ -3546,7 +3582,7 @@ fn open_inline_footnote<'d>(
         members,
         start: (block.children.len(), block.inline.content_mark()),
     }));
-    frames.push(frame);
+    push_frame(frames, frame);
     Ok(())
 }
 
@@ -3610,7 +3646,8 @@ fn block<'a>(
     resources: &mut ImageResources<'a>,
 ) -> Result<BlockBox, DocumentError> {
     let element = root.element;
-    let mut frames = vec![root];
+    let mut frames = Vec::new();
+    push_frame(&mut frames, root);
     if frames[0].style.display.is_block_container() {
         frames[0]
             .block
@@ -3977,10 +4014,7 @@ fn block<'a>(
             continue;
         }
         if let Some(node) = frames[index].nodes.as_mut().and_then(Iterator::next) {
-            // Children of the block and of its boxless descendants are the block's children.
-            let block_child = frames[block_index + 1..=index]
-                .iter()
-                .all(|frame| frame.style.display == Display::Contents);
+            let block_child = nearest(&frames).block_children;
             // Past the work budget the rest of the document is left out; what was formatted
             // before it stays.
             if traversal.work.exhausted().is_some() {
@@ -4319,21 +4353,21 @@ fn block<'a>(
                     pseudo: None,
                 });
             }
-            frames.push(Frame::new(
+            let mut frame = Frame::new(
                 child,
                 child_style,
                 child_depth,
                 ordinal,
                 placement,
                 ancestor_page.as_ref(),
-            ));
-            let frame = frames.last_mut().expect("the child frame was appended");
+            );
             frame.math_depth = math_depth;
             frame.scroll_container = scroll_container;
             frame.marker_group = marker_group;
-            if let Some(block) = frames.last_mut().and_then(|frame| frame.block.as_mut()) {
+            if let Some(block) = &mut frame.block {
                 block.first_line = first_line;
             }
+            push_frame(&mut frames, frame);
             if let Some(run_in) = merged {
                 frames
                     .last_mut()

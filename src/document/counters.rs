@@ -23,10 +23,158 @@ struct Counter {
     /// The style containment scopes enclosing the counter's creator.
     scope: usize,
 }
+/// A CSS counters set, innermost counter first. The sets of elements share the counters they
+/// inherit from one another, so that inheriting and keeping a set costs the counters in which
+/// the sets differ, not how many counters are in scope.
+#[derive(Clone, Default)]
+struct CounterList(Option<Rc<CounterNode>>);
+struct CounterNode {
+    counter: Counter,
+    outer: CounterList,
+    len: usize,
+}
+impl CounterList {
+    fn len(&self) -> usize {
+        self.0.as_ref().map_or(0, |node| node.len)
+    }
+    fn nodes(&self) -> impl Iterator<Item = &Rc<CounterNode>> {
+        std::iter::successors(self.0.as_ref(), |node| node.outer.0.as_ref())
+    }
+    /// The counters, innermost first.
+    fn iter(&self) -> impl Iterator<Item = &Counter> {
+        self.nodes().map(|node| &node.counter)
+    }
+    /// The counters, outermost first.
+    fn outermost_first(&self) -> Vec<&Counter> {
+        let mut counters: Vec<_> = self.iter().collect();
+        counters.reverse();
+        counters
+    }
+    /// The innermost counter named `name`, with its position from the innermost, and the
+    /// counters stepped over to find it, or to find there is none.
+    fn innermost(&self, name: &str) -> (Option<(usize, &Counter)>, usize) {
+        let mut steps = 0;
+        for (position, counter) in self.iter().enumerate() {
+            steps += 1;
+            if counter.name.as_ref() == name {
+                return (Some((position, counter)), steps);
+            }
+        }
+        (None, steps)
+    }
+    fn push(&mut self, counter: Counter) {
+        let outer = std::mem::take(self);
+        let len = outer.len() + 1;
+        *self = Self(Some(Rc::new(CounterNode {
+            counter,
+            outer,
+            len,
+        })));
+    }
+    /// Removes the counter `position` counters from the innermost, copying those inside it.
+    fn remove(&mut self, position: usize) {
+        let (inner, mut list) = {
+            let mut nodes = self.nodes();
+            let inner: Vec<Counter> = nodes
+                .by_ref()
+                .take(position)
+                .map(|node| node.counter.clone())
+                .collect();
+            let Some(removed) = nodes.next() else {
+                return;
+            };
+            (inner, removed.outer.clone())
+        };
+        for counter in inner.into_iter().rev() {
+            list.push(counter);
+        }
+        *self = list;
+    }
+    /// The counters of `self` that `source` holds too, in the order of `self`, and the
+    /// counters stepped over to find them: those outside the counters both share.
+    fn retained_in(&self, source: &Self) -> (Self, usize) {
+        fn same(own: Option<&Rc<CounterNode>>, other: Option<&Rc<CounterNode>>) -> bool {
+            match (own, other) {
+                (Some(own), Some(other)) => Rc::ptr_eq(own, other),
+                (own, other) => own.is_none() && other.is_none(),
+            }
+        }
+        let len = |node: Option<&Rc<CounterNode>>| node.map_or(0, |node| node.len);
+        let (mut own, mut other) = (self.0.as_ref(), source.0.as_ref());
+        let mut unshared = Vec::new();
+        let mut held = HashSet::new();
+        let mut steps = 0;
+        while !same(own, other) {
+            steps += 1;
+            let (own_len, other_len) = (len(own), len(other));
+            if own_len >= other_len
+                && let Some(node) = own
+            {
+                unshared.push(&node.counter);
+                own = node.outer.0.as_ref();
+            }
+            if other_len >= own_len
+                && let Some(node) = other
+            {
+                held.insert((node.counter.name.as_ref(), node.counter.creator));
+                other = node.outer.0.as_ref();
+            }
+        }
+        let mut list = Self(own.cloned());
+        for counter in unshared.into_iter().rev() {
+            if held.contains(&(counter.name.as_ref(), counter.creator)) {
+                list.push(counter.clone());
+            }
+        }
+        (list, steps)
+    }
+    /// A copy of the counters with values of their own, copying each node once among all the
+    /// lists `copies` records.
+    fn detached(
+        &self,
+        copies: &mut HashMap<*const CounterNode, CounterList>,
+        cells: &mut HashMap<*const Cell<i128>, Rc<Cell<i128>>>,
+    ) -> Self {
+        let mut pending = Vec::new();
+        let mut list = Self::default();
+        for node in self.nodes() {
+            if let Some(copy) = copies.get(&Rc::as_ptr(node)) {
+                list = copy.clone();
+                break;
+            }
+            pending.push(node);
+        }
+        for node in pending.into_iter().rev() {
+            let counter = &node.counter;
+            list.push(Counter {
+                value: cells
+                    .entry(Rc::as_ptr(&counter.value))
+                    .or_insert_with(|| Rc::new(Cell::new(counter.value.get())))
+                    .clone(),
+                ..counter.clone()
+            });
+            copies.insert(Rc::as_ptr(node), list.clone());
+        }
+        list
+    }
+}
+/// Drops the nodes no other list shares one at a time: dropping a deep list node within node
+/// would take stack in proportion to its length.
+impl Drop for CounterList {
+    fn drop(&mut self) {
+        let mut next = self.0.take();
+        while let Some(node) = next {
+            next = Rc::try_unwrap(node)
+                .ok()
+                .and_then(|mut node| node.outer.0.take());
+        }
+    }
+}
+
 struct Frame {
     target: PageStyleTarget,
-    counters: Vec<Counter>,
-    sibling: Option<Vec<Counter>>,
+    counters: CounterList,
+    sibling: Option<CounterList>,
     /// Style containment scopes enclosing the element: increments and sets inside one only
     /// update counters created inside it (CSS Containment 2 §3.3).
     scope: usize,
@@ -38,7 +186,7 @@ type CounterKey = (PageStyleTarget, Arc<str>);
 #[derive(Default)]
 pub(crate) struct Counters {
     frames: Vec<Frame>,
-    previous: Vec<Counter>,
+    previous: CounterList,
     work: Rc<Cell<usize>>,
     initials: Option<HashMap<CounterKey, i128>>,
     collecting: bool,
@@ -60,19 +208,8 @@ impl Counters {
     /// A copy whose counters change apart from these, for formatting a subtree again from
     /// where these stand. It shares their work budget.
     pub(crate) fn detached(&self) -> Self {
-        let mut cells: HashMap<*const Cell<i128>, Rc<Cell<i128>>> = HashMap::new();
-        let mut copy = |counters: &[Counter]| -> Vec<Counter> {
-            counters
-                .iter()
-                .map(|counter| Counter {
-                    value: cells
-                        .entry(Rc::as_ptr(&counter.value))
-                        .or_insert_with(|| Rc::new(Cell::new(counter.value.get())))
-                        .clone(),
-                    ..counter.clone()
-                })
-                .collect()
-        };
+        let (mut copies, mut cells) = (HashMap::new(), HashMap::new());
+        let mut copy = |counters: &CounterList| counters.detached(&mut copies, &mut cells);
         Self {
             frames: self
                 .frames
@@ -80,7 +217,7 @@ impl Counters {
                 .map(|frame| Frame {
                     target: frame.target,
                     counters: copy(&frame.counters),
-                    sibling: frame.sibling.as_deref().map(&mut copy),
+                    sibling: frame.sibling.as_ref().map(&mut copy),
                     scope: frame.scope,
                     scoping: frame.scoping,
                 })
@@ -96,6 +233,7 @@ impl Counters {
     /// Charges `amount` units of counter work; false once the budget is spent, past which
     /// counters are no longer created, updated or inherited, and read as zero.
     fn charge(&mut self, amount: usize) -> bool {
+        crate::work::count(crate::work::Work::CounterStep, amount);
         self.work.set(self.work.get().saturating_add(amount));
         !self.exhausted()
     }
@@ -247,22 +385,19 @@ impl Counters {
                     .iter()
                     .any(|change| change.name.as_ref() == LIST_ITEM_COUNTER)
             {
-                Some(
-                    if self
-                        .frames
-                        .last()
-                        .unwrap()
-                        .counters
-                        .iter()
-                        .rev()
-                        .find(|counter| counter.name.as_ref() == LIST_ITEM_COUNTER)
-                        .is_some_and(|counter| counter.reversed)
-                    {
-                        -DEFAULT_COUNTER_INCREMENT
-                    } else {
-                        DEFAULT_COUNTER_INCREMENT
-                    },
-                )
+                let (list_item, steps) = self
+                    .frames
+                    .last()
+                    .unwrap()
+                    .counters
+                    .innermost(LIST_ITEM_COUNTER);
+                let reversed = list_item.is_some_and(|(_, counter)| counter.reversed);
+                self.charge(steps);
+                Some(if reversed {
+                    -DEFAULT_COUNTER_INCREMENT
+                } else {
+                    DEFAULT_COUNTER_INCREMENT
+                })
             } else {
                 None
             };
@@ -278,27 +413,18 @@ impl Counters {
         self.update_previous();
         Ok(())
     }
+    /// Opens the counters of `target`: those of its parent, or of its preceding sibling once
+    /// there is one, that the element preceding it holds, with their values there (CSS Lists 3
+    /// §4.5).
     fn inherit(&mut self, target: PageStyleTarget, scoping: bool) {
-        let count = self.frames.last().map_or(0, |parent| {
-            parent.sibling.as_ref().unwrap_or(&parent.counters).len()
+        let (inherited, steps) = self.frames.last().map_or_else(Default::default, |parent| {
+            self.previous
+                .retained_in(parent.sibling.as_ref().unwrap_or(&parent.counters))
         });
-        let counters = if self.charge(count.saturating_add(self.previous.len())) {
-            self.frames.last().map_or_else(Vec::new, |parent| {
-                let source: HashSet<(&str, PageStyleTarget)> = parent
-                    .sibling
-                    .as_ref()
-                    .unwrap_or(&parent.counters)
-                    .iter()
-                    .map(|candidate| (candidate.name.as_ref(), candidate.creator))
-                    .collect();
-                self.previous
-                    .iter()
-                    .filter(|counter| source.contains(&(counter.name.as_ref(), counter.creator)))
-                    .cloned()
-                    .collect()
-            })
+        let counters = if self.charge(steps) {
+            inherited
         } else {
-            Vec::new()
+            CounterList::default()
         };
         let scope = self
             .frames
@@ -361,27 +487,17 @@ impl Counters {
         if implicit.is_some() {
             names.insert(Arc::from(LIST_ITEM_COUNTER));
         }
-        let counters = &self.frames.last().unwrap().counters;
-        let work = names.len().saturating_mul(
-            counters
-                .len()
-                .saturating_add(properties.increment.len())
-                .saturating_add(properties.set.len()),
-        );
-        if !self.charge(work) {
-            return;
-        }
         for name in names {
-            let Some(initial) = self
-                .frames
-                .last()
-                .unwrap()
-                .counters
-                .iter()
-                .rev()
-                .find(|counter| counter.name == name)
-                .and_then(|counter| counter.automatic.clone())
-            else {
+            let (counter, steps) = self.frames.last().unwrap().counters.innermost(&name);
+            let initial = counter.and_then(|(_, counter)| counter.automatic.clone());
+            if !self.charge(
+                steps
+                    .saturating_add(properties.increment.len())
+                    .saturating_add(properties.set.len()),
+            ) {
+                return;
+            }
+            let Some(initial) = initial else {
                 continue;
             };
             let increment = properties
@@ -415,10 +531,8 @@ impl Counters {
         }
     }
     fn update_previous(&mut self) {
-        let count = self.frames.last().unwrap().counters.len();
-        if self.charge(count) {
-            self.previous = self.frames.last().unwrap().counters.clone();
-        }
+        self.charge(1);
+        self.previous = self.frames.last().unwrap().counters.clone();
     }
     fn instantiate(
         &mut self,
@@ -427,20 +541,20 @@ impl Counters {
         reversed: bool,
         automatic: Option<Rc<RefCell<AutomaticInitial>>>,
     ) -> Rc<Cell<i128>> {
-        let count = self.frames.last().unwrap().counters.len();
-        if !self.charge(count.saturating_add(1)) {
+        let parent = self.frames.iter().rev().nth(1).map(|frame| frame.target);
+        let frame = self.frames.last().unwrap();
+        // A new counter replaces the element's own counter of its name, or its preceding
+        // sibling's.
+        let (replaced, steps) = frame.counters.innermost(&name);
+        let replaced = replaced
+            .filter(|(_, counter)| counter.creator == frame.target || counter.parent == parent)
+            .map(|(position, _)| position);
+        if !self.charge(steps.saturating_add(1)) {
             return Rc::new(Cell::new(value));
         }
-        let parent = self.frames.iter().rev().nth(1).map(|frame| frame.target);
         let frame = self.frames.last_mut().unwrap();
-        if let Some(index) = frame
-            .counters
-            .iter()
-            .rposition(|counter| counter.name == name)
-            && (frame.counters[index].creator == frame.target
-                || frame.counters[index].parent == parent)
-        {
-            frame.counters.remove(index);
+        if let Some(position) = replaced {
+            frame.counters.remove(position);
         }
         let value = Rc::new(Cell::new(value));
         frame.counters.push(Counter {
@@ -458,37 +572,29 @@ impl Counters {
     /// element's innermost style containment scope, or else a new one (CSS Containment 2
     /// §3.3). Reading counter values is not scoped.
     fn updated(&mut self, name: Arc<str>) -> Rc<Cell<i128>> {
-        if !self.charge(self.frames.last().unwrap().counters.len()) {
-            return Rc::new(Cell::new(INITIAL_COUNTER_VALUE));
-        }
         let frame = self.frames.last().unwrap();
-        if let Some(counter) = frame
-            .counters
-            .iter()
-            .rev()
-            .find(|counter| counter.name == name)
-            .filter(|counter| counter.scope == frame.scope)
-        {
-            return counter.value.clone();
-        }
-        self.instantiate(name, INITIAL_COUNTER_VALUE, false, None)
+        let (counter, steps) = frame.counters.innermost(&name);
+        let found = counter
+            .filter(|(_, counter)| counter.scope == frame.scope)
+            .map(|(_, counter)| counter.value.clone());
+        self.found_or_instantiated(name, found, steps)
     }
     fn value(&mut self, name: Arc<str>) -> Rc<Cell<i128>> {
-        if !self.charge(self.frames.last().unwrap().counters.len()) {
+        let (counter, steps) = self.frames.last().unwrap().counters.innermost(&name);
+        let found = counter.map(|(_, counter)| counter.value.clone());
+        self.found_or_instantiated(name, found, steps)
+    }
+    /// The value of the counter `name` that `steps` found, or else of a new one.
+    fn found_or_instantiated(
+        &mut self,
+        name: Arc<str>,
+        found: Option<Rc<Cell<i128>>>,
+        steps: usize,
+    ) -> Rc<Cell<i128>> {
+        if !self.charge(steps) {
             return Rc::new(Cell::new(INITIAL_COUNTER_VALUE));
         }
-        if let Some(counter) = self
-            .frames
-            .last()
-            .unwrap()
-            .counters
-            .iter()
-            .rev()
-            .find(|counter| counter.name == name)
-        {
-            return counter.value.clone();
-        }
-        self.instantiate(name, INITIAL_COUNTER_VALUE, false, None)
+        found.unwrap_or_else(|| self.instantiate(name, INITIAL_COUNTER_VALUE, false, None))
     }
     pub(crate) fn ordinal(&mut self) -> i128 {
         let value = self.value(Arc::from(LIST_ITEM_COUNTER)).get();
@@ -508,23 +614,35 @@ impl Counters {
                 .last()
                 .unwrap()
                 .counters
-                .iter()
+                .outermost_first()
+                .into_iter()
                 .map(|counter| (counter.name.clone(), counter.value.get()))
                 .collect(),
         )
     }
     pub(crate) fn text(&mut self, request: &CounterRequest) -> crate::style::Representation {
         self.value(request.name.clone());
-        let text = render_counter(
-            request,
-            self.frames
-                .last()
-                .unwrap()
-                .counters
-                .iter()
-                .filter(|counter| counter.name == request.name)
-                .map(|counter| counter.value.get()),
-        );
+        let counters = &self.frames.last().unwrap().counters;
+        // `counter()` shows the innermost counter of the name, `counters()` each of them.
+        let text = if request.separator.is_some() {
+            render_counter(
+                request,
+                counters
+                    .outermost_first()
+                    .into_iter()
+                    .filter(|counter| counter.name == request.name)
+                    .map(|counter| counter.value.get()),
+            )
+        } else {
+            render_counter(
+                request,
+                counters
+                    .innermost(&request.name)
+                    .0
+                    .map(|(_, counter)| counter.value.get())
+                    .into_iter(),
+            )
+        };
         self.update_previous();
         text
     }

@@ -256,6 +256,44 @@ impl Computed {
     }
 }
 
+/// The nodes being evaluated, outermost first, with the position of each, so that finding a
+/// node among them takes no walk however deep the evaluation nests.
+#[derive(Default)]
+struct ActiveNodes {
+    stack: Vec<Node>,
+    positions: HashMap<Node, usize>,
+}
+impl ActiveNodes {
+    fn position(&self, node: Node) -> Option<usize> {
+        crate::work::count(crate::work::Work::ActiveNode, 1);
+        self.positions.get(&node).copied()
+    }
+    fn contains(&self, node: Node) -> bool {
+        self.position(node).is_some()
+    }
+    /// The nodes from `start` on, innermost last.
+    fn since(&self, start: usize) -> &[Node] {
+        &self.stack[start..]
+    }
+    fn len(&self) -> usize {
+        self.stack.len()
+    }
+    fn push(&mut self, node: Node) {
+        self.positions.insert(node, self.stack.len());
+        self.stack.push(node);
+    }
+    fn pop(&mut self) {
+        if let Some(node) = self.stack.pop() {
+            self.positions.remove(&node);
+        }
+    }
+    fn truncate(&mut self, len: usize) {
+        while self.stack.len() > len {
+            self.pop();
+        }
+    }
+}
+
 struct Geometry<'a> {
     sheet: &'a Stylesheet,
     page_rules: OnceCell<crate::style::page_rules::MatchedPageRules>,
@@ -281,7 +319,7 @@ struct Geometry<'a> {
     work: Rc<crate::style::calc::Work>,
     complete: RefCell<HashSet<Node>>,
     dimensions: RefCell<HashMap<Node, f32>>,
-    active: RefCell<Vec<Node>>,
+    active: RefCell<ActiveNodes>,
     axes: RefCell<[Option<PageAxis>; 2]>,
 }
 
@@ -424,7 +462,7 @@ impl<'a> Geometry<'a> {
             return Ok(());
         }
         if !self.side_selection_done.get()
-            && self.active.borrow().contains(&Node::FirstPageStart)
+            && self.active.borrow().contains(Node::FirstPageStart)
             && self.sheet.page_rules.iter().any(|rule| {
                 rule.depends_on_side(&self.first_request.borrow(), self.selection_done.get())
             })
@@ -648,8 +686,8 @@ impl<'a> Geometry<'a> {
 
     fn enter(&self, node: Node) -> Result<(), StyleError> {
         let mut active = self.active.borrow_mut();
-        if let Some(start) = active.iter().position(|candidate| *candidate == node) {
-            let chain = active[start..].iter().copied().chain([node]);
+        if let Some(start) = active.position(node) {
+            let chain = active.since(start).iter().copied().chain([node]);
             let mut sources = Vec::new();
             let mut dependencies = Vec::new();
             for dependency in chain {
@@ -1046,23 +1084,21 @@ impl<'a> Geometry<'a> {
             }
             let computed = self.context(context);
             if let Some(dependencies) = computed.font_pending.borrow().get(name).copied()
-                && let Some(property) =
-                    self.active
+                && let Some(property) = [
+                    (dependencies.font_size, Property::FontSize),
+                    (dependencies.line_height, Property::LineHeight),
+                ]
+                .into_iter()
+                .filter(|(dependent, _)| *dependent)
+                .filter_map(|(_, property)| {
+                    let position = self
+                        .active
                         .borrow()
-                        .iter()
-                        .rev()
-                        .find_map(|node| match *node {
-                            Node::Property(active, property)
-                                if active == context
-                                    && ((property == Property::FontSize
-                                        && dependencies.font_size)
-                                        || (property == Property::LineHeight
-                                            && dependencies.line_height)) =>
-                            {
-                                Some(property)
-                            }
-                            _ => None,
-                        })
+                        .position(Node::Property(context, property))?;
+                    Some((position, property))
+                })
+                .max_by_key(|(position, _)| *position)
+                .map(|(_, property)| property)
             {
                 computed.cyclic_properties.borrow_mut().insert(property);
                 computed.cyclic_customs.borrow_mut().insert(name.to_owned());
@@ -1113,7 +1149,7 @@ impl<'a> Geometry<'a> {
                 && self
                     .active
                     .borrow()
-                    .contains(&Node::Property(context, property))
+                    .contains(Node::Property(context, property))
             {
                 computed.cyclic_properties.borrow_mut().insert(property);
                 return Ok(None);

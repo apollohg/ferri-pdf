@@ -359,16 +359,16 @@ fn reversed_initial_values_cancel_offsets_before_clamping_at_numeric_bounds() {
 
 #[test]
 fn counters_past_their_work_budget_stop_updating_instead_of_failing() {
-    // Every element inherits every counter in scope, so many counters reset around many
-    // elements exceed the counter work budget.
+    // Each increment finds its counter among the counters in scope, so incrementing the
+    // outermost of many counters on many elements exceeds the counter work budget.
     const COUNTERS: usize = 5_000;
-    const ELEMENTS: usize = 2_000;
+    const ELEMENTS: usize = 4_000;
     let resets = (0..COUNTERS)
         .map(|index| format!("c{index}"))
         .collect::<Vec<_>>()
         .join(" ");
     let html = format!(
-        "<style>body{{counter-reset:{resets}}}</style><p>{}<span>Last</span></p>",
+        "<style>body{{counter-reset:{resets}}}span{{counter-increment:c0}}</style><p>{}<b>Last</b></p>",
         "<span>x</span>".repeat(ELEMENTS)
     );
     let output = render_html(&html, &local_options())
