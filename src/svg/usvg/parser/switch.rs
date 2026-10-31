@@ -52,7 +52,7 @@ pub(crate) fn convert(
     if let Some(g) = converter::convert_group(node, state, false, cache, parent, &|cache, g| {
         converter::convert_element(child, state, cache, g);
     }) {
-        parent.children.push(Node::Group(Box::new(g)));
+        parent.children.push(Node::Group(g));
     }
 
     Some(())

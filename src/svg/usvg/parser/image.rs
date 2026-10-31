@@ -138,7 +138,7 @@ pub(crate) fn convert(
         .try_attribute(AId::Href)
         .log_none(|| log::warn!("Image lacks the 'xlink:href' attribute. Skipped."))?;
 
-    let kind = get_href_data(href, state)?;
+    let kind = get_href_data(href, state, cache)?;
 
     let visibility: Visibility = node.find_attribute(AId::Visibility).unwrap_or_default();
     let visible = visibility == Visibility::Visible;
@@ -288,9 +288,27 @@ pub(crate) fn convert_inner(
     Some(())
 }
 
-pub(crate) fn get_href_data(href: &str, state: &converter::State) -> Option<ImageKind> {
+/// The image `href` names, which is omitted when it is an SVG image nesting its groups too deep
+/// in those converting. It resolves as a resource referenced: an SVG document converts there.
+pub(crate) fn get_href_data(
+    href: &str,
+    state: &converter::State,
+    cache: &mut converter::Cache,
+) -> Option<ImageKind> {
+    let kind = cache.referenced(|cache| resolve_href(href, state, cache.nesting()))?;
+    match &kind {
+        ImageKind::SVG(tree) if !cache.draws_nested(tree.depth) => None,
+        _ => Some(kind),
+    }
+}
+
+fn resolve_href(
+    href: &str,
+    state: &converter::State,
+    nesting: converter::Nesting,
+) -> Option<ImageKind> {
     if let Some(resolve) = state.image_resolver {
-        return resolve(href, state.opt);
+        return resolve(href, state.opt, nesting);
     }
     if let Ok(url) = data_url::DataUrl::process(href) {
         let (data, _) = url.decode_to_vec().ok()?;

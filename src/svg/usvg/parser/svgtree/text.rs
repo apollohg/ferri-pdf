@@ -6,14 +6,17 @@
 use roxmltree::Error;
 
 use super::parse::{Source, parse_svg_element};
-use super::{AId, Document, EId, NodeId, NodeKind, SvgNode};
+use super::{AId, Document, EId, NodeId, NodeKind, Placement, SvgNode};
 use crate::style::WhiteSpaceCollapse;
 
 const XLINK_NS: &str = "http://www.w3.org/1999/xlink";
 
+/// Parses the content of the `text` element `parent`, which is `parent_id` in the tree and
+/// whose child elements go where `placement` says.
 pub(crate) fn parse_svg_text_element<'input>(
     parent: roxmltree::Node<'_, 'input>,
     parent_id: NodeId,
+    placement: Placement,
     style_sheet: &super::css::StyleSheet,
     doc: &mut Document<'input>,
 ) -> Result<(), Error> {
@@ -25,10 +28,18 @@ pub(crate) fn parse_svg_text_element<'input>(
         .find_map(own_space)
         .unwrap_or_default();
 
-    parse_svg_text_element_impl(parent, parent_id, style_sheet, space, &mut None, doc)?;
+    parse_svg_text_element_impl(
+        parent,
+        parent_id,
+        placement,
+        style_sheet,
+        space,
+        &mut None,
+        doc,
+    )?;
 
     trim_text_nodes(parent_id, space, doc);
-    parse_first_line(parent, parent_id, style_sheet, space, doc)
+    parse_first_line(parent, parent_id, placement, style_sheet, space, doc)
 }
 
 /// Where the first-letter text of a `text` element stands while its first formatted line's
@@ -47,6 +58,7 @@ enum Letter<'a, 'input> {
 fn parse_first_line<'input>(
     xml: roxmltree::Node<'_, 'input>,
     text_id: NodeId,
+    placement: Placement,
     style_sheet: &super::css::StyleSheet,
     space: WhiteSpaceCollapse,
     doc: &mut Document<'input>,
@@ -65,6 +77,7 @@ fn parse_first_line<'input>(
         return Ok(());
     }
     let root = doc.detached_copy(text_id);
+    let copied = placement.inside(root);
     let (source, container, mut letter) = match written {
         Some(written) => {
             let element = Source::Element { ignore_ids: true };
@@ -78,7 +91,20 @@ fn parse_first_line<'input>(
         }
         None => (xml, root, Some(Letter::Pending(xml))),
     };
-    parse_svg_text_element_impl(source, container, style_sheet, space, &mut letter, doc)?;
+    let placement = if container == root {
+        copied
+    } else {
+        copied.children(container)
+    };
+    parse_svg_text_element_impl(
+        source,
+        container,
+        placement,
+        style_sheet,
+        space,
+        &mut letter,
+        doc,
+    )?;
     trim_text_nodes(root, space, doc);
     doc.first_lines.insert(text_id.get_usize(), root);
     Ok(())
@@ -89,26 +115,38 @@ fn is_written_first_line(node: &roxmltree::Node<'_, '_>) -> bool {
     node.is_element() && node.has_attribute(crate::svg::FIRST_LINE_ATTRIBUTE)
 }
 
+/// Parses the content of `parent`, which is `parent_id` in the tree and whose child elements go
+/// where `placement` says, without recursion.
 fn parse_svg_text_element_impl<'a, 'input>(
     parent: roxmltree::Node<'a, 'input>,
     parent_id: NodeId,
+    placement: Placement,
     style_sheet: &super::css::StyleSheet,
     space: WhiteSpaceCollapse,
     letter: &mut Option<Letter<'a, 'input>>,
     doc: &mut Document<'input>,
 ) -> Result<(), Error> {
-    for node in parent.children() {
+    let mut pending = Vec::new();
+    content(parent, parent_id, placement, space, true, &mut pending);
+    while let Some(Content {
+        node,
+        owner,
+        placement,
+        space,
+        letters,
+    }) = pending.pop()
+    {
         if node.is_text() {
             let text = trim_text(node.text().unwrap(), space);
-            match letter {
+            match letter.as_ref().filter(|_| letters) {
                 Some(Letter::Pending(origin)) => {
                     let origin = *origin;
-                    if split_first_letter(text, parent_id, origin, style_sheet, space, doc)? {
+                    if split_first_letter(text, owner, origin, style_sheet, space, doc)? {
                         *letter = Some(Letter::Done);
                     }
                 }
                 _ => {
-                    doc.append(parent_id, NodeKind::Text(text));
+                    doc.append(owner, NodeKind::Text(text));
                 }
             }
             continue;
@@ -133,7 +171,7 @@ fn parse_svg_text_element_impl<'a, 'input>(
         // `textPath` must be a direct `text` child.
         if tag_name == EId::TextPath
             && doc
-                .get(parent_id)
+                .get(placement.parent)
                 .ancestors()
                 .find(|node| !node.is_contents() && !node.is_first_line())
                 .and_then(|node| node.tag_name())
@@ -151,7 +189,7 @@ fn parse_svg_text_element_impl<'a, 'input>(
 
         let node_id = parse_svg_element(
             node,
-            parent_id,
+            placement.parent,
             tag_name,
             style_sheet,
             Source::Element { ignore_ids: false },
@@ -162,7 +200,7 @@ fn parse_svg_text_element_impl<'a, 'input>(
 
         if is_tref {
             // A first letter follows no other content (CSS Pseudo-Elements 4 §2.2.2).
-            if letter.is_some() {
+            if letters && letter.is_some() {
                 *letter = Some(Letter::Done);
             }
             let link_value = node
@@ -175,15 +213,49 @@ fn parse_svg_text_element_impl<'a, 'input>(
                     doc.append(node_id, NodeKind::Text(text));
                 }
             }
-        } else if doc.get(node_id).attribute::<&str>(AId::Display) == Some(DISPLAY_NONE) {
-            // Content that renders nothing holds no first letter.
-            parse_svg_text_element_impl(node, node_id, style_sheet, space, &mut None, doc)?;
         } else {
-            parse_svg_text_element_impl(node, node_id, style_sheet, space, letter, doc)?;
+            let inner = placement.children(node_id);
+            doc.limits.flattened |= inner.parent != node_id
+                && node
+                    .children()
+                    .any(|child| super::parse::parse_tag_name(child).is_some());
+            // Content that renders nothing holds no first letter.
+            let letters =
+                letters && doc.get(node_id).attribute::<&str>(AId::Display) != Some(DISPLAY_NONE);
+            content(node, node_id, inner, space, letters, &mut pending);
         }
     }
 
     Ok(())
+}
+
+/// A node of a `text` element's content to parse: its text goes in `owner`, the element it is
+/// in, and an element where `placement` says; `letters` where it may hold the first letter.
+struct Content<'a, 'input> {
+    node: roxmltree::Node<'a, 'input>,
+    owner: NodeId,
+    placement: Placement,
+    space: WhiteSpaceCollapse,
+    letters: bool,
+}
+
+/// Adds the children of `element`, which is `owner` in the tree, to `pending` so that they
+/// parse in order.
+fn content<'a, 'input>(
+    element: roxmltree::Node<'a, 'input>,
+    owner: NodeId,
+    placement: Placement,
+    space: WhiteSpaceCollapse,
+    letters: bool,
+    pending: &mut Vec<Content<'a, 'input>>,
+) {
+    pending.extend(element.children().rev().map(|node| Content {
+        node,
+        owner,
+        placement,
+        space,
+        letters,
+    }));
 }
 
 const DISPLAY_NONE: &str = "none";

@@ -48,7 +48,7 @@ pub(crate) fn convert(
         EId::LinearGradient => convert_linear(node, target, state, id),
         EId::RadialGradient => convert_radial(node, target, state, id),
         EId::SweepGradient => convert_sweep(node, target, state, id),
-        EId::Pattern => convert_pattern(node, target, state, cache, id),
+        EId::Pattern => cache.referenced(|cache| convert_pattern(node, target, state, cache, id)),
         _ => unreachable!(),
     };
 
@@ -813,26 +813,7 @@ fn node_to_user_coordinates(
             update_paint_servers(g, context_transform, context_bbox, text_bbox, cache);
         }
         Node::Path(path) => {
-            // Paths inside `Text::flattened` are special and must use text's bounding box
-            // instead of their own.
-            let bbox = text_bbox.unwrap_or(path.bounding_box);
-
-            process_fill(
-                &mut path.fill,
-                path.abs_transform,
-                context_transform,
-                context_bbox,
-                bbox,
-                cache,
-            );
-            process_stroke(
-                &mut path.stroke,
-                path.abs_transform,
-                context_transform,
-                context_bbox,
-                bbox,
-                cache,
-            );
+            path_to_user_coordinates(path, context_transform, context_bbox, text_bbox, cache);
         }
         Node::Image(image) => {
             if let ImageKind::SVG(tree) = &mut image.kind {
@@ -840,103 +821,146 @@ fn node_to_user_coordinates(
             }
         }
         Node::Text(text) => {
-            // By the SVG spec, `tspan` doesn't have a bbox and uses the parent `text` bbox.
-            // Therefore we have to use text's bbox when converting tspan and flatted text
-            // paint servers.
-            let bbox = text.bounding_box;
-
-            // We need to update three things:
-            // 1. The fills/strokes of the original elements in the usvg tree.
-            // 2. The fills/strokes of the layouted elements of the text.
-            // 3. The fills/strokes of the outlined text.
-
-            // 1.
-            let first_line = text.first_line.iter_mut().flat_map(|line| &mut line.chunks);
-            for chunk in text.chunks.iter_mut().chain(first_line) {
-                for span in &mut chunk.spans {
-                    process_fill(
-                        &mut span.fill,
-                        text.abs_transform,
-                        context_transform,
-                        context_bbox,
-                        bbox,
-                        cache,
-                    );
-                    process_stroke(
-                        &mut span.stroke,
-                        text.abs_transform,
-                        context_transform,
-                        context_bbox,
-                        bbox,
-                        cache,
-                    );
-                    process_text_decoration(&mut span.decoration.underline, bbox, cache);
-                    process_text_decoration(&mut span.decoration.overline, bbox, cache);
-                    process_text_decoration(&mut span.decoration.line_through, bbox, cache);
-                }
-            }
-
-            // 2.
-            for span in &mut text.layouted {
-                process_fill(
-                    &mut span.fill,
-                    text.abs_transform,
-                    context_transform,
-                    context_bbox,
-                    bbox,
-                    cache,
-                );
-                process_stroke(
-                    &mut span.stroke,
-                    text.abs_transform,
-                    context_transform,
-                    context_bbox,
-                    bbox,
-                    cache,
-                );
-
-                let mut process_decoration = |path: &mut Path| {
-                    process_fill(
-                        &mut path.fill,
-                        text.abs_transform,
-                        context_transform,
-                        context_bbox,
-                        bbox,
-                        cache,
-                    );
-                    process_stroke(
-                        &mut path.stroke,
-                        text.abs_transform,
-                        context_transform,
-                        context_bbox,
-                        bbox,
-                        cache,
-                    );
-                };
-
-                if let Some(path) = &mut span.overline {
-                    process_decoration(path);
-                }
-
-                if let Some(path) = &mut span.underline {
-                    process_decoration(path);
-                }
-
-                if let Some(path) = &mut span.line_through {
-                    process_decoration(path);
-                }
-            }
-
-            // 3.
-            update_paint_servers(
-                &mut text.flattened,
-                context_transform,
-                context_bbox,
-                Some(bbox),
-                cache,
-            );
+            text_to_user_coordinates(text, context_transform, context_bbox, cache);
         }
     }
+}
+
+/// `node_to_user_coordinates` for a path, outside the recursion over groups so that its frame
+/// stays small in deep content.
+#[inline(never)]
+fn path_to_user_coordinates(
+    path: &mut Path,
+    context_transform: Transform,
+    context_bbox: Option<Rect>,
+    text_bbox: Option<Rect>,
+    cache: &mut Cache,
+) {
+    // Paths inside `Text::flattened` are special and must use text's bounding box
+    // instead of their own.
+    let bbox = text_bbox.unwrap_or(path.bounding_box);
+
+    process_fill(
+        &mut path.fill,
+        path.abs_transform,
+        context_transform,
+        context_bbox,
+        bbox,
+        cache,
+    );
+    process_stroke(
+        &mut path.stroke,
+        path.abs_transform,
+        context_transform,
+        context_bbox,
+        bbox,
+        cache,
+    );
+}
+
+/// `node_to_user_coordinates` for text, likewise.
+#[inline(never)]
+fn text_to_user_coordinates(
+    text: &mut Text,
+    context_transform: Transform,
+    context_bbox: Option<Rect>,
+    cache: &mut Cache,
+) {
+    // By the SVG spec, `tspan` doesn't have a bbox and uses the parent `text` bbox.
+    // Therefore we have to use text's bbox when converting tspan and flatted text
+    // paint servers.
+    let bbox = text.bounding_box;
+
+    // We need to update three things:
+    // 1. The fills/strokes of the original elements in the usvg tree.
+    // 2. The fills/strokes of the layouted elements of the text.
+    // 3. The fills/strokes of the outlined text.
+
+    // 1.
+    let first_line = text.first_line.iter_mut().flat_map(|line| &mut line.chunks);
+    for chunk in text.chunks.iter_mut().chain(first_line) {
+        for span in &mut chunk.spans {
+            process_fill(
+                &mut span.fill,
+                text.abs_transform,
+                context_transform,
+                context_bbox,
+                bbox,
+                cache,
+            );
+            process_stroke(
+                &mut span.stroke,
+                text.abs_transform,
+                context_transform,
+                context_bbox,
+                bbox,
+                cache,
+            );
+            process_text_decoration(&mut span.decoration.underline, bbox, cache);
+            process_text_decoration(&mut span.decoration.overline, bbox, cache);
+            process_text_decoration(&mut span.decoration.line_through, bbox, cache);
+        }
+    }
+
+    // 2.
+    for span in &mut text.layouted {
+        process_fill(
+            &mut span.fill,
+            text.abs_transform,
+            context_transform,
+            context_bbox,
+            bbox,
+            cache,
+        );
+        process_stroke(
+            &mut span.stroke,
+            text.abs_transform,
+            context_transform,
+            context_bbox,
+            bbox,
+            cache,
+        );
+
+        let mut process_decoration = |path: &mut Path| {
+            process_fill(
+                &mut path.fill,
+                text.abs_transform,
+                context_transform,
+                context_bbox,
+                bbox,
+                cache,
+            );
+            process_stroke(
+                &mut path.stroke,
+                text.abs_transform,
+                context_transform,
+                context_bbox,
+                bbox,
+                cache,
+            );
+        };
+
+        if let Some(path) = &mut span.overline {
+            process_decoration(path);
+        }
+
+        if let Some(path) = &mut span.underline {
+            process_decoration(path);
+        }
+
+        if let Some(path) = &mut span.line_through {
+            process_decoration(path);
+        }
+    }
+
+    // 3.
+    update_paint_servers(
+        &mut text.flattened,
+        context_transform,
+        context_bbox,
+        Some(bbox),
+        cache,
+    );
 }
 
 fn process_fill(

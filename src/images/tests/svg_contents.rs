@@ -1418,3 +1418,200 @@ fn svg_typographic_pseudo_elements_reach_only_rendered_text_of_text_elements() {
         assert_eq!(actual, expected, "`{body}` lays out {runs:#?}");
     }
 }
+
+/// `body` loaded as inline SVG content, with the resources and values of the limits that
+/// changed it.
+fn limited_svg(
+    body: &str,
+    resolver: &dyn ResourceResolver,
+) -> (crate::svg::usvg::Tree, Vec<(&'static str, usize)>) {
+    let mut cache = ImageCache::default();
+    let image = cache
+        .inline_svg(
+            format!("{SVG_OPEN}{body}</svg>"),
+            &ResourceBase::default(),
+            resolver,
+        )
+        .expect("limited SVG content renders rather than failing");
+    let Image::Svg(svg) = image.as_ref() else {
+        panic!("vector image expected")
+    };
+    let limits = cache
+        .take_limited()
+        .into_iter()
+        .map(|diagnostic| match diagnostic {
+            crate::document::DocumentDiagnostic::FormattingLimit {
+                resource, limit, ..
+            } => (resource, limit),
+            other => panic!("SVG limits are formatting limits: {other:?}"),
+        })
+        .collect();
+    (svg.tree(SIZE).unwrap(), limits)
+}
+
+#[test]
+fn svg_elements_past_the_depth_limit_are_placed_beside_their_parents() {
+    use crate::svg::usvg::MAX_SVG_DEPTH;
+    // The root element is at depth zero, so the rectangle inside `groups` groups is at depth
+    // `groups + 1`; past the limit the innermost group keeps no element and the rectangle
+    // is placed beside it, outside its translation.
+    for (groups, limited, x) in [
+        (MAX_SVG_DEPTH - 1, Vec::new(), MAX_SVG_DEPTH - 1),
+        (
+            MAX_SVG_DEPTH,
+            vec![(crate::images::SVG_NESTING_RESOURCE, MAX_SVG_DEPTH)],
+            MAX_SVG_DEPTH - 1,
+        ),
+    ] {
+        let body = format!(
+            "{}<rect width='1' height='1'/>{}",
+            "<g transform='translate(1)'>".repeat(groups),
+            "</g>".repeat(groups)
+        );
+        let (tree, limits) = limited_svg(&body, &FileResolver::default());
+        assert_eq!(limits, limited, "limits of {groups} nested groups");
+        let paths = paths(&tree);
+        assert_eq!(
+            paths.len(),
+            1,
+            "the rectangle of {groups} nested groups renders"
+        );
+        let bounds = paths[0].abs_bounding_box();
+        assert!(
+            (bounds.x() - x as f32).abs() <= EPSILON,
+            "the rectangle of {groups} nested groups is translated to {x}: {bounds:?}"
+        );
+    }
+}
+
+#[test]
+fn svg_text_past_the_depth_limit_keeps_its_characters_in_order() {
+    use crate::svg::usvg::MAX_SVG_DEPTH;
+    // `text` is at depth one; its innermost `tspan` is at depth `spans + 1`.
+    for (spans, limited) in [
+        (MAX_SVG_DEPTH - 1, Vec::new()),
+        (
+            MAX_SVG_DEPTH,
+            vec![(crate::images::SVG_NESTING_RESOURCE, MAX_SVG_DEPTH)],
+        ),
+        (
+            MAX_SVG_DEPTH * 8,
+            vec![(crate::images::SVG_NESTING_RESOURCE, MAX_SVG_DEPTH)],
+        ),
+    ] {
+        let body = format!(
+            "<text y='20'>{}x{}<tspan>y</tspan></text>",
+            "<tspan>".repeat(spans),
+            "</tspan>".repeat(spans)
+        );
+        let (tree, limits) = limited_svg(&body, &FileResolver::default());
+        assert_eq!(limits, limited, "limits of {spans} nested spans");
+        let text: String = groups(&tree)
+            .into_iter()
+            .flat_map(crate::svg::usvg::Group::children)
+            .filter_map(|node| match node {
+                crate::svg::usvg::Node::Text(text) => Some(text),
+                _ => None,
+            })
+            .flat_map(|text| text.chunks())
+            .map(|chunk| chunk.text.as_str())
+            .collect();
+        assert_eq!(text, "xy", "characters of {spans} nested spans");
+    }
+}
+
+#[test]
+fn svg_references_past_the_reference_depth_are_omitted() {
+    use crate::svg::usvg::MAX_REFERENCE_DEPTH;
+    // A chain of masks, each masking a rectangle in the last's content with the next.
+    let chain = |masks: usize| {
+        let mut body = String::new();
+        for index in 0..masks {
+            let next = if index + 1 < masks {
+                format!(" mask='url(#m{})'", index + 1)
+            } else {
+                String::new()
+            };
+            let _ = write!(
+                body,
+                "<mask id='m{index}' maskUnits='userSpaceOnUse'><rect width='20' height='10' fill='white'{next}/></mask>"
+            );
+        }
+        body + "<rect width='20' height='10' mask='url(#m0)'/>"
+    };
+    let (tree, limits) = limited_svg(&chain(MAX_REFERENCE_DEPTH), &FileResolver::default());
+    assert!(
+        limits.is_empty(),
+        "the reference depth itself converts: {limits:?}"
+    );
+    assert_bounds(&tree, [0.0, 0.0, 20.0, 10.0]);
+    // One further mask is omitted as an invalid reference is, which leaves each mask that
+    // holds it empty, and so invalid, up to the rectangle.
+    let (tree, limits) = limited_svg(&chain(MAX_REFERENCE_DEPTH + 1), &FileResolver::default());
+    assert_eq!(
+        limits,
+        [(crate::images::SVG_REFERENCE_RESOURCE, MAX_REFERENCE_DEPTH)]
+    );
+    assert!(
+        paths(&tree).is_empty(),
+        "the masked rectangle must not render with an omitted mask"
+    );
+}
+
+#[test]
+fn svg_images_drawing_svg_images_nest_as_references() {
+    use crate::svg::usvg::MAX_REFERENCE_DEPTH;
+    /// Serves `n.svg` as a document drawing `n+1.svg`, so that the images nest without end.
+    struct Chain {
+        requests: Cell<usize>,
+    }
+    impl ResourceResolver for Chain {
+        fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {
+            self.requests.set(self.requests.get() + 1);
+            let level: usize = reference
+                .trim_end_matches(".svg")
+                .parse()
+                .map_err(|_| ResourceError::Denied(base.resolve(reference).unwrap()))?;
+            Ok(Resource {
+                bytes: format!(
+                    "{SVG_OPEN}<rect width='1' height='1'/><image href='{}.svg' width='200' height='100'/></svg>",
+                    level + 1
+                )
+                .into_bytes(),
+                base: base.clone(),
+            })
+        }
+    }
+    let resolver = Chain {
+        requests: Cell::new(0),
+    };
+    let (tree, limits) = limited_svg("<image href='1.svg' width='200' height='100'/>", &resolver);
+    assert_eq!(
+        resolver.requests.get(),
+        MAX_REFERENCE_DEPTH,
+        "each image converts as one further reference"
+    );
+    assert_eq!(
+        limits,
+        [(crate::images::SVG_REFERENCE_RESOURCE, MAX_REFERENCE_DEPTH)],
+        "the document whose image would nest past the reference depth reports it once"
+    );
+    // Each document draws the next, down to the one whose image is omitted.
+    let mut drawn = 0;
+    let mut current = tree;
+    while let Some(nested) = groups(&current)
+        .into_iter()
+        .flat_map(crate::svg::usvg::Group::children)
+        .find_map(|node| match node {
+            crate::svg::usvg::Node::Image(image) => match image.kind() {
+                crate::svg::usvg::ImageKind::SVG(nested) => Some(nested.clone()),
+                _ => None,
+            },
+            _ => None,
+        })
+    {
+        drawn += 1;
+        current = nested;
+    }
+    assert_eq!(drawn, MAX_REFERENCE_DEPTH, "nested SVG images drawn");
+}

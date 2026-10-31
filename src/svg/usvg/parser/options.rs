@@ -96,6 +96,8 @@ pub struct Options<'a> {
     pub style_sheet: Option<String>,
     /// What the document attaches to the SVG content it styles.
     pub(crate) styling: crate::svg::DocumentStyling,
+    /// How deep its conversion nests in those of the documents drawing it as an image.
+    pub(crate) nesting: super::converter::Nesting,
 }
 
 impl Default for Options<'_> {
@@ -116,6 +118,7 @@ impl Default for Options<'_> {
             fontdb: Arc::new(fontdb::Database::new()),
             style_sheet: None,
             styling: crate::svg::DocumentStyling::default(),
+            nesting: super::converter::Nesting::default(),
         }
     }
 }

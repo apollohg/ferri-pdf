@@ -42,6 +42,19 @@ pub(crate) fn convert(
     cache: &mut converter::Cache,
     parent: &mut Group,
 ) {
+    cache.referenced(|cache| {
+        convert_markers(node, path, state, cache, parent);
+        Some(())
+    });
+}
+
+fn convert_markers(
+    node: SvgNode,
+    path: &tiny_skia_path::Path,
+    state: &converter::State,
+    cache: &mut converter::Cache,
+    parent: &mut Group,
+) {
     let list = [
         (AId::MarkerStart, MarkerKind::Start),
         (AId::MarkerMid, MarkerKind::Middle),

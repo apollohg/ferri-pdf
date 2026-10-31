@@ -774,6 +774,10 @@ impl StyledDocument {
                 .into_iter()
                 .map(DocumentDiagnostic::UnavailableFont),
         );
+        let limited = self.pages.images().borrow_mut().take_limited();
+        for diagnostic in limited {
+            self.diagnose(diagnostic);
+        }
         self.diagnostics
     }
 

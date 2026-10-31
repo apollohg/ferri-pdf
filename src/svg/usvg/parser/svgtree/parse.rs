@@ -8,13 +8,13 @@ use crate::style::PseudoElement;
 use roxmltree::Error;
 use svgtypes::FontShorthand;
 
-use super::{AId, Attribute, Document, EId, NodeData, NodeId, NodeKind, ShortRange};
+use super::{
+    AId, Attribute, Document, EId, MAX_SVG_NODES, NodeData, NodeId, NodeKind, Placement, ShortRange,
+};
 
 const SVG_NS: &str = "http://www.w3.org/2000/svg";
 const XLINK_NS: &str = "http://www.w3.org/1999/xlink";
 const XML_NAMESPACE_NS: &str = "http://www.w3.org/XML/1998/namespace";
-const MAX_SVG_DEPTH: u32 = 1024;
-const MAX_SVG_NODES: usize = 1_000_000;
 
 impl<'input> Document<'input> {
     /// Parses a [`Document`] from a [`roxmltree::Document`].
@@ -80,6 +80,7 @@ fn parse<'input>(
         attrs: Vec::new(),
         links: HashMap::new(),
         css_limit: None,
+        limits: super::TreeLimits::default(),
     };
 
     // build a map of id -> node for resolve_href
@@ -104,16 +105,7 @@ fn parse<'input>(
     let style_sheet = resolve_css(xml, injected_stylesheet);
     doc.css_limit = style_sheet.limit;
 
-    parse_xml_node_children(
-        xml.root(),
-        xml.root(),
-        doc.root().id,
-        &style_sheet,
-        false,
-        0,
-        &mut doc,
-        &id_map,
-    )?;
+    parse_xml_tree(xml.root(), &style_sheet, &mut doc, &id_map);
 
     // Check that the root element is `svg`.
     match doc.root().first_element_child() {
@@ -172,46 +164,98 @@ pub(crate) fn parse_tag_name(node: roxmltree::Node) -> Option<EId> {
     EId::from_str(node.tag_name().name())
 }
 
-fn parse_xml_node_children<'input>(
-    parent: roxmltree::Node<'_, 'input>,
-    origin: roxmltree::Node,
-    parent_id: NodeId,
-    style_sheet: &StyleSheet,
-    ignore_ids: bool,
-    depth: u32,
-    doc: &mut Document<'input>,
-    id_map: &HashMap<&str, roxmltree::Node<'_, 'input>>,
-) -> Result<(), Error> {
-    for node in parent.children() {
-        parse_xml_node(
-            node,
-            origin,
-            parent_id,
-            style_sheet,
-            ignore_ids,
-            depth,
-            doc,
-            id_map,
-        )?;
-    }
-
-    Ok(())
+/// A step of parsing the XML tree into the document.
+enum Step<'a, 'input> {
+    /// An XML node, where it goes, and the `use` element whose instance it is in, if any.
+    Node {
+        node: roxmltree::Node<'a, 'input>,
+        origin: roxmltree::Node<'a, 'input>,
+        placement: Placement,
+        ignore_ids: bool,
+    },
+    /// The end of the instance of `link`, restoring the instance context outside it.
+    Leave {
+        link: roxmltree::NodeId,
+        outer: Option<crate::dom::TreeScopeId>,
+    },
 }
 
-fn parse_xml_node<'input>(
-    node: roxmltree::Node<'_, 'input>,
-    origin: roxmltree::Node,
-    parent_id: NodeId,
+/// The steps parsing the children of `parent` in order, placed by `placement`.
+fn children_steps<'a, 'input>(
+    parent: roxmltree::Node<'a, 'input>,
+    origin: roxmltree::Node<'a, 'input>,
+    placement: Placement,
+    ignore_ids: bool,
+    steps: &mut Vec<Step<'a, 'input>>,
+) {
+    steps.extend(parent.children().rev().map(|node| Step::Node {
+        node,
+        origin,
+        placement,
+        ignore_ids,
+    }));
+}
+
+/// Parses the XML tree under `root` without recursion, which bounds the stack whatever the
+/// nesting; the instances of `use` elements nest in their elements. Past the node limit the
+/// rest of the content is omitted.
+fn parse_xml_tree<'a, 'input>(
+    root: roxmltree::Node<'a, 'input>,
+    style_sheet: &StyleSheet,
+    doc: &mut Document<'input>,
+    id_map: &HashMap<&str, roxmltree::Node<'a, 'input>>,
+) {
+    let mut steps = Vec::new();
+    let top = Placement::top(doc.root().id);
+    children_steps(root, root, top, false, &mut steps);
+    // The links whose instances are open, which a circular reference would instantiate again
+    // (SVG 2 §5.6.3).
+    let mut open = std::collections::HashSet::new();
+    while let Some(step) = steps.pop() {
+        let (node, origin, placement, ignore_ids) = match step {
+            Step::Node {
+                node,
+                origin,
+                placement,
+                ignore_ids,
+            } => (node, origin, placement, ignore_ids),
+            Step::Leave { link, outer } => {
+                open.remove(&link);
+                style_sheet.swap_instance(outer);
+                continue;
+            }
+        };
+        if parse_xml_node(
+            node,
+            origin,
+            placement,
+            style_sheet,
+            ignore_ids,
+            doc,
+            id_map,
+            &mut open,
+            &mut steps,
+        )
+        .is_err()
+        {
+            doc.limits.truncated = true;
+            return;
+        }
+    }
+}
+
+/// Parses `node` into the document, adding the steps that parse its content to `steps`.
+fn parse_xml_node<'a, 'input>(
+    node: roxmltree::Node<'a, 'input>,
+    origin: roxmltree::Node<'a, 'input>,
+    placement: Placement,
     style_sheet: &StyleSheet,
     ignore_ids: bool,
-    depth: u32,
     doc: &mut Document<'input>,
-    id_map: &HashMap<&str, roxmltree::Node<'_, 'input>>,
+    id_map: &HashMap<&str, roxmltree::Node<'a, 'input>>,
+    open: &mut std::collections::HashSet<roxmltree::NodeId>,
+    steps: &mut Vec<Step<'a, 'input>>,
 ) -> Result<(), Error> {
-    if depth > MAX_SVG_DEPTH {
-        return Err(Error::NodesLimitReached);
-    }
-
     let mut tag_name = match parse_tag_name(node) {
         Some(id) => id,
         None => return Ok(()),
@@ -229,47 +273,43 @@ fn parse_xml_node<'input>(
 
     let referenced = (tag_name == EId::Use)
         .then(|| resolve_svg_use(node, origin, id_map))
-        .flatten();
+        .flatten()
+        .filter(|link| !open.contains(&link.id()));
     let host_instance = match referenced {
         Some(link) => style_sheet.create_instance(link, node, MAX_SVG_NODES)?,
         None => None,
     };
     let node_id = parse_svg_element(
         node,
-        parent_id,
+        placement.parent,
         tag_name,
         style_sheet,
         Source::Element { ignore_ids },
         host_instance,
         doc,
     )?;
+    let inner = placement.children(node_id);
     if tag_name == EId::Text {
-        super::text::parse_svg_text_element(node, node_id, style_sheet, doc)?;
+        super::text::parse_svg_text_element(node, node_id, inner, style_sheet, doc)?;
     } else if tag_name == EId::Use {
         if let Some(link) = referenced {
-            let _context = style_sheet.enter_instance(host_instance);
-            parse_xml_node(
-                link,
-                node,
-                node_id,
-                style_sheet,
-                true,
-                depth + 2,
-                doc,
-                id_map,
-            )?;
+            open.insert(link.id());
+            steps.push(Step::Leave {
+                link: link.id(),
+                outer: style_sheet.swap_instance(host_instance),
+            });
+            doc.limits.flattened |= inner.parent != node_id;
+            steps.push(Step::Node {
+                node: link,
+                origin: node,
+                placement: inner,
+                ignore_ids: true,
+            });
         }
     } else {
-        parse_xml_node_children(
-            node,
-            origin,
-            node_id,
-            style_sheet,
-            ignore_ids,
-            depth + 1,
-            doc,
-            id_map,
-        )?;
+        doc.limits.flattened |=
+            inner.parent != node_id && node.children().any(|child| parse_tag_name(child).is_some());
+        children_steps(node, origin, inner, ignore_ids, steps);
     }
 
     Ok(())

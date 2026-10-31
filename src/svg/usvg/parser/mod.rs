@@ -21,9 +21,10 @@ mod units;
 mod use_node;
 
 mod text;
-pub(crate) use converter::Cache;
+pub(crate) use converter::{Cache, MAX_REFERENCE_DEPTH, Nesting};
 pub(crate) use image::ImageHrefResolver;
 pub(crate) use options::Options;
+pub(crate) use svgtree::{MAX_SVG_DEPTH, MAX_SVG_NODES, TreeLimits};
 
 pub(crate) struct ParsedSvg<'input>(svgtree::Document<'input>);
 
@@ -56,6 +57,11 @@ impl<'input> ParsedSvg<'input> {
             return Err(Error::CssComponentDepthLimit { limit });
         }
         Ok(Self(doc))
+    }
+
+    /// The limits that changed the parsed content, its linked documents' included.
+    pub(crate) fn limits(&self) -> TreeLimits {
+        self.0.limits
     }
 
     pub(crate) fn natural_dimensions(
@@ -112,7 +118,7 @@ impl<'input> ParsedSvg<'input> {
         &self,
         opt: &Options,
         viewport: Option<crate::svg::usvg::Size>,
-        images: Option<&dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>>,
+        images: Option<&dyn Fn(&str, &Options, Nesting) -> Option<crate::svg::usvg::ImageKind>>,
         fonts: Option<&dyn crate::svg::usvg::FontProvider>,
     ) -> Result<crate::svg::usvg::Tree, Error> {
         converter::convert_doc(&self.0, opt, viewport, images, fonts)
@@ -257,7 +263,7 @@ impl crate::svg::usvg::Tree {
         text: &str,
         opt: &Options,
         viewport: Option<crate::svg::usvg::Size>,
-        resolver: &dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>,
+        resolver: &dyn Fn(&str, &Options, Nesting) -> Option<crate::svg::usvg::ImageKind>,
     ) -> Result<Self, Error> {
         Self::from_str_impl(text, opt, viewport, Some(resolver), None, None)
     }
@@ -267,7 +273,7 @@ impl crate::svg::usvg::Tree {
         text: &str,
         opt: &Options,
         viewport: Option<crate::svg::usvg::Size>,
-        images: &dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>,
+        images: &dyn Fn(&str, &Options, Nesting) -> Option<crate::svg::usvg::ImageKind>,
         fonts: &dyn crate::svg::usvg::FontProvider,
         documents: &dyn Fn(&str) -> Option<LinkedDocument>,
     ) -> Result<Self, Error> {
@@ -294,7 +300,7 @@ impl crate::svg::usvg::Tree {
         text: &str,
         opt: &Options,
         viewport: Option<crate::svg::usvg::Size>,
-        resolver: Option<&dyn Fn(&str, &Options) -> Option<crate::svg::usvg::ImageKind>>,
+        resolver: Option<&dyn Fn(&str, &Options, Nesting) -> Option<crate::svg::usvg::ImageKind>>,
         fonts: Option<&dyn crate::svg::usvg::FontProvider>,
         documents: Option<&dyn Fn(&str) -> Option<LinkedDocument>>,
     ) -> Result<Self, Error> {

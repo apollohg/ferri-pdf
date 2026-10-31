@@ -21,6 +21,56 @@ use crate::svg::usvg::{
 pub(crate) use names::{AId, EId};
 
 pub(super) const CSS_INITIAL: &str = "initial";
+/// The deepest element nesting the tree keeps below its root element. Conversion and
+/// rendering recurse over the tree, so an element nested deeper is placed beside its parent
+/// at this depth, as HTML parsers re-parent deep trees.
+pub(crate) const MAX_SVG_DEPTH: usize = 128;
+/// The most nodes the tree holds; content past them is omitted.
+pub(crate) const MAX_SVG_NODES: usize = 1_000_000;
+
+/// Where an element goes in the tree: its parent, and its depth below the root element.
+#[derive(Clone, Copy)]
+pub(super) struct Placement {
+    pub(super) parent: NodeId,
+    depth: usize,
+}
+
+impl Placement {
+    /// The root element's.
+    pub(super) fn top(root: NodeId) -> Self {
+        Self {
+            parent: root,
+            depth: 0,
+        }
+    }
+
+    /// The same depth in `parent`, as a copy of the element the placement is in.
+    pub(super) fn inside(self, parent: NodeId) -> Self {
+        Self { parent, ..self }
+    }
+
+    /// Where the children of `element`, placed here, go: in it, or beside it past the depth
+    /// limit.
+    pub(super) fn children(self, element: NodeId) -> Self {
+        if self.depth < MAX_SVG_DEPTH {
+            Self {
+                parent: element,
+                depth: self.depth + 1,
+            }
+        } else {
+            self
+        }
+    }
+}
+
+/// The limits that changed the content of the tree.
+#[derive(Clone, Copy, Default)]
+pub(crate) struct TreeLimits {
+    /// Elements nested past `MAX_SVG_DEPTH` were placed beside their parents.
+    pub(crate) flattened: bool,
+    /// Content past the node limit was omitted.
+    pub(crate) truncated: bool,
+}
 
 /// An SVG tree container.
 ///
@@ -28,6 +78,7 @@ pub(super) const CSS_INITIAL: &str = "initial";
 /// Text nodes are present only inside the `text` element.
 pub(super) struct Document<'input> {
     pub(crate) css_limit: Option<usize>,
+    pub(crate) limits: TreeLimits,
     variables: HashMap<usize, crate::style::svg_cascade::Variables>,
     /// The declarations of properties without attributes that won each element's cascade,
     /// as longhands, by node.

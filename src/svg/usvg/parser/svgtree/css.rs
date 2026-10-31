@@ -58,17 +58,6 @@ pub(super) struct StyleSheet<'i> {
     instance: Cell<Option<TreeScopeId>>,
 }
 
-pub(super) struct InstanceContext<'a> {
-    current: &'a Cell<Option<TreeScopeId>>,
-    previous: Option<TreeScopeId>,
-}
-
-impl Drop for InstanceContext<'_> {
-    fn drop(&mut self) {
-        self.current.set(self.previous);
-    }
-}
-
 impl<'i> StyleSheet<'i> {
     pub(super) fn new() -> Self {
         Self {
@@ -167,11 +156,9 @@ impl<'i> StyleSheet<'i> {
                 DomError::TreeLimit { .. } => roxmltree::Error::NodesLimitReached,
             })
     }
-    pub(super) fn enter_instance(&self, instance: Option<TreeScopeId>) -> InstanceContext<'_> {
-        InstanceContext {
-            current: &self.instance,
-            previous: self.instance.replace(instance),
-        }
+    /// Makes `instance` the instance tree that matching sees, returning the one before.
+    pub(super) fn swap_instance(&self, instance: Option<TreeScopeId>) -> Option<TreeScopeId> {
+        self.instance.replace(instance)
     }
 }
 

@@ -1842,6 +1842,12 @@ pub struct Tree {
     pub(crate) masks: Vec<Arc<Mask>>,
     pub(crate) filters: Vec<Arc<filter::Filter>>,
     pub(crate) fontdb: Arc<fontdb::Database>,
+    /// Content nested past the conversion depth through references was omitted.
+    pub(crate) limited: bool,
+    /// How deep its groups nest, the groups of the SVG images it draws included.
+    pub(crate) depth: usize,
+    /// How deep its conversion nested in those of the documents drawing it as an image.
+    pub(crate) nesting: crate::svg::usvg::Nesting,
 }
 
 impl Tree {

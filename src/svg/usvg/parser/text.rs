@@ -364,211 +364,225 @@ fn collect_text_chunks_impl(
             continue;
         }
 
-        if !parent.is_visible_element(state.opt) {
+        collect_text_node(parent, child, pos_list, state, cache, iter_state);
+    }
+}
+
+/// Adds the text node `child` of `parent` to the chunks, outside the recursion over elements
+/// so that its frame stays small in deep content.
+#[inline(never)]
+fn collect_text_node(
+    parent: SvgNode,
+    child: SvgNode,
+    pos_list: &[CharacterPosition],
+    state: &converter::State,
+    cache: &mut Cache,
+    iter_state: &mut IterState,
+) {
+    if !parent.is_visible_element(state.opt) {
+        iter_state.chars_count += child.text().chars().count();
+        return;
+    }
+
+    let text_orientation = parent
+        .find_attribute::<&str>(AId::TextOrientation)
+        .and_then(crate::style::logical::TextOrientation::from_name)
+        .unwrap_or_default();
+    let rtl = parent.find_attribute::<&str>(AId::Direction) == Some(RIGHT_TO_LEFT)
+        && !(convert_writing_mode(parent) == WritingMode::TopToBottom
+            && text_orientation == crate::style::logical::TextOrientation::Upright);
+    // SVG 2 §11.10.1.1: in right-to-left text `start` aligns the right side, `end` the left.
+    let anchor = match parent.find_attribute(AId::TextAnchor).unwrap_or_default() {
+        TextAnchor::Start if rtl => TextAnchor::End,
+        TextAnchor::End if rtl => TextAnchor::Start,
+        anchor => anchor,
+    };
+
+    // TODO: what to do when <= 0? UB?
+    let font_size = super::units::resolve_font_size(parent, state);
+    let font_size = match NonZeroPositiveF32::new(font_size) {
+        Some(n) => n,
+        None => {
+            // Skip this span.
             iter_state.chars_count += child.text().chars().count();
-            continue;
+            return;
         }
+    };
 
-        let text_orientation = parent
-            .find_attribute::<&str>(AId::TextOrientation)
-            .and_then(crate::style::logical::TextOrientation::from_name)
-            .unwrap_or_default();
-        let rtl = parent.find_attribute::<&str>(AId::Direction) == Some(RIGHT_TO_LEFT)
-            && !(convert_writing_mode(parent) == WritingMode::TopToBottom
-                && text_orientation == crate::style::logical::TextOrientation::Upright);
-        // SVG 2 §11.10.1.1: in right-to-left text `start` aligns the right side, `end` the left.
-        let anchor = match parent.find_attribute(AId::TextAnchor).unwrap_or_default() {
-            TextAnchor::Start if rtl => TextAnchor::End,
-            TextAnchor::End if rtl => TextAnchor::Start,
-            anchor => anchor,
-        };
+    let font = convert_font(parent, state);
 
-        // TODO: what to do when <= 0? UB?
-        let font_size = super::units::resolve_font_size(parent, state);
-        let font_size = match NonZeroPositiveF32::new(font_size) {
-            Some(n) => n,
-            None => {
-                // Skip this span.
-                iter_state.chars_count += child.text().chars().count();
-                continue;
-            }
-        };
+    let raw_paint_order: svgtypes::PaintOrder =
+        parent.find_attribute(AId::PaintOrder).unwrap_or_default();
+    let paint_order = converter::svg_paint_order_to_usvg(raw_paint_order);
 
-        let font = convert_font(parent, state);
+    let mut dominant_baseline = parent
+        .find_layout_attribute(AId::DominantBaseline)
+        .unwrap_or_default();
 
-        let raw_paint_order: svgtypes::PaintOrder =
-            parent.find_attribute(AId::PaintOrder).unwrap_or_default();
-        let paint_order = converter::svg_paint_order_to_usvg(raw_paint_order);
-
-        let mut dominant_baseline = parent
+    // `no-change` means "use parent".
+    if dominant_baseline == DominantBaseline::NoChange {
+        dominant_baseline = parent
+            .parent_element()
+            .unwrap()
             .find_layout_attribute(AId::DominantBaseline)
             .unwrap_or_default();
+    }
 
-        // `no-change` means "use parent".
-        if dominant_baseline == DominantBaseline::NoChange {
-            dominant_baseline = parent
-                .parent_element()
-                .unwrap()
-                .find_layout_attribute(AId::DominantBaseline)
-                .unwrap_or_default();
+    let font_optical_sizing = match parent.find_attribute::<&str>(AId::FontOpticalSizing) {
+        Some("none") => FontOpticalSizing::None,
+        _ => FontOpticalSizing::Auto, // "auto" or missing (browser default)
+    };
+
+    // The `::first-line` box takes no `textLength`: it applies to the element it wraps.
+    let layout_parent = parent
+        .ancestors()
+        .find(|node| !node.is_contents() && !node.is_first_line())
+        .unwrap_or(parent);
+    let mut text_length = layout_parent
+        .try_convert_length(AId::TextLength, Units::UserSpaceOnUse, state)
+        .filter(|_| !iter_state.wrapped);
+    // Negative values should be ignored.
+    if let Some(n) = text_length {
+        if n < 0.0 {
+            text_length = None;
         }
+    }
 
-        let font_optical_sizing = match parent.find_attribute::<&str>(AId::FontOpticalSizing) {
-            Some("none") => FontOpticalSizing::None,
-            _ => FontOpticalSizing::Auto, // "auto" or missing (browser default)
-        };
-
-        // The `::first-line` box takes no `textLength`: it applies to the element it wraps.
-        let layout_parent = parent
-            .ancestors()
-            .find(|node| !node.is_contents() && !node.is_first_line())
-            .unwrap_or(parent);
-        let mut text_length = layout_parent
-            .try_convert_length(AId::TextLength, Units::UserSpaceOnUse, state)
-            .filter(|_| !iter_state.wrapped);
-        // Negative values should be ignored.
-        if let Some(n) = text_length {
-            if n < 0.0 {
-                text_length = None;
-            }
+    let visibility: Visibility = parent.find_attribute(AId::Visibility).unwrap_or_default();
+    let (alignment_baseline, parent_alignment) = alignment(parent, state, cache);
+    let (baseline_shift, line_edge) = convert_baseline_shift(parent, state, cache);
+    let mut ancestry = Vec::new();
+    for node in parent.ancestors() {
+        if !node.is_contents() {
+            ancestry.push(Ancestor {
+                element: node.index(),
+                style: text_style(node, state),
+                font: convert_font(node, state),
+                font_size: super::units::resolve_font_size(node, state),
+            });
         }
-
-        let visibility: Visibility = parent.find_attribute(AId::Visibility).unwrap_or_default();
-        let (alignment_baseline, parent_alignment) = alignment(parent, state, cache);
-        let (baseline_shift, line_edge) = convert_baseline_shift(parent, state, cache);
-        let mut ancestry = Vec::new();
-        for node in parent.ancestors() {
-            if !node.is_contents() {
-                ancestry.push(Ancestor {
-                    element: node.index(),
-                    style: text_style(node, state),
-                    font: convert_font(node, state),
-                    font_size: super::units::resolve_font_size(node, state),
-                });
-            }
-            if node.tag_name() == Some(EId::Text) {
-                break;
-            }
+        if node.tag_name() == Some(EId::Text) {
+            break;
         }
-        ancestry.reverse();
+    }
+    ancestry.reverse();
 
-        let span = TextSpan {
-            start: 0,
-            end: 0,
-            fill: style::resolve_fill(parent, true, state, cache),
-            stroke: style::resolve_stroke(parent, true, state, cache),
-            paint_order,
-            font,
-            font_size,
-            style: text_style(parent, state),
-            ancestry: ancestry.into(),
-            single_character: child.text().chars().nth(1).is_none(),
-            linear_light: parent.find_attribute::<&str>(AId::ColorInterpolation)
-                == Some(converter::LINEAR_RGB),
-            text_orientation,
-            font_optical_sizing,
-            decoration: resolve_decoration(parent, state, cache),
-            visible: visibility == Visibility::Visible,
-            dominant_baseline,
-            alignment_baseline,
-            parent_alignment,
-            baseline_shift,
-            line_edge,
-            letter_spacing: parent.resolve_length(AId::LetterSpacing, state, 0.0),
-            word_spacing: parent.resolve_length(AId::WordSpacing, state, 0.0),
-            text_length,
-            length_adjust: parent
-                .find_layout_attribute(AId::LengthAdjust)
-                .unwrap_or_default(),
-        };
+    let span = TextSpan {
+        start: 0,
+        end: 0,
+        fill: style::resolve_fill(parent, true, state, cache),
+        stroke: style::resolve_stroke(parent, true, state, cache),
+        paint_order,
+        font,
+        font_size,
+        style: text_style(parent, state),
+        ancestry: ancestry.into(),
+        single_character: child.text().chars().nth(1).is_none(),
+        linear_light: parent.find_attribute::<&str>(AId::ColorInterpolation)
+            == Some(converter::LINEAR_RGB),
+        text_orientation,
+        font_optical_sizing,
+        decoration: resolve_decoration(parent, state, cache),
+        visible: visibility == Visibility::Visible,
+        dominant_baseline,
+        alignment_baseline,
+        parent_alignment,
+        baseline_shift,
+        line_edge,
+        letter_spacing: parent.resolve_length(AId::LetterSpacing, state, 0.0),
+        word_spacing: parent.resolve_length(AId::WordSpacing, state, 0.0),
+        text_length,
+        length_adjust: parent
+            .find_layout_attribute(AId::LengthAdjust)
+            .unwrap_or_default(),
+    };
 
-        let mut is_new_span = true;
-        for c in child.text().chars() {
-            let char_len = c.len_utf8();
+    let mut is_new_span = true;
+    for c in child.text().chars() {
+        let char_len = c.len_utf8();
 
-            // SVG 2 §11.6.1: a preserved segment break is an addressable character that
-            // starts a new line box; text before any other starts at the break's position.
-            if c == super::svgtree::SEGMENT_BREAK {
-                if iter_state.chunks.is_empty() {
-                    iter_state.chunks.push(TextChunk {
-                        x: pos_list[iter_state.chars_count].x,
-                        y: pos_list[iter_state.chars_count].y,
-                        anchor,
-                        rtl,
-                        spans: Vec::new(),
-                        text_flow: iter_state.text_flow.clone(),
-                        text: String::new(),
-                        line_breaks: 0,
-                        inline_offset: 0.0,
-                        hanging: [0.0; 2],
-                        soft_wrapped: false,
-                        overflowing: false,
-                    });
-                }
-                iter_state.line_breaks += 1;
-                iter_state.split_chunk = true;
-                iter_state.chars_count += 1;
-                continue;
-            }
-
-            // Create a new chunk if:
-            // - this is the first span (yes, position can be None)
-            // - text character has an absolute coordinate assigned to it (via x/y attribute)
-            // - `c` is the first char of the `textPath`
-            // - `c` is the first char after `textPath`
-            let is_new_chunk = pos_list[iter_state.chars_count].x.is_some()
-                || pos_list[iter_state.chars_count].y.is_some()
-                || iter_state.split_chunk
-                || iter_state.chunks.is_empty();
-
-            iter_state.split_chunk = false;
-
-            if is_new_chunk {
-                iter_state.chunk_bytes_count = 0;
-
-                let mut span2 = span.clone();
-                span2.start = 0;
-                span2.end = char_len;
-
+        // SVG 2 §11.6.1: a preserved segment break is an addressable character that
+        // starts a new line box; text before any other starts at the break's position.
+        if c == super::svgtree::SEGMENT_BREAK {
+            if iter_state.chunks.is_empty() {
                 iter_state.chunks.push(TextChunk {
                     x: pos_list[iter_state.chars_count].x,
                     y: pos_list[iter_state.chars_count].y,
                     anchor,
                     rtl,
-                    spans: vec![span2],
+                    spans: Vec::new(),
                     text_flow: iter_state.text_flow.clone(),
-                    text: c.to_string(),
-                    line_breaks: std::mem::take(&mut iter_state.line_breaks),
+                    text: String::new(),
+                    line_breaks: 0,
                     inline_offset: 0.0,
                     hanging: [0.0; 2],
                     soft_wrapped: false,
                     overflowing: false,
                 });
-            } else if is_new_span {
-                // Add this span to the last text chunk.
-                let mut span2 = span.clone();
-                span2.start = iter_state.chunk_bytes_count;
-                span2.end = iter_state.chunk_bytes_count + char_len;
+            }
+            iter_state.line_breaks += 1;
+            iter_state.split_chunk = true;
+            iter_state.chars_count += 1;
+            continue;
+        }
 
-                if let Some(chunk) = iter_state.chunks.last_mut() {
-                    chunk.text.push(c);
-                    chunk.spans.push(span2);
-                }
-            } else {
-                // Extend the last span.
-                if let Some(chunk) = iter_state.chunks.last_mut() {
-                    chunk.text.push(c);
-                    if let Some(span) = chunk.spans.last_mut() {
-                        debug_assert_ne!(span.end, 0);
-                        span.end += char_len;
-                    }
+        // Create a new chunk if:
+        // - this is the first span (yes, position can be None)
+        // - text character has an absolute coordinate assigned to it (via x/y attribute)
+        // - `c` is the first char of the `textPath`
+        // - `c` is the first char after `textPath`
+        let is_new_chunk = pos_list[iter_state.chars_count].x.is_some()
+            || pos_list[iter_state.chars_count].y.is_some()
+            || iter_state.split_chunk
+            || iter_state.chunks.is_empty();
+
+        iter_state.split_chunk = false;
+
+        if is_new_chunk {
+            iter_state.chunk_bytes_count = 0;
+
+            let mut span2 = span.clone();
+            span2.start = 0;
+            span2.end = char_len;
+
+            iter_state.chunks.push(TextChunk {
+                x: pos_list[iter_state.chars_count].x,
+                y: pos_list[iter_state.chars_count].y,
+                anchor,
+                rtl,
+                spans: vec![span2],
+                text_flow: iter_state.text_flow.clone(),
+                text: c.to_string(),
+                line_breaks: std::mem::take(&mut iter_state.line_breaks),
+                inline_offset: 0.0,
+                hanging: [0.0; 2],
+                soft_wrapped: false,
+                overflowing: false,
+            });
+        } else if is_new_span {
+            // Add this span to the last text chunk.
+            let mut span2 = span.clone();
+            span2.start = iter_state.chunk_bytes_count;
+            span2.end = iter_state.chunk_bytes_count + char_len;
+
+            if let Some(chunk) = iter_state.chunks.last_mut() {
+                chunk.text.push(c);
+                chunk.spans.push(span2);
+            }
+        } else {
+            // Extend the last span.
+            if let Some(chunk) = iter_state.chunks.last_mut() {
+                chunk.text.push(c);
+                if let Some(span) = chunk.spans.last_mut() {
+                    debug_assert_ne!(span.end, 0);
+                    span.end += char_len;
                 }
             }
-
-            is_new_span = false;
-            iter_state.chars_count += 1;
-            iter_state.chunk_bytes_count += char_len;
         }
+
+        is_new_span = false;
+        iter_state.chars_count += 1;
+        iter_state.chunk_bytes_count += char_len;
     }
 }
 

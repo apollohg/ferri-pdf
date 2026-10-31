@@ -2,7 +2,7 @@ use crate::fonts::{DEFAULT_FAMILY, FontNamespace};
 use crate::images::svg_fonts::SvgFonts;
 use crate::images::{Image, ImageCache, ImageError, RasterFormat};
 use crate::resources::{Resource, ResourceBase, ResourceResolver};
-use crate::svg::usvg::{ImageKind, LinkedDocument, ParsedSvg, Tree};
+use crate::svg::usvg::{ImageKind, LinkedDocument, Nesting, ParsedSvg, Tree};
 use std::{
     cell::RefCell,
     collections::{HashMap, HashSet},
@@ -12,7 +12,6 @@ use std::{
 const SVG_NAMESPACE: &str = "http://www.w3.org/2000/svg";
 const XLINK_NAMESPACE: &str = "http://www.w3.org/1999/xlink";
 const DEFAULT_FONT_SIZE: f64 = 16.0;
-const MAX_RESOURCE_DEPTH: usize = 32;
 
 #[derive(Debug)]
 pub(crate) struct SvgSource {
@@ -48,11 +47,10 @@ impl SvgImage {
     pub(crate) fn parse(
         resource: Resource,
         resolver: &dyn ResourceResolver,
-        depth: usize,
+        nesting: Nesting,
         cache: &mut ImageCache,
         namespace: FontNamespace,
     ) -> Result<Self, ImageError> {
-        validate_depth(depth)?;
         let xml = String::from_utf8(resource.bytes).map_err(ImageError::SvgEncoding)?;
         Self::parse_source(
             Arc::new(SvgSource {
@@ -62,7 +60,7 @@ impl SvgImage {
             crate::svg::DocumentStyling::default(),
             false,
             resolver,
-            depth,
+            nesting,
             cache,
             namespace,
         )
@@ -75,11 +73,10 @@ impl SvgImage {
         styling: crate::svg::DocumentStyling,
         styled: bool,
         resolver: &dyn ResourceResolver,
-        depth: usize,
+        nesting: Nesting,
         cache: &mut ImageCache,
         namespace: FontNamespace,
     ) -> Result<Self, ImageError> {
-        validate_depth(depth)?;
         let xml = &source.xml;
         let document = roxmltree::Document::parse(xml).map_err(ImageError::SvgXml)?;
         let root = document.root_element();
@@ -89,6 +86,7 @@ impl SvgImage {
         let mut parsed = ParsedSvg::parse(&document, None).map_err(ImageError::Svg)?;
         let mut options = options(crate::images::DEFAULT_OBJECT_SIZE)?;
         options.styling = styling.clone();
+        options.nesting = nesting;
         let fonts = cache.fonts.in_namespace(namespace);
         let provider = fonts.provider(Some(resolver));
         options.fontdb = fonts.database();
@@ -131,7 +129,8 @@ impl SvgImage {
         let documents = RefCell::new(HashMap::<String, Option<LinkedDocument>>::new());
         let jpeg_images = RefCell::new(HashSet::new());
         let cache = RefCell::new(cache);
-        let resolve = |href: &str, _: &crate::svg::usvg::Options<'_>| {
+        // An image converts where it draws, nesting in the conversion around it.
+        let resolve = |href: &str, _: &crate::svg::usvg::Options<'_>, conversion| {
             if href.starts_with('#') {
                 return None;
             }
@@ -141,7 +140,7 @@ impl SvgImage {
             let loaded =
                 cache
                     .borrow_mut()
-                    .load_nested(href, &source.base, resolver, depth + 1, namespace);
+                    .load_nested(href, &source.base, resolver, conversion, namespace);
             let loaded = loaded
                 .and_then(|image| image_kind(&image, &mut jpeg_images.borrow_mut()))
                 .map_err(|error| cache.borrow_mut().record_failure(&source.base, href, error))
@@ -179,6 +178,9 @@ impl SvgImage {
         });
         let fonts = provider.finish()?;
         let initial_tree = initial_tree.map_err(ImageError::Svg)?;
+        cache
+            .into_inner()
+            .record_limits(parsed.limits(), initial_tree.limited);
         let resources = resources
             .into_inner()
             .into_iter()
@@ -238,25 +240,19 @@ impl SvgImage {
         let mut options = options(size)?;
         options.fontdb = self.initial_tree.fontdb().clone();
         options.styling = (*self.styling).clone();
+        options.nesting = self.initial_tree.nesting;
         let provider = self.fonts.provider(None);
         let result = Tree::from_str_with_resolvers(
             &self.source.xml,
             &options,
             Some(options.default_size),
-            &|href, _| self.resources.get(href).cloned(),
+            &|href, _, _| self.resources.get(href).cloned(),
             &provider,
             &|reference| self.documents.get(reference).cloned().flatten(),
         );
         provider.finish()?;
         result.map_err(ImageError::Svg)
     }
-}
-
-fn validate_depth(depth: usize) -> Result<(), ImageError> {
-    if depth > MAX_RESOURCE_DEPTH {
-        return Err(ImageError::SvgResourceDepth(MAX_RESOURCE_DEPTH));
-    }
-    Ok(())
 }
 
 fn pixel_size(dimensions: crate::images::NaturalDimensions, available_width: f32) -> [f32; 2] {

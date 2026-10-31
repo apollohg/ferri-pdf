@@ -182,6 +182,8 @@ impl Document<'_> {
     /// Appends the root element of `other`, whose references are rewritten already, after
     /// this document's, with ids prefixed by `local`.
     fn append_document(&mut self, other: &Document<'_>, local: &str) {
+        self.limits.flattened |= other.limits.flattened;
+        self.limits.truncated |= other.limits.truncated;
         let Some((root, _)) = other.nodes[0].children else {
             return;
         };

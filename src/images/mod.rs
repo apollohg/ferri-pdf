@@ -283,7 +283,7 @@ impl Image {
     fn parse(
         resource: crate::resources::Resource,
         resolver: &dyn ResourceResolver,
-        depth: usize,
+        nesting: crate::svg::usvg::Nesting,
         cache: &mut ImageCache,
         namespace: FontNamespace,
     ) -> Result<Self, ImageError> {
@@ -296,7 +296,7 @@ impl Image {
         if image::guess_format(&resource.bytes).is_ok() {
             RasterImage::parse(resource.bytes).map(Self::Raster)
         } else {
-            SvgImage::parse(resource, resolver, depth, cache, namespace).map(Self::Svg)
+            SvgImage::parse(resource, resolver, nesting, cache, namespace).map(Self::Svg)
         }
     }
 }
@@ -360,8 +360,6 @@ pub enum ImageError {
     Svg(#[source] crate::svg::usvg::Error),
     #[error("SVG viewport must have positive finite dimensions")]
     SvgSize,
-    #[error("nested SVG images exceed resource depth {0}")]
-    SvgResourceDepth(usize),
     #[error("{0}")]
     Resource(#[from] ResourceError),
     #[error("invalid image: {0}")]
@@ -373,6 +371,16 @@ pub enum ImageError {
     #[error("{0}")]
     Fragment(#[from] InvalidFragment),
 }
+
+/// The limits that change SVG content, which renders limited, as `FormattingLimit`
+/// diagnostics name them and their fallbacks.
+pub(crate) const SVG_NESTING_RESOURCE: &str = "SVG element nesting";
+const FLATTENED_SVG_NESTING: &str = "elements nested deeper are placed beside their parents";
+pub(crate) const SVG_NODES_RESOURCE: &str = "SVG nodes";
+const OMITTED_SVG_NODES: &str = "the content after them is left out";
+pub(crate) const SVG_REFERENCE_RESOURCE: &str = "SVG reference nesting";
+const OMITTED_SVG_REFERENCES: &str =
+    "resources referenced deeper are left out as invalid references are";
 
 #[derive(Debug, thiserror::Error)]
 #[error("image {reference} is unavailable: {error}")]
@@ -394,6 +402,8 @@ pub(crate) struct ImageCache {
     validated_markers: HashSet<usize>,
     failed: HashSet<(FontNamespace, crate::resources::ResourceBase, String)>,
     failures: Vec<ImageFailure>,
+    /// The diagnostics of the limits that changed SVG content.
+    limited: Vec<crate::document::DocumentDiagnostic>,
     fonts: SvgFonts,
     svg_sources: HashMap<crate::resources::ResourceBase, HashMap<String, Arc<svg::SvgSource>>>,
     linked: LinkedDocuments,
@@ -414,6 +424,7 @@ impl ImageCache {
             validated_markers: HashSet::new(),
             failed: HashSet::new(),
             failures: Vec::new(),
+            limited: Vec::new(),
             svg_sources: HashMap::new(),
             linked: LinkedDocuments::default(),
             images: HashMap::new(),
@@ -483,7 +494,13 @@ impl ImageCache {
         resolver: &dyn ResourceResolver,
         namespace: FontNamespace,
     ) -> Result<Arc<Image>, ImageError> {
-        self.load_nested(reference, base, resolver, 0, namespace)
+        self.load_nested(
+            reference,
+            base,
+            resolver,
+            crate::svg::usvg::Nesting::default(),
+            namespace,
+        )
     }
     /// Load an HTML image, retaining a diagnostic instead of aborting on resource failure.
     pub(crate) fn load_optional(
@@ -596,6 +613,43 @@ impl ImageCache {
     pub(crate) fn take_failures(&mut self) -> Vec<ImageFailure> {
         std::mem::take(&mut self.failures)
     }
+    /// Retains a diagnostic for each limit that changed SVG content as it parsed and, where
+    /// `converted`, as it converted.
+    pub(crate) fn record_limits(&mut self, limits: crate::svg::usvg::TreeLimits, converted: bool) {
+        let limited = [
+            (
+                limits.flattened,
+                SVG_NESTING_RESOURCE,
+                crate::svg::usvg::MAX_SVG_DEPTH,
+                FLATTENED_SVG_NESTING,
+            ),
+            (
+                limits.truncated,
+                SVG_NODES_RESOURCE,
+                crate::svg::usvg::MAX_SVG_NODES,
+                OMITTED_SVG_NODES,
+            ),
+            (
+                converted,
+                SVG_REFERENCE_RESOURCE,
+                crate::svg::usvg::MAX_REFERENCE_DEPTH,
+                OMITTED_SVG_REFERENCES,
+            ),
+        ];
+        self.limited
+            .extend(limited.into_iter().filter(|(applied, ..)| *applied).map(
+                |(_, resource, limit, fallback)| {
+                    crate::document::DocumentDiagnostic::FormattingLimit {
+                        resource,
+                        limit,
+                        fallback,
+                    }
+                },
+            ));
+    }
+    pub(crate) fn take_limited(&mut self) -> Vec<crate::document::DocumentDiagnostic> {
+        std::mem::take(&mut self.limited)
+    }
     /// Parses an inline `<svg>` element serialized as XML; its references resolve against `base`.
     #[cfg(test)]
     pub(crate) fn inline_svg(
@@ -620,7 +674,7 @@ impl ImageCache {
             styling,
             true,
             resolver,
-            0,
+            crate::svg::usvg::Nesting::default(),
             self,
             namespace,
         )?)))
@@ -630,7 +684,7 @@ impl ImageCache {
         reference: &str,
         base: &crate::resources::ResourceBase,
         resolver: &dyn ResourceResolver,
-        depth: usize,
+        nesting: crate::svg::usvg::Nesting,
         namespace: FontNamespace,
     ) -> Result<Arc<Image>, ImageError> {
         if let Some(image) = self
@@ -662,13 +716,13 @@ impl ImageCache {
                 crate::svg::DocumentStyling::default(),
                 false,
                 resolver,
-                depth,
+                nesting,
                 self,
                 namespace,
             )?)
         } else {
             let resource = resolver.resolve(reference, base)?;
-            Image::parse(resource, resolver, depth, self, namespace)?
+            Image::parse(resource, resolver, nesting, self, namespace)?
         };
         Ok(self.insert(reference, base, image, namespace))
     }
@@ -682,7 +736,13 @@ impl ImageCache {
         resolver: &dyn ResourceResolver,
         namespace: FontNamespace,
     ) -> Option<Arc<Image>> {
-        match Image::parse(resource, resolver, 0, self, namespace) {
+        match Image::parse(
+            resource,
+            resolver,
+            crate::svg::usvg::Nesting::default(),
+            self,
+            namespace,
+        ) {
             Ok(image) => Some(self.insert(reference, base, image, namespace)),
             Err(error) => {
                 self.failures.push(ImageFailure {

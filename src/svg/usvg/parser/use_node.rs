@@ -123,7 +123,7 @@ fn convert_instance(
                 g2.transform = Transform::default();
                 // The viewport clip lies in the plane a 3D placement projects.
                 g.matrix = g2.matrix.take();
-                g.children.push(Node::Group(Box::new(g2)));
+                g.children.push(Node::Group(g2));
             }
 
             if g.children.is_empty() {
@@ -150,7 +150,7 @@ fn convert_instance(
         {
             g.is_context_element = true;
             g.transform = Transform::default();
-            parent.children.push(Node::Group(Box::new(g)));
+            parent.children.push(Node::Group(g));
         }
     } else {
         let linked_to_svg = child.tag_name() == Some(EId::Svg);
@@ -194,48 +194,82 @@ pub(crate) fn convert_svg(
     cache: &mut converter::Cache,
     parent: &mut Group,
 ) {
-    // We require original transformation to setup 'clipPath'.
-    let mut orig_ts = node.resolve_transform(AId::Transform, state);
-    let mut new_ts = Transform::default();
-
-    let x = node.convert_user_length(AId::X, state, Length::zero());
-    let y = node.convert_user_length(AId::Y, state, Length::zero());
-    new_ts = new_ts.pre_translate(x, y);
-
-    if let Some(ts) = viewbox_transform(node, node, state) {
-        new_ts = new_ts.pre_concat(ts);
-    }
-
-    // We have to create a new state which would have its viewBox set to the current SVG element.
-    // Note that we're not updating State::size - it's a completely different property.
-    let mut new_state = state.clone();
-    new_state.view_box = {
-        if let Some(vb) = node.parse_viewbox(node.effective_zoom()) {
-            vb
-        } else {
-            // No `viewBox` attribute? Then use `x`, `y`, `width` and `height` instead.
-            let (mut w, mut h) = use_node_size(node, state);
-
-            // If attributes `width` and/or `height` are provided on the `use` element,
-            // then these values will override the corresponding attributes
-            // on the `svg` in the generated tree.
-            w = state.use_size.0.unwrap_or(w);
-            h = state.use_size.1.unwrap_or(h);
-
-            NonZeroRect::from_xywh(x, y, w, h).unwrap_or(state.view_box)
-        }
-    };
-
-    if let Some((clip_rect, axes)) = get_clip_rect(node, node, state) {
-        let mut g = clip_element(node, orig_ts, state);
+    let viewport = SvgViewport::of(node, state);
+    if let Some((clip_rect, axes)) = viewport.clip {
+        let mut g = Box::new(clip_element(node, viewport.transform, state));
         g.abs_transform = parent.abs_transform;
-        convert_children(node, new_ts, &new_state, cache, false, &mut g);
+        convert_children(
+            node,
+            viewport.content,
+            &viewport.state,
+            cache,
+            false,
+            &mut g,
+        );
         g.calculate_bounding_boxes();
         g.clip_path = converter::viewport_clip(cache, clip_rect, axes, g.layer_bounding_box);
-        parent.children.push(Node::Group(Box::new(g)));
+        parent.children.push(Node::Group(g));
     } else {
-        orig_ts = orig_ts.pre_concat(new_ts);
-        convert_children(node, orig_ts, &new_state, cache, false, parent);
+        let transform = viewport.transform.pre_concat(viewport.content);
+        convert_children(node, transform, &viewport.state, cache, false, parent);
+    }
+}
+
+/// The viewport a nested `svg` element establishes. Its state is boxed: nested `svg` elements
+/// convert recursively.
+struct SvgViewport<'a> {
+    /// The state of the content, whose view box is the element's.
+    state: Box<converter::State<'a>>,
+    /// The element's own transform.
+    transform: Transform,
+    /// The transform of the content within the element.
+    content: Transform,
+    /// The viewport rectangle and the axes it clips.
+    clip: Option<(NonZeroRect, [bool; 2])>,
+}
+
+impl<'a> SvgViewport<'a> {
+    #[inline(never)]
+    fn of(node: SvgNode, state: &converter::State<'a>) -> Self {
+        // We require original transformation to setup 'clipPath'.
+        let transform = node.resolve_transform(AId::Transform, state);
+        let mut content = Transform::default();
+
+        let x = node.convert_user_length(AId::X, state, Length::zero());
+        let y = node.convert_user_length(AId::Y, state, Length::zero());
+        content = content.pre_translate(x, y);
+
+        if let Some(ts) = viewbox_transform(node, node, state) {
+            content = content.pre_concat(ts);
+        }
+
+        // We have to create a new state which would have its viewBox set to the current SVG
+        // element. Note that we're not updating State::size - it's a completely different
+        // property.
+        let mut new_state = Box::new(state.clone());
+        new_state.view_box = {
+            if let Some(vb) = node.parse_viewbox(node.effective_zoom()) {
+                vb
+            } else {
+                // No `viewBox` attribute? Then use `x`, `y`, `width` and `height` instead.
+                let (mut w, mut h) = use_node_size(node, state);
+
+                // If attributes `width` and/or `height` are provided on the `use` element,
+                // then these values will override the corresponding attributes
+                // on the `svg` in the generated tree.
+                w = state.use_size.0.unwrap_or(w);
+                h = state.use_size.1.unwrap_or(h);
+
+                NonZeroRect::from_xywh(x, y, w, h).unwrap_or(state.view_box)
+            }
+        };
+
+        Self {
+            state: new_state,
+            transform,
+            content,
+            clip: get_clip_rect(node, node, state),
+        }
     }
 }
 
@@ -298,7 +332,7 @@ fn convert_children(
             }
             None => g.transform = transform,
         }
-        parent.children.push(Node::Group(Box::new(g)));
+        parent.children.push(Node::Group(g));
     }
 
     parent.abs_transform = old_abs_transform;

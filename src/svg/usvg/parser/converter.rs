@@ -50,7 +50,8 @@ pub(super) struct State<'a> {
     /// Width and height can be set independently.
     pub(crate) use_size: (Option<f32>, Option<f32>),
     pub(crate) opt: &'a Options<'a>,
-    pub(crate) image_resolver: Option<&'a dyn Fn(&str, &Options) -> Option<ImageKind>>,
+    /// Resolves an image reference, given how deep it would draw.
+    pub(crate) image_resolver: Option<&'a dyn Fn(&str, &Options, Nesting) -> Option<ImageKind>>,
     pub(crate) font_provider: Option<&'a dyn FontProvider>,
 }
 
@@ -104,12 +105,29 @@ impl ResourceKey {
     }
 }
 
+/// How deep conversion nests: its groups, and the resources it references, each referenced
+/// from inside the last. A document drawn as an image converts nested in its drawing.
+#[derive(Clone, Copy, Debug, Default)]
+pub struct Nesting {
+    pub(crate) groups: usize,
+    pub(crate) references: usize,
+}
+
 #[derive(Clone)]
 pub(crate) struct Cache {
     /// This fontdb is initialized from [`Options::fontdb`] and then populated
     /// over the course of conversion.
     pub fontdb: Arc<Database>,
     pub(crate) style_error: Option<Arc<crate::style::StyleError>>,
+    /// The groups converting, each inside the last: the tree's and those of the resources
+    /// it references.
+    depth: usize,
+    /// The resources converting, each referenced from inside the last.
+    references: usize,
+    /// The deepest `depth` reached, with the depth of the SVG images drawn there.
+    deepest: usize,
+    /// Content nested past `MAX_CONVERSION_DEPTH` or `MAX_REFERENCE_DEPTH` was omitted.
+    pub(crate) limited: bool,
 
     cache_outline: HashMap<(ID, GlyphId), Option<tiny_skia_path::Path>>,
     /// Keyed by the bits of each painting's location, palette and foreground as well.
@@ -158,6 +176,10 @@ impl Cache {
         Self {
             fontdb,
             style_error: None,
+            depth: 0,
+            references: 0,
+            deepest: 0,
+            limited: false,
 
             cache_outline: HashMap::new(),
             cache_colr: HashMap::new(),
@@ -184,6 +206,42 @@ impl Cache {
     }
 
     // TODO: macros?
+    /// How deep the groups and references converting nest.
+    pub(crate) fn nesting(&self) -> Nesting {
+        Nesting {
+            groups: self.depth,
+            references: self.references,
+        }
+    }
+
+    /// Whether an SVG image whose groups nest `depth` deep may draw inside the groups
+    /// converting: rendering nests its groups in theirs within `MAX_CONVERSION_DEPTH`.
+    pub(crate) fn draws_nested(&mut self, depth: usize) -> bool {
+        let nested = self.depth + depth;
+        if nested > MAX_CONVERSION_DEPTH {
+            self.limited = true;
+            return false;
+        }
+        self.deepest = self.deepest.max(nested);
+        true
+    }
+
+    /// What `convert` makes of the content of a resource that an element references, which
+    /// is omitted, as an invalid reference is, past `MAX_REFERENCE_DEPTH` nested references.
+    pub(crate) fn referenced<T>(
+        &mut self,
+        convert: impl FnOnce(&mut Self) -> Option<T>,
+    ) -> Option<T> {
+        if self.references >= MAX_REFERENCE_DEPTH {
+            self.limited = true;
+            return None;
+        }
+        self.references += 1;
+        let converted = convert(self);
+        self.references -= 1;
+        converted
+    }
+
     pub(crate) fn gen_linear_gradient_id(&mut self) -> NonEmptyString {
         loop {
             self.linear_gradient_index += 1;
@@ -471,7 +529,7 @@ pub(crate) fn convert_doc(
     svg_doc: &svgtree::Document,
     opt: &Options,
     viewport: Option<Size>,
-    image_resolver: Option<&dyn Fn(&str, &Options) -> Option<ImageKind>>,
+    image_resolver: Option<&dyn Fn(&str, &Options, Nesting) -> Option<ImageKind>>,
     font_provider: Option<&dyn FontProvider>,
 ) -> Result<Tree, Error> {
     let svg = svg_doc.root_element();
@@ -506,6 +564,9 @@ pub(crate) fn convert_doc(
         masks: Vec::new(),
         filters: Vec::new(),
         fontdb: opt.fontdb.clone(),
+        limited: false,
+        depth: 0,
+        nesting: opt.nesting,
     };
 
     if !svg.is_visible_element(opt) {
@@ -519,6 +580,9 @@ pub(crate) fn convert_doc(
     };
 
     let mut cache = Cache::new(opt.fontdb.clone());
+    cache.depth = opt.nesting.groups;
+    cache.deepest = opt.nesting.groups;
+    cache.references = opt.nesting.references;
 
     for node in svg_doc.descendants() {
         if let Some(tag) = node.tag_name() {
@@ -592,6 +656,8 @@ pub(crate) fn convert_doc(
     {
         tree.fontdb = cache.fontdb;
     }
+    tree.limited = cache.limited;
+    tree.depth = cache.deepest - opt.nesting.groups;
 
     if restore_viewbox {
         calculate_svg_bbox(&mut tree);
@@ -702,7 +768,7 @@ pub(crate) fn convert_element(node: SvgNode, state: &State, cache: &mut Cache, p
     if let Some(g) = convert_group(node, state, false, cache, parent, &|cache, g| {
         convert_element_impl(tag_name, node, state, cache, g);
     }) {
-        parent.children.push(Node::Group(Box::new(g)));
+        parent.children.push(Node::Group(g));
     }
 }
 
@@ -782,7 +848,7 @@ pub(crate) fn convert_clip_path_elements(
         if let Some(g) = convert_group(node, state, false, cache, parent, &|cache, g| {
             convert_clip_path_elements_impl(tag_name, node, state, cache, g);
         }) {
-            parent.children.push(Node::Group(Box::new(g)));
+            parent.children.push(Node::Group(g));
         }
     }
 }
@@ -975,7 +1041,20 @@ pub(super) fn record_perspective(
     }
 }
 
-// TODO: explain
+/// The deepest the groups of the tree and of the resources it references nest as they convert:
+/// a tree within its depth limit converts whole, nested `svg` elements converting as two
+/// groups each, but references can nest content without bound. Rendering recurses over the
+/// converted groups too.
+pub(crate) const MAX_CONVERSION_DEPTH: usize = 2 * (MAX_SVG_DEPTH + 1);
+/// The most resources that convert each referenced from the content of the last. A resource
+/// converts in several large frames before its content does.
+pub(crate) const MAX_REFERENCE_DEPTH: usize = 8;
+
+/// The group `node` establishes around the content `collect_children` converts, or `None`
+/// where its content joins `parent` directly, it is not rendered, or it nests past
+/// `MAX_CONVERSION_DEPTH`. Recursion over the tree passes through here, so the group's own
+/// conversion happens in functions of its own whose frames leave the stack before its content
+/// converts.
 pub(crate) fn convert_group(
     node: SvgNode,
     state: &State,
@@ -983,17 +1062,51 @@ pub(crate) fn convert_group(
     cache: &mut Cache,
     parent: &mut Group,
     collect_children: &dyn Fn(&mut Cache, &mut Group),
-) -> Option<Group> {
+) -> Option<Box<Group>> {
+    if cache.depth >= MAX_CONVERSION_DEPTH {
+        cache.limited = true;
+        return None;
+    }
+    cache.depth += 1;
+    cache.deepest = cache.deepest.max(cache.depth);
+    let group = nested_group(node, state, force, cache, parent, collect_children);
+    cache.depth -= 1;
+    group
+}
+
+/// `convert_group` within the conversion depth.
+fn nested_group(
+    node: SvgNode,
+    state: &State,
+    force: bool,
+    cache: &mut Cache,
+    parent: &mut Group,
+    collect_children: &dyn Fn(&mut Cache, &mut Group),
+) -> Option<Box<Group>> {
     if node.attribute(AId::Display) == Some("contents") {
         if !node.is_contents() {
             return None;
         }
-        let mut group = Group::empty();
+        let mut group = Box::new(Group::empty());
         group.abs_transform = parent.abs_transform;
         collect_children(cache, &mut group);
         group.calculate_bounding_boxes();
         return (!group.children.is_empty()).then_some(group);
     }
+    let mut g = open_group(node, state, cache, parent, collect_children)?;
+    collect_children(cache, &mut g);
+    close_group(node, state, force, cache, parent, g)
+}
+
+/// The group `node` establishes, before its content converts.
+#[inline(never)]
+fn open_group(
+    node: SvgNode,
+    state: &State,
+    cache: &mut Cache,
+    parent: &Group,
+    collect_children: &dyn Fn(&mut Cache, &mut Group),
+) -> Option<Box<Group>> {
     // A `clipPath` child cannot have an opacity.
     let opacity = if state.parent_clip_path.is_none() {
         node.attribute::<Opacity>(AId::Opacity)
@@ -1023,8 +1136,7 @@ pub(crate) fn convert_group(
     let isolate = isolation == Isolation::Isolate;
 
     // Nodes generated by markers must not have an ID. Otherwise we would have duplicates.
-    let is_g_or_use = matches!(node.tag_name(), Some(EId::G) | Some(EId::Use));
-    let id = if is_g_or_use && state.parent_markers.is_empty() {
+    let id = if is_g_or_use(node) && state.parent_markers.is_empty() {
         node.element_id().to_string()
     } else {
         String::new()
@@ -1032,7 +1144,7 @@ pub(crate) fn convert_group(
 
     let abs_transform = parent.abs_transform.pre_concat(transform);
     let dummy = Rect::from_xywh(0.0, 0.0, 0.0, 0.0).unwrap();
-    let mut g = Group {
+    Some(Box::new(Group {
         id,
         transform,
         matrix,
@@ -1056,9 +1168,24 @@ pub(crate) fn convert_group(
         layer_bounding_box: NonZeroRect::from_xywh(0.0, 0.0, 1.0, 1.0).unwrap(),
         abs_layer_bounding_box: NonZeroRect::from_xywh(0.0, 0.0, 1.0, 1.0).unwrap(),
         children: Vec::new(),
-    };
-    collect_children(cache, &mut g);
+    }))
+}
 
+fn is_g_or_use(node: SvgNode) -> bool {
+    matches!(node.tag_name(), Some(EId::G) | Some(EId::Use))
+}
+
+/// The group `open_group` opened for `node`, with its content converted: with its clip path,
+/// mask and filters, or `None` where its content joins `parent` directly or it is not rendered.
+#[inline(never)]
+fn close_group(
+    node: SvgNode,
+    state: &State,
+    force: bool,
+    cache: &mut Cache,
+    parent: &mut Group,
+    mut g: Box<Group>,
+) -> Option<Box<Group>> {
     // We need to know group's bounding box before converting
     // clipPaths, masks and filters.
     let object_bbox = g.calculate_object_bbox();
@@ -1131,19 +1258,19 @@ pub(crate) fn convert_group(
         filters
     };
 
-    let required = opacity.get().approx_ne_ulps(&1.0, 4)
+    let required = g.opacity.get().approx_ne_ulps(&1.0, 4)
         || clip_path.is_some()
         || mask.is_some()
         || layer_mask.is_some()
         || !filters.is_empty()
-        || !transform.is_identity()
-        || matrix.is_some()
-        || preserves_3d
-        || blend_mode != BlendMode::Normal
-        || isolate
+        || !g.transform.is_identity()
+        || g.matrix.is_some()
+        || g.preserves_3d
+        || g.blend_mode != BlendMode::Normal
+        || g.isolate
         // The group's own children composite in its colour space.
-        || linear_light != parent.linear_light
-        || is_g_or_use
+        || g.linear_light != parent.linear_light
+        || is_g_or_use(node)
         || force;
 
     if !required {
