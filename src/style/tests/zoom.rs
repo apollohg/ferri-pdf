@@ -101,3 +101,39 @@ fn zoom_defaults_and_explicit_inheritance_have_distinct_accumulation() {
         );
     }
 }
+
+#[test]
+fn paint_lengths_zoomed_past_finite_magnitudes_clamp_to_them() {
+    let (_, child) = styles(
+        "zoom:1e30;filter:blur(1e30pt) drop-shadow(1e30pt -1e30pt 1e30pt red);\
+         outline:1e30pt solid;outline-offset:-1e30pt;-webkit-text-stroke-width:1e30pt",
+    );
+    let used = child.used();
+    let filters: Vec<f32> = used
+        .filter
+        .iter()
+        .flat_map(|function| match function {
+            crate::paint::FilterFunction::Blur(deviation) => vec![*deviation],
+            crate::paint::FilterFunction::DropShadow {
+                offset, deviation, ..
+            } => vec![offset[0], offset[1], *deviation],
+            _ => Vec::new(),
+        })
+        .collect();
+    let outline = [
+        used.decoration.outline.width,
+        used.decoration.outline.offset,
+    ];
+    let lengths: Vec<f32> = filters
+        .iter()
+        .copied()
+        .chain(outline)
+        .chain([used.text_paint.stroke_width])
+        .collect();
+    assert_eq!(lengths.len(), 7, "every zoomed paint length: {lengths:?}");
+    assert!(
+        lengths.iter().all(|length| length.abs() == f32::MAX),
+        "lengths zoomed past finite magnitudes take the largest finite one, keeping their \
+         sign: {lengths:?}"
+    );
+}

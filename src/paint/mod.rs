@@ -40,7 +40,7 @@ pub use boxes::{Border, BorderStyle, INLINE_EDGES, Outline, OutlineStyle};
 #[cfg(test)]
 pub(crate) use calculation::MAX_CALC_MAGNITUDE;
 pub(crate) use calculation::{
-    BinaryFunction, Calculation, RoundingStrategy, SIZE_KEYWORD, UnaryFunction,
+    BinaryFunction, Calculation, RoundingStrategy, SIZE_KEYWORD, UnaryFunction, censor,
 };
 pub use clip::{Clip, ClipBounds};
 pub(crate) use color_space::{

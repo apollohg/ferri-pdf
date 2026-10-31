@@ -5,6 +5,12 @@ use std::sync::Arc;
 
 pub(crate) const INITIAL_ZOOM: f32 = 1.0;
 
+/// A zoomed length that only paints, which no layout geometry check sees: one zoomed past
+/// finite magnitudes clamps to them, as CSS Values 4 §10.9 clamps infinite calculations.
+fn paint_zoomed(value: f32, factor: f32) -> f32 {
+    paint::censor(value * factor)
+}
+
 pub(crate) fn accumulate_zoom(parent: f32, own: f32) -> Result<f32, crate::style::StyleError> {
     let effective = parent * own;
     if !effective.is_finite() || effective <= 0.0 {
@@ -58,8 +64,8 @@ impl Style {
             style.decoration.outline.width = style.decoration.outline.used_width();
             style.decoration.outline.style = paint::OutlineStyle::Line(paint::BorderStyle::Solid);
         }
-        style.decoration.outline.width *= factor;
-        style.decoration.outline.offset *= factor;
+        style.decoration.outline.width = paint_zoomed(style.decoration.outline.width, factor);
+        style.decoration.outline.offset = paint_zoomed(style.decoration.outline.offset, factor);
         for corner in Arc::make_mut(&mut style.decoration.radii) {
             for radius in corner {
                 *radius = radius.zoomed(factor);
@@ -130,28 +136,29 @@ impl Style {
         for filter in [&mut style.filter, &mut style.backdrop_filter] {
             for function in Arc::make_mut(filter) {
                 match function {
-                    paint::FilterFunction::Blur(value) => *value *= factor,
+                    paint::FilterFunction::Blur(value) => *value = paint_zoomed(*value, factor),
                     paint::FilterFunction::DropShadow {
                         offset, deviation, ..
                     } => {
-                        *offset = offset.map(|value| value * factor);
-                        *deviation *= factor;
+                        *offset = offset.map(|value| paint_zoomed(value, factor));
+                        *deviation = paint_zoomed(*deviation, factor);
                     }
                     _ => {}
                 }
             }
         }
         for shadow in Arc::make_mut(&mut style.decoration.shadows) {
-            shadow.offset = shadow.offset.map(|value| value * factor);
-            shadow.blur *= factor;
-            shadow.spread *= factor;
+            shadow.offset = shadow.offset.map(|value| paint_zoomed(value, factor));
+            shadow.blur = paint_zoomed(shadow.blur, factor);
+            shadow.spread = paint_zoomed(shadow.spread, factor);
         }
         for shadow in Arc::make_mut(&mut style.text_paint.shadows) {
-            shadow.offset = shadow.offset.map(|value| value * factor);
-            shadow.blur *= factor;
+            shadow.offset = shadow.offset.map(|value| paint_zoomed(value, factor));
+            shadow.blur = paint_zoomed(shadow.blur, factor);
         }
-        style.text_paint.stroke_width *= factor;
-        Arc::make_mut(&mut style.svg).text_stroke_width *= factor;
+        style.text_paint.stroke_width = paint_zoomed(style.text_paint.stroke_width, factor);
+        let svg = Arc::make_mut(&mut style.svg);
+        svg.text_stroke_width = paint_zoomed(svg.text_stroke_width, factor);
         style.text_decorations.declared = style.text_decorations.declared.zoomed(factor);
         if let Some(value) = &mut style.text_decorations.underline_offset {
             *value = value.zoomed(factor);
