@@ -1,5 +1,5 @@
 mod common;
-use common::{PROFILE, local_options};
+use common::{PROFILE, local_options, lossy_options};
 use ferri_pdf::{DisplayItem, render_html};
 
 fn render(body: &str, css: &str) -> ferri_pdf::LayoutTrace {
@@ -101,7 +101,7 @@ fn overflowing_pages_do_not_move_the_normal_flow_sibling() {
 fn enormous_fixed_height_stops_at_the_page_limit_before_allocation() {
     let output = render_html(
         &format!("<style>{PROFILE}div{{height:1e30pt}}</style><div>Large</div><p>After</p>"),
-        &local_options(),
+        &lossy_options(),
     )
     .expect("enormous specified height is bounded by the page limit");
     assert!(

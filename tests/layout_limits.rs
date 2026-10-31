@@ -1,6 +1,6 @@
 mod common;
 
-use common::local_options;
+use common::{local_options, lossy_options};
 use ferri_pdf::{
     Degradation, DisplayItem, LayoutDiagnostic, PrintSettings, RenderDiagnostic, render_html,
 };
@@ -16,7 +16,7 @@ fn content_past_the_page_limit_is_omitted_after_the_last_page() {
             "<!doctype html><style>@page{{size:100pt {PAGE_HEIGHT_PT}pt;margin:0}}html,body{{margin:0}}\
              div{{height:1e9pt;background:rgb(0,0,255)}}</style><div></div><p>after</p>"
         ),
-        &local_options(),
+        &lossy_options(),
     )
     .expect("a box taller than the page limit renders the pages it fills");
     assert_eq!(
@@ -91,7 +91,7 @@ fn font_size_adjust_past_finite_sizes_omits_only_its_text_box() {
                 "<!doctype html><style>.huge{{font-size-adjust:{adjust}}}</style>\
                  <p>before</p><p class=huge>Hello</p><p>after</p>"
             ),
-            &local_options(),
+            &lossy_options(),
         )
         .unwrap_or_else(|error| panic!("font-size-adjust:{adjust} must render: {error}"));
         assert!(
@@ -121,7 +121,7 @@ fn font_size_adjust_past_finite_sizes_omits_only_its_text_box() {
 /// The text of every line `html` renders, sorted, and the reasons of the boxes its layout
 /// omits.
 fn texts_and_omitted_boxes(html: &str) -> (Vec<String>, Vec<String>) {
-    let output = render_html(html, &local_options())
+    let output = render_html(html, &lossy_options())
         .unwrap_or_else(|error| panic!("{html} must render: {error}"));
     let omitted = output
         .diagnostics

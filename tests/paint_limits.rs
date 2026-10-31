@@ -1,6 +1,6 @@
 mod common;
 
-use common::local_options;
+use common::{local_options, lossy_options};
 use ferri_pdf::{PaintDiagnostic, RenderDiagnostic, RenderOutput, render_html};
 
 const RED: [u8; 3] = [255, 0, 0];
@@ -79,7 +79,7 @@ fn shared_mask_references_past_the_page_budget_draw_as_transparent_black_layers(
         "white masks within the budget show the box: {:?}",
         shallow.diagnostics
     );
-    let output = render_html(&doubling_masks(EXPONENTIAL), &local_options())
+    let output = render_html(&doubling_masks(EXPONENTIAL), &lossy_options())
         .expect("mask references past the budget still render");
     assert!(
         output.diagnostics.iter().any(|diagnostic| matches!(
@@ -139,7 +139,7 @@ fn filters_whose_raster_exceeds_the_rasterizer_are_omitted_with_their_content() 
     let output = render_html(
         "<!doctype html><div style='width:100px;height:100px;background:red;filter:blur(1e30px)'></div>\
          <div style='width:100px;height:100px;background:red'></div>",
-        &local_options(),
+        &lossy_options(),
     )
     .expect("an unrasterizable filter does not fail the document");
     assert!(

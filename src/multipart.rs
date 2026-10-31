@@ -6,7 +6,8 @@ use crate::writer::PdfPart;
 
 use crate::{
     DefaultResolver, Error, HeadingLocation, LayoutTrace, PdfError, RenderDiagnostic,
-    RenderOptions, ResourceBase, ResourceResolver, pdf_error, prepare_document,
+    RenderOptions, ResourceBase, ResourceResolver, checked_diagnostics, pdf_error,
+    prepare_document,
 };
 
 enum HtmlSource<'a> {
@@ -52,7 +53,7 @@ pub struct PartOutput {
     pub headings: Vec<HeadingLocation>,
     /// Source indices and page indices remain local to this part.
     pub layout: Option<LayoutTrace>,
-    /// Recoverable input and resource issues for this part.
+    /// Input, resource and limit issues for this part.
     pub diagnostics: Vec<RenderDiagnostic>,
 }
 
@@ -145,7 +146,8 @@ pub fn render_parts_with_resolver(
     let mut page_count = 0;
     let parts = prepared
         .into_iter()
-        .map(|(document, trace)| {
+        .enumerate()
+        .map(|(index, (document, trace))| {
             let mut headings = trace.heading_locations(&document.navigation().headings);
             for heading in &mut headings {
                 heading.page += page_count;
@@ -156,6 +158,13 @@ pub fn render_parts_with_resolver(
                     .next()
                     .expect("writer returns diagnostics for every part"),
             );
+            let diagnostics =
+                checked_diagnostics(diagnostics, options.content_loss).map_err(|source| {
+                    Error::Part {
+                        part: index + 1,
+                        source: Box::new(source),
+                    }
+                })?;
             let result = PartOutput {
                 first_page: page_count + 1,
                 page_count: trace.pages.len(),
@@ -164,9 +173,9 @@ pub fn render_parts_with_resolver(
                 diagnostics,
             };
             page_count += result.page_count;
-            result
+            Ok(result)
         })
-        .collect();
+        .collect::<Result<_, Error>>()?;
     Ok(MultipartOutput {
         pdf: encoded.pdf,
         page_count,

@@ -1,13 +1,17 @@
 //! Missing, denied, truncated, garbled and oversized resources never make rendering fail:
 //! images take their broken state (HTML §4.8.4.3) or are invalid (CSS Images 4 §2.4),
 //! fonts fall back (CSS Fonts 4 §4.3), and style sheets and nested documents are skipped,
-//! each with a diagnostic.
+//! each with a diagnostic. Images past the renderer's own decoding budget are lost content,
+//! which fails the default render.
 mod common;
 
 use ferri_pdf::{
-    DisplayItem, FileResolver, ImageError, RenderDiagnostic, RenderOutput, Resource, ResourceBase,
-    ResourceError, ResourceResolver, render_with_resolver,
+    DisplayItem, Error, FileResolver, ImageError, RenderDiagnostic, RenderOptions, RenderOutput,
+    Resource, ResourceBase, ResourceError, ResourceResolver, render_with_resolver,
 };
+
+/// The variant of each raster fixture whose header claims dimensions past the decoding budget.
+const OVER_BUDGET: &str = "over-budget";
 use std::collections::HashMap;
 
 const SEED: u64 = 0x5eed_f00d_cafe_d00d;
@@ -190,6 +194,34 @@ fn image_fixtures() -> Vec<(&'static str, Vec<u8>, Vec<u8>)> {
     ]
 }
 
+/// The grid image of `format` whose grid descriptor claims a 65535 by 65535 output, past the
+/// decoding budget, for the formats that decode grids.
+fn over_budget_grid(format: &str) -> Option<Vec<u8>> {
+    const HUGE_SIDES: [u8; 4] = [u8::MAX; 4];
+    let (mut bytes, marker, offset): (Vec<u8>, &[u8], usize) = match format {
+        // The `idat` item data is the grid descriptor: version, flags, then 16-bit sides.
+        "avif" => (
+            include_bytes!("oracle/assets/image-alpha-grid.avif").to_vec(),
+            b"idat",
+            8,
+        ),
+        // The grid descriptor of an 80 by 40 output: version, flags, rows, columns, sides.
+        "heic" => (
+            include_bytes!("oracle/assets/image-grid.heic").to_vec(),
+            &[0, 0, 0, 1, 0, 80, 0, 40],
+            4,
+        ),
+        _ => return None,
+    };
+    let at = bytes
+        .windows(marker.len())
+        .position(|window| window == marker)
+        .unwrap_or_else(|| panic!("{format} grid fixture has its descriptor"))
+        + offset;
+    bytes[at..at + HUGE_SIDES.len()].copy_from_slice(&HUGE_SIDES);
+    Some(bytes)
+}
+
 /// The image contexts of one document, each naming `reference`.
 fn image_document(reference: &str) -> String {
     format!(
@@ -218,7 +250,11 @@ fn texts(output: &RenderOutput) -> Vec<String> {
 }
 
 fn render(case: &str, html: &str, corpus: &Corpus) -> RenderOutput {
-    let output = render_with_resolver(html, &common::local_options(), corpus)
+    render_with(case, html, corpus, &common::local_options())
+}
+
+fn render_with(case: &str, html: &str, corpus: &Corpus, options: &RenderOptions) -> RenderOutput {
+    let output = render_with_resolver(html, options, corpus)
         .unwrap_or_else(|error| panic!("{case}: rendering must not fail: {error}"));
     assert!(
         output.pdf.starts_with(b"%PDF-"),
@@ -259,10 +295,14 @@ fn broken_and_damaged_images_of_every_format_render_their_fallbacks() {
         let mut damaged = vec![("truncated".to_owned(), intact[..intact.len() / 2].to_vec())];
         // A vector image has no decoding budget: its huge natural size is merely scaled. AVIF
         // and HEIF images decode at their coded size, not their `ispe` property's.
-        if matches!(format, "svg" | "avif" | "heic") {
-            damaged.push(("huge".to_owned(), huge));
-        } else {
-            broken.push(("huge".to_owned(), huge));
+        // The huge WebP header carries no image chunk, so it is malformed before any budget.
+        match format {
+            "svg" | "avif" | "heic" => damaged.push(("huge".to_owned(), huge)),
+            "webp" => broken.push(("huge".to_owned(), huge)),
+            _ => broken.push((OVER_BUDGET.to_owned(), huge)),
+        }
+        if let Some(grid) = over_budget_grid(format) {
+            broken.push((OVER_BUDGET.to_owned(), grid));
         }
         for variant in 0..GARBLED_VARIANTS {
             damaged.push((
@@ -283,7 +323,35 @@ fn broken_and_damaged_images_of_every_format_render_their_fallbacks() {
             let case = format!("{reference} ({} bytes)", bytes.len());
             let mut corpus = Corpus::default();
             corpus.insert(&reference, bytes);
-            let output = render(&case, &image_document(&reference), &corpus);
+            let html = image_document(&reference);
+            let over_budget = variant == OVER_BUDGET;
+            if over_budget {
+                match render_with_resolver(&html, &common::local_options(), &corpus) {
+                    Err(Error::ContentLost { diagnostics }) => assert!(
+                        diagnostics.iter().all(|diagnostic| matches!(
+                            diagnostic,
+                            RenderDiagnostic::UnavailableImage(failure)
+                                if matches!(
+                                    failure.error,
+                                    ImageError::Dimensions { .. }
+                                        | ImageError::Decode(image::ImageError::Limits(_))
+                                        | ImageError::Heif(heic_decoder::HeifError::LimitExceeded(_))
+                                )
+                        )),
+                        "{case}: only the decoding budget is reported lost: {diagnostics:?}"
+                    ),
+                    other => panic!(
+                        "{case}: the image the decoding budget leaves out must fail the default \
+                         render, got {:?}",
+                        other.map(|output| output.diagnostics)
+                    ),
+                }
+            }
+            let output = if over_budget {
+                render_with(&case, &html, &corpus, &common::lossy_options())
+            } else {
+                render(&case, &html, &corpus)
+            };
             for diagnostic in &output.diagnostics {
                 assert!(
                     image_reported(diagnostic, &reference),

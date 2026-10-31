@@ -22,6 +22,9 @@ Use `-` for stdin or stdout. Options:
 | `--part INPUT.html` | Append another document to the same PDF (repeatable) |
 | `--headings HEADINGS.json` | Write heading page numbers as JSON |
 | `--trace` | Write the measured layout next to the PDF |
+| `--allow-content-loss` | Write the PDF even when a resource limit left content out |
+
+Invalid markup, unsupported CSS and missing resources never fail a render; they are recovered as the specifications say and printed as warnings. Input that exceeds a resource limit so that content is left out fails with the losses listed, unless `--allow-content-loss` is given.
 
 ## Library
 
@@ -42,6 +45,8 @@ std::fs::write("hello.pdf", output.pdf)?;
 ```
 
 Relative URLs resolve against `base`. HTTP(S) fetching is behind the default `http` feature. To control resource loading, pass your own resolver to `render_with_resolver`.
+
+Recovered input is reported in `output.diagnostics`. When a resource limit leaves content out, rendering returns `Error::ContentLost` with those diagnostics; set `content_loss: ContentLoss::Render` to get the PDF anyway.
 
 ## Development
 

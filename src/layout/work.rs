@@ -181,19 +181,22 @@ mod tests {
             ["See", "Destination"],
             "the kept pass is the provisional one, whose target counter is not yet resolved"
         );
-        let diagnostics: Vec<_> = document
-            .into_diagnostics()
-            .into_iter()
-            .map(|diagnostic| diagnostic.to_string())
-            .collect();
+        let diagnostics = document.into_diagnostics();
         assert_eq!(
-            diagnostics,
+            diagnostics
+                .iter()
+                .map(ToString::to_string)
+                .collect::<Vec<_>>(),
             [crate::layout::LayoutDiagnostic::WorkLimit {
                 limit: first_pass_work,
                 kept: crate::layout::WorkFallback::LastPass,
             }
             .to_string()],
             "the budget is shared by every pass and its exhaustion is reported once"
+        );
+        assert!(
+            crate::checked_diagnostics(diagnostics, crate::ContentLoss::Fail).is_ok(),
+            "keeping the last pass loses no content, so the default policy renders it"
         );
     }
 
@@ -238,13 +241,12 @@ mod tests {
              {items} of {ITEMS} items kept, text ends {:?}",
             text.last()
         );
-        let diagnostics: Vec<_> = document
-            .into_diagnostics()
-            .into_iter()
-            .map(|diagnostic| diagnostic.to_string())
-            .collect();
+        let diagnostics = document.into_diagnostics();
         assert_eq!(
-            diagnostics,
+            diagnostics
+                .iter()
+                .map(ToString::to_string)
+                .collect::<Vec<_>>(),
             [crate::layout::LayoutDiagnostic::WorkLimit {
                 limit,
                 kept: crate::layout::WorkFallback::Truncated,
@@ -252,6 +254,17 @@ mod tests {
             .to_string()],
             "the omission is reported once however many layouts it takes"
         );
+        match crate::checked_diagnostics(diagnostics, crate::ContentLoss::Fail) {
+            Err(crate::Error::ContentLost { diagnostics }) => assert_eq!(
+                diagnostics.len(),
+                1,
+                "the default policy fails with the truncation: {diagnostics:?}"
+            ),
+            other => panic!(
+                "the default policy must fail on the truncated content, got {:?}",
+                other.map(|_| ())
+            ),
+        }
     }
 
     #[test]

@@ -5,7 +5,7 @@ use crate::document::formatting::{
     FORMATTING_NESTING_RESOURCE, GRID_DEPTH, MATHML_NESTING_RESOURCE, MAX_FORMATTING_DEPTH,
     MULTICOL_DEPTH, ORTHOGONAL_DEPTH, POSITIONED_DEPTH, TABLE_DEPTH,
 };
-use crate::{RenderDiagnostic, RenderOptions, render_html};
+use crate::{Error, RenderDiagnostic, RenderOptions, render_html};
 
 /// The root's formatting depth, below which the body and its content nest.
 const BODY_DEPTH: usize = 1;
@@ -35,6 +35,8 @@ struct Construct {
     name: &'static str,
     document: fn(Boundary) -> String,
     flattened: fn(&RenderDiagnostic) -> bool,
+    /// Whether what its limit does leaves content out, failing the default render.
+    loses_content: bool,
 }
 
 /// Levels of `open` and `close`, each taking `depth` formatting depth, nested below `wrapper`
@@ -135,6 +137,7 @@ macro_rules! formatting_construct {
             name: $name,
             document: |boundary| $nest.document(boundary),
             flattened: formatting_flattened,
+            loses_content: false,
         }
     };
 }
@@ -408,6 +411,7 @@ const CONSTRUCTS: &[Construct] = &[
         name: "MathML rows",
         document: |boundary| math_document("<mrow>", "</mrow>", "<mi>x</mi>", boundary),
         flattened: math_flattened,
+        loses_content: false,
     },
     Construct {
         name: "MathML fractions",
@@ -420,16 +424,19 @@ const CONSTRUCTS: &[Construct] = &[
             )
         },
         flattened: math_flattened,
+        loses_content: false,
     },
     Construct {
         name: "iframe srcdoc",
         document: navigable_document,
         flattened: navigable_flattened,
+        loses_content: true,
     },
     Construct {
         name: "shadow roots",
         document: shadow_document,
         flattened: shadow_flattened,
+        loses_content: true,
     },
 ];
 
@@ -437,21 +444,36 @@ const CONSTRUCTS: &[Construct] = &[
 /// sizes.
 fn render_construct(construct: &Construct) {
     for (boundary, flattened) in [(Boundary::At, false), (Boundary::Past, true)] {
-        let output = render_html(&(construct.document)(boundary), &RenderOptions::default())
-            .unwrap_or_else(|error| {
-                panic!(
-                    "{} nested {boundary:?} the limit must render: {error}",
-                    construct.name
-                )
-            });
+        let diagnostics = match render_html(
+            &(construct.document)(boundary),
+            &RenderOptions::default(),
+        ) {
+            Ok(output) => {
+                assert!(
+                    !(flattened && construct.loses_content),
+                    "{} nested {boundary:?} the limit leaves content out, so the default render \
+                     must fail: {:?}",
+                    construct.name,
+                    output.diagnostics
+                );
+                assert!(output.page_count > 0, "{} renders pages", construct.name);
+                output.diagnostics
+            }
+            Err(Error::ContentLost { diagnostics }) if flattened && construct.loses_content => {
+                diagnostics
+            }
+            Err(error) => panic!(
+                "{} nested {boundary:?} the limit must render: {error}",
+                construct.name
+            ),
+        };
         assert_eq!(
-            output.diagnostics.iter().any(construct.flattened),
+            diagnostics.iter().any(construct.flattened),
             flattened,
-            "{} nested {boundary:?} the limit reports flattening exactly past it: {:?}",
+            "{} nested {boundary:?} the limit reports its limit exactly past it, failing the \
+             default render only where that loses content: {diagnostics:?}",
             construct.name,
-            output.diagnostics
         );
-        assert!(output.page_count > 0, "{} renders pages", construct.name);
     }
 }
 

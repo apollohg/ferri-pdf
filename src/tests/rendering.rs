@@ -663,7 +663,7 @@ fn overflowing_text_spacing_omits_its_paragraph_before_pdf_painting() {
         let html = format!(
             "<style>{PROFILE}p{{text-align:center}}.over{{{property}:{value}}}</style><p>kept</p><p class=over>i i i i</p>"
         );
-        let output = render_html(&html, &local_options())
+        let output = render_html(&html, &lossy_options())
             .unwrap_or_else(|error| panic!("{property} beyond finite text geometry: {error}"));
         assert_eq!(
             omitting_box(output, "non-finite text geometry"),
@@ -674,7 +674,7 @@ fn overflowing_text_spacing_omits_its_paragraph_before_pdf_painting() {
     let html = format!(
         "<style>{PROFILE}.tiny{{font-size:1e-38pt;text-align:justify;text-align-last:justify}}</style><p>kept</p><p class=tiny>i i i</p>"
     );
-    let output = render_html(&html, &local_options())
+    let output = render_html(&html, &lossy_options())
         .expect("justification spacing beyond glyph em units still renders");
     assert_eq!(
         omitting_box(output, "non-finite text geometry"),
@@ -1484,7 +1484,7 @@ fn overflowing_percentage_margins_omit_their_box_before_pdf_serialization() {
     let html = format!(
         "<style>{PROFILE}</style><p>kept</p><div style='width:3e38pt'><p style='margin-top:200%'>A</p></div>"
     );
-    let output = render_html(&html, &local_options())
+    let output = render_html(&html, &lossy_options())
         .expect("percentage margins that overflow still render");
     assert_eq!(
         omitting_box(output, "not finite"),
@@ -2169,4 +2169,4 @@ fn source_lists_try_supported_fonts_in_order_and_report_skipped_sources() {
     );
 }
 use super::common;
-use common::{PROFILE, local_options};
+use common::{PROFILE, local_options, lossy_options};

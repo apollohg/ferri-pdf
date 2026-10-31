@@ -1,8 +1,11 @@
 //! HTML and CSS to PDF, implemented in Rust.
 //!
 //! The compatibility corpus is executable with `python3 tests/oracle/run.py`.
-//! Input never makes rendering fail: what the engine cannot render as specified degrades as
-//! the specifications' error handling says, and is reported in [`RenderOutput::diagnostics`].
+//! Malformed, unsupported or unavailable input never makes rendering fail: it is recovered as
+//! the specifications' error handling says and reported in [`RenderOutput::diagnostics`].
+//! Input past a resource limit degrades too, but where that leaves author content out of the
+//! PDF, rendering returns [`Error::ContentLost`] unless [`RenderOptions::content_loss`] is
+//! [`ContentLoss::Render`].
 //!
 //! ```
 //! use ferri_pdf::{render_html, RenderOptions};
@@ -96,6 +99,19 @@ pub struct RenderOptions {
     pub include_layout: bool,
     /// Optional raster encoding controls, applied after layout.
     pub images: ImageOptions,
+    /// Whether a render that leaves author content out past a resource limit fails.
+    pub content_loss: ContentLoss,
+}
+
+/// What rendering does when a resource limit leaves author content out of the PDF, as the
+/// diagnostics for which [`RenderDiagnostic::loses_content`] holds report.
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub enum ContentLoss {
+    /// Return [`Error::ContentLost`] instead of the incomplete PDF.
+    #[default]
+    Fail,
+    /// Return the incomplete PDF, with the losses among its diagnostics.
+    Render,
 }
 
 /// A completed rendering job. No output file is written by the library.
@@ -108,7 +124,7 @@ pub struct RenderOutput {
     pub headings: Vec<HeadingLocation>,
     /// Measured page fragments, present only when requested.
     pub layout: Option<LayoutTrace>,
-    /// Recoverable input and resource issues encountered during rendering.
+    /// Input, resource and limit issues encountered during rendering.
     pub diagnostics: Vec<RenderDiagnostic>,
 }
 
@@ -141,6 +157,33 @@ pub enum Error {
     InvalidFont,
     #[error("PDF serialization: {0}")]
     Pdf(#[from] PdfError),
+    /// Resource limits left author content out of the PDF; holds only those diagnostics.
+    #[error("content left out of the PDF: {}", lost_content(diagnostics))]
+    ContentLost { diagnostics: Vec<RenderDiagnostic> },
+}
+
+fn lost_content(diagnostics: &[RenderDiagnostic]) -> String {
+    diagnostics
+        .iter()
+        .map(ToString::to_string)
+        .collect::<Vec<_>>()
+        .join("; ")
+}
+
+/// `diagnostics` unless `policy` fails on the content they report lost.
+fn checked_diagnostics(
+    diagnostics: Vec<RenderDiagnostic>,
+    policy: ContentLoss,
+) -> Result<Vec<RenderDiagnostic>, Error> {
+    if policy == ContentLoss::Fail && diagnostics.iter().any(RenderDiagnostic::loses_content) {
+        return Err(Error::ContentLost {
+            diagnostics: diagnostics
+                .into_iter()
+                .filter(RenderDiagnostic::loses_content)
+                .collect(),
+        });
+    }
+    Ok(diagnostics)
 }
 
 #[cfg(feature = "http")]
@@ -224,7 +267,7 @@ fn render_document(
         headings,
         page_count: trace.pages.len(),
         layout: options.include_layout.then_some(trace),
-        diagnostics,
+        diagnostics: checked_diagnostics(diagnostics, options.content_loss)?,
     })
 }
 

@@ -1,5 +1,5 @@
 use super::common;
-use common::{PROFILE, local_options};
+use common::{PROFILE, local_options, lossy_options};
 
 fn render(css: &str, body: &str) -> crate::LayoutTrace {
     crate::render_html(
@@ -208,7 +208,7 @@ fn huge_leader_expansion_omits_its_paragraph_before_allocating_repetitions() {
     let html = format!(
         "<style>{PROFILE}p{{width:200pt;font:10pt Spike}}p::after{{font-size:0.000001pt;content:leader('.') 'Z'}}</style><p>A</p>"
     );
-    let output = crate::render_html(&html, &local_options())
+    let output = crate::render_html(&html, &lossy_options())
         .expect("a leader past its text bound still renders");
     let reason = crate::text::TextError::LeaderExpansionLimit {
         limit: crate::document::MAX_INLINE_TEXT_BYTES,

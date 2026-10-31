@@ -2,7 +2,7 @@
 //! CSS error handling rules say, and limits degrade the output instead of failing it.
 mod common;
 
-use common::local_options;
+use common::lossy_options;
 use ferri_pdf::render_html;
 use std::fmt::Write;
 
@@ -609,7 +609,7 @@ fn assert_generated_documents_render(kind: &str, generate: impl Fn(&mut Generato
     for case in 0..CASES {
         let seed = FIRST_SEED.wrapping_add(case.wrapping_mul(SEED_STEP)) | 1;
         let html = generate(&mut Generator(seed), case);
-        let result = std::panic::catch_unwind(|| render_html(&html, &local_options()));
+        let result = std::panic::catch_unwind(|| render_html(&html, &lossy_options()));
         match result {
             Ok(Ok(output)) => assert!(
                 output.page_count > 0 && output.pdf.starts_with(b"%PDF-"),

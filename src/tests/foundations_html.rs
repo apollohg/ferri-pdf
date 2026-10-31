@@ -7,7 +7,7 @@ use crate::dom::{
 use crate::{
     Resource, ResourceBase, ResourceError, ResourceResolver, render_html, render_with_resolver,
 };
-use common::{assert_pt, local_options};
+use common::{assert_pt, local_options, lossy_options};
 use std::cell::Cell;
 
 fn select<'a>(tree: &'a DocumentTree, selector: &str) -> crate::dom::Element<'a> {
@@ -348,8 +348,8 @@ fn excessive_shadow_nesting_leaves_an_ordinary_template_and_is_reported() {
         "</template></div>".repeat(TOO_DEEP)
     );
     for output in [
-        render_html(&html, &local_options()),
-        crate::render_bytes(html.as_bytes(), &local_options()),
+        render_html(&html, &lossy_options()),
+        crate::render_bytes(html.as_bytes(), &lossy_options()),
     ] {
         let output =
             output.unwrap_or_else(|error| panic!("deep shadow roots must render: {error}"));

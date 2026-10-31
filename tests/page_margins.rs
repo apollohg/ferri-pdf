@@ -1,5 +1,5 @@
 mod common;
-use common::{PROFILE, local_options};
+use common::{PROFILE, local_options, lossy_options};
 use ferri_pdf::render_html;
 
 #[test]
@@ -225,7 +225,7 @@ fn nonfinite_page_margin_geometry_omits_the_box_even_without_text() {
     let html = format!(
         r#"<style>{PROFILE}@page{{@top-left{{content:"";background:red;padding:1e38%}}}}</style><p>Body</p>"#
     );
-    let output = render_html(&html, &local_options())
+    let output = render_html(&html, &lossy_options())
         .unwrap_or_else(|error| panic!("overflowing margin geometry must render: {error}"));
     assert!(
         output.diagnostics.iter().any(|diagnostic| matches!(

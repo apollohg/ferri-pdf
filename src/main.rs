@@ -3,8 +3,8 @@
     reason = "the command line reports warnings, progress and errors on stderr"
 )]
 use ferri_pdf::{
-    FontPreferences, HtmlPart, ImageDpi, ImageOptions, JpegQuality, RenderOptions, Url,
-    render_bytes, render_parts,
+    ContentLoss, FontPreferences, HtmlPart, ImageDpi, ImageOptions, JpegQuality, RenderOptions,
+    Url, render_bytes, render_parts,
 };
 use std::io::{self, Read, Write};
 use std::{
@@ -13,10 +13,11 @@ use std::{
     process::ExitCode,
 };
 
-const USAGE: &str = "usage: ferri-pdf INPUT.html OUTPUT.pdf [--trace] [--headings HEADINGS.json] [--font-serif FAMILY] [--font-sans-serif FAMILY] [--font-monospace FAMILY] [--font-fallback FAMILY] [--jpeg-quality 1..100] [--image-dpi DPI] [--part INPUT.html ...]";
+const USAGE: &str = "usage: ferri-pdf INPUT.html OUTPUT.pdf [--trace] [--headings HEADINGS.json] [--font-serif FAMILY] [--font-sans-serif FAMILY] [--font-monospace FAMILY] [--font-fallback FAMILY] [--jpeg-quality 1..100] [--image-dpi DPI] [--allow-content-loss] [--part INPUT.html ...]";
 const JPEG_QUALITY_FLAG: &str = "--jpeg-quality";
 const IMAGE_DPI_FLAG: &str = "--image-dpi";
 const PART_FLAG: &str = "--part";
+const ALLOW_CONTENT_LOSS_FLAG: &str = "--allow-content-loss";
 const FONT_SERIF_FLAG: &str = "--font-serif";
 const FONT_SANS_SERIF_FLAG: &str = "--font-sans-serif";
 const FONT_MONOSPACE_FLAG: &str = "--font-monospace";
@@ -121,10 +122,13 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     let mut headings = None;
     let mut fonts = FontPreferences::default();
     let mut images = ImageOptions::default();
+    let mut content_loss = ContentLoss::default();
     let mut flags = args[FIRST_FLAG_ARGUMENT..].iter();
     while let Some(flag) = flags.next() {
         if flag == "--trace" && !trace {
             trace = true;
+        } else if flag == ALLOW_CONTENT_LOSS_FLAG && content_loss == ContentLoss::Fail {
+            content_loss = ContentLoss::Render;
         } else if flag == PART_FLAG {
             let path = Path::new(flags.next().ok_or(USAGE)?);
             if path == Path::new("-") {
@@ -200,6 +204,7 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
         .into(),
         include_layout: trace,
         images,
+        content_loss,
         print: ferri_pdf::PrintSettings {
             fonts,
             ..Default::default()

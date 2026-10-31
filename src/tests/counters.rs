@@ -1,6 +1,6 @@
 use super::common;
 use crate::render_html;
-use common::{PROFILE, local_options};
+use common::{PROFILE, local_options, lossy_options};
 
 fn lines(css: &str, body: &str) -> Vec<String> {
     render_html(
@@ -371,7 +371,7 @@ fn counters_past_their_work_budget_stop_updating_instead_of_failing() {
         "<style>body{{counter-reset:{resets}}}span{{counter-increment:c0}}</style><p>{}<b>Last</b></p>",
         "<span>x</span>".repeat(ELEMENTS)
     );
-    let output = render_html(&html, &local_options())
+    let output = render_html(&html, &lossy_options())
         .expect("counters past the counter work budget must render");
     assert!(
         output.diagnostics.iter().any(|diagnostic| matches!(

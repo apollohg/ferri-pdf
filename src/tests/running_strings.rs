@@ -1,6 +1,6 @@
 use super::common;
 use crate::render_html;
-use common::{PROFILE, local_options};
+use common::{PROFILE, local_options, lossy_options};
 
 const HEADER_PREFIX: &str = "F[";
 const STRING_PAGE_CSS: &str = "@page{size:1000pt 400pt;margin:40pt;@top-left{content:'F[' string(heading,first) ']S[' string(heading,start) ']L[' string(heading,last) ']X[' string(heading,first-except) ']'}}h2{font:12pt Spike;margin:0;break-after:auto}p{margin:0}.next{break-before:page}";
@@ -450,7 +450,7 @@ fn reports_text_limit(diagnostics: &[crate::RenderDiagnostic]) -> bool {
 /// The text of the first page's line starting with `prefix`, rendering `css` and `body`.
 fn limited_render(css: &str, body: &str, prefix: &str) -> String {
     let html = format!("<style>{PROFILE}{LIMIT_CSS}{css}</style>{body}");
-    let output = render_html(&html, &local_options())
+    let output = render_html(&html, &lossy_options())
         .expect("generated text past its limit must be cut, not fail the render");
     assert!(
         reports_text_limit(&output.diagnostics),
@@ -521,7 +521,7 @@ fn element_text_repeated_past_the_text_limit_is_cut_in_running_strings_and_bookm
     );
     let body = format!("<h1>{}</h1><p>Body</p>", "x".repeat(MEBIBYTE));
     let html = format!("<style>{PROFILE}{LIMIT_CSS}{css}</style>{body}");
-    let output = render_html(&html, &local_options())
+    let output = render_html(&html, &lossy_options())
         .expect("element text repeated past its limit must be cut, not fail the render");
     assert!(
         reports_text_limit(&output.diagnostics),

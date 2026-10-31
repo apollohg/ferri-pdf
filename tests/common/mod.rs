@@ -17,6 +17,18 @@ pub(crate) fn local_options() -> RenderOptions {
     }
 }
 
+/// `local_options` that render documents whose content resource limits leave out.
+#[allow(
+    dead_code,
+    reason = "each test binary uses a subset of the shared helpers"
+)]
+pub(crate) fn lossy_options() -> RenderOptions {
+    RenderOptions {
+        content_loss: ferri_pdf::ContentLoss::Render,
+        ..local_options()
+    }
+}
+
 #[allow(
     dead_code,
     reason = "each test binary uses a subset of the shared helpers"

@@ -5,7 +5,7 @@ use crate::graphics::ImagePaint;
 use crate::images::Image;
 use crate::layout::ViewportPaint;
 use crate::{DisplayItem, LayoutTrace, RenderDiagnostic, RenderOptions, render_html};
-use common::{assert_labelled_pt, local_options};
+use common::{assert_labelled_pt, local_options, lossy_options};
 
 /// A 288pt-wide page area with a 12pt/18pt body font.
 const PAGE: &str = "@page{size:360pt 480pt;margin:36pt}";
@@ -15,12 +15,16 @@ const IMAGE: &str = "../assets/image-pattern.png";
 const IMAGE_PIXELS: [f32; 2] = [80.0, 40.0];
 
 fn render(body: &str) -> crate::RenderOutput {
+    render_with(body, &local_options())
+}
+
+fn render_with(body: &str, options: &RenderOptions) -> crate::RenderOutput {
     render_html(
         &format!(
             "<!doctype html><style>{}{PAGE}</style>{body}",
             common::PROFILE
         ),
-        &local_options(),
+        options,
     )
     .unwrap_or_else(|error| panic!("rendering `{body}`: {error}"))
 }
@@ -275,7 +279,10 @@ fn srcdoc_nesting_is_bounded() {
         crate::document::frames::MAX_NAVIGABLE_DEPTH,
         "every permitted level lays out"
     );
-    let output = render(&nest(crate::document::frames::MAX_NAVIGABLE_DEPTH + 1));
+    let output = render_with(
+        &nest(crate::document::frames::MAX_NAVIGABLE_DEPTH + 1),
+        &lossy_options(),
+    );
     assert_eq!(
         trace_depth(&output),
         crate::document::frames::MAX_NAVIGABLE_DEPTH,
