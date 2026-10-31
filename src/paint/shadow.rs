@@ -404,33 +404,34 @@ fn gaussian_kernel(sigma: f32) -> Vec<f32> {
     weights.into_iter().map(|weight| weight / total).collect()
 }
 
-/// Convolves `values` along one axis; samples beyond the grid are zero.
+/// Convolves `values` along one axis; samples beyond the grid are zero. Each tap is added
+/// across a whole row at once, so every pixel sums its products in kernel order.
 fn convolve(values: &[f32], size: [usize; 2], kernel: &[f32], vertical: bool) -> Vec<f32> {
     let [columns, rows] = size;
-    let radius = (kernel.len() / 2) as isize;
-    let (length, lines) = if vertical {
-        (rows, columns)
-    } else {
-        (columns, rows)
-    };
-    let index = |line: usize, at: usize| {
-        if vertical {
-            at * columns + line
-        } else {
-            line * columns + at
+    let radius = kernel.len() / 2;
+    let mut output = vec![0.0; values.len()];
+    let accumulate = |output: &mut [f32], input: &[f32], weight: f32| {
+        for (sum, value) in output.iter_mut().zip(input) {
+            *sum += weight * value;
         }
     };
-    let mut output = vec![0.0; values.len()];
-    for line in 0..lines {
-        for at in 0..length {
-            let mut sum = 0.0;
-            for (tap, weight) in kernel.iter().enumerate() {
-                let source = at as isize + tap as isize - radius;
-                if (0..length as isize).contains(&source) {
-                    sum += weight * values[index(line, source as usize)];
+    for (row, (line, input)) in output
+        .chunks_exact_mut(columns)
+        .zip(values.chunks_exact(columns))
+        .enumerate()
+    {
+        for (tap, &weight) in kernel.iter().enumerate() {
+            if vertical {
+                if let Some(source) = (row + tap).checked_sub(radius).filter(|&at| at < rows) {
+                    accumulate(line, &values[source * columns..][..columns], weight);
+                }
+            } else {
+                // Output `at` reads input `at + tap - radius`.
+                let (start, source) = (radius.saturating_sub(tap), tap.saturating_sub(radius));
+                if let (Some(target), Some(input)) = (line.get_mut(start..), input.get(source..)) {
+                    accumulate(target, input, weight);
                 }
             }
-            output[index(line, at)] = sum;
         }
     }
     output
