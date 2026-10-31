@@ -638,6 +638,24 @@ impl TextChunk {
     pub fn text(&self) -> &str {
         &self.text
     }
+
+    /// The chunk placed and flowing as this one, holding `text` in `spans`.
+    pub(crate) fn holding(&self, text: String, spans: Vec<TextSpan>) -> Self {
+        Self {
+            x: self.x,
+            y: self.y,
+            anchor: self.anchor,
+            rtl: self.rtl,
+            spans,
+            text_flow: self.text_flow.clone(),
+            text,
+            line_breaks: self.line_breaks,
+            inline_offset: self.inline_offset,
+            hanging: self.hanging,
+            soft_wrapped: self.soft_wrapped,
+            overflowing: self.overflowing,
+        }
+    }
 }
 
 /// A writing mode.

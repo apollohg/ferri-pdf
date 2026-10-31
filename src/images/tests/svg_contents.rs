@@ -1804,40 +1804,57 @@ fn a_chain_of_use_elements_in_definitions_expands_only_where_it_renders() {
     );
 }
 
-#[test]
-fn svg_text_shapes_each_run_of_spans_once() {
-    // Shaping the whole chunk again for each of its spans takes time quadratic in the spans:
-    // minutes for this many, against about a second.
-    const PAIRS: usize = 2000;
-    const BOUND: std::time::Duration = std::time::Duration::from_secs(10);
-    const BLACK: [u8; 3] = [0, 0, 0];
-    let body = format!(
-        "<text x='0' y='20' font-size='4'>{}</text>",
-        "<tspan>a</tspan><tspan fill='blue'>b</tspan>".repeat(PAIRS)
-    );
-    let glyphs = within(&format!("{} SVG text spans", 2 * PAIRS), BOUND, move || {
-        let tree = tree(&body);
-        let mut glyphs = Vec::new();
-        for group in groups(&tree) {
-            for node in group.children() {
-                let crate::svg::usvg::Node::Text(text) = node else {
-                    continue;
-                };
-                for span in text.layouted() {
-                    let fill = paint_color(span.fill.as_ref().expect("filled text").paint());
-                    glyphs.extend(
-                        span.positioned_glyphs
-                            .iter()
-                            .map(|glyph| (glyph.text.clone(), fill, glyph.transform().tx)),
-                    );
-                }
+/// The glyphs of the tree's text in layout order: each one's characters, fill and origin.
+fn laid_out_glyphs(tree: &crate::svg::usvg::Tree) -> Vec<(String, [u8; 3], [f32; 2])> {
+    let mut glyphs = Vec::new();
+    for group in groups(tree) {
+        for node in group.children() {
+            let crate::svg::usvg::Node::Text(text) = node else {
+                continue;
+            };
+            for span in text.layouted() {
+                let fill = paint_color(span.fill.as_ref().expect("filled text").paint());
+                glyphs.extend(span.positioned_glyphs.iter().map(|glyph| {
+                    let transform = glyph.transform();
+                    (glyph.text.clone(), fill, [transform.tx, transform.ty])
+                }));
             }
         }
-        glyphs
-    });
+    }
+    glyphs
+}
+
+/// The glyphs of `body`'s text, which must convert within a bound far below the minutes that
+/// work quadratic in its `work` takes.
+fn text_glyphs_within(work: &str, body: String) -> Vec<(String, [u8; 3], [f32; 2])> {
+    const BOUND: std::time::Duration = std::time::Duration::from_secs(10);
+    within(work, BOUND, move || laid_out_glyphs(&tree(&body)))
+}
+
+/// The characters of `glyphs` that are not white space.
+fn inked(glyphs: &[(String, [u8; 3], [f32; 2])]) -> String {
+    glyphs
+        .iter()
+        .flat_map(|(text, ..)| text.chars())
+        .filter(|ch| !ch.is_whitespace())
+        .collect()
+}
+
+#[test]
+fn svg_text_shapes_each_run_of_spans_once() {
+    // Shaping the whole chunk again for each of its spans takes time quadratic in the spans.
+    const PAIRS: usize = 2000;
+    const BLACK: [u8; 3] = [0, 0, 0];
+    let glyphs = text_glyphs_within(
+        &format!("{} SVG text spans", 2 * PAIRS),
+        format!(
+            "<text x='0' y='20' font-size='4'>{}</text>",
+            "<tspan>a</tspan><tspan fill='blue'>b</tspan>".repeat(PAIRS)
+        ),
+    );
     assert_eq!(glyphs.len(), 2 * PAIRS, "one glyph per span");
     let mut previous = f32::NEG_INFINITY;
-    for (index, (text, fill, x)) in glyphs.iter().enumerate() {
+    for (index, (text, fill, [x, _])) in glyphs.iter().enumerate() {
         let expected = if index % 2 == 0 {
             ("a", BLACK)
         } else {
@@ -1854,4 +1871,72 @@ fn svg_text_shapes_each_run_of_spans_once() {
         );
         previous = *x;
     }
+}
+
+#[test]
+fn svg_text_autospaces_many_spans_in_linear_time() {
+    // Measuring the spacing at each boundary copied every span of the chunk.
+    const SPANS: usize = 6000;
+    const IDEOGRAPH: char = '\u{6f22}';
+    let text = |autospace: &str| {
+        format!(
+            "<text x='0' y='20' font-size='4' style='text-autospace:{autospace}'>{}</text>",
+            format!("<tspan>{IDEOGRAPH}a</tspan>").repeat(SPANS)
+        )
+    };
+    let spaced = text_glyphs_within(&format!("{SPANS} autospaced spans"), text("normal"));
+    let unspaced = laid_out_glyphs(&tree(&text("no-autospace")));
+    assert_eq!(
+        inked(&spaced),
+        format!("{IDEOGRAPH}a").repeat(SPANS),
+        "every span's characters are laid out"
+    );
+    let end = |glyphs: &[(String, [u8; 3], [f32; 2])]| glyphs.last().expect("laid out").2[0];
+    assert!(
+        end(&spaced) > end(&unspaced),
+        "CSS Text 4 §8.4: the boundaries of ideographs and letters are spaced, which moves \
+         the last glyph from {} to {}",
+        end(&unspaced),
+        end(&spaced)
+    );
+}
+
+#[test]
+fn long_svg_text_on_a_path_is_positioned_in_linear_time() {
+    // Counting the characters before each cluster to find its position's attributes takes
+    // time quadratic in the text.
+    const PAIRS: usize = 20_000;
+    let glyphs = text_glyphs_within(
+        &format!("{PAIRS} characters on a path"),
+        format!(
+            "<defs><path id='p' d='M0 50 L1000000 50'/></defs><text font-size='4'>\
+             <textPath href='#p'>{}</textPath></text>",
+            "ab ".repeat(PAIRS)
+        ),
+    );
+    assert_eq!(
+        inked(&glyphs),
+        "ab".repeat(PAIRS),
+        "every character lies on the path"
+    );
+}
+
+#[test]
+fn ellipsized_svg_text_hides_its_overflow_in_linear_time() {
+    // Measuring what is left after hiding each character takes time quadratic in the text.
+    const WORDS: usize = 20_000;
+    const ELLIPSIS: char = '\u{2026}';
+    let glyphs = text_glyphs_within(
+        &format!("a line of {WORDS} words"),
+        format!(
+            "<text x='0' y='20' font-size='10' style='inline-size:100px;\
+             text-overflow:ellipsis;white-space:nowrap;overflow:hidden'>{}</text>",
+            "word ".repeat(WORDS)
+        ),
+    );
+    let shown = inked(&glyphs);
+    assert!(
+        shown.ends_with(ELLIPSIS) && shown.starts_with("wordword"),
+        "CSS Overflow 4 §4.1: the words that fit the line then an ellipsis show, got {shown:?}"
+    );
 }

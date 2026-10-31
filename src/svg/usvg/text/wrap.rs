@@ -241,14 +241,18 @@ impl<'a> Paragraph<'a> {
 
     /// The width of the source text in `range`.
     fn width(&self, range: Range<usize>) -> f32 {
+        self.advances_in(range).sum()
+    }
+
+    /// The advances of the characters in `range`.
+    fn advances_in(&self, range: Range<usize>) -> impl Iterator<Item = f32> + '_ {
         let start = self
             .advances
             .partition_point(|(offset, _)| *offset < range.start);
         self.advances[start..]
             .iter()
-            .take_while(|(offset, _)| *offset < range.end)
-            .map(|(_, advance)| advance)
-            .sum()
+            .take_while(move |(offset, _)| *offset < range.end)
+            .map(|(_, advance)| *advance)
     }
 
     /// The widths of the text between consecutive break opportunities, whose maximum is the
@@ -427,12 +431,11 @@ impl<'a> Paragraph<'a> {
         resolver: &dyn FontProvider,
         fontdb: &mut Arc<Database>,
     ) -> f32 {
-        let Some(span) = self
-            .chunk
-            .spans
-            .iter()
-            .find(|span| span.start < offset && offset <= span.end)
-            .or_else(|| self.chunk.spans.first())
+        let spans = &self.chunk.spans;
+        let Some(span) = spans
+            .get(spans.partition_point(|span| span.end < offset))
+            .filter(|span| span.start < offset)
+            .or_else(|| spans.first())
         else {
             return 0.0;
         };
@@ -454,7 +457,14 @@ impl<'a> Paragraph<'a> {
         let source = &self.chunk.text;
         let mut text = String::new();
         let mut spans: Vec<crate::svg::usvg::TextSpan> = Vec::new();
-        for span in &self.chunk.spans {
+        let first_span = self
+            .chunk
+            .spans
+            .partition_point(|span| span.end <= range.start);
+        for span in self.chunk.spans[first_span..]
+            .iter()
+            .take_while(|span| span.start < range.end)
+        {
             let start = span.start.max(range.start);
             let end = span.end.min(range.end);
             if start >= end {
@@ -477,11 +487,9 @@ impl<'a> Paragraph<'a> {
             x: if first { self.chunk.x } else { None },
             y: if first { self.chunk.y } else { None },
             line_breaks: if first { self.chunk.line_breaks } else { 1 },
-            spans,
-            text,
             hanging,
             soft_wrapped: !first,
-            ..self.chunk.clone()
+            ..self.chunk.holding(text, spans)
         }
     }
 
@@ -522,13 +530,22 @@ impl<'a> Paragraph<'a> {
             .map(|(offset, _)| visible.start + offset)
             .chain([visible.end])
             .collect();
+        // The width left as each character is hidden, in double precision so that neither the
+        // sum nor the subtractions drift.
+        let width_of = |range| self.advances_in(range).map(f64::from).sum::<f64>();
+        let room = f64::from(room);
+        let mut width = width_of(kept.clone());
         if logical_end {
-            while kept.end > kept.start && self.width(kept.clone()) > room {
-                kept.end = boundaries[boundaries.partition_point(|&offset| offset < kept.end) - 1];
+            while kept.end > kept.start && width > room {
+                let end = boundaries[boundaries.partition_point(|&offset| offset < kept.end) - 1];
+                width -= width_of(end..kept.end);
+                kept.end = end;
             }
         } else {
-            while kept.start < kept.end && self.width(kept.clone()) > room {
-                kept.start = boundaries[boundaries.partition_point(|&offset| offset <= kept.start)];
+            while kept.start < kept.end && width > room {
+                let start = boundaries[boundaries.partition_point(|&offset| offset <= kept.start)];
+                width -= width_of(kept.start..start);
+                kept.start = start;
             }
         }
         let mut shown = self.line(kept, None, [0.0; 2], first);

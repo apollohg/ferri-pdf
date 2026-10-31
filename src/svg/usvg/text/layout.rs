@@ -859,15 +859,14 @@ pub(crate) fn styled_clusters(
     resolver: &dyn FontProvider,
     fontdb: &mut Arc<Database>,
 ) -> Option<Vec<GlyphCluster>> {
-    let chunk = TextChunk {
-        text: text.to_owned(),
-        spans: vec![TextSpan {
+    let chunk = chunk.holding(
+        text.to_owned(),
+        vec![TextSpan {
             start: 0,
             end: text.len(),
             ..span.clone()
         }],
-        ..chunk.clone()
-    };
+    );
     process_chunk(
         &chunk,
         WritingMode::LeftToRight,
@@ -1447,8 +1446,9 @@ fn resolve_clusters_positions_horizontal(
     let mut x = process_anchor(chunk.anchor, aligned) - left;
     let mut y = 0.0;
 
+    let code_points = CodePoints::of(&chunk.text);
     for cluster in clusters {
-        let cp = offset + cluster.byte_idx.code_point_at(&chunk.text);
+        let cp = offset + code_points.at(cluster.byte_idx);
         if let (Some(dx), Some(dy)) = (text.dx.get(cp), text.dy.get(cp)) {
             if writing_mode == WritingMode::LeftToRight {
                 x += dx;
@@ -1544,7 +1544,15 @@ fn resolve_clusters_positions_path(
     let start_offset =
         chunk_offset + path.start_offset + process_anchor(chunk.anchor, clusters_length(clusters));
 
-    let normals = collect_normals(text, chunk, clusters, &path.path, char_offset, start_offset);
+    let code_points = CodePoints::of(&chunk.text);
+    let normals = collect_normals(
+        text,
+        &code_points,
+        clusters,
+        &path.path,
+        char_offset,
+        start_offset,
+    );
     for (cluster, normal) in clusters.iter_mut().zip(normals) {
         let (x, y, angle) = match normal {
             Some(normal) => (normal.x, normal.y, normal.angle),
@@ -1566,7 +1574,7 @@ fn resolve_clusters_positions_path(
         cluster.transform = cluster.transform.pre_translate(x - half_width, y);
         cluster.transform = cluster.transform.pre_rotate_at(angle, half_width, 0.0);
 
-        let cp = char_offset + cluster.byte_idx.code_point_at(&chunk.text);
+        let cp = char_offset + code_points.at(cluster.byte_idx);
         dy += text.dy.get(cp).cloned().unwrap_or(0.0);
 
         let baseline_shift = chunk_span_at(chunk, cluster.byte_idx)
@@ -1620,7 +1628,7 @@ pub(crate) struct PathNormal {
 
 fn collect_normals(
     text: &Text,
-    chunk: &TextChunk,
+    code_points: &CodePoints,
     clusters: &[GlyphCluster],
     path: &tiny_skia_path::Path,
     char_offset: usize,
@@ -1635,7 +1643,7 @@ fn collect_normals(
             let half_width = cluster.width / 2.0;
 
             // Include relative position.
-            let cp = char_offset + cluster.byte_idx.code_point_at(&chunk.text);
+            let cp = char_offset + code_points.at(cluster.byte_idx);
             advance += text.dx.get(cp).cloned().unwrap_or(0.0);
 
             let offset = advance + half_width;
@@ -1882,11 +1890,7 @@ impl CasedChunk {
         }
         spans.retain(|span| span.start < span.end);
         Some(Some(Self {
-            chunk: TextChunk {
-                spans,
-                text,
-                ..chunk.clone()
-            },
+            chunk: chunk.holding(text, spans),
             units,
         }))
     }
@@ -2001,15 +2005,27 @@ fn shape_chunk(
     let mut glyphs: Vec<Glyph> = glyphs.into_iter().map(|(_, glyph)| glyph).collect();
 
     if writing_mode == WritingMode::TopToBottom {
-        for group in crate::text::combine::groups(&paragraph) {
-            let combined = combined_glyphs(chunk, &group, fonts_cache, resolver, fontdb)?;
-            let inside = |glyph: &Glyph| group.range.contains(&glyph.byte_idx.value());
-            let Some(first) = glyphs.iter().position(inside) else {
-                continue;
-            };
-            glyphs.retain(|glyph| !inside(glyph));
-            glyphs.splice(first..first, combined);
-        }
+        // Each combination's glyphs replace those of its text where the first of them was;
+        // the combinations follow each other in the text.
+        let groups = crate::text::combine::groups(&paragraph);
+        let mut combined = groups
+            .iter()
+            .map(|group| combined_glyphs(chunk, group, fonts_cache, resolver, fontdb).map(Some))
+            .collect::<Option<Vec<_>>>()?;
+        let group_at = |offset: usize| {
+            let index = groups.partition_point(|group| group.range.end <= offset);
+            groups
+                .get(index)
+                .filter(|group| group.range.contains(&offset))
+                .map(|_| index)
+        };
+        glyphs = glyphs
+            .into_iter()
+            .flat_map(|glyph| match group_at(glyph.byte_idx.value()) {
+                Some(index) => combined[index].take().unwrap_or_default(),
+                None => vec![glyph],
+            })
+            .collect();
     }
 
     Some(glyphs)
@@ -3409,6 +3425,21 @@ impl ResolvedFont {
 
 pub(crate) type FontsCache = HashMap<Font, Arc<ResolvedFont>>;
 
+/// The code point positions of a text's byte positions: the starts of its characters, which
+/// a search finds a position's among.
+struct CodePoints(Vec<usize>);
+
+impl CodePoints {
+    fn of(text: &str) -> Self {
+        Self(text.char_indices().map(|(start, _)| start).collect())
+    }
+
+    /// The code point position of `index`, a character boundary.
+    fn at(&self, index: ByteIndex) -> usize {
+        self.0.partition_point(|&start| start < index.value())
+    }
+}
+
 /// A read-only text index in bytes.
 ///
 /// Guarantee to be on a char boundary and in text bounds.
@@ -3422,13 +3453,6 @@ impl ByteIndex {
 
     pub(crate) fn value(&self) -> usize {
         self.0
-    }
-
-    /// Converts byte position into a code point position.
-    pub(crate) fn code_point_at(&self, text: &str) -> usize {
-        text.char_indices()
-            .take_while(|(i, _)| *i != self.0)
-            .count()
     }
 
     /// Converts byte position into a character.
