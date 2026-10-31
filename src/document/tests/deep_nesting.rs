@@ -2,8 +2,8 @@
 //! the limits flatten deeper content before its nesting can exhaust the stack.
 use crate::document::formatting::{
     ANONYMOUS_TABLE_DEPTH, ATOMIC_INLINE_DEPTH, BOX_DEPTH, FILTER_DEPTH, FLEX_DEPTH, FLOAT_DEPTH,
-    FORMATTING_NESTING_RESOURCE, GRID_DEPTH, MATHML_NESTING_RESOURCE, MAX_FORMATTING_DEPTH,
-    MULTICOL_DEPTH, ORTHOGONAL_DEPTH, POSITIONED_DEPTH, TABLE_DEPTH,
+    FORMATTING_NESTING_RESOURCE, GRID_DEPTH, MASK_DEPTH, MATHML_NESTING_RESOURCE,
+    MAX_FORMATTING_DEPTH, MULTICOL_DEPTH, ORTHOGONAL_DEPTH, POSITIONED_DEPTH, TABLE_DEPTH,
 };
 use crate::{Error, RenderDiagnostic, RenderOptions, render_html};
 
@@ -16,6 +16,11 @@ const MATH_DEPTH: usize = crate::document::mathml::MAX_DEPTH;
 const SHADOW_DEPTH: usize = crate::dom::MAX_SHADOW_DEPTH;
 /// Library users render on 2 MiB threads, such as tokio's workers.
 const LIBRARY_STACK_BYTES: usize = 2 * 1024 * 1024;
+/// The share of a library thread's stack, in percent, each construct renders within, leaving
+/// the rest to the caller's frames and to frame growth between builds.
+const STACK_MARGIN_PERCENT: usize = 88;
+/// The stack each construct renders on.
+const MARGIN_STACK_BYTES: usize = LIBRARY_STACK_BYTES / 100 * STACK_MARGIN_PERCENT;
 const CONSTRUCT_ENV: &str = "FERRI_DEEP_CONSTRUCT";
 /// Sizes the stack of the thread the test harness runs each test on.
 const MIN_STACK_ENV: &str = "RUST_MIN_STACK";
@@ -327,7 +332,7 @@ const CONSTRUCTS: &[Construct] = &[
     ),
     formatting_construct!(
         "masks",
-        FormattingNest::level("<div>", "</div>", BOX_DEPTH)
+        FormattingNest::level("<div>", "</div>", BOX_DEPTH + MASK_DEPTH)
             .styled("div{mask-image:linear-gradient(black,transparent)}")
     ),
     formatting_construct!(
@@ -555,7 +560,7 @@ fn every_nesting_construct_renders_at_and_past_its_limit_on_a_library_thread() {
             let child = std::process::Command::new(&executable)
                 .args(["--exact", HARNESS_TEST, "--nocapture"])
                 .env(CONSTRUCT_ENV, construct.name)
-                .env(MIN_STACK_ENV, LIBRARY_STACK_BYTES.to_string())
+                .env(MIN_STACK_ENV, MARGIN_STACK_BYTES.to_string())
                 .stdout(std::process::Stdio::piped())
                 .stderr(std::process::Stdio::piped())
                 .spawn()
@@ -580,8 +585,8 @@ fn every_nesting_construct_renders_at_and_past_its_limit_on_a_library_thread() {
         .collect();
     assert!(
         failures.is_empty(),
-        "every construct must render at and past its nesting limit on a \
-         {LIBRARY_STACK_BYTES}-byte thread; failed:\n{}",
+        "every construct must render at and past its nesting limit within \
+         {STACK_MARGIN_PERCENT}% of a {LIBRARY_STACK_BYTES}-byte thread; failed:\n{}",
         failures.join("\n")
     );
 }

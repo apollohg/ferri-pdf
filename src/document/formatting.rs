@@ -22,7 +22,7 @@ pub(super) const TABLE_DEPTH: usize = 1;
 /// The formatting depth of the anonymous table around a table part outside a table (CSS 2.1
 /// §17.2.1), whose boxes nest in layout as an explicit table's table, row group and row do.
 pub(super) const ANONYMOUS_TABLE_DEPTH: usize = 3 * BOX_DEPTH;
-pub(super) const FLEX_DEPTH: usize = 4;
+pub(super) const FLEX_DEPTH: usize = 5;
 pub(super) const GRID_DEPTH: usize = 9;
 pub(super) const FLOAT_DEPTH: usize = 4;
 pub(crate) const POSITIONED_DEPTH: usize = 4;
@@ -32,6 +32,9 @@ pub(crate) const POSITIONED_DEPTH: usize = 4;
 /// such level around it.
 pub(super) const MULTICOL_DEPTH: usize = 127;
 pub(super) const FILTER_DEPTH: usize = 20;
+/// A masked box takes more for the group the writer draws its content in, which nests with each
+/// masked level.
+pub(super) const MASK_DEPTH: usize = 1;
 pub(super) const ORTHOGONAL_DEPTH: usize = 63;
 /// Formatting-work units per formatting of a document, shared by the subtree copies it formats
 /// again. Units count formatted text bytes and, `ELEMENT_WORK` each, formatted elements.
@@ -3248,6 +3251,7 @@ fn formatting_depth(style: &Style, parent: &Style, math: Option<&str>) -> usize 
             style.is_filtered() || style.has_backdrop_filter(),
             FILTER_DEPTH,
         ),
+        (style.decoration.masks.is_masked(), MASK_DEPTH),
     ]
     .into_iter()
     .filter_map(|(applies, depth)| applies.then_some(depth))
