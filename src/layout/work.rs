@@ -658,6 +658,40 @@ mod tests {
     }
 
     #[test]
+    fn grid_lanes_in_a_shrink_to_fit_float_of_a_thousand_columns_progress() {
+        let resolver = FileResolver::default();
+        let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        // The columns are narrower than any word, and the grid's row lanes break before the
+        // words each fragmentainer holds none of yet.
+        let document = StyledDocument::parse(
+            "<!doctype html><style>@font-face{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}body{font:10pt/10pt Fixed}</style><div style=\"float:left\">words <div style=\"column-count:1000\">column text <div style=\"display:grid\">grid text</div></div></div>",
+            &base, &[], &resolver,
+        )
+        .unwrap();
+        const LIMIT: usize = 65_536;
+        let output = layout_with_work_limit(&document, &resolver, LIMIT).unwrap_or_else(|error| {
+            panic!(
+                "lanes yielding columns that hold no content never progress, so they exhaust \
+                 any budget: {error}"
+            )
+        });
+        let pages = page_text(&output);
+        let mut words: Vec<_> = pages
+            .iter()
+            .flatten()
+            .flat_map(|line| line.split_whitespace())
+            .collect();
+        words.sort_unstable();
+        assert_eq!(
+            words,
+            ["column", "grid", "text", "text", "words"],
+            "every word is placed once: {pages:?}"
+        );
+    }
+
+    #[test]
     fn floats_across_fragmentainers_measure_their_content_once_per_containing_block() {
         const LINES: usize = 48;
         let resolver = FileResolver::default();
