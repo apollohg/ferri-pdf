@@ -1,7 +1,7 @@
 use crate::fonts::{
     FontAdjustments, FontBook, FontData, FontError, FontFaceStyle, FontId, FontInstance, FontRange,
     FontSelection, FontSlant, FontSource, FontSources, FontStyle, FontVariation, FontWeight,
-    LoadedFont, matching, validate,
+    LoadedFont, matching, sfnt, validate,
 };
 use crate::resources::ResourceResolver;
 
@@ -271,6 +271,8 @@ impl FontBook {
 
     /// The first of `sources` that loads as a valid font (CSS Fonts 4 §4.3); a URL that
     /// cannot be fetched, policy denies, or that holds no valid font is skipped, recorded.
+    /// WOFF and WOFF2 files are decoded and collections give the face the URL's fragment
+    /// names (§4.3.2) before validation.
     fn load_sources(
         &self,
         sources: &FontSources,
@@ -289,10 +291,13 @@ impl FontBook {
                 },
                 FontSource::Url(reference) => reference,
             };
-            let loaded = resolver
-                .resolve(reference, &sources.base)
+            let loaded = sfnt::postscript_fragment(reference)
                 .map_err(FontError::from)
-                .and_then(|resource| validate(&resource.bytes).map(|()| resource.bytes));
+                .and_then(|fragment| {
+                    let resource = resolver.resolve(reference, &sources.base)?;
+                    let data = sfnt::decode(resource.bytes, fragment.as_deref())?;
+                    validate(&data).map(|()| data)
+                });
             match loaded {
                 Ok(data) => {
                     return Some(LoadedFont {

@@ -230,7 +230,11 @@ fn extended_font_and_at_rule_queries_reflect_the_rendering_pipeline() {
         ("font-format(truetype)", true),
         ("font-format(opentype)", true),
         ("font-format(truetype-variations)", false),
-        ("font-format(woff2)", false),
+        ("font-format(woff2)", true),
+        ("font-format(woff)", true),
+        ("font-format(collection)", true),
+        ("font-format(embedded-opentype)", false),
+        ("font-format(svg)", false),
         ("font-format('truetype')", false),
         ("font-tech(features-opentype)", true),
         ("font-tech(features-aat)", true),
@@ -742,7 +746,7 @@ fn when_supports_operands_follow_the_selected_declaration_grammar() {
 fn named_descriptor_probes_check_usable_sources_and_pending_page_values() {
     for (probe, expected) in [
         (
-            "@font-face{font-family:Probe;src:url('missing.woff2') format('woff2')}",
+            "@font-face{font-family:Probe;src:url('missing.eot') format('embedded-opentype')}",
             false,
         ),
         (

@@ -2080,7 +2080,7 @@ fn source_lists_try_supported_fonts_in_order_and_report_skipped_sources() {
         PathBuf::from("/document/good.ttf"),
         FONT.to_vec(),
     )]));
-    let html = "<style>@font-face{font-family:Custom;src:local(Uninstalled),url(unsupported.woff2) format('woff2'),url(missing.ttf),url(good.ttf) format('truetype')} body{font-family:Custom}</style><p>Loaded font</p>";
+    let html = "<style>@font-face{font-family:Custom;src:local(Uninstalled),url(unsupported.eot) format('embedded-opentype'),url(missing.ttf),url(good.ttf) format('truetype')} body{font-family:Custom}</style><p>Loaded font</p>";
     let output = render_with_resolver(
         html,
         &RenderOptions {

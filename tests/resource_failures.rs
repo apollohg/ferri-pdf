@@ -555,6 +555,98 @@ fn broken_and_damaged_fonts_fall_back_and_report_each_failure() {
     );
 }
 
+/// WOFF, WOFF2 and WOFF2 collection files, with the `format()` hint naming each.
+fn web_font_fixtures() -> Vec<(&'static str, &'static str, Vec<u8>)> {
+    vec![
+        (
+            "woff",
+            "woff",
+            include_bytes!("fixtures/fonts/WoffTest-Regular.woff").to_vec(),
+        ),
+        (
+            "woff2",
+            "woff2",
+            include_bytes!("fixtures/fonts/WoffTest-Regular.woff2").to_vec(),
+        ),
+        (
+            "null-glyf",
+            "woff2",
+            include_bytes!("fixtures/fonts/WoffTest-Regular-NullGlyf.woff2").to_vec(),
+        ),
+        (
+            "collection",
+            "woff2",
+            include_bytes!("fixtures/fonts/WoffTest-Collection.woff2").to_vec(),
+        ),
+    ]
+}
+
+#[test]
+fn damaged_woff_files_fall_back_to_the_next_source_and_report_each_failure() {
+    const FALLBACK_FONT: &str = "fallback.ttf";
+    /// The WOFF2 header, which precedes its table directory.
+    const WOFF2_HEADER_BYTES: usize = 48;
+    let mut seeded = Seeded(SEED);
+    let mut damaged = Vec::new();
+    for (name, format, font) in web_font_fixtures() {
+        let mut variants = vec![
+            ("header".to_owned(), font[..HEADER_BYTES].to_vec()),
+            ("truncated".to_owned(), font[..font.len() / 3].to_vec()),
+            ("short".to_owned(), font[..font.len() - 1].to_vec()),
+            (
+                "header-garbled".to_owned(),
+                seeded.garble(&font, HEADER_BYTES..WOFF2_HEADER_BYTES, 1),
+            ),
+        ];
+        for variant in 0..GARBLED_VARIANTS {
+            variants.push((
+                format!("garbled-{variant}"),
+                seeded.garble(
+                    &font,
+                    WOFF2_HEADER_BYTES..font.len(),
+                    garbled_count(font.len()),
+                ),
+            ));
+        }
+        for (variant, bytes) in variants {
+            damaged.push((format!("{variant}-{name}.{format}"), format, bytes));
+        }
+    }
+    let mut failed = 0;
+    for (reference, format, bytes) in &damaged {
+        let mut corpus = Corpus::default();
+        corpus.insert(reference, bytes.clone());
+        corpus.insert(
+            FALLBACK_FONT,
+            include_bytes!("fixtures/fonts/WoffTest-Bold.ttf").to_vec(),
+        );
+        let html = format!(
+            "<!doctype html><style>{}@font-face{{font-family:Probe;src:url('{reference}') format('{format}'),url('{FALLBACK_FONT}')}}\
+             p{{font-family:Probe,serif}}</style><p>Before Hello wörld ffi 123 <i>italic</i> <b>bold</b></p><p>After</p>",
+            common::PROFILE
+        );
+        let output = render(reference, &html, &corpus);
+        let failures = font_failures(&output);
+        assert!(
+            failures.len() <= 1 && failures.iter().all(|(skipped, _)| skipped == reference),
+            "{reference}: only the damaged source is reported, once: {failures:?}"
+        );
+        failed += failures.len();
+        let trace = output.layout.expect("layout requested");
+        let run = &trace.pages[0][0].runs[0];
+        assert_eq!(
+            trace.fonts[run.font_id.index()].family,
+            "Probe",
+            "{reference}: a damaged source falls back to the next source of the face, not the next family"
+        );
+    }
+    assert!(
+        failed * 2 > damaged.len(),
+        "most seeded damage must reach the WOFF validation: {failed} of {} failed",
+        damaged.len()
+    );
+}
+
 #[test]
 fn unavailable_style_sheets_and_nested_documents_are_skipped() {
     let mut seeded = Seeded(SEED);

@@ -7,7 +7,10 @@ mod matching;
 mod metrics;
 mod palettes;
 mod selection;
+mod sfnt;
 mod silhouette;
+mod woff;
+mod woff2;
 
 pub(crate) use baselines::BaselineTable;
 pub(crate) use feature_values::FeatureValueType;
@@ -581,6 +584,8 @@ pub enum FontError {
     UnresolvedFont(FontId),
     #[error("invalid font: {0}")]
     InvalidFont(#[source] ttf_parser::FaceParsingError),
+    #[error("{0}")]
+    File(#[from] sfnt::FontFileError),
     #[error("font cannot be embedded: {0}")]
     Unembeddable(#[source] subsetter::Error),
     #[error(

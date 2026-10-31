@@ -1,0 +1,48 @@
+{
+  "derived_from": {
+    "Regular": "assets/fonts/LiberationSans-Regular.ttf",
+    "Bold": "assets/fonts/LiberationSans-Bold.ttf"
+  },
+  "source_sha256": {
+    "Regular": "76d04c18ea243f426b7de1f3ad208e927008f961dc5945e5aad352d0dfde8ee8",
+    "Bold": "788abee4c806d660e8aee46689dd8540cd4bb98da03dcc9d171ce3efd99a9173"
+  },
+  "license": "../../../assets/fonts/LIBERATION-LICENSE.txt",
+  "generator": "make-woff-fonts.py",
+  "tool": "FontTools 4.63.0, Brotli 1.2.0",
+  "changes": "Subset to U+0020-U+007E and \u00c9\u00e9 with hinting kept, renamed family; the regular face's O sets OVERLAP_SIMPLE. Packaged as WOFF with zlib tables and metadata and private blocks; WOFF2 with transformed glyf, loca and hmtx and the same blocks; WOFF2 with only hmtx transformed; a TrueType collection sharing identical tables; and a WOFF2 collection of the two transformed faces.",
+  "composite_glyphs": [
+    "Eacute",
+    "eacute"
+  ],
+  "files": {
+    "WoffTest-Regular.ttf": {
+      "sha256": "9e966537de935b600e524ef28e18e2d4cdefea24977d2098f75a114e3795f133",
+      "bytes": 24936
+    },
+    "WoffTest-Bold.ttf": {
+      "sha256": "7924d8b762f87e12d228af13c1bb1679609a4596c3fa8a72370218dd6d8738d4",
+      "bytes": 24108
+    },
+    "WoffTest-Regular.woff": {
+      "sha256": "d66af5a806dc88991b6dad335fb832b8e0df1a572c7ce2d8c4b2ffd9cd0ff51d",
+      "bytes": 16791
+    },
+    "WoffTest-Regular.woff2": {
+      "sha256": "8c1673592d8cac28edaf5dea2ca34d3d705cfe51f8ab79c4c9bc196a8f81aab2",
+      "bytes": 13591
+    },
+    "WoffTest-Regular-NullGlyf.woff2": {
+      "sha256": "9066461b56bb41ae7c64880b2298da483a9af3cc408fdea8d7d34e0628cb1121",
+      "bytes": 15104
+    },
+    "WoffTest-Collection.woff2": {
+      "sha256": "a6259fb75fca6323ae3a54484671a36bf15ef3895f8829d4a16f9f45af8d6892",
+      "bytes": 22951
+    },
+    "WoffTest.ttc": {
+      "sha256": "cf563ce018375a884c306be1dc08c3c07ad5fd10abb6f2c924e9ead6622fb6d4",
+      "bytes": 46924
+    }
+  }
+}

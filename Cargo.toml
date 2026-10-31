@@ -106,6 +106,10 @@ unicode-script = "0.5"
 unicode-segmentation = "1.12"
 ttf-parser = { version = "0.25", features = ["gvar-alloc"] }
 subsetter = { version = "0.2.6", features = ["variable-fonts"] }
+# Rebuilds sfnt files from decoded WOFF tables; already in the tree through subsetter.
+write-fonts = "0.48.1"
+# Pure-Rust Brotli for WOFF2; its default features contain no unsafe code.
+brotli-decompressor = "5.0.3"
 thiserror = "2"
 # Only languages whose patterns are MIT, BSD-3-Clause, Unlicense or FSFAP-no-warranty-disclaimer
 # licensed; assets/hyphenation/PATTERNS.txt carries their notices.
@@ -187,6 +191,7 @@ thiserror.workspace = true
 [dependencies]
 avif-decode.workspace = true
 base64.workspace = true
+brotli-decompressor.workspace = true
 cssparser.workspace = true
 data-url.workspace = true
 ego-tree.workspace = true
@@ -239,6 +244,7 @@ unicode-segmentation.workspace = true
 unicode-vo.workspace = true
 ureq = { workspace = true, optional = true }
 url.workspace = true
+write-fonts.workspace = true
 xmlwriter.workspace = true
 zenavif-parse.workspace = true
 zune-jpeg.workspace = true

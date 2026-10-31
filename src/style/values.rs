@@ -13,7 +13,7 @@ use crate::style::{
 };
 use cssparser::{Parser, ParserInput};
 
-const SUPPORTED_FONT_FORMATS: [&str; 2] = ["truetype", "opentype"];
+const SUPPORTED_FONT_FORMATS: [&str; 5] = ["truetype", "opentype", "collection", "woff", "woff2"];
 pub(super) fn supports_font_format(name: &str) -> bool {
     SUPPORTED_FONT_FORMATS
         .iter()
