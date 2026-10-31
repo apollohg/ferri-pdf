@@ -208,3 +208,15 @@ it nests, those of referenced resources and of SVG images drawn included: past
 markers and images) nested past `MAX_REFERENCE_DEPTH` (8) are omitted as invalid references are,
 each with a diagnostic. The functions recursing over the tree keep their per-level work in
 functions of their own so that their frames stay small.
+
+Work stays near linear in the content however references and nesting repeat it. The content of
+a `transform-box` or offset-path element is measured once for its reference box, in its parent's
+space, and content measured inside a measurement is used as converted, so nested measured
+elements convert in linear rather than exponential time; resources measure their own content.
+`use` elements in `defs` or a `symbol`, other than the instance root a `use` element clones and
+those in clip paths, masks, markers, patterns or an element `feImage` draws, get no instance,
+as only clones of them render. Past `MAX_SVG_NODES` converted elements, which references such
+as markers in markers can multiply, the rest is omitted with a diagnostic. Each shared resource
+is collected once. Each run of text spans styled alike (CSS Text 3 §7.3) shapes once in the
+context of its chunk, its glyphs placed in the visual order of the bidi runs; spans, character
+positions, combinations and ellipsized widths are found by search or incrementally.
