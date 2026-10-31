@@ -157,15 +157,19 @@ pub(super) fn parsed(
         for parsed in &mut output[before..] {
             parsed.font_namespace = namespace;
         }
-        let kind = match result {
+        let declared = format!("{}: {}", declaration.name, declaration.value);
+        let (kind, context) = match result {
             Ok(()) if output.len() > before => continue,
-            Ok(()) => StyleDiagnosticKind::InvalidDeclaration,
-            Err(error) => StyleDiagnosticKind::of(&error, StyleDiagnosticKind::InvalidDeclaration),
+            Ok(()) => (StyleDiagnosticKind::InvalidDeclaration, declared),
+            Err(error) => (
+                StyleDiagnosticKind::of(&error, StyleDiagnosticKind::InvalidDeclaration),
+                format!("{declared} ({error})"),
+            ),
         };
         diagnostics.borrow_mut().push(StyleDiagnostic {
             location: declaration.location.clone(),
             kind,
-            context: format!("{}: {}", declaration.name, declaration.value),
+            context,
         });
     }
     output

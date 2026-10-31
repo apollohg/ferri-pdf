@@ -47,6 +47,17 @@ fn custom_name_validation_is_shared_by_definedness_and_shadow_hosts() {
     );
 }
 
+/// Whether `output` reports a rule dropped past the selector component limit.
+fn component_limit_reported(output: &crate::RenderOutput) -> bool {
+    output.diagnostics.iter().any(|diagnostic| {
+        matches!(
+            diagnostic,
+            crate::RenderDiagnostic::Css(diagnostic)
+                if diagnostic.kind == crate::style::StyleDiagnosticKind::LimitExceeded
+        )
+    })
+}
+
 #[test]
 fn host_selector_arguments_respect_component_limits_on_the_normal_thread() {
     const COMPONENT_LIMIT: usize = 256;
@@ -73,16 +84,13 @@ fn host_selector_arguments_respect_component_limits_on_the_normal_thread() {
                     .unwrap();
                 assert_pt(trace.pages[0][0].font_size, 19.0);
             } else {
+                let output = result.expect("a rule past the component limit is dropped");
                 assert!(
-                    matches!(
-                        result,
-                        Err(crate::Error::Css(crate::style::StyleError::GrammarLimit {
-                            limit: COMPONENT_LIMIT,
-                            ..
-                        }))
-                    ),
-                    "one more nested argument must return the existing CSS limit error"
+                    component_limit_reported(&output),
+                    "one more nested argument must report the existing CSS limit: {:?}",
+                    output.diagnostics
                 );
+                assert_pt(output.layout.unwrap().pages[0][0].font_size, 12.0);
             }
         }
     }
@@ -500,16 +508,13 @@ fn slotted_arguments_respect_component_limits_on_the_normal_thread() {
                 .unwrap();
             assert_pt(trace.pages[0][0].font_size, 29.0);
         } else {
+            let output = result.expect("a rule past the component limit is dropped");
             assert!(
-                matches!(
-                    result,
-                    Err(crate::Error::Css(crate::style::StyleError::GrammarLimit {
-                        limit: COMPONENT_LIMIT,
-                        ..
-                    }))
-                ),
-                "another slotted argument level must return the typed CSS limit error"
+                component_limit_reported(&output),
+                "another slotted argument level must report the CSS limit: {:?}",
+                output.diagnostics
             );
+            assert_pt(output.layout.unwrap().pages[0][0].font_size, 12.0);
         }
     }
 }

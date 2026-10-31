@@ -77,6 +77,29 @@ fn computed_reporting(
     Ok((style, sheet.take_degradations()))
 }
 
+/// Parsing `css` must drop the declaration past the `resource` limit, reporting it.
+fn dropped_past_limit(css: String, resource: &str) {
+    let mut sheet = Stylesheet::parse(&[StylesheetSource {
+        text: css,
+        base: font_base(),
+    }])
+    .unwrap_or_else(|error| {
+        panic!("a declaration past the {resource} limit must not fail: {error}")
+    });
+    let diagnostics = sheet.take_diagnostics();
+    assert!(
+        diagnostics.iter().any(|diagnostic| {
+            diagnostic.kind == crate::style::StyleDiagnosticKind::LimitExceeded
+                && diagnostic.context.contains(resource)
+        }),
+        "the declaration past the {resource} limit must be reported: {:?}",
+        diagnostics
+            .iter()
+            .map(|diagnostic| (diagnostic.kind, diagnostic.context.len()))
+            .collect::<Vec<_>>()
+    );
+}
+
 /// The target's computed style and the degradations computing it reported.
 fn discarding(css: &str, resolver: &dyn ResourceResolver) -> (Style, Vec<Degradation>) {
     computed_reporting(
@@ -839,22 +862,8 @@ fn conditional_queries_skip_inactive_metrics_and_keep_shared_limits() {
     for _ in 0..EXCESSIVE_NESTING {
         nested = format!("if(media(screen):{nested};else:17pt)");
     }
-    let error = Stylesheet::parse(&[StylesheetSource {
-        text: format!("#target{{width:{nested}}}"),
-        base: font_base(),
-    }])
-    .err()
-    .expect("excessive conditional nesting is rejected during stylesheet parsing");
-    assert!(
-        matches!(
-            error,
-            StyleError::VariableLimit {
-                resource: "value nesting",
-                ..
-            }
-        ),
-        "all branches retain shared nesting limits: {error:?}"
-    );
+    // All branches retain the shared nesting limit during stylesheet parsing.
+    dropped_past_limit(format!("#target{{width:{nested}}}"), "value nesting");
 }
 
 #[test]
@@ -1433,14 +1442,8 @@ fn inherited_value_reference_nesting_keeps_the_shared_substitution_bound() {
     for _ in 0..NESTING {
         source = format!("inherit(--missing,{source})");
     }
-    let result = Stylesheet::parse(&[StylesheetSource {
-        text: format!("#target{{width:{source}}}"),
-        base: font_base(),
-    }]);
-    assert!(
-        matches!(result, Err(StyleError::VariableLimit { .. })),
-        "inherit-only substitutions must retain the value nesting quota"
-    );
+    // Inherit-only substitutions retain the value nesting quota.
+    dropped_past_limit(format!("#target{{width:{source}}}"), "value nesting");
 }
 
 #[test]
@@ -1652,13 +1655,10 @@ fn calc_mix_nested_easing_retains_a_shared_work_quota() {
     for _ in 0..NESTING {
         control = format!("calc-mix(.5 by cubic-bezier({control},0,1,1),0,1)");
     }
-    let result = Stylesheet::parse(&[StylesheetSource {
-        text: format!("#target{{width:calc-mix(.5 by cubic-bezier({control},0,1,1),0pt,100pt)}}"),
-        base: font_base(),
-    }]);
-    assert!(
-        matches!(result, Err(StyleError::GrammarLimit { .. })),
-        "nested easing reparses must consume the enclosing work quota"
+    // Nested easing reparses consume the enclosing work quota.
+    dropped_past_limit(
+        format!("#target{{width:calc-mix(.5 by cubic-bezier({control},0,1,1),0pt,100pt)}}"),
+        "CSS value exceeds",
     );
 }
 
@@ -2307,20 +2307,8 @@ fn first_valid_candidates_retain_one_matching_work_budget() {
             "#target{{{property}:first-valid({}{fallback})}}",
             "x,".repeat(CANDIDATES)
         );
-        let result = Stylesheet::parse(&[StylesheetSource {
-            text: source,
-            base: font_base(),
-        }]);
-        assert!(
-            matches!(
-                result,
-                Err(StyleError::GrammarLimit {
-                    resource: "matching steps",
-                    ..
-                })
-            ),
-            "candidate matching must retain one quota even for primitive grammar nodes: {property}"
-        );
+        // Candidate matching retains one quota even for primitive grammar nodes.
+        dropped_past_limit(source, "matching steps");
     }
 }
 
