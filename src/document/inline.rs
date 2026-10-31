@@ -20,7 +20,7 @@ pub(crate) struct GeneratedImage {
 
 pub(crate) struct TextSpan {
     pub range: Range<usize>,
-    pub style: Style,
+    pub style: Arc<Style>,
     /// Innermost inline box containing the text; `None` is the paragraph's root inline box.
     pub inline_box: Option<usize>,
     /// Atomic inline whose placeholder this span holds.
@@ -138,7 +138,7 @@ impl Paragraph {
             }
             for span in &mut paragraph.spans {
                 if span.style.used_writing_mode().vertical() {
-                    span.style = reflow(&span.style);
+                    span.style = Arc::new(reflow(&span.style));
                 }
             }
             for inline in &mut paragraph.boxes {
@@ -184,7 +184,7 @@ impl Paragraph {
         self.style.size *= ratio;
         self.style.text_box.edges = edges;
         for span in &mut self.spans {
-            span.style.size *= ratio;
+            Arc::make_mut(&mut span.style).size *= ratio;
         }
         for inline_box in &mut self.boxes {
             Arc::make_mut(&mut inline_box.style).size *= ratio;
@@ -262,7 +262,7 @@ impl Paragraph {
                 .zip(spans)
                 .map(|(span, style)| TextSpan {
                     range: span.range.clone(),
-                    style,
+                    style: Arc::new(style),
                     inline_box: shift(span.inline_box),
                     atomic: span.atomic,
                     leader: span.leader,
@@ -366,7 +366,7 @@ impl Paragraph {
                 .enumerate()
                 .map(|(source, (range, style, inline_box))| TextSpan {
                     range,
-                    style,
+                    style: Arc::new(style),
                     inline_box,
                     atomic: None,
                     leader: false,
@@ -430,7 +430,7 @@ impl Paragraph {
         let text = String::from(' ');
         let span = TextSpan {
             range: 0..text.len(),
-            style: style.clone(),
+            style: Arc::new(style.clone()),
             inline_box: None,
             atomic: None,
             leader: false,
@@ -587,7 +587,10 @@ impl Paragraph {
         let mut copy = self.first_line_copy(
             (*self.style).clone(),
             Vec::new(),
-            self.spans.iter().map(|span| span.style.clone()).collect(),
+            self.spans
+                .iter()
+                .map(|span| (*span.style).clone())
+                .collect(),
             self.boxes
                 .iter()
                 .map(|inline_box| ((*inline_box.style).clone(), inline_box.decoration.clone()))
@@ -814,7 +817,7 @@ pub(crate) struct ContentMark([usize; 4]);
 pub(crate) struct InlineCollector {
     text: String,
     spans: Vec<TextSpan>,
-    styles: Vec<Style>,
+    styles: Vec<Arc<Style>>,
     pending_space: Option<PendingSpace>,
     next_source: usize,
     anchors: Vec<Anchor>,
@@ -904,7 +907,7 @@ impl InlineCollector {
             .last()
             .is_none_or(|last| !last.same_text_style(style) || !last.origin.same(&style.origin))
         {
-            self.styles.push(style.clone());
+            self.styles.push(Arc::new(style.clone()));
         }
         self.styles.len() - 1
     }
@@ -1044,10 +1047,10 @@ impl InlineCollector {
         mut decorate: impl FnMut(&Style) -> crate::graphics::BoxDecoration,
     ) -> Result<(), DocumentError> {
         for style in &mut self.styles {
-            *style = restyle(style)?;
+            *style = restyle(style)?.into();
         }
         for span in &mut self.spans {
-            span.style = restyle(&span.style)?;
+            span.style = restyle(&span.style)?.into();
         }
         for inline_box in &mut self.boxes {
             inline_box.style = restyle(&inline_box.style)?.into();
