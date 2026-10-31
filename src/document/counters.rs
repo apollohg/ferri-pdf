@@ -4,7 +4,7 @@ use crate::style::{
 };
 use std::{
     cell::{Cell, RefCell},
-    collections::{HashMap, HashSet},
+    collections::{BTreeSet, HashMap, HashSet},
     rc::Rc,
     sync::Arc,
 };
@@ -478,7 +478,8 @@ impl Counters {
         }
     }
     fn track_updates(&mut self, properties: &CounterProperties, implicit: Option<i128>) {
-        let mut names: HashSet<Arc<str>> = properties
+        // Ordered, so that a budget running out mid-update stops at the same counter each run.
+        let mut names: BTreeSet<Arc<str>> = properties
             .increment
             .iter()
             .chain(properties.set.iter())
