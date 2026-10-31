@@ -1,6 +1,6 @@
 mod common;
 
-use common::{local_options, lossy_options};
+use common::{local_options, lossy_options, pdf_number_faults, visible_frame_columns};
 use ferri_pdf::{
     Degradation, DisplayItem, LayoutDiagnostic, PrintSettings, RenderDiagnostic, render_html,
 };
@@ -123,6 +123,12 @@ fn font_size_adjust_past_finite_sizes_omits_only_its_text_box() {
 fn texts_and_omitted_boxes(html: &str) -> (Vec<String>, Vec<String>) {
     let output = render_html(html, &lossy_options())
         .unwrap_or_else(|error| panic!("{html} must render: {error}"));
+    let faults = pdf_number_faults(&output.pdf);
+    assert!(
+        faults.is_empty(),
+        "{html} must render a valid PDF:\n{}",
+        faults.join("\n")
+    );
     let omitted = output
         .diagnostics
         .iter()
@@ -204,4 +210,41 @@ fn page_margin_boxes_layout_cannot_form_are_omitted_alone() {
             "{rule}: only the margin box is lost, not the body or the other margin boxes"
         );
     }
+}
+
+#[test]
+fn footnote_areas_layout_cannot_form_are_omitted_with_their_footnotes() {
+    let html = |padding: &str| {
+        format!(
+            "<!doctype html><style>@page{{@footnote{{padding-top:{padding};\
+             padding-bottom:{padding}}}}}</style><p>Body<span style=float:footnote>Note</span></p>"
+        )
+    };
+    let footnotes = |html: &str| -> Vec<String> {
+        let trace = render_html(html, &lossy_options())
+            .unwrap_or_else(|error| panic!("{html} must render: {error}"))
+            .layout
+            .expect("layout requested");
+        visible_frame_columns(&trace, 0)
+            .into_iter()
+            .flat_map(|(_, texts)| texts)
+            .collect()
+    };
+    assert_eq!(
+        footnotes(&html("1px")),
+        ["1. Note"],
+        "a footnote area of finite geometry holds the footnote"
+    );
+    let omitted = html("3e38px");
+    let (texts, reasons) = texts_and_omitted_boxes(&omitted);
+    assert_eq!(
+        reasons,
+        ["non-finite footnote area geometry"],
+        "the area whose padding overflows its extent is reported omitted"
+    );
+    assert_eq!(texts, ["Body1"], "the body and its footnote call render");
+    assert!(
+        footnotes(&omitted).is_empty(),
+        "the footnote is omitted with its area"
+    );
 }

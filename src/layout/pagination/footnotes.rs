@@ -204,6 +204,20 @@ impl Area {
     fn edges(&self, side: usize) -> f32 {
         self.padding[side] + self.borders[side] + self.margins[side]
     }
+    /// Whether layout can form the area: its geometry, and its extent along each axis,
+    /// are finite.
+    fn is_finite(&self) -> bool {
+        [
+            self.x,
+            self.width + self.edges(LEFT) + self.edges(RIGHT),
+            self.minimum + self.edges(TOP) + self.edges(BOTTOM),
+            self.columns.width + self.columns.gap,
+        ]
+        .into_iter()
+        .chain(self.maximum)
+        .chain(self.column_height)
+        .all(f32::is_finite)
+    }
     fn content_height(&self, parts: f32, unbounded: bool) -> f32 {
         let height = parts.max(self.minimum);
         match self.maximum {
@@ -232,6 +246,7 @@ impl Area {
         }
     }
 }
+const NON_FINITE_AREA: &str = "non-finite footnote area geometry";
 const TOP: usize = 0;
 const RIGHT: usize = 1;
 const BOTTOM: usize = 2;
@@ -309,7 +324,7 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         };
         let width = width.max(0.0);
         let multicol = style.multicol.is_multicol();
-        Some(Area {
+        let area = Area {
             x: content.x + margins[LEFT],
             width,
             columns: ColumnGeometry::resolve(&style, 0.0, width),
@@ -326,7 +341,18 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
             margins,
             minimum,
             maximum,
-        })
+        };
+        // An area layout cannot form is omitted, with the footnotes it would hold, as layout
+        // omits page-margin boxes it cannot form.
+        if !area.is_finite() {
+            self.measurer
+                .diagnostics
+                .record(crate::layout::LayoutDiagnostic::OmittedBox {
+                    reason: NON_FINITE_AREA.to_owned(),
+                });
+            return None;
+        }
+        Some(area)
     }
 
     /// Whether the page holds only footnotes, which `max-height` then does not limit (CSS
@@ -593,14 +619,15 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
 
     /// How much more of the page area the footnote area takes with `footnotes` whole after
     /// the `pending` parts of earlier lines; `None` when they do not fit it whole, or must
-    /// follow footnotes already waiting for the next page. `pending` gains their parts.
+    /// follow footnotes already waiting for the next page. `pending` gains their parts. A
+    /// page whose area is omitted places no footnotes, so they take none of it.
     pub(super) fn footnote_growth(
         &mut self,
         footnotes: &[usize],
         pending: &mut Vec<FootnotePart>,
     ) -> Result<Option<f32>, LayoutError> {
         let Some(area) = self.area(self.page) else {
-            return Ok(None);
+            return Ok(Some(0.0));
         };
         if self.footnotes.has_carried() {
             return Ok(None);
@@ -852,6 +879,8 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
     fn fill_footnote_area(&mut self, advance: bool) -> Result<(), LayoutError> {
         let page = self.page;
         let Some(area) = self.area(page) else {
+            // The footnote content waiting for an omitted area is omitted with it.
+            self.footnotes.carried.clear();
             return Ok(());
         };
         let page_height = self.fragmentainers.height(page);
@@ -939,7 +968,9 @@ impl<'a: 't, 't: 'a> Paginator<'a, '_, 't> {
         let mut navigation = Vec::new();
         let mut page_text: Box<[Vec<DisplayItem>]> = vec![Vec::new(); page_count].into();
         for page in 0..page_count.min(self.footnotes.pages.len()) {
-            let area = self.area(page).expect("footnote areas belong to pages");
+            let Some(area) = self.area(page) else {
+                continue;
+            };
             let unbounded = self.footnotes_only(page);
             let Some(content) = self.area_content(self.footnotes.parts(page), &area, unbounded)
             else {
