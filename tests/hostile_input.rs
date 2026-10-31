@@ -467,12 +467,132 @@ impl Generator {
     }
 }
 
-#[test]
-fn generated_hostile_documents_always_render() {
+/// Lengths at and past the ends of what layout can represent.
+const EXTREME_LENGTHS: &[&str] = &[
+    "1e30px",
+    "-1e30px",
+    "3e38pt",
+    "-3e38pt",
+    "1e-30px",
+    "0",
+    "100000%",
+    "-100000%",
+    "calc(1e38px * 100)",
+    "max-content",
+];
+/// Layout and paint declarations, with `{}` where each takes an extreme length.
+const GEOMETRY: &[&str] = &[
+    "width:{}",
+    "height:{}",
+    "min-height:{}",
+    "max-width:{}",
+    "margin:{}",
+    "padding:{}",
+    "border:{} solid red",
+    "border-radius:{}",
+    "outline:{} solid;outline-offset:{}",
+    "letter-spacing:{}",
+    "word-spacing:{}",
+    "text-indent:{}",
+    "font-size:{}",
+    "line-height:{}",
+    "inset:{}",
+    "gap:{}",
+    "column-width:{}",
+    "column-gap:{}",
+    "flex-basis:{}",
+    "transform:translate({},{})",
+    "transform:scale(1e30) rotate(45deg)",
+    "transform:matrix3d(1e30,0,0,0,0,1e30,0,0,0,0,1,1e30,0,0,0,1e-30)",
+    "perspective:{}",
+    "filter:blur({})",
+    "backdrop-filter:blur({})",
+    "box-shadow:{} {} {} {} red",
+    "text-shadow:{} {} {} red",
+    "float:left;shape-outside:circle({})",
+    "offset-path:circle({});offset-distance:100%",
+    "mask:linear-gradient(red,transparent) 0 0/{} {}",
+    "background:linear-gradient(red,blue) 0 0/{} {}",
+    "grid-template-columns:repeat(1000,{})",
+    "tab-size:{}",
+    "aspect-ratio:1e30/1e-30",
+    "zoom:1e30",
+];
+/// Formatting contexts and positioning schemes: the start of an opening tag whose `style`
+/// attribute the generated declarations continue, and the markup closing it.
+const CONTEXTS: &[(&str, &str)] = &[
+    ("<div style=\"", "</div>"),
+    ("<div style=\"display:flex;flex-wrap:wrap;", "</div>"),
+    ("<div style=\"display:grid;", "</div>"),
+    (
+        "<table><tr><td colspan=1000 rowspan=65534 style=\"",
+        "</table>",
+    ),
+    (
+        "<div style=\"columns:3;column-fill:auto;height:50pt;",
+        "</div>",
+    ),
+    ("<div style=\"float:left;", "</div>"),
+    ("<div style=\"position:absolute;", "</div>"),
+    ("<div style=\"position:fixed;", "</div>"),
+    ("<div style=\"position:sticky;top:0;", "</div>"),
+    ("<span style=\"display:inline-block;", "</span>"),
+    ("<ruby style=\"", "<rt>r</ruby>"),
+    ("<span style=\"float:footnote;", "</span>"),
+    ("<div style=\"writing-mode:vertical-rl;", "</div>"),
+    (
+        "<div style=\"anchor-name:--a;position:absolute;position-anchor:--a;top:anchor(bottom);",
+        "</div>",
+    ),
+    ("<div style=\"container-type:inline-size;", "</div>"),
+    ("<div style=\"break-after:page;", "</div>"),
+];
+const MAX_BOXES: usize = 8;
+
+impl Generator {
+    fn geometry_declarations(&mut self) -> String {
+        (0..=self.below(MAX_DECLARATIONS))
+            .map(|_| {
+                let mut declaration = self.pick(GEOMETRY).to_owned();
+                while let Some(slot) = declaration.find("{}") {
+                    let length = self.pick(EXTREME_LENGTHS);
+                    declaration.replace_range(slot..slot + 2, length);
+                }
+                declaration + ";"
+            })
+            .collect()
+    }
+
+    /// Nested and sibling boxes with extreme geometry in every formatting context, around
+    /// text that breaks across lines.
+    fn geometry_document(&mut self) -> String {
+        let mut html = String::from("<!doctype html>");
+        let mut closing = Vec::new();
+        for _ in 0..=self.below(MAX_BOXES) {
+            if self.chance(3)
+                && let Some(close) = closing.pop()
+            {
+                html.push_str(close);
+            }
+            let (open, close) = CONTEXTS[self.below(CONTEXTS.len())];
+            let _ = write!(
+                html,
+                "{open}{}\">words that wrap across lines ",
+                self.geometry_declarations()
+            );
+            closing.push(close);
+        }
+        html
+    }
+}
+
+/// Renders the documents `generate` makes for each case from its seed, collecting every
+/// failure.
+fn assert_generated_documents_render(kind: &str, generate: impl Fn(&mut Generator, u64) -> String) {
     let mut failures = Vec::new();
     for case in 0..CASES {
         let seed = FIRST_SEED.wrapping_add(case.wrapping_mul(SEED_STEP)) | 1;
-        let html = Generator(seed).document(case % DEEP_CASE_PERIOD == 0);
+        let html = generate(&mut Generator(seed), case);
         let result = std::panic::catch_unwind(|| render_html(&html, &local_options()));
         match result {
             Ok(Ok(output)) => assert!(
@@ -486,8 +606,20 @@ fn generated_hostile_documents_always_render() {
     }
     assert!(
         failures.is_empty(),
-        "{} of {CASES} hostile documents failed to render:\n\n{}",
+        "{} of {CASES} hostile {kind} failed to render:\n\n{}",
         failures.len(),
         failures.join("\n\n")
     );
+}
+
+#[test]
+fn generated_hostile_documents_always_render() {
+    assert_generated_documents_render("documents", |generator, case| {
+        generator.document(case % DEEP_CASE_PERIOD == 0)
+    });
+}
+
+#[test]
+fn generated_hostile_geometry_always_renders() {
+    assert_generated_documents_render("geometries", |generator, _| generator.geometry_document());
 }
