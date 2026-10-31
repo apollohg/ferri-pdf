@@ -249,7 +249,14 @@ pub(crate) fn encode_parts_with_diagnostics(
         for (page_index, (lines, items)) in trace.pages.iter().zip(&trace.display_lists).enumerate()
         {
             let record = &trace.page_records[page_index];
-            let [width, height] = record.geometry.paper.map(|side| side.min(MAX_PAGE_SIDE_PT));
+            // A side that is not a number is a layout invariant violation, which fails below.
+            let [width, height] = record.geometry.paper.map(|side| {
+                if side > MAX_PAGE_SIDE_PT {
+                    MAX_PAGE_SIDE_PT
+                } else {
+                    side
+                }
+            });
             if [width, height] != record.geometry.paper {
                 images.record(PaintDiagnostic::PageSize {
                     limit: MAX_PAGE_SIDE_PT,
