@@ -2428,11 +2428,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     }
     /// Lays `block` out. Its content's flow nests the layout of the blocks inside it, so its
     /// start and end stay apart from that flow, in frames of their own.
-    fn block(
-        &mut self,
-        block: MeasuredBlock<'a>,
-        tail: BreakTail,
-    ) -> Result<ActiveBox<'a>, LayoutError> {
+    fn block(&mut self, block: Box<MeasuredBlock<'a>>, tail: BreakTail) -> Result<(), LayoutError> {
         let (mut frame, monolithic) = self.open_block(block, tail)?;
         self.unbroken += monolithic;
         let flowed = self.flow(std::mem::take(&mut frame.items), tail);
@@ -2444,10 +2440,10 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     #[inline(never)]
     fn open_block(
         &mut self,
-        block: MeasuredBlock<'a>,
+        block: Box<MeasuredBlock<'a>>,
         tail: BreakTail,
     ) -> Result<(Box<BlockFrame<'a>>, usize), LayoutError> {
-        let (block, request) = self.prepare_block(block, tail)?;
+        let (block, request) = self.prepare_block(*block, tail)?;
         if let Some(request) = request {
             self.new_page(request.forced, request.preserve_empty)?;
         }
@@ -2457,14 +2453,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     }
     /// Ends the block of `frame` once its content is laid out.
     #[inline(never)]
-    fn close_block(
-        &mut self,
-        mut frame: Box<BlockFrame<'a>>,
-    ) -> Result<ActiveBox<'a>, LayoutError> {
+    fn close_block(&mut self, mut frame: Box<BlockFrame<'a>>) -> Result<(), LayoutError> {
         while let Some(request) = self.resume_block_end(&mut frame)? {
             self.new_page(request.forced, request.preserve_empty)?;
         }
-        self.finish_block(*frame)
+        self.finish_block(*frame).map(drop)
     }
     fn refresh_block(
         &mut self,
@@ -2878,7 +2871,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             self.root_paint = Some((None, self.group));
         }
         let paint_order = self.order();
-        let paint = if let Some(mut paint) = block.paint {
+        let paint = if let Some(mut paint) = block.paint.map(|paint| *paint) {
             if canvas_root {
                 paint.decoration.backgrounds = self.canvas.decoration.backgrounds.clone();
                 paint.decoration.background = self.canvas.decoration.background;
@@ -3237,39 +3230,52 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         Ok(None)
     }
-    fn finish_block(&mut self, frame: BlockFrame<'a>) -> Result<ActiveBox<'a>, LayoutError> {
-        let BlockFrame {
-            style,
-            height,
-            break_after,
-            continues,
-            containing,
-            previous_offset,
-            previous_key,
-            previous_context,
-            previous_clip,
-            previous_group,
-            previous_parent_3d,
-            previous_space,
-            split,
-            end,
-            ..
-        } = frame;
+    /// Ends the block of `frame`. The positioned boxes it places, inline ones first, nest the
+    /// layout of their own content, so the box closes and the block ends in frames of their own.
+    fn finish_block(&mut self, frame: BlockFrame<'a>) -> Result<Box<ActiveBox<'a>>, LayoutError> {
+        let frame = Box::new(frame);
+        self.leave_block_flow(&frame);
+        self.place_inline_pending(self.boxes.len())?;
+        let mut active = self.close_block_box(&frame)?;
+        if frame.containing {
+            active.pending = self
+                .containers
+                .pop()
+                .map(|container| container.pending)
+                .unwrap_or_default();
+            if !frame.defer_positioned {
+                self.place_box_pending(&mut active)?;
+            }
+        }
+        self.end_block(frame, active)
+    }
+    #[inline(never)]
+    fn leave_block_flow(&mut self, frame: &BlockFrame<'a>) {
         if frame.independent {
             self.floats
                 .pop()
                 .expect("independent flow owns a float context");
         }
-        let reflowed = end
-            .expect("block extent completed before final painting")
-            .reflowed;
-        if height > 0.0 {
+        if frame.height > 0.0 {
             self.has_flow = true;
             // Margins after a box with height no longer adjoin the page start.
             self.at_page_start = false;
         }
-        self.place_inline_pending(self.boxes.len())?;
-        let mut active = self.boxes.pop().unwrap();
+    }
+    /// Closes the box of `frame`, painting its last fragment.
+    #[inline(never)]
+    fn close_block_box(
+        &mut self,
+        frame: &BlockFrame<'a>,
+    ) -> Result<Box<ActiveBox<'a>>, LayoutError> {
+        let BlockFrame {
+            style,
+            height,
+            continues,
+            ref split,
+            ..
+        } = *frame;
+        let mut active = Box::new(self.boxes.pop().unwrap());
         self.close_page_groups(active.open_groups);
         for node in [
             active.clip_node,
@@ -3377,16 +3383,32 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         if active.canvas_root {
             self.canvas_roots.extend(active.fragments.iter().copied());
         }
-        if containing {
-            active.pending = self
-                .containers
-                .pop()
-                .map(|container| container.pending)
-                .unwrap_or_default();
-            if !frame.defer_positioned {
-                self.place_box_pending(&mut active)?;
-            }
-        }
+        Ok(active)
+    }
+    /// Ends the block of `frame` once its box `active` closed and placed its positioned boxes.
+    #[inline(never)]
+    fn end_block(
+        &mut self,
+        frame: Box<BlockFrame<'a>>,
+        active: Box<ActiveBox<'a>>,
+    ) -> Result<Box<ActiveBox<'a>>, LayoutError> {
+        let BlockFrame {
+            style,
+            break_after,
+            previous_offset,
+            previous_key,
+            previous_context,
+            previous_clip,
+            previous_group,
+            previous_parent_3d,
+            previous_space,
+            split,
+            end,
+            ..
+        } = *frame;
+        let reflowed = end
+            .expect("block extent completed before final painting")
+            .reflowed;
         if !frame.defer_positioned {
             self.propagate_overflow(&active, style)?;
         }
@@ -4628,7 +4650,24 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         containing: &Containing<'a>,
     ) -> Result<(), LayoutError> {
         let page = pending.position.page;
-        let (cb, flow, clip) = match containing {
+        let (cb, flow, clip) = self.placed_containing(&pending, containing)?;
+        let (measured, top) = self.measure_placed(&pending, cb, flow.rtl)?;
+        let reference = self.place_anchor(&pending, containing, (&measured, top), (cb, flow, clip));
+        let previous = std::mem::replace(&mut self.motion_containing, reference);
+        let result = self.lay_out_positioned(measured, top, page, clip, pending);
+        self.motion_containing = previous;
+        result
+    }
+    /// The containing block of the positioned box `pending` on its page, with its flow and
+    /// clip.
+    #[inline(never)]
+    fn placed_containing(
+        &mut self,
+        pending: &Pending<'a>,
+        containing: &Containing<'a>,
+    ) -> Result<(Rect, crate::style::logical::Flow, Option<usize>), LayoutError> {
+        let page = pending.position.page;
+        Ok(match containing {
             Containing::Rect {
                 rect, flow, clip, ..
             } => (*rect, *flow, *clip),
@@ -4675,18 +4714,41 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 };
                 (rect, *flow, *clip)
             }
-        };
+        })
+    }
+    /// The positioned box `pending` measured in its containing block `cb`, and its top.
+    #[inline(never)]
+    fn measure_placed(
+        &mut self,
+        pending: &Pending<'a>,
+        cb: Rect,
+        rtl: bool,
+    ) -> Result<(Box<MeasuredBlock<'a>>, f32), LayoutError> {
+        let page = pending.position.page;
         let (measured, top) = self.measurer.run(|measurer| {
             measurer.space = pending.space;
             crate::layout::positioned::place(
                 measurer,
                 pending.block,
                 cb,
-                flow.rtl,
+                rtl,
                 &pending.position,
                 matches!(self.fragmentainers, Fragmentainers::Pages(_)).then_some(page),
             )
         })?;
+        Ok((Box::new(measured), top))
+    }
+    /// Records where the positioned box `measured` lies for anchor positioning, returning the
+    /// node its motion path refers to.
+    #[inline(never)]
+    fn place_anchor(
+        &mut self,
+        pending: &Pending<'a>,
+        containing: &Containing<'a>,
+        (measured, top): (&MeasuredBlock<'a>, f32),
+        (cb, flow, clip): (Rect, crate::style::logical::Flow, Option<usize>),
+    ) -> Option<usize> {
+        let page = pending.position.page;
         let mut border = measured.geometry.border_box(measured.height);
         border.x += measured.offset[0];
         border.y = top;
@@ -4702,7 +4764,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             border,
             clip,
         );
-        let reference = if pending.block.style().motion.active() {
+        if pending.block.style().motion.active() {
             match containing {
                 Containing::Page => None,
                 Containing::Rect { paint, radius, .. } => {
@@ -4720,15 +4782,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
         } else {
             None
-        };
-        let previous = std::mem::replace(&mut self.motion_containing, reference);
-        let result = self.lay_out_positioned(measured, top, page, clip, pending);
-        self.motion_containing = previous;
-        result
+        }
     }
     fn lay_out_positioned(
         &mut self,
-        measured: MeasuredBlock<'a>,
+        measured: Box<MeasuredBlock<'a>>,
         top: f32,
         page: usize,
         clip: Option<usize>,
@@ -4778,15 +4836,15 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
     /// Lays out `measured` from a fixed start, then restores the flow.
     fn block_at(
         &mut self,
-        measured: MeasuredBlock<'a>,
+        measured: Box<MeasuredBlock<'a>>,
         mut at: FixedStart,
     ) -> Result<(), LayoutError> {
         at.force_hidden |= measured.style.force_hidden;
         if at.breaks {
-            self.lay_out_at(at, |paginator| paginator.positioned_flow(measured))
+            self.lay_out_at(at, |paginator| paginator.positioned_flow(*measured))
         } else {
             self.lay_out_at(at, |paginator| {
-                paginator.block(measured, BreakTail::default()).map(|_| ())
+                paginator.block(measured, BreakTail::default())
             })
         }
     }
@@ -7261,7 +7319,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             ),
         };
         self.block_at(
-            *atomic.block,
+            atomic.block,
             FixedStart {
                 breaks: false,
                 force_hidden: false,
@@ -7539,7 +7597,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             });
             self.pending.push(root.before.clone());
             self.within_page_limit(|paginator| {
-                paginator.block(root, BreakTail::default()).map(drop)
+                paginator.block(Box::new(root), BreakTail::default())
             })?;
             for pending in self.containers.pop().map(|c| c.pending).unwrap_or_default() {
                 self.within_page_limit(|paginator| paginator.place(pending, &Containing::Page))?;
@@ -7632,7 +7690,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     border,
                     None,
                 );
-                self.lay_out_positioned(measured.clone(), *top, page, None, pending.clone())?;
+                self.lay_out_positioned(
+                    Box::new(measured.clone()),
+                    *top,
+                    page,
+                    None,
+                    pending.clone(),
+                )?;
             }
         }
         self.assemble_sliced_boxes();

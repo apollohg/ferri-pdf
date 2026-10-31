@@ -999,10 +999,8 @@ impl<'a> TablePlan<'a> {
             cells.blocks.push(None);
             return Ok(());
         }
-        let measured = self.measure_cell(measurer, index, resolved, None)?;
-        cells.heights.push(cell_height(&measured));
-        cells.blocks.push(Some(measured));
-        Ok(())
+        let measured = self.measure_cell(measurer, index, resolved, None);
+        cells.record(measured)
     }
     /// Measures the cell `index` again at the height its rows give it, if it has an explicit
     /// height that this changes.
@@ -1017,8 +1015,8 @@ impl<'a> TablePlan<'a> {
     ) -> Result<(), Failure> {
         let content_height = rows.content_height(self.cell_rows(index), resolved.spacing[1]);
         if let Some(used_height) = self.cell_used_height(index, content_height, resolved) {
-            cells.constrained[index] =
-                Some(self.measure_cell(measurer, index, resolved, Some(used_height))?);
+            let measured = self.measure_cell(measurer, index, resolved, Some(used_height));
+            cells.constrained[index] = Some(measured?);
         }
         Ok(())
     }
@@ -1527,6 +1525,17 @@ struct PlanCells<'a> {
     constrained: Vec<Option<MeasuredBlock<'a>>>,
 }
 
+impl<'a> PlanCells<'a> {
+    /// Records the cell its measurement `measured` measured, or passes on its failure.
+    #[inline(never)]
+    fn record(&mut self, measured: Result<MeasuredBlock<'a>, Failure>) -> Result<(), Failure> {
+        let measured = measured?;
+        self.heights.push(cell_height(&measured));
+        self.blocks.push(Some(measured));
+        Ok(())
+    }
+}
+
 /// Measures the table box of `plan`. Its cells, which nest tables of their own, measure apart
 /// from the assembly of its rows, whose frame each nested table would stack otherwise.
 fn measure_plan<'a>(
@@ -1836,9 +1845,9 @@ fn assemble_plan<'a>(
                     // The row paints the cell's box, at whose edges the cell still clips its
                     // contents (CSS Overflow 3 §3.1).
                     if measured.style.clip_edges().next().is_some() {
-                        measured.paint = Some(paint.unpainted());
+                        measured.paint = Some(Box::new(paint.unpainted()));
                     }
-                    own_paints.push(paint);
+                    own_paints.push(*paint);
                 }
             }
             if !hidden {

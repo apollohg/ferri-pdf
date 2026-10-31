@@ -503,7 +503,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             )?;
             loop {
                 if let Some(active) = self.advance_cell(&mut flow)? {
-                    break Ok(active);
+                    break Ok(*active);
                 }
                 self.measurer.work.spend(1)?;
             }
@@ -516,7 +516,7 @@ impl<'a> Paginator<'a, '_, 'a> {
     pub(super) fn advance_cell(
         &mut self,
         cell: &mut CellContinuation<'a, 'a>,
-    ) -> Result<Option<ActiveBox<'a>>, LayoutError> {
+    ) -> Result<Option<Box<ActiveBox<'a>>>, LayoutError> {
         let CellFlow {
             frame,
             cursor,
@@ -540,7 +540,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         cell: &mut CellContinuation<'a, 'a>,
         frame: Box<BlockFrame<'a>>,
         (cursor, request): (Box<FlowCursor<'a, 'a>>, Option<BreakRequest>),
-    ) -> Result<Option<ActiveBox<'a>>, LayoutError> {
+    ) -> Result<Option<Box<ActiveBox<'a>>>, LayoutError> {
         if let Some(request) = request {
             self.new_page(request.forced, request.preserve_empty)?;
         }
@@ -565,7 +565,7 @@ impl<'a> Paginator<'a, '_, 'a> {
         mut frame: Box<BlockFrame<'a>>,
         available: f32,
         progress: Result<Option<(Box<FlowCursor<'a, 'a>>, BreakRequest)>, LayoutError>,
-    ) -> Result<Option<ActiveBox<'a>>, LayoutError> {
+    ) -> Result<Option<Box<ActiveBox<'a>>>, LayoutError> {
         let suspended = if let Some(next) = progress? {
             Some(next)
         } else {

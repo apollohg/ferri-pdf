@@ -17,6 +17,12 @@ pub(super) struct FloatFlow {
     pub top: f32,
 }
 
+/// A float being laid out: its source and its flow.
+struct FloatLayout<'a> {
+    source: &'a BlockBox,
+    flow: cells::CellContinuation<'a, 'a>,
+}
+
 /// A float's box on one page, in its float context's coordinates.
 #[derive(Clone)]
 pub(super) struct FloatFragmentBox {
@@ -561,14 +567,36 @@ impl<'a> Paginator<'a, '_, 'a> {
         self.place_measured_float(measured, left, width, y)
     }
 
+    /// Places the float `measured` and lays it out. Its layout nests the layout of the
+    /// content inside it, so starting and ending the float keep frames of their own.
     pub(super) fn place_measured_float(
+        &mut self,
+        measured: MeasuredFloat<'a>,
+        left: f32,
+        width: f32,
+        y: f32,
+    ) -> Result<(), LayoutError> {
+        let (mut float, parent) = self.start_float(measured, left, width, y)?;
+        let active = loop {
+            self.measurer.work.spend(1)?;
+            if let Some(active) = self.advance_cell(&mut float.flow)? {
+                break active;
+            }
+        };
+        self.end_float(&float, active, parent)
+    }
+
+    /// Positions the float `measured` and starts its layout, returning it with the flow
+    /// position it leaves.
+    #[inline(never)]
+    fn start_float(
         &mut self,
         mut measured: MeasuredFloat<'a>,
         mut left: f32,
         mut width: f32,
         mut y: f32,
-    ) -> Result<(), LayoutError> {
-        let parent = self.flow_position();
+    ) -> Result<(Box<FloatLayout<'a>>, Box<cells::FlowPosition<'a>>), LayoutError> {
+        let parent = Box::new(self.flow_position());
         if let Some((page, start)) = self
             .floats
             .last()
@@ -587,28 +615,37 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
         let (measured, mut placement) = self.position_float(measured, left, width, y)?;
         let source = measured.source;
-        let style = measured.style;
-        let side = style.floating().expect("float source has an active side");
-        let mut flow = self.start_cell(
+        let flow = self.start_cell(
             measured,
             BreakTail::default(),
             cells::CellStart::default(),
             Some(&mut placement),
         )?;
-        let active = loop {
-            self.measurer.work.spend(1)?;
-            if let Some(active) = self.advance_cell(&mut flow)? {
-                break active;
-            }
-        };
+        Ok((Box::new(FloatLayout { source, flow }), parent))
+    }
+
+    /// Ends the layout of `float`, whose box is `active`, excluding it from the flow that
+    /// resumes at `parent`.
+    #[inline(never)]
+    fn end_float(
+        &mut self,
+        float: &FloatLayout<'a>,
+        active: Box<ActiveBox<'a>>,
+        parent: Box<cells::FlowPosition<'a>>,
+    ) -> Result<(), LayoutError> {
+        let side = float
+            .source
+            .style()
+            .floating()
+            .expect("float source has an active side");
         let exclusions = active
             .float_placement
             .expect("floating boxes retain fragment geometry")
             .exclusions(
-                source,
+                float.source,
                 (&self.measurer.work, &self.measurer.element_targets),
             )?;
-        self.restore_flow_position(parent)?;
+        self.restore_flow_position(*parent)?;
         let context = self.floats.last_mut().expect("flow has a float context");
         context.insert(side, exclusions);
         Ok(())

@@ -888,7 +888,7 @@ impl<'a> Paginator<'a, '_, 'a> {
     fn after_lane(
         &mut self,
         cursor: &mut RowCursor<'a, 'a>,
-        advanced: Result<Option<ActiveBox<'a>>, LayoutError>,
+        advanced: Result<Option<Box<ActiveBox<'a>>>, LayoutError>,
     ) -> Result<(), LayoutError> {
         let RowCursor {
             end,
@@ -939,7 +939,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                 self.tables.last_mut().unwrap().flow.heights[index].height = height;
             }
             stretches.push((
-                active,
+                *active,
                 after,
                 paint_start,
                 backgrounds,

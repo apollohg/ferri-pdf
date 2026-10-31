@@ -135,7 +135,7 @@ fn render<'a>(
         let mut content = root.clone();
         content.independent = false;
         paginator.pending.push(content.before.clone());
-        paginator.block(content, super::BreakTail::default())?;
+        paginator.block(Box::new(content), super::BreakTail::default())?;
         if let Some(owner) = &root.frame_owner
             && (owner.source.style().contains_absolute() || owner.source.style().contains_fixed())
         {

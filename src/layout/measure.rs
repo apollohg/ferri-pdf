@@ -114,7 +114,8 @@ pub(super) struct MeasuredBlock<'a> {
     pub break_before: BreakBetween,
     pub break_after: BreakBetween,
     pub items: Vec<FlowItem<'a>>,
-    pub paint: Option<BoxPaint>,
+    /// Boxed, as measured blocks are moved through the frames nested measurements stack.
+    pub paint: Option<Box<BoxPaint>>,
     /// The line fragments a box laid out as one paints in place of `paint`'s ink: an inline
     /// initial letter whose contents wrap (CSS Inline 3 §7.8.4).
     pub line_fragments: Vec<BoxPaint>,
@@ -191,12 +192,14 @@ impl MeasuredBlock<'_> {
     }
 
     pub(crate) fn retain_fragment(&mut self) {
-        self.paint.get_or_insert_with(|| BoxPaint {
-            padding: self.geometry.padding,
-            ..BoxPaint::whole(
-                self.geometry.border_box(self.height),
-                BoxDecoration::default(),
-            )
+        self.paint.get_or_insert_with(|| {
+            Box::new(BoxPaint {
+                padding: self.geometry.padding,
+                ..BoxPaint::whole(
+                    self.geometry.border_box(self.height),
+                    BoxDecoration::default(),
+                )
+            })
         });
     }
 
@@ -994,7 +997,7 @@ impl<'a> Measurer<'a> {
         &self,
         block: impl Into<BlockSource<'b>>,
         geometry: &crate::layout::geometry::HorizontalBox,
-    ) -> Option<BoxPaint> {
+    ) -> Option<Box<BoxPaint>> {
         let block = block.into();
         let style = block.style();
         let mut decoration = block.decoration().clone();
@@ -1016,12 +1019,12 @@ impl<'a> Measurer<'a> {
             || !block.navigation().is_empty();
         let rect = geometry.border_box(0.0);
         (style.display != Display::None && (decoration.is_visible() || fragments)).then(|| {
-            BoxPaint {
+            Box::new(BoxPaint {
                 draw_background: !block.is_canvas_source(),
                 padding: geometry.padding,
                 margins: geometry.used_margins(),
                 ..BoxPaint::whole(rect, decoration)
-            }
+            })
         })
     }
     pub(crate) fn block(
@@ -1779,31 +1782,20 @@ impl<'a> Measurer<'a> {
             following: budget.following,
         });
         let mut frames = vec![frame];
-        loop {
+        let mut finished = None;
+        while finished.is_none() {
             let frame = frames.last_mut().unwrap();
-            let child = frame.children.next();
-            match child {
-                Some(BlockContent::Events(events)) => frame.items.push(FlowItem::Events(events)),
-                Some(BlockContent::Positioned(child)) => {
-                    frame.items.push(FlowItem::Positioned(PositionedFlow {
-                        block: child,
-                        left: frame.content_x,
-                        right: frame.content_x + frame.content_width,
-                        margin: frame.pending.value(),
-                        alignment: None,
-                    }));
-                }
+            match frame.children.next() {
                 Some(BlockContent::Block(child)) => self.flow_block(&mut frames, child)?,
                 Some(BlockContent::Inline(paragraph)) => {
                     self.flow_paragraph(&mut frames, paragraph)?;
                 }
-                None => {
-                    if let Some(measured) = self.close_flow(&mut frames)? {
-                        return Ok(measured);
-                    }
-                }
+                Some(BlockContent::Events(events)) => frame.push_events(events),
+                Some(BlockContent::Positioned(child)) => frame.push_positioned(child),
+                None => self.close_flow(&mut frames, &mut finished)?,
             }
         }
+        Ok(finished.expect("the flow ends once its outermost frame closes"))
     }
 
     /// Measures a block child of the innermost frame, or opens a frame for its flow. Kept
@@ -2004,16 +1996,17 @@ impl<'a> Measurer<'a> {
     }
 
     /// Finishes the innermost frame into its parent, or restarts it; the measured outermost
-    /// block once it finishes.
+    /// block goes to `finished` once it finishes.
     fn close_flow(
         &mut self,
         frames: &mut Vec<FlowFrame<'a>>,
-    ) -> Result<Option<MeasuredBlock<'a>>, Failure> {
+        finished: &mut Option<MeasuredBlock<'a>>,
+    ) -> Result<(), Failure> {
         let frame = frames.pop().unwrap();
         let restore = frame.restore_column_flow;
-        let finished = frame.finish(self)?;
+        let done = frame.finish(self)?;
         self.column_flow = restore;
-        let measured = match finished {
+        let measured = match done {
             FlowFinished::Complete(measured) => measured,
             FlowFinished::Restart {
                 block,
@@ -2038,14 +2031,14 @@ impl<'a> Measurer<'a> {
                 };
                 next.outer.3 = previous_columns;
                 frames.push(next);
-                return Ok(None);
+                return Ok(());
             }
         };
-        let Some(parent) = frames.last_mut() else {
-            return Ok(Some(measured));
-        };
-        parent.push_block(measured, false);
-        Ok(None)
+        match frames.last_mut() {
+            Some(parent) => parent.push_block(measured, false),
+            None => *finished = Some(measured),
+        }
+        Ok(())
     }
 
     fn paragraph(
@@ -2353,10 +2346,6 @@ enum FlowFinished<'a> {
     },
 }
 
-#[expect(
-    clippy::large_enum_variant,
-    reason = "measurement results and continuations stay inline to avoid an allocation per probe"
-)]
 enum FlowStart<'a> {
     Complete(MeasuredBlock<'a>),
     Pending(FlowFrame<'a>),
@@ -2461,6 +2450,25 @@ impl<'a> FlowFrame<'a> {
         self.items.push(item);
         self.at_start = false;
     }
+    // The items below take no measurement here; pushing them keeps their locals off the
+    // frame that each nested flow's measurement stacks.
+    #[inline(never)]
+    fn push_events(&mut self, events: &'a [crate::document::SemanticEvent]) {
+        self.items.push(FlowItem::Events(events));
+    }
+
+    /// Pushes the positioned child `child`, placed once its containing block is laid out.
+    #[inline(never)]
+    fn push_positioned(&mut self, child: &'a BlockBox) {
+        self.items.push(FlowItem::Positioned(PositionedFlow {
+            block: child,
+            left: self.content_x,
+            right: self.content_x + self.content_width,
+            margin: self.pending.value(),
+            alignment: None,
+        }));
+    }
+
     /// Pushes the block child a measurement measured, or passes on its failure.
     fn push_measured(
         &mut self,

@@ -716,7 +716,7 @@ pub(super) fn measure<'a>(
         );
         measured.frame_owner = Some(Box::new(if table_edges.is_some() {
             let rect = measured.geometry.border_box(measured.height);
-            let mut paint = measured.paint.clone().unwrap_or_else(|| {
+            let mut paint = measured.paint.as_deref().cloned().unwrap_or_else(|| {
                 BoxPaint::whole(rect, crate::graphics::BoxDecoration::default())
             });
             paint.rect.height = measured.height;

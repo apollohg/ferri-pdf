@@ -91,14 +91,16 @@ fn measure_atomic<'a>(
             containing_rtl,
         );
     }
-    let (measured, geometry) = measure_shrink_to_fit(
+    // The measurement passes on as it is, so that this frame, which nested atomic inlines
+    // stack, holds no copy of it.
+    measure_shrink_to_fit(
         measurer,
         block,
         containing_width,
         containing_height,
         containing_rtl,
-    )?;
-    Ok(measured_atomic(block, measured, &geometry))
+    )
+    .map(|(measured, geometry)| measured_atomic(block, measured, &geometry))
 }
 
 /// Lays a ruby annotation box out again at the `width` its ruby column gives it, which its
@@ -351,8 +353,8 @@ fn measure_initial_letter<'a>(
                 .collect();
             if let Some(paint) = measured.paint.take() {
                 let (carrier, pieces) =
-                    letter_fragments(paint, &geometry, style, &fragments, indent);
-                measured.paint = Some(carrier);
+                    letter_fragments(*paint, &geometry, style, &fragments, indent);
+                measured.paint = Some(Box::new(carrier));
                 measured.line_fragments = pieces;
             }
         }
@@ -652,8 +654,8 @@ pub(super) fn measure_shrink_to_fit<'a>(
     containing_height: Option<f32>,
     containing_rtl: bool,
 ) -> Result<(MeasuredBlock<'a>, crate::layout::geometry::HorizontalBox), Failure> {
-    let result = if block.style().display.is_table() {
-        crate::layout::tables::measure_placed(
+    if block.style().display.is_table() {
+        return crate::layout::tables::measure_placed(
             measurer,
             block,
             0.0,
@@ -661,20 +663,18 @@ pub(super) fn measure_shrink_to_fit<'a>(
             containing_rtl,
             containing_height,
             inline_horizontal,
-        )?
-    } else {
-        let geometry = shrink_to_fit_geometry(
-            measurer,
-            block,
-            containing_width,
-            containing_height,
-            containing_rtl,
-        )?;
-        let measured =
-            measurer.measure_format(block, geometry.clone(), false, containing_height, None)?;
-        (measured, geometry)
-    };
-    Ok(result)
+        );
+    }
+    let geometry = shrink_to_fit_geometry(
+        measurer,
+        block,
+        containing_width,
+        containing_height,
+        containing_rtl,
+    )?;
+    measurer
+        .measure_format(block, geometry.clone(), false, containing_height, None)
+        .map(|measured| (measured, geometry))
 }
 
 pub(super) fn shrink_to_fit_geometry<'a>(
