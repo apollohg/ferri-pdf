@@ -247,17 +247,25 @@ pub(super) fn rebase(
     flow: &PaintKey,
     lane: &PaintOrder,
 ) {
-    let key = |source: &PaintKey| -> PaintKey {
-        let (prefix, rest) = if source.first() == Some(&FLOW_LEVEL) {
-            (flow, &source[1..])
-        } else {
-            (context, source.as_ref())
-        };
-        prefix
-            .iter()
-            .cloned()
-            .chain(rest.iter().map(|(z, order)| (*z, order.within(lane))))
-            .collect()
+    let mut rebase = super::order::Rebase::new(lane);
+    // The scope each scope becomes, by the scope it was, which it keeps alive so that no other
+    // scope takes its address.
+    let mut scopes: HashMap<*const [(i32, PaintOrder)], (PaintKey, PaintKey)> = HashMap::new();
+    let mut key = |source: &PaintKey| -> PaintKey {
+        let (_, placed) = scopes.entry(Rc::as_ptr(source)).or_insert_with(|| {
+            let (prefix, rest) = if source.first() == Some(&FLOW_LEVEL) {
+                (flow, &source[1..])
+            } else {
+                (context, source.as_ref())
+            };
+            let placed = prefix
+                .iter()
+                .cloned()
+                .chain(rest.iter().map(|(z, order)| (*z, rebase.order(order))))
+                .collect();
+            (source.clone(), placed)
+        });
+        placed.clone()
     };
     for paint in output
         .display_lists
@@ -267,10 +275,9 @@ pub(super) fn rebase(
         .flatten()
     {
         paint.scope = key(&paint.scope);
-        paint.order = paint.order.within(lane);
     }
     for node in &mut output.clips {
-        node.context = node.context.as_ref().map(key);
+        node.context = node.context.as_ref().map(&mut key);
     }
     for pending in output
         .containers
@@ -279,7 +286,24 @@ pub(super) fn rebase(
         .chain(&mut output.fixed)
     {
         pending.context = key(&pending.context);
-        pending.order = pending.order.within(lane);
-        pending.orders = pending.orders.within(lane);
+    }
+    drop(key);
+    for paint in output
+        .display_lists
+        .iter_mut()
+        .chain(&mut output.foreground)
+        .chain(output.underlays.values_mut())
+        .flatten()
+    {
+        paint.order = rebase.order(&paint.order);
+    }
+    for pending in output
+        .containers
+        .iter_mut()
+        .flat_map(|c| &mut c.pending)
+        .chain(&mut output.fixed)
+    {
+        pending.order = rebase.order(&pending.order);
+        pending.orders = rebase.orders(&pending.orders);
     }
 }

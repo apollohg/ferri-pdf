@@ -29,10 +29,13 @@ pub(crate) enum Work {
     ActiveNode,
     /// A counter that work on an element's counters steps over, as the counter budget charges.
     CounterStep,
+    /// A step of a paint order path that placing a retained lane's paints in the enclosing
+    /// traversal copies.
+    PlacedStep,
 }
 
 #[cfg(test)]
-const KINDS: usize = 13;
+const KINDS: usize = 14;
 
 #[cfg(test)]
 thread_local! {

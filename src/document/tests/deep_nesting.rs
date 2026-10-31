@@ -2,8 +2,8 @@
 //! the limits flatten deeper content before its nesting can exhaust the stack.
 use crate::document::formatting::{
     ATOMIC_INLINE_DEPTH, BOX_DEPTH, FILTER_DEPTH, FLEX_DEPTH, FLOAT_DEPTH,
-    FORMATTING_NESTING_RESOURCE, GRID_DEPTH, MAX_FORMATTING_DEPTH, MULTICOL_DEPTH,
-    ORTHOGONAL_DEPTH, POSITIONED_DEPTH, TABLE_DEPTH,
+    FORMATTING_NESTING_RESOURCE, GRID_DEPTH, MATHML_NESTING_RESOURCE, MAX_FORMATTING_DEPTH,
+    MULTICOL_DEPTH, ORTHOGONAL_DEPTH, POSITIONED_DEPTH, TABLE_DEPTH,
 };
 use crate::{RenderDiagnostic, RenderOptions, render_html};
 
@@ -12,6 +12,7 @@ const BODY_DEPTH: usize = 1;
 /// The formatting depth below the body that content may reach.
 const CONTENT_DEPTH: usize = MAX_FORMATTING_DEPTH - BODY_DEPTH;
 const NAVIGABLE_DEPTH: usize = crate::document::frames::MAX_NAVIGABLE_DEPTH;
+const MATH_DEPTH: usize = crate::document::mathml::MAX_DEPTH;
 const SHADOW_DEPTH: usize = crate::dom::MAX_SHADOW_DEPTH;
 /// Library users render on 2 MiB threads, such as tokio's workers.
 const LIBRARY_STACK_BYTES: usize = 2 * 1024 * 1024;
@@ -108,6 +109,14 @@ fn formatting_flattened(diagnostic: &RenderDiagnostic) -> bool {
     )
 }
 
+fn math_flattened(diagnostic: &RenderDiagnostic) -> bool {
+    matches!(
+        diagnostic,
+        RenderDiagnostic::FormattingLimit { resource: MATHML_NESTING_RESOURCE, limit, .. }
+            if *limit == MATH_DEPTH
+    )
+}
+
 fn navigable_flattened(diagnostic: &RenderDiagnostic) -> bool {
     matches!(diagnostic, RenderDiagnostic::NavigableDepth { limit } if *limit == NAVIGABLE_DEPTH)
 }
@@ -128,6 +137,22 @@ macro_rules! formatting_construct {
             flattened: formatting_flattened,
         }
     };
+}
+
+/// Levels of `open` and `close` nested in a `math` element so that the elements of `leaf`,
+/// inside the innermost level, lie at the `MathML` nesting limit; `Past` adds one more level.
+fn math_document(open: &str, close: &str, leaf: &str, boundary: Boundary) -> String {
+    // The math element lies at depth zero, and the leaf one level below the innermost level.
+    let levels = MATH_DEPTH - 2;
+    let levels = match boundary {
+        Boundary::At => levels,
+        Boundary::Past => levels + 1,
+    };
+    format!(
+        "<!doctype html><body><math>{}{leaf}{}</math>",
+        open.repeat(levels),
+        close.repeat(levels)
+    )
 }
 
 /// Navigables nested to the navigable limit, each document nesting blocks to the formatting
@@ -375,6 +400,23 @@ const CONSTRUCTS: &[Construct] = &[
         FormattingNest::level("<span>", "</span>", BOX_DEPTH + ATOMIC_INLINE_DEPTH)
             .styled("span{display:inline-block}span::first-line{color:red}")
     ),
+    Construct {
+        name: "MathML rows",
+        document: |boundary| math_document("<mrow>", "</mrow>", "<mi>x</mi>", boundary),
+        flattened: math_flattened,
+    },
+    Construct {
+        name: "MathML fractions",
+        document: |boundary| {
+            math_document(
+                "<mfrac><mi>x</mi>",
+                "</mfrac>",
+                "<mi>x</mi><mn>1</mn>",
+                boundary,
+            )
+        },
+        flattened: math_flattened,
+    },
     Construct {
         name: "iframe srcdoc",
         document: navigable_document,

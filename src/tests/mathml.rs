@@ -1581,3 +1581,30 @@ fn recovered_operator_identity_uses_the_first_visible_box_including_anonymous_te
         }
     }
 }
+
+#[test]
+fn placing_a_math_frame_copies_each_shared_paint_order_step_once() {
+    // Cells nested in a token element's CSS content paint in lanes nested as deep, so their
+    // paint orders' paths deepen with the nesting. Placing the frames' paints in the enclosing
+    // flow must copy the steps those paths share once, not every path whole.
+    const DEPTH: usize = 8;
+    crate::work::assert_linear("table cells nested in a math token", DEPTH, |depth| {
+        let body = format!(
+            "<math><mtext>{}x{}</mtext></math>",
+            "<table><tr><td>y".repeat(depth),
+            "</td></tr></table>".repeat(depth)
+        );
+        let (output, steps) =
+            crate::work::measured(crate::work::Work::PlacedStep, || math_output(&body));
+        let cells = output
+            .layout
+            .expect("layout requested")
+            .pages
+            .iter()
+            .flatten()
+            .filter(|line| line.text.starts_with('y'))
+            .count();
+        assert_eq!(cells, depth, "each nested cell shows its text: {body}");
+        steps
+    });
+}
