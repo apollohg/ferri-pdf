@@ -1028,6 +1028,7 @@ impl<'a> Measurer<'a> {
     ) -> Result<MeasuredBlock<'a>, Failure> {
         let style = block.style();
         if style.display.is_table() {
+            self.work.start(block);
             return crate::layout::tables::measure(
                 self,
                 block,
@@ -1386,6 +1387,7 @@ impl<'a> Measurer<'a> {
         containing_height: Option<f32>,
         used_height: Option<f32>,
     ) -> Result<FlowStart<'a>, Failure> {
+        self.work.start(block.block);
         self.work.spend(1)?;
         let restore_column_flow = self.column_flow;
         let outer_space = self.space;

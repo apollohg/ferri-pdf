@@ -704,6 +704,65 @@ impl BlockBox {
     pub(crate) fn children(&self) -> &[BlockContent] {
         &self.children
     }
+    /// Removes `target`, a box of this subtree, and the content after it in document order;
+    /// whether `target` is in the subtree. Paragraphs holding `target` are removed whole, and
+    /// a subtree's root that is `target` keeps no content.
+    pub(crate) fn omit_from(&mut self, target: *const BlockBox) -> bool {
+        if std::ptr::eq(self, target) {
+            self.omit_content();
+            return true;
+        }
+        for index in 0..self.children.len() {
+            let kept = match &mut self.children[index] {
+                BlockContent::Block(block) | BlockContent::Positioned(block) => {
+                    if std::ptr::eq(block, target) {
+                        Some(index)
+                    } else {
+                        block.omit_from(target).then_some(index + 1)
+                    }
+                }
+                BlockContent::Inline(paragraph) => paragraph
+                    .anchors()
+                    .iter()
+                    .chain(paragraph.inline_blocks())
+                    .any(|anchor| anchor.block.holds(target))
+                    .then_some(index),
+                BlockContent::Events(_) => None,
+            };
+            if let Some(kept) = kept {
+                self.children.truncate(kept);
+                return true;
+            }
+        }
+        [
+            &mut self.first_line_box,
+            &mut self.math_content,
+            &mut self.flow,
+        ]
+        .into_iter()
+        .flatten()
+        .any(|block| block.omit_from(target))
+    }
+    pub(crate) fn omit_content(&mut self) {
+        self.children.clear();
+    }
+    /// Whether `target` is this box or a box of its subtree.
+    fn holds(&self, target: *const BlockBox) -> bool {
+        std::ptr::eq(self, target)
+            || self.children.iter().any(|child| match child {
+                BlockContent::Block(block) | BlockContent::Positioned(block) => block.holds(target),
+                BlockContent::Inline(paragraph) => paragraph
+                    .anchors()
+                    .iter()
+                    .chain(paragraph.inline_blocks())
+                    .any(|anchor| anchor.block.holds(target)),
+                BlockContent::Events(_) => false,
+            })
+            || [&self.first_line_box, &self.math_content, &self.flow]
+                .into_iter()
+                .flatten()
+                .any(|block| block.holds(target))
+    }
     /// Marks the paragraphs holding the first and last formatted lines that this box or the
     /// ancestors in `requested` trim (CSS Inline 3 §6.2): trimming passes into the first and
     /// last in-flow child blocks without padding or borders on that side, but not into or

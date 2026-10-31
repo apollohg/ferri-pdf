@@ -52,7 +52,8 @@ pub(super) fn view(
     };
     let paint = match frame.document(size, color_scheme, resolver)? {
         FrameDocument::Html(mut document) => {
-            let trace = crate::layout::stabilize(&mut document, resolver, budget, Vec::new())?;
+            let trace =
+                crate::layout::stabilize(&mut document, resolver, &budget.nested(), Vec::new())?;
             let LayoutTrace {
                 page_area,
                 pages,

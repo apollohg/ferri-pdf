@@ -39,6 +39,16 @@ impl RunningElement {
     pub(crate) fn blocks(&self) -> impl Iterator<Item = &BlockBox> {
         std::iter::once(&self.block).chain(self.copies.iter().map(|(_, block)| block))
     }
+    fn blocks_mut(&mut self) -> impl Iterator<Item = &mut BlockBox> {
+        std::iter::once(&mut self.block).chain(self.copies.iter_mut().map(|(_, block)| block))
+    }
+    /// See [`BlockBox::omit_from`].
+    pub(crate) fn omit_from(&mut self, target: *const BlockBox) -> bool {
+        self.blocks_mut().any(|block| block.omit_from(target))
+    }
+    pub(crate) fn omit_content(&mut self) {
+        self.blocks_mut().for_each(BlockBox::omit_content);
+    }
 }
 
 /// A running element whose box formatting completes after its position records it.

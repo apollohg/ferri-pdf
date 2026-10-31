@@ -2507,6 +2507,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         })
     }
     fn start_block(&mut self, block: MeasuredBlock<'a>) -> Result<BlockFrame<'a>, LayoutError> {
+        self.measurer.work.start(block.source);
         let mut block = self.refresh_block(block)?;
         if self.at_page_start && !matches!(self.margin_start, MarginStart::Initial) {
             block = self.resolve_clearance_margins(block)?;

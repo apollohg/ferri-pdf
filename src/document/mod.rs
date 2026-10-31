@@ -753,6 +753,30 @@ impl StyledDocument {
         }
     }
 
+    /// Omits `target`, a formatting box of the document, and the content after it in
+    /// document order; whether the document holds `target`.
+    pub(crate) fn omit_from(&mut self, target: *const BlockBox) -> bool {
+        std::iter::once(&mut self.root)
+            .chain(self.footnotes.bodies.iter_mut().map(|body| &mut body.block))
+            .any(|tree| tree.omit_from(target))
+            || self
+                .running_strings
+                .iter_mut()
+                .filter_map(|assignment| assignment.element.as_mut())
+                .any(|element| element.omit_from(target))
+    }
+
+    pub(crate) fn omit_content(&mut self) {
+        self.root.omit_content();
+        for body in &mut self.footnotes.bodies {
+            body.block.omit_content();
+        }
+        self.running_strings
+            .iter_mut()
+            .filter_map(|assignment| assignment.element.as_mut())
+            .for_each(RunningElement::omit_content);
+    }
+
     /// Retains what the layout of this document degraded.
     pub(crate) fn record_layout(
         &mut self,

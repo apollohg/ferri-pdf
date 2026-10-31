@@ -179,16 +179,42 @@ pub(crate) fn layout(
 }
 
 pub(crate) fn layout_document(
-    mut document: StyledDocument,
+    document: StyledDocument,
     resolver: &dyn ResourceResolver,
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
-    let trace = stabilize(
-        &mut document,
-        resolver,
-        &work::Budget::new(MAX_LAYOUT_WORK),
-        Vec::new(),
-    )?;
-    Ok((document, trace))
+    layout_within(document, resolver, MAX_LAYOUT_WORK)
+}
+
+/// Lays `document` out with `work_limit` units of work for each attempt.
+fn layout_within(
+    mut document: StyledDocument,
+    resolver: &dyn ResourceResolver,
+    work_limit: usize,
+) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
+    // A first layout pass that runs out of work completes no layout to keep, so the layouts
+    // after it omit the content from the box it started with half its work spent, then a
+    // quarter, and so on; the last omits all content.
+    let mut marks: Option<Vec<_>> = None;
+    let mut content = true;
+    loop {
+        let budget = work::Budget::new(work_limit);
+        match stabilize(&mut document, resolver, &budget, Vec::new()) {
+            Err(LayoutError::WorkLimit { limit }) if content => {
+                let marks = marks.get_or_insert_with(|| budget.marks());
+                content = std::iter::from_fn(|| marks.pop())
+                    .flatten()
+                    .any(|mark| document.omit_from(mark));
+                if !content {
+                    document.omit_content();
+                }
+                document.record_layout([LayoutDiagnostic::WorkLimit {
+                    limit,
+                    kept: WorkFallback::Truncated,
+                }]);
+            }
+            result => return Ok((document, result?)),
+        }
+    }
 }
 
 struct LayoutPass {

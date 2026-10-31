@@ -1,5 +1,12 @@
-use crate::layout::LayoutError;
-use std::{cell::Cell, rc::Rc};
+use crate::{document::BlockBox, layout::LayoutError};
+use std::{
+    cell::{Cell, RefCell},
+    rc::Rc,
+};
+
+/// The fractions of a budget, as right shifts of it, whose spending marks the frontier,
+/// smallest first.
+const MARK_SHIFTS: [u32; 4] = [4, 3, 2, 1];
 
 /// A work budget shared by every clone, each charging the units of work it does.
 #[derive(Clone)]
@@ -8,7 +15,17 @@ pub(crate) struct Budget {
     remaining: Rc<Cell<Option<usize>>>,
     /// Optional work was skipped for want of units.
     declined: Rc<Cell<bool>>,
+    /// The formatting box of the document being laid out that layout last started.
+    frontier: Rc<Cell<Frontier>>,
+    /// The frontier where each of [`MARK_SHIFTS`]'s fractions of the budget was spent, and the
+    /// spending that marks the next.
+    marks: Rc<RefCell<Vec<Frontier>>>,
+    next_mark: Rc<Cell<usize>>,
+    /// Lays out a nested document, whose boxes lie inside the frontier's.
+    nested: bool,
 }
+
+type Frontier = Option<*const BlockBox>;
 
 /// A budget of `limit` units ran out.
 #[derive(Debug)]
@@ -28,6 +45,10 @@ impl Budget {
             limit,
             remaining: Rc::new(Cell::new(Some(limit))),
             declined: Rc::new(Cell::new(false)),
+            frontier: Rc::default(),
+            marks: Rc::default(),
+            next_mark: Rc::new(Cell::new(limit >> MARK_SHIFTS[0])),
+            nested: false,
         }
     }
 
@@ -66,12 +87,47 @@ impl Budget {
         );
     }
 
+    /// The budget shared by the layout of a document nested in the box being laid out.
+    pub(crate) fn nested(&self) -> Self {
+        Self {
+            nested: true,
+            ..self.clone()
+        }
+    }
+
+    /// Records that layout starts `block`.
+    pub(crate) fn start(&self, block: &BlockBox) {
+        if !self.nested {
+            self.frontier.set(Some(std::ptr::from_ref(block)));
+        }
+    }
+
+    /// The boxes layout last started where it had spent each of [`MARK_SHIFTS`]'s fractions of
+    /// the budget, smallest first: the content before each took at most that fraction.
+    pub(crate) fn marks(&self) -> Vec<Frontier> {
+        self.marks.borrow().clone()
+    }
+
     pub(crate) fn spend(&self, units: usize) -> Result<(), Exhausted> {
         let remaining = self
             .remaining
             .get()
             .and_then(|left| left.checked_sub(units));
         self.remaining.set(remaining);
+        let spent = self.limit - remaining.unwrap_or(0);
+        if spent >= self.next_mark.get() {
+            let mut marks = self.marks.borrow_mut();
+            while let Some(shift) = MARK_SHIFTS.get(marks.len())
+                && spent >= self.limit >> shift
+            {
+                marks.push(self.frontier.get());
+            }
+            self.next_mark.set(
+                MARK_SHIFTS
+                    .get(marks.len())
+                    .map_or(usize::MAX, |shift| self.limit >> shift),
+            );
+        }
         remaining.map(|_| ()).ok_or(Exhausted { limit: self.limit })
     }
 }
@@ -128,6 +184,58 @@ mod tests {
             }
             .to_string()],
             "the budget is shared by every pass and its exhaustion is reported once"
+        );
+    }
+
+    #[test]
+    fn a_first_pass_out_of_work_omits_the_content_it_reached_late() {
+        const ITEMS: usize = 300;
+        let resolver = FileResolver::default();
+        let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        let document = || {
+            StyledDocument::parse(
+                &format!(
+                    "<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}@page{{size:200pt 200pt;margin:10pt}}html,body{{margin:0;font:10pt/10pt Fixed}}</style><p>before</p><section>{}</section><p>after</p>",
+                    "<div>item</div>".repeat(ITEMS)
+                ),
+                &base,
+                &[],
+                &resolver,
+            )
+            .unwrap()
+        };
+        let limit = required_work(&document(), &resolver) / 2;
+        let (document, trace) = crate::layout::layout_within(document(), &resolver, limit)
+            .expect("a document that exceeds its work budget keeps the content laid out within it");
+        let text: Vec<_> = trace
+            .pages
+            .iter()
+            .flatten()
+            .map(|line| line.text.as_str())
+            .collect();
+        let items = text.iter().filter(|line| **line == "item").count();
+        assert_eq!(text.first(), Some(&"before"), "the content before is kept");
+        assert!(
+            (1..ITEMS).contains(&items) && !text.contains(&"after"),
+            "the content from a box started late in the budget is omitted: \
+             {items} of {ITEMS} items kept, text ends {:?}",
+            text.last()
+        );
+        let diagnostics: Vec<_> = document
+            .into_diagnostics()
+            .into_iter()
+            .map(|diagnostic| diagnostic.to_string())
+            .collect();
+        assert_eq!(
+            diagnostics,
+            [crate::layout::LayoutDiagnostic::WorkLimit {
+                limit,
+                kept: crate::layout::WorkFallback::Truncated,
+            }
+            .to_string()],
+            "the omission is reported once however many layouts it takes"
         );
     }
 
