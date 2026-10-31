@@ -116,6 +116,10 @@ pub enum PaintDiagnostic {
     /// each draws as a transparent black layer.
     #[error("mask elements drawn past {limit} on a page are transparent black layers")]
     MaskElementDrawLimit { limit: usize },
+    /// A mask image layer whose raster exceeds the rasterizer's limits at the drawing's
+    /// resolution is drawn at the highest resolution within them.
+    #[error("a mask image too large to rasterize is drawn at a lower resolution")]
+    ReducedResolution,
 }
 
 /// An independently laid-out document to append to a shared PDF.

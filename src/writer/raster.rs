@@ -106,13 +106,33 @@ impl Raster {
 /// Pixels a raster holds at most, whose memory would otherwise grow without bound.
 const MAX_RASTER_PIXELS: f32 = 1.0e8;
 
+/// Pixels along either side of a raster at most.
+const MAX_RASTER_SIDE: f32 = u16::MAX as f32;
+/// The share of the limits a fitted raster's density aims at: rounding its sides up to whole
+/// pixels adds less than the rest.
+const FITTED_SHARE: f64 = 0.99;
+
 /// Whether a raster of `width` by `height` pixels is within the rasterizer's limits.
 pub(super) fn fits(width: f32, height: f32) -> Result<(), PdfError> {
-    let side = f32::from(u16::MAX);
-    if width > side || height > side || width * height > MAX_RASTER_PIXELS {
+    if width > MAX_RASTER_SIDE || height > MAX_RASTER_SIDE || width * height > MAX_RASTER_PIXELS {
         return Err(PdfError::RasterSize { width, height });
     }
     Ok(())
+}
+
+/// `density`, or the largest density at which a raster of `area` fits the rasterizer's
+/// limits where at `density` it does not.
+pub(super) fn fitting_density(area: Rect, density: f32) -> f32 {
+    let [width, height] =
+        [area.width, area.height].map(|extent| f64::from(extent) * f64::from(density));
+    let scale = (f64::from(MAX_RASTER_SIDE) / width)
+        .min(f64::from(MAX_RASTER_SIDE) / height)
+        .min((f64::from(MAX_RASTER_PIXELS) / (width * height)).sqrt());
+    if scale < 1.0 {
+        (f64::from(density) * scale * FITTED_SHARE) as f32
+    } else {
+        density
+    }
 }
 
 /// Renders `items` as they would draw at `area` of the current drawing space, or `None`

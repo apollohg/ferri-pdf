@@ -399,6 +399,18 @@ fn mask_color(color: Color, luminance: bool) -> Color {
     }
 }
 
+/// The density an image layer's `tile` rasterizes at: `density`, or the largest at which its
+/// raster fits the rasterizer, as an image too large for it draws at a lower resolution.
+fn tile_density(painter: &mut Painter<'_, '_, '_>, tile: Rect, density: f32) -> f32 {
+    let fitted = raster::fitting_density(tile, density);
+    if fitted < density {
+        painter
+            .images
+            .record(crate::writer::PaintDiagnostic::ReducedResolution);
+    }
+    fitted
+}
+
 /// `<image>` layers are alpha masks under `match-source` (§7.2).
 fn draw_layer(
     painter: &mut Painter<'_, '_, '_>,
@@ -437,6 +449,7 @@ fn draw_layer(
                 source_scale: *scale,
                 rendering: *rendering,
             })];
+            let density = tile_density(painter, tile, density);
             let Some(raster) = raster::rasterize(painter, &item, tile, density)? else {
                 return Ok(());
             };
@@ -452,6 +465,7 @@ fn draw_layer(
                 y: 0.0,
                 ..layer.tile
             };
+            let density = tile_density(painter, tile, density);
             let Some(raster) =
                 raster::render(painter, tile, density, |painter, space, surface| {
                     crate::writer::backgrounds::draw_tile(

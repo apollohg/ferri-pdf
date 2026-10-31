@@ -33,6 +33,16 @@ fn red_pixels(output: &RenderOutput) -> usize {
         .count()
 }
 
+/// Pixels where red paint shows at least half opaque over the white page.
+fn mostly_red_pixels(output: &RenderOutput) -> usize {
+    const HALF: u8 = 128;
+    first_page_pixels(output)
+        .0
+        .iter()
+        .filter(|pixel| pixel[0] == RED[0] && pixel[1] < HALF && pixel[2] < HALF)
+        .count()
+}
+
 /// SVG `mask` elements whose content is masked twice by the next element, so drawing the first
 /// draws the last `2^(depth - 1)` times.
 fn doubling_masks(depth: usize) -> String {
@@ -88,6 +98,41 @@ fn shared_mask_references_past_the_page_budget_draw_as_transparent_black_layers(
         (1..=unmasked).contains(&shown),
         "the draws within the budget show the white rectangles they reach and those past it are \
          transparent black layers adding nothing: {shown} red pixels of {unmasked}"
+    );
+}
+
+#[test]
+fn mask_images_too_large_to_rasterize_draw_at_a_lower_resolution() {
+    const BOX: &str = "width:100px;height:100px;background:red";
+    // A tile wider than the rasterizer allows, repeated down the box, covers all of it.
+    let wide = "url(\"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 \
+                width=%22100000%22 height=%2210%22><rect width=%22100%%22 \
+                height=%22100%%22/></svg>\")";
+    let output = render_html(
+        &format!("<!doctype html><div style='{BOX};mask-image:{wide}'></div>"),
+        &local_options(),
+    )
+    .expect("a mask image larger than the rasterizer allows does not fail the document");
+    assert!(
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            RenderDiagnostic::Paint(PaintDiagnostic::ReducedResolution)
+        )),
+        "the lower resolution is reported, got {:?}",
+        output.diagnostics
+    );
+    let unmasked = render_html(
+        &format!("<!doctype html><div style='{BOX}'></div>"),
+        &local_options(),
+    )
+    .unwrap();
+    // The coarser raster's last row of each 10px tile is partly covered, which fades at most
+    // one of every ten page rows.
+    const FADED_ROWS: f32 = 0.15;
+    let (shown, whole) = (mostly_red_pixels(&output), red_pixels(&unmasked));
+    assert!(
+        shown <= whole && shown as f32 >= whole as f32 * (1.0 - FADED_ROWS),
+        "the opaque mask image still shows the box: {shown} of its {whole} pixels"
     );
 }
 
