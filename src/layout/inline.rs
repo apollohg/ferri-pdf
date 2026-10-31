@@ -14,7 +14,7 @@ use crate::text::{AtomicMetrics, BoxFragment, GlyphRun};
 #[derive(Clone)]
 pub(super) struct MeasuredAtomic<'a> {
     /// Laid out with its left margin edge at x = 0.
-    pub block: MeasuredBlock<'a>,
+    pub block: Box<MeasuredBlock<'a>>,
     pub metrics: AtomicMetrics,
     pub margin_top: f32,
     /// An initial letter's place against its originating line, which it does not grow.
@@ -217,7 +217,7 @@ fn measured_atomic<'a>(
             baseline: content.map_or(height, |baseline| margin[0] + baseline),
             synthesized_baseline: content.is_none(),
         },
-        block: measured,
+        block: Box::new(measured),
         margin_top: margin[0],
         letter: None,
     }
@@ -396,7 +396,7 @@ fn measure_initial_letter<'a>(
             width,
             lift: origins.last().copied().unwrap_or(0.0),
         }),
-        block: measured,
+        block: Box::new(measured),
         margin_top: margin[0],
     })
 }

@@ -1917,14 +1917,7 @@ impl<'a> Measurer<'a> {
         let mut atomics = Vec::new();
         let mut first_line_atomics = Vec::new();
         for (index, atomic) in paragraph.inline_blocks().enumerate() {
-            let base_height = paragraph
-                .inter_character_base_style(index)
-                .map(|style| {
-                    crate::text::BoxMetrics::of(self.text, style)
-                        .map(|metrics| metrics.ascent + metrics.descent)
-                })
-                .transpose()?;
-            let containing = base_height.or(containing_height);
+            let containing = self.atomic_containing_height(paragraph, index, containing_height)?;
             atomics.push(Some(crate::layout::inline::measure(
                 self,
                 atomic.block(),
@@ -1932,16 +1925,60 @@ impl<'a> Measurer<'a> {
                 containing,
                 rtl,
             )?));
-            first_line_atomics.push(
-                atomic
-                    .block()
-                    .first_line_box()
-                    .map(|block| {
-                        crate::layout::inline::measure(self, block, width, containing, rtl)
-                    })
-                    .transpose()?,
-            );
+            let first_line = match atomic.block().first_line_box() {
+                Some(block) => Some(crate::layout::inline::measure(
+                    self, block, width, containing, rtl,
+                )?),
+                None => None,
+            };
+            first_line_atomics.push(first_line);
         }
+        self.paragraph_lines(
+            (paragraph, index, part),
+            (x, width, containing_height),
+            budget,
+            (atomics, first_line_atomics),
+        )
+    }
+
+    // The helpers below keep their locals off `paragraph`, whose frame each nested atomic
+    // inline stacks.
+    /// The height of the containing block of atomic inline `index` in `paragraph`: that of the
+    /// base an inter-character annotation belongs to, or `containing_height`.
+    #[inline(never)]
+    fn atomic_containing_height(
+        &self,
+        paragraph: &crate::document::Paragraph,
+        index: usize,
+        containing_height: Option<f32>,
+    ) -> Result<Option<f32>, Failure> {
+        let base_height = paragraph
+            .inter_character_base_style(index)
+            .map(|style| {
+                crate::text::BoxMetrics::of(self.text, style)
+                    .map(|metrics| metrics.ascent + metrics.descent)
+            })
+            .transpose()?;
+        Ok(base_height.or(containing_height))
+    }
+
+    /// The lines of `paragraph`, numbered `index`, holding its measured atomic inlines: those
+    /// of its annotation contents' `part` a line breaking inside the bases holds, or all.
+    #[inline(never)]
+    fn paragraph_lines(
+        &mut self,
+        (paragraph, index, part): (
+            &'a crate::document::Paragraph,
+            usize,
+            Option<std::ops::Range<usize>>,
+        ),
+        (x, width, containing_height): (f32, f32, Option<f32>),
+        budget: Option<LineBudget>,
+        (atomics, first_line_atomics): (
+            Vec<Option<crate::layout::inline::MeasuredAtomic<'a>>>,
+            Vec<Option<crate::layout::inline::MeasuredAtomic<'a>>>,
+        ),
+    ) -> Result<MeasuredParagraph<'a>, Failure> {
         let mut metrics = Vec::new();
         crate::layout::inline::paragraph_metrics(paragraph, &atomics, &mut metrics);
         let mut first_line_metrics = Vec::new();

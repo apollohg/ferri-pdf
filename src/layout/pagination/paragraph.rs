@@ -377,11 +377,261 @@ impl<'a> Paginator<'a, '_, 'a> {
             started: false,
         }
     }
+    /// Fits the remaining lines of `cursor`'s paragraph from the current position, again where
+    /// the space beside floats or the containing block changed, keeping `reserve` at the
+    /// page's end; the paragraph's inline floats are placed as `trials`.
+    // Out of `paragraph_fragment`, whose frame each nested atomic inline stacks.
+    #[inline(never)]
+    fn fit_paragraph_lines(
+        &mut self,
+        cursor: &mut ParagraphCursor<'a, 'a>,
+        reserve: f32,
+        (float_anchors, has_inline_floats): (&[&'a crate::document::Anchor], bool),
+        trials: &mut Vec<FloatTrial>,
+    ) -> Result<(), LayoutError> {
+        let text = self.measurer.text;
+        let source = cursor.source;
+        let style = cursor.style;
+        let letter = cursor.letter;
+        let consumed_floats = cursor.consumed_floats;
+        let consumed_anchors = cursor.consumed_anchors;
+        let (left, destination_width, height) =
+            self.paragraph_geometry()
+                .unwrap_or((cursor.x, cursor.width, cursor.containing_height));
+        cursor.x = left;
+        let floating = has_inline_floats
+            || !self
+                .floats
+                .last()
+                .expect("flow has a float context")
+                .is_empty();
+        if floating
+            || cursor.width != destination_width
+            || (!cursor.atomics.is_empty() && cursor.containing_height != height)
+            || (!cursor.candidate_complete && cursor.candidate_page != self.page)
+        {
+            cursor.width = destination_width;
+            cursor.containing_height = height;
+            self.remeasure_inline_blocks(
+                source,
+                (&mut cursor.atomics, &mut cursor.first_line_atomics),
+                cursor.width,
+                height,
+            )?;
+            crate::layout::inline::paragraph_metrics(source, &cursor.atomics, &mut cursor.metrics);
+            crate::layout::inline::first_line_metrics(
+                source,
+                &cursor.metrics,
+                &cursor.first_line_atomics,
+                &mut cursor.first_line_metrics,
+            );
+            if cursor.prepared.is_none() {
+                self.measurer.work.spend(source.text().len().max(1))?;
+            }
+            self.measurer.work.spend(cursor.metrics.len().max(1))?;
+            let prepared = cursor.prepared.get_or_insert_with(|| {
+                Rc::new(text.prepare_paragraph(source).clamped(cursor.clamp.clone()))
+            });
+            let mut stream = prepared
+                .lines(cursor.position, cursor.width, &cursor.metrics)?
+                .with_first_line_atomics(&cursor.first_line_metrics)?;
+            cursor.geometry.clear();
+            let mut float_position = cursor.position;
+            let mut remainder = Vec::new();
+            let mut checkpoints = Vec::new();
+            cursor.candidate_complete = true;
+            cursor.candidate_page = self.page;
+            let mut extent = self.y + reserve;
+            let mut available: usize = 0;
+            let mut overflow = false;
+            let mut line_clearance_y = None;
+            loop {
+                let (line, checkpoint) = if floating {
+                    let cleared_y = if let Some(y) = line_clearance_y {
+                        y
+                    } else {
+                        let (clear, rtl) = source.clearance_at(float_position.offset());
+                        let y = self
+                            .floats
+                            .last()
+                            .expect("flow has a float context")
+                            .clearance_end(self.page, clear, rtl, &self.measurer.work)?
+                            .map_or(extent - reserve, |(page, bottom)| {
+                                if page > self.page {
+                                    self.height.max(extent - reserve)
+                                } else {
+                                    bottom.max(extent - reserve)
+                                }
+                            });
+                        // An initial letter's line clears earlier initial letters
+                        // (CSS Inline 3 §7.9.2) and moves down for the letter to
+                        // stay below the content edge (§7.6.1).
+                        let y = match letter.and_then(|index| {
+                            letter_atomic(
+                                source,
+                                &cursor.atomics,
+                                &cursor.first_line_atomics,
+                                index,
+                            )
+                        }) {
+                            Some(atomic) if remainder.is_empty() => self
+                                .floats
+                                .last()
+                                .expect("flow has a float context")
+                                .letter_clearance(self.page, y, &self.measurer.work)?
+                                .max(
+                                    extent - reserve
+                                        + atomic
+                                            .letter
+                                            .expect("an initial letter has an extent")
+                                            .rise(),
+                                ),
+                            _ => y,
+                        };
+                        line_clearance_y = Some(y);
+                        y
+                    };
+                    let Some((line, checkpoint, placement)) = self.fit_float_line(
+                        prepared,
+                        float_position,
+                        (&cursor.metrics, &cursor.first_line_metrics),
+                        [cursor.x, cursor.x + cursor.width],
+                        cleared_y,
+                    )?
+                    else {
+                        break;
+                    };
+                    let next_anchor = consumed_floats
+                        + trials
+                            .iter()
+                            .filter(|trial| matches!(trial, FloatTrial::Float { .. }))
+                            .count();
+                    if let Some(anchor) = float_anchors.get(next_anchor).filter(|anchor| {
+                        anchor.offset < line.range.end
+                            || (anchor.offset == line.range.end
+                                && !source.text()[line.range.clone()]
+                                    .ends_with(['\n', '\u{2028}', '\u{2029}']))
+                    }) {
+                        let measured = self.measure_float(
+                            anchor.block(),
+                            cursor.width,
+                            cursor.containing_height,
+                        )?;
+                        let prefix = (line.x_at(source, anchor.offset, style.used_rtl())
+                            - line.x_at(source, line.range.start, style.used_rtl()))
+                        .abs();
+                        let occupied = prefix + if prefix > 0.0 { line.indent } else { 0.0 };
+                        let y = placement.y
+                            + if measured.size[0] + occupied > placement.width {
+                                line.height
+                            } else {
+                                0.0
+                            };
+                        // A float after the first line clears the initial letter
+                        // beside it, which then excludes the cursor.lines it reaches.
+                        if y > placement.y && remainder.is_empty() {
+                            self.place_letter_trial(
+                                letter,
+                                (source, &cursor.atomics, &cursor.first_line_atomics),
+                                &line,
+                                placement,
+                                style.used_rtl(),
+                                trials,
+                            );
+                        }
+                        self.place_inline_float(
+                            measured,
+                            anchor,
+                            [cursor.x, cursor.width, y],
+                            &cursor.layers,
+                        )?;
+                        trials.push(FloatTrial::Float {
+                            anchor: next_anchor,
+                            line: remainder.len(),
+                            y,
+                        });
+                        continue;
+                    }
+                    if remainder.is_empty() {
+                        self.place_letter_trial(
+                            letter,
+                            (source, &cursor.atomics, &cursor.first_line_atomics),
+                            &line,
+                            placement,
+                            style.used_rtl(),
+                            trials,
+                        );
+                    }
+                    extent = placement.y + reserve;
+                    cursor.geometry.push_back(placement);
+                    float_position = checkpoint;
+                    line_clearance_y = None;
+                    (line, checkpoint)
+                } else {
+                    let Some(line) = stream.next() else {
+                        break;
+                    };
+                    (line?, stream.checkpoint())
+                };
+                self.measurer.work.spend(line.range.len().max(1))?;
+                extent += line.height;
+                overflow |= overflows(extent, self.height);
+                if !overflow {
+                    available += 1;
+                }
+                remainder.push(line);
+                checkpoints.push(checkpoint);
+                if overflow && remainder.len() > available.saturating_add(style.widows) {
+                    cursor.candidate_complete = false;
+                    break;
+                }
+            }
+            cursor.anchors =
+                crate::layout::measure::line_anchors(source, &remainder, cursor.candidate_complete)
+                    .into_iter()
+                    .skip(consumed_anchors)
+                    .collect::<Vec<_>>()
+                    .into_iter()
+                    .peekable();
+            cursor.line_index = 0;
+            cursor.positions = checkpoints.into_iter();
+            cursor.lines = remainder.into_iter();
+        }
+        Ok(())
+    }
     pub(super) fn paragraph_fragment(
         &mut self,
-        cursor: Box<ParagraphCursor<'a, 'a>>,
+        mut cursor: Box<ParagraphCursor<'a, 'a>>,
         tail: BreakTail,
     ) -> Result<Option<(Box<ParagraphCursor<'a, 'a>>, BreakRequest)>, LayoutError> {
+        let float_anchors: Vec<_> = cursor
+            .source
+            .anchors()
+            .iter()
+            .filter(|anchor| anchor.block().style().floating().is_some())
+            .collect();
+        let has_inline_floats =
+            cursor.consumed_floats < float_anchors.len() || cursor.letter.is_some();
+        let mut snapshot = has_inline_floats.then(|| self.snapshot()).transpose()?;
+        let saved_layers = has_inline_floats.then(|| cursor.layers.clone());
+        let mut trials: Vec<FloatTrial> = Vec::new();
+        let mut request = BreakRequest::default();
+        let fits = !(cursor.lines.as_slice().is_empty() && cursor.candidate_complete);
+        let (reserve, closing_reserve) = if fits {
+            self.measurer.work.spend(1)?;
+            let reserve = self.continuation_reserve()?;
+            (reserve, self.closing_reserve(tail, reserve)?)
+        } else {
+            (0.0, 0.0)
+        };
+        if fits {
+            self.fit_paragraph_lines(
+                &mut cursor,
+                reserve,
+                (&float_anchors, has_inline_floats),
+                &mut trials,
+            )?;
+        }
         let text = self.measurer.text;
         let ParagraphCursor {
             index,
@@ -394,14 +644,14 @@ impl<'a> Paginator<'a, '_, 'a> {
             mut x,
             mut width,
             mut containing_height,
-            mut candidate_complete,
-            mut candidate_page,
+            candidate_complete,
+            candidate_page,
             mut geometry,
             mut anchors,
             mut atomics,
-            mut metrics,
+            metrics,
             mut first_line_atomics,
-            mut first_line_metrics,
+            first_line_metrics,
             mut consumed_anchors,
             mut consumed_events,
             mut consumed_floats,
@@ -411,217 +661,9 @@ impl<'a> Paginator<'a, '_, 'a> {
             mut letter,
             mut started,
         } = *cursor;
-        let float_anchors: Vec<_> = source
-            .anchors()
-            .iter()
-            .filter(|anchor| anchor.block().style().floating().is_some())
-            .collect();
-        let has_inline_floats = consumed_floats < float_anchors.len() || letter.is_some();
-        let mut snapshot = has_inline_floats.then(|| self.snapshot()).transpose()?;
-        let saved_layers = has_inline_floats.then(|| layers.clone());
-        let mut trials: Vec<FloatTrial> = Vec::new();
-        let mut request = BreakRequest::default();
         'fragment: {
-            if lines.as_slice().is_empty() && candidate_complete {
+            if !fits {
                 break 'fragment;
-            }
-            self.measurer.work.spend(1)?;
-            let reserve = self.continuation_reserve()?;
-            let closing_reserve = self.closing_reserve(tail, reserve)?;
-            {
-                let (left, destination_width, height) =
-                    self.paragraph_geometry()
-                        .unwrap_or((x, width, containing_height));
-                x = left;
-                let floating = has_inline_floats
-                    || !self
-                        .floats
-                        .last()
-                        .expect("flow has a float context")
-                        .is_empty();
-                if floating
-                    || width != destination_width
-                    || (!atomics.is_empty() && containing_height != height)
-                    || (!candidate_complete && candidate_page != self.page)
-                {
-                    width = destination_width;
-                    containing_height = height;
-                    self.remeasure_inline_blocks(
-                        source,
-                        (&mut atomics, &mut first_line_atomics),
-                        width,
-                        height,
-                    )?;
-                    crate::layout::inline::paragraph_metrics(source, &atomics, &mut metrics);
-                    crate::layout::inline::first_line_metrics(
-                        source,
-                        &metrics,
-                        &first_line_atomics,
-                        &mut first_line_metrics,
-                    );
-                    if prepared.is_none() {
-                        self.measurer.work.spend(source.text().len().max(1))?;
-                    }
-                    self.measurer.work.spend(metrics.len().max(1))?;
-                    let prepared = prepared.get_or_insert_with(|| {
-                        Rc::new(text.prepare_paragraph(source).clamped(clamp.clone()))
-                    });
-                    let mut stream = prepared
-                        .lines(position, width, &metrics)?
-                        .with_first_line_atomics(&first_line_metrics)?;
-                    geometry.clear();
-                    let mut float_position = position;
-                    let mut remainder = Vec::new();
-                    let mut checkpoints = Vec::new();
-                    candidate_complete = true;
-                    candidate_page = self.page;
-                    let mut extent = self.y + reserve;
-                    let mut available: usize = 0;
-                    let mut overflow = false;
-                    let mut line_clearance_y = None;
-                    loop {
-                        let (line, checkpoint) = if floating {
-                            let cleared_y = if let Some(y) = line_clearance_y {
-                                y
-                            } else {
-                                let (clear, rtl) = source.clearance_at(float_position.offset());
-                                let y = self
-                                    .floats
-                                    .last()
-                                    .expect("flow has a float context")
-                                    .clearance_end(self.page, clear, rtl, &self.measurer.work)?
-                                    .map_or(extent - reserve, |(page, bottom)| {
-                                        if page > self.page {
-                                            self.height.max(extent - reserve)
-                                        } else {
-                                            bottom.max(extent - reserve)
-                                        }
-                                    });
-                                // An initial letter's line clears earlier initial letters
-                                // (CSS Inline 3 §7.9.2) and moves down for the letter to
-                                // stay below the content edge (§7.6.1).
-                                let y = match letter.and_then(|index| {
-                                    letter_atomic(source, &atomics, &first_line_atomics, index)
-                                }) {
-                                    Some(atomic) if remainder.is_empty() => self
-                                        .floats
-                                        .last()
-                                        .expect("flow has a float context")
-                                        .letter_clearance(self.page, y, &self.measurer.work)?
-                                        .max(
-                                            extent - reserve
-                                                + atomic
-                                                    .letter
-                                                    .expect("an initial letter has an extent")
-                                                    .rise(),
-                                        ),
-                                    _ => y,
-                                };
-                                line_clearance_y = Some(y);
-                                y
-                            };
-                            let Some((line, checkpoint, placement)) = self.fit_float_line(
-                                prepared,
-                                float_position,
-                                (&metrics, &first_line_metrics),
-                                [x, x + width],
-                                cleared_y,
-                            )?
-                            else {
-                                break;
-                            };
-                            let next_anchor = consumed_floats
-                                + trials
-                                    .iter()
-                                    .filter(|trial| matches!(trial, FloatTrial::Float { .. }))
-                                    .count();
-                            if let Some(anchor) = float_anchors.get(next_anchor).filter(|anchor| {
-                                anchor.offset < line.range.end
-                                    || (anchor.offset == line.range.end
-                                        && !source.text()[line.range.clone()]
-                                            .ends_with(['\n', '\u{2028}', '\u{2029}']))
-                            }) {
-                                let measured =
-                                    self.measure_float(anchor.block(), width, containing_height)?;
-                                let prefix = (line.x_at(source, anchor.offset, style.used_rtl())
-                                    - line.x_at(source, line.range.start, style.used_rtl()))
-                                .abs();
-                                let occupied =
-                                    prefix + if prefix > 0.0 { line.indent } else { 0.0 };
-                                let y = placement.y
-                                    + if measured.size[0] + occupied > placement.width {
-                                        line.height
-                                    } else {
-                                        0.0
-                                    };
-                                // A float after the first line clears the initial letter
-                                // beside it, which then excludes the lines it reaches.
-                                if y > placement.y && remainder.is_empty() {
-                                    self.place_letter_trial(
-                                        letter,
-                                        (source, &atomics, &first_line_atomics),
-                                        &line,
-                                        placement,
-                                        style.used_rtl(),
-                                        &mut trials,
-                                    );
-                                }
-                                self.place_inline_float(measured, anchor, [x, width, y], &layers)?;
-                                trials.push(FloatTrial::Float {
-                                    anchor: next_anchor,
-                                    line: remainder.len(),
-                                    y,
-                                });
-                                continue;
-                            }
-                            if remainder.is_empty() {
-                                self.place_letter_trial(
-                                    letter,
-                                    (source, &atomics, &first_line_atomics),
-                                    &line,
-                                    placement,
-                                    style.used_rtl(),
-                                    &mut trials,
-                                );
-                            }
-                            extent = placement.y + reserve;
-                            geometry.push_back(placement);
-                            float_position = checkpoint;
-                            line_clearance_y = None;
-                            (line, checkpoint)
-                        } else {
-                            let Some(line) = stream.next() else {
-                                break;
-                            };
-                            (line?, stream.checkpoint())
-                        };
-                        self.measurer.work.spend(line.range.len().max(1))?;
-                        extent += line.height;
-                        overflow |= overflows(extent, self.height);
-                        if !overflow {
-                            available += 1;
-                        }
-                        remainder.push(line);
-                        checkpoints.push(checkpoint);
-                        if overflow && remainder.len() > available.saturating_add(style.widows) {
-                            candidate_complete = false;
-                            break;
-                        }
-                    }
-                    anchors = crate::layout::measure::line_anchors(
-                        source,
-                        &remainder,
-                        candidate_complete,
-                    )
-                    .into_iter()
-                    .skip(consumed_anchors)
-                    .collect::<Vec<_>>()
-                    .into_iter()
-                    .peekable();
-                    line_index = 0;
-                    positions = checkpoints.into_iter();
-                    lines = remainder.into_iter();
-                }
             }
             layers.set_containing(InlineContaining {
                 width,
@@ -811,7 +853,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             }
             let accepted = trials.partition_point(|trial| trial.line() < take);
             if accepted < trials.len() {
-                self.restore_state(snapshot.take().expect("inline float trial has a snapshot"));
+                self.restore_state(*snapshot.take().expect("inline float trial has a snapshot"));
                 layers = saved_layers.expect("inline float trial saves its layers");
                 for trial in &trials[..accepted] {
                     match *trial {

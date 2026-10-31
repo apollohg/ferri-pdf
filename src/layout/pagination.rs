@@ -1340,7 +1340,7 @@ impl<M> PaginationState<'_, '_, M> {
 }
 
 impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
-    fn snapshot(&self) -> Result<PaginationState<'a, 't, ()>, LayoutError> {
+    fn snapshot(&self) -> Result<Box<PaginationState<'a, 't, ()>>, LayoutError> {
         let lines: usize = self.pages.iter().map(Vec::len).sum();
         let paints: usize = self
             .display_lists
@@ -1361,7 +1361,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 .saturating_add(self.anchors.payload_work())
                 .max(1),
         )?;
-        let mut snapshot = self.copy_state();
+        let mut snapshot = Box::new(self.copy_state());
         let mut orders = OrderSnapshots::default();
         snapshot.detach_orders(&mut orders);
         self.measurer.work.spend(orders.len())?;
@@ -3424,8 +3424,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 }
                 continue;
             }
-            if let Some(entry) = cursor.row_entry.take() {
-                cursor.row = Some(Box::new(self.start_row(entry)?));
+            if cursor.row_entry.is_some() {
+                self.open_row(&mut cursor)?;
                 continue;
             }
             if let Some(mut row) = cursor.row.take() {
@@ -3433,7 +3433,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                     cursor.row = Some(row);
                     return Ok(Some((cursor, request)));
                 }
-                self.finish_row(*row)?;
+                self.close_row(row)?;
                 continue;
             }
             if let Some((paragraph, tail)) = cursor.paragraph.take() {
@@ -3448,14 +3448,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             } else {
                 let frame = cursor.frames.last_mut().unwrap();
                 let Some((item, tail)) = frame.items.next() else {
-                    if let Some(block) = &mut frame.block
-                        && let Some(request) = self.resume_block_end(block)?
-                    {
+                    if let Some(request) = self.close_flow_frame(&mut cursor)? {
                         return Ok(Some((cursor, request)));
-                    }
-                    let frame = cursor.frames.pop().unwrap();
-                    if let Some(block) = frame.block {
-                        self.finish_block(block)?;
                     }
                     continue;
                 };
@@ -3464,128 +3458,191 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             };
             let tail = tails.at(self.fragmentainers.breaks_page(self.page));
             match item {
-                FlowItem::Frame {
-                    inner,
-                    area,
-                    height,
-                    baselines,
-                } => self.place_frame(inner, area, height, baselines)?,
-                FlowItem::Image {
-                    paint,
-                    height,
-                    visible,
-                } => self.place_image(paint, height, visible),
-                FlowItem::Block(child) | FlowItem::Spanner(child) => {
-                    let child = if ready {
-                        *child
-                    } else {
-                        let (child, request) = self.prepare_block(*child, tail)?;
-                        if let Some(request) = request {
-                            cursor.ready = Some((FlowItem::Block(Box::new(child)), tails));
-                            return Ok(Some((cursor, request)));
-                        }
-                        child
-                    };
-                    let mut block = self.start_block(child)?;
-                    let items = std::mem::take(&mut block.items);
-                    cursor
-                        .frames
-                        .push(FlowFrame::new(items, tails, Some(block)));
-                }
-                FlowItem::Columns(columns) => {
-                    cursor.columns = Some(Box::new(columns::ColumnCursor::new(*columns, tail)));
-                }
-                FlowItem::Paragraph(paragraph) => {
-                    if !ready
-                        && !paragraph.is_phantom()
-                        && let Some(request) = self.paragraph_break()
+                FlowItem::Positioned(item) => self.place_positioned(&item)?,
+                item => {
+                    if let Some(request) =
+                        self.flow_item(&mut cursor, item, (tails, tail), ready)?
                     {
-                        cursor.ready = Some((FlowItem::Paragraph(paragraph), tails));
                         return Ok(Some((cursor, request)));
                     }
-                    cursor.paragraph = Some((Box::new(self.start_paragraph(paragraph)), tail));
-                }
-                FlowItem::Row(row) => {
-                    let (entry, request) = self.prepare_row(*row, tail)?;
-                    cursor.row_entry = Some(entry);
-                    if let Some(request) = request {
-                        return Ok(Some((cursor, request)));
-                    }
-                }
-                FlowItem::Margin(margin) => {
-                    let width = self.containing_geometry().1;
-                    let margin = self
-                        .measurer
-                        .run(|measurer| margin.resolve(width, measurer))?;
-                    if !margin.is_empty() {
-                        self.pending.push(margin);
-                    }
-                }
-                FlowItem::Edge(edge, measured) => {
-                    let value = self
-                        .boxes
-                        .last()
-                        .filter(|active| self.continuation_flow() && active.geometry.is_some())
-                        .map_or(measured, |active| match edge {
-                            BlockEdge::Start => active.start_space,
-                            BlockEdge::End => active.end_space,
-                        });
-                    // Cloned edges repeat on every fragment instead of continuing.
-                    if value != 0.0 && self.boxes.last().is_some_and(|active| active.clone) {
-                        self.space(value);
-                    } else if let Some(rest) = self.place_space(value)? {
-                        cursor.ready = Some((FlowItem::Space(rest), tails));
-                        return Ok(Some((cursor, SPACE_BREAK)));
-                    }
-                }
-                FlowItem::Space(value) => {
-                    if let Some(rest) = self.place_space(value)? {
-                        cursor.ready = Some((FlowItem::Space(rest), tails));
-                        return Ok(Some((cursor, SPACE_BREAK)));
-                    }
-                }
-                FlowItem::TableBox(table) => {
-                    if let Some(request) = self.place_table_box(&mut cursor, table, tails, ready)? {
-                        return Ok(Some((cursor, request)));
-                    }
-                }
-                FlowItem::Events(events) => {
-                    for event in events {
-                        self.string_locations.record(self.page, event);
-                        if event.context.pseudo.is_none() {
-                            self.record_event_line(event.context.element, 0.0, false);
-                        }
-                    }
-                }
-                FlowItem::Positioned(item) => {
-                    if item.block.style().floating().is_some() {
-                        self.place_float(
-                            item.block,
-                            item.left,
-                            item.right - item.left,
-                            self.y + self.pending_value() + item.margin,
-                        )?;
-                        continue;
-                    }
-                    let position = StaticPosition {
-                        page: self.page,
-                        left: item.left + self.offset[0],
-                        right: item.right + self.offset[0],
-                        y: self.top + self.y + self.pending_value() + item.margin + self.offset[1],
-                        bottom: self.top
-                            + self.y
-                            + self.pending_value()
-                            + item.margin
-                            + self.offset[1]
-                            + item.alignment.map_or(0.0, |alignment| alignment.content[1]),
-                        alignment: item.alignment,
-                    };
-                    let layer = self.current_layer();
-                    self.anchor(item.block, position, &layer, self.parent_3d);
                 }
             }
         }
         Ok(None)
+    }
+    // The helpers below keep their locals off `resume_flow`, whose frame each nested
+    // paragraph, float and row stacks.
+    #[inline(never)]
+    fn open_row(&mut self, cursor: &mut FlowCursor<'a, 't>) -> Result<(), LayoutError> {
+        if let Some(entry) = cursor.row_entry.take() {
+            cursor.row = Some(Box::new(self.start_row(entry)?));
+        }
+        Ok(())
+    }
+    #[inline(never)]
+    fn close_row(&mut self, row: Box<rows::RowCursor<'a, 't>>) -> Result<(), LayoutError> {
+        self.finish_row(*row)
+    }
+    /// Ends the innermost frame of the flow, whose items are all placed, unless its block's
+    /// end needs a break first.
+    #[inline(never)]
+    fn close_flow_frame(
+        &mut self,
+        cursor: &mut FlowCursor<'a, 't>,
+    ) -> Result<Option<BreakRequest>, LayoutError> {
+        let frame = cursor
+            .frames
+            .last_mut()
+            .expect("the flow has an open frame");
+        if let Some(block) = &mut frame.block
+            && let Some(request) = self.resume_block_end(block)?
+        {
+            return Ok(Some(request));
+        }
+        let frame = cursor.frames.pop().expect("the flow has an open frame");
+        if let Some(block) = frame.block {
+            self.finish_block(block)?;
+        }
+        Ok(None)
+    }
+    /// Places a flow item other than a positioned box, returning the break it needs first.
+    #[inline(never)]
+    fn flow_item(
+        &mut self,
+        cursor: &mut FlowCursor<'a, 't>,
+        item: FlowItem<'a>,
+        (tails, tail): (BreakTails, BreakTail),
+        ready: bool,
+    ) -> Result<Option<BreakRequest>, LayoutError> {
+        match item {
+            FlowItem::Frame {
+                inner,
+                area,
+                height,
+                baselines,
+            } => self.place_frame(inner, area, height, baselines)?,
+            FlowItem::Image {
+                paint,
+                height,
+                visible,
+            } => self.place_image(paint, height, visible),
+            FlowItem::Block(child) | FlowItem::Spanner(child) => {
+                let child = if ready {
+                    *child
+                } else {
+                    let (child, request) = self.prepare_block(*child, tail)?;
+                    if let Some(request) = request {
+                        cursor.ready = Some((FlowItem::Block(Box::new(child)), tails));
+                        return Ok(Some(request));
+                    }
+                    child
+                };
+                let mut block = self.start_block(child)?;
+                let items = std::mem::take(&mut block.items);
+                cursor
+                    .frames
+                    .push(FlowFrame::new(items, tails, Some(block)));
+            }
+            FlowItem::Columns(columns) => {
+                cursor.columns = Some(Box::new(columns::ColumnCursor::new(*columns, tail)));
+            }
+            FlowItem::Paragraph(paragraph) => {
+                if !ready
+                    && !paragraph.is_phantom()
+                    && let Some(request) = self.paragraph_break()
+                {
+                    cursor.ready = Some((FlowItem::Paragraph(paragraph), tails));
+                    return Ok(Some(request));
+                }
+                cursor.paragraph = Some((Box::new(self.start_paragraph(paragraph)), tail));
+            }
+            FlowItem::Row(row) => {
+                let (entry, request) = self.prepare_row(*row, tail)?;
+                cursor.row_entry = Some(entry);
+                if let Some(request) = request {
+                    return Ok(Some(request));
+                }
+            }
+            FlowItem::Margin(margin) => {
+                let width = self.containing_geometry().1;
+                let margin = self
+                    .measurer
+                    .run(|measurer| margin.resolve(width, measurer))?;
+                if !margin.is_empty() {
+                    self.pending.push(margin);
+                }
+            }
+            FlowItem::Edge(edge, measured) => {
+                let value = self
+                    .boxes
+                    .last()
+                    .filter(|active| self.continuation_flow() && active.geometry.is_some())
+                    .map_or(measured, |active| match edge {
+                        BlockEdge::Start => active.start_space,
+                        BlockEdge::End => active.end_space,
+                    });
+                // Cloned edges repeat on every fragment instead of continuing.
+                if value != 0.0 && self.boxes.last().is_some_and(|active| active.clone) {
+                    self.space(value);
+                } else if let Some(rest) = self.place_space(value)? {
+                    cursor.ready = Some((FlowItem::Space(rest), tails));
+                    return Ok(Some(SPACE_BREAK));
+                }
+            }
+            FlowItem::Space(value) => {
+                if let Some(rest) = self.place_space(value)? {
+                    cursor.ready = Some((FlowItem::Space(rest), tails));
+                    return Ok(Some(SPACE_BREAK));
+                }
+            }
+            FlowItem::TableBox(table) => {
+                if let Some(request) = self.place_table_box(cursor, table, tails, ready)? {
+                    return Ok(Some(request));
+                }
+            }
+            FlowItem::Events(events) => {
+                for event in events {
+                    self.string_locations.record(self.page, event);
+                    if event.context.pseudo.is_none() {
+                        self.record_event_line(event.context.element, 0.0, false);
+                    }
+                }
+            }
+            FlowItem::Positioned(item) => self.place_positioned(&item)?,
+        }
+        Ok(None)
+    }
+    /// Places a float, or records an absolutely positioned box's static position.
+    #[inline(never)]
+    fn place_positioned(
+        &mut self,
+        item: &crate::layout::measure::PositionedFlow<'a>,
+    ) -> Result<(), LayoutError> {
+        if item.block.style().floating().is_some() {
+            self.place_float(
+                item.block,
+                item.left,
+                item.right - item.left,
+                self.y + self.pending_value() + item.margin,
+            )?;
+            return Ok(());
+        }
+        let position = StaticPosition {
+            page: self.page,
+            left: item.left + self.offset[0],
+            right: item.right + self.offset[0],
+            y: self.top + self.y + self.pending_value() + item.margin + self.offset[1],
+            bottom: self.top
+                + self.y
+                + self.pending_value()
+                + item.margin
+                + self.offset[1]
+                + item.alignment.map_or(0.0, |alignment| alignment.content[1]),
+            alignment: item.alignment,
+        };
+        let layer = self.current_layer();
+        self.anchor(item.block, position, &layer, self.parent_3d);
+        Ok(())
     }
     fn order(&self) -> PaintOrder {
         self.orders.take()
@@ -6866,6 +6923,24 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         ),
         layers: &mut InlineLayers<'a>,
     ) -> Result<(), LayoutError> {
+        self.inline_fragments(line, width, left, layers);
+        for fragment in line.atomics.iter().chain(&line.annotations) {
+            let atomic = self.line_atomic(line, fragment, (atomics, first_line), layers)?;
+            self.place_line_atomic(line, fragment, left, atomic, layers)?;
+        }
+        Ok(())
+    }
+    // The helpers below keep their locals off `inline_content`, whose frame each nested atomic
+    // inline stacks.
+    /// Places the fragments of the inline boxes and links on `line`.
+    #[inline(never)]
+    fn inline_fragments(
+        &mut self,
+        line: &crate::text::Line,
+        width: f32,
+        left: f32,
+        layers: &mut InlineLayers<'a>,
+    ) {
         let source = layers.paragraph;
         let baseline = self.y + line.ascent;
         let origin = [left + self.offset[0], self.top + baseline + self.offset[1]];
@@ -7030,97 +7105,128 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 },
             });
         }
+    }
+    /// The atomic inline or ruby annotation `fragment` on `line` lays out, as measured or
+    /// measured again at the width its line gives it.
+    #[inline(never)]
+    fn line_atomic(
+        &mut self,
+        line: &crate::text::Line,
+        fragment: &crate::text::AtomicFragment,
+        (atomics, first_line): (
+            &mut [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+            &mut [Option<crate::layout::inline::MeasuredAtomic<'a>>],
+        ),
+        layers: &InlineLayers<'a>,
+    ) -> Result<Box<crate::layout::inline::MeasuredAtomic<'a>>, LayoutError> {
+        let source = layers.paragraph;
         let annotations = source.atomics().len()..;
-        for fragment in line.atomics.iter().chain(&line.annotations) {
-            let anchor = source.inline_block(fragment.index);
-            // The first formatted line lays out the part of an annotation's `::first-line`
-            // box (CSS Pseudo-Elements 4 §2.1.3).
-            let block = anchor
-                .block()
-                .first_line_box()
-                .filter(|_| line.first_line_styles)
-                .unwrap_or(anchor.block());
-            let remeasure = |paginator: &mut Self, part: Option<std::ops::Range<usize>>| {
-                paginator.measurer.run(|measurer| {
-                    crate::layout::inline::measure_annotation(
-                        measurer,
-                        (block, part.clone()),
-                        fragment.width,
-                        layers.containing.height,
-                        layers.containing.rtl,
-                    )
-                })
-            };
-            // An annotation whose bases break across lines lays out the part of its contents
-            // each line holds (CSS Ruby 1 §3.4.2).
-            let atomic = if let Some(part) = &fragment.part {
-                remeasure(self, Some(part.clone()))?
+        let anchor = source.inline_block(fragment.index);
+        // The first formatted line lays out the part of an annotation's `::first-line`
+        // box (CSS Pseudo-Elements 4 §2.1.3).
+        let block = anchor
+            .block()
+            .first_line_box()
+            .filter(|_| line.first_line_styles)
+            .unwrap_or(anchor.block());
+        let remeasure = |paginator: &mut Self, part: Option<std::ops::Range<usize>>| {
+            paginator.measurer.run(|measurer| {
+                crate::layout::inline::measure_annotation(
+                    measurer,
+                    (block, part.clone()),
+                    fragment.width,
+                    layers.containing.height,
+                    layers.containing.rtl,
+                )
+            })
+        };
+        // An annotation whose bases break across lines lays out the part of its contents
+        // each line holds (CSS Ruby 1 §3.4.2).
+        Ok(Box::new(if let Some(part) = &fragment.part {
+            remeasure(self, Some(part.clone()))?
+        } else {
+            // The first formatted line lays out an atomic inline's `::first-line` box in its
+            // place (CSS Pseudo-Elements 4 §2.1.3); `source` is then the line's copy.
+            let slot = if line.first_line_styles
+                && first_line.get(fragment.index).is_some_and(Option::is_some)
+            {
+                &mut first_line[fragment.index]
             } else {
-                // The first formatted line lays out an atomic inline's `::first-line` box in its
-                // place (CSS Pseudo-Elements 4 §2.1.3); `source` is then the line's copy.
-                let slot = if line.first_line_styles
-                    && first_line.get(fragment.index).is_some_and(Option::is_some)
-                {
-                    &mut first_line[fragment.index]
-                } else {
-                    &mut atomics[fragment.index]
-                };
-                let atomic = slot
-                    .take()
-                    .expect("each atomic inline is placed on exactly one line");
-                // A ruby column wider than its annotation gives it its width (§4.3).
-                if annotations.contains(&fragment.index) && fragment.width != atomic.metrics.width {
-                    remeasure(self, None)?
-                } else {
-                    atomic
-                }
+                &mut atomics[fragment.index]
             };
-            let inline_box = anchor.inline_box;
-            let chain = inline_chain(source, inline_box);
-            let chain_layers = self.chain_layers(&chain, layers.containing);
-            let layer = chain_layers
-                .last()
-                .cloned()
-                .unwrap_or_else(|| self.current_layer());
-            let key = self.layer_scope(&layer);
-            let opened = self.open_inline_containers(&chain, &chain_layers);
-            // An initial letter sits against its line box's top, and its kerning insets it
-            // past the line's start (CSS Inline 3 §§7.6.1–7.6.2).
-            let (y, x) = match atomic.letter {
-                Some(letter) => (
-                    self.y + letter.top + atomic.margin_top,
-                    if source.style().used_rtl() {
-                        fragment.x + fragment.width + letter.kerning - letter.width
-                    } else {
-                        fragment.x - letter.kerning
-                    },
-                ),
-                None => (
-                    baseline + fragment.baseline - atomic.metrics.baseline + atomic.margin_top,
-                    fragment.x,
-                ),
-            };
-            self.block_at(
-                atomic.block,
-                FixedStart {
-                    breaks: false,
-                    force_hidden: false,
-                    page: self.page,
-                    y,
-                    offset: [
-                        self.offset[0] + left + x + layer.offset[0],
-                        self.offset[1] + layer.offset[1],
-                    ],
-                    clip: layer.clip,
-                    context: layer.context,
-                    group: layer.group,
-                    parent_3d: self.parent_3d.filter(|_| inline_box.is_none()),
-                    key,
-                    reserved_order: None,
+            let atomic = slot
+                .take()
+                .expect("each atomic inline is placed on exactly one line");
+            // A ruby column wider than its annotation gives it its width (§4.3).
+            if annotations.contains(&fragment.index) && fragment.width != atomic.metrics.width {
+                remeasure(self, None)?
+            } else {
+                atomic
+            }
+        }))
+    }
+    /// Lays out `atomic`, the atomic inline or ruby annotation `fragment` on `line`.
+    #[inline(never)]
+    #[expect(
+        clippy::boxed_local,
+        reason = "the measured atomic stays boxed off the frame each nested atomic inline stacks"
+    )]
+    fn place_line_atomic(
+        &mut self,
+        line: &crate::text::Line,
+        fragment: &crate::text::AtomicFragment,
+        left: f32,
+        atomic: Box<crate::layout::inline::MeasuredAtomic<'a>>,
+        layers: &InlineLayers<'a>,
+    ) -> Result<(), LayoutError> {
+        let source = layers.paragraph;
+        let baseline = self.y + line.ascent;
+        let anchor = source.inline_block(fragment.index);
+        let inline_box = anchor.inline_box;
+        let chain = inline_chain(source, inline_box);
+        let chain_layers = self.chain_layers(&chain, layers.containing);
+        let layer = chain_layers
+            .last()
+            .cloned()
+            .unwrap_or_else(|| self.current_layer());
+        let key = self.layer_scope(&layer);
+        let opened = self.open_inline_containers(&chain, &chain_layers);
+        // An initial letter sits against its line box's top, and its kerning insets it
+        // past the line's start (CSS Inline 3 §§7.6.1–7.6.2).
+        let (y, x) = match atomic.letter {
+            Some(letter) => (
+                self.y + letter.top + atomic.margin_top,
+                if source.style().used_rtl() {
+                    fragment.x + fragment.width + letter.kerning - letter.width
+                } else {
+                    fragment.x - letter.kerning
                 },
-            )?;
-            self.close_inline_containers(&opened);
-        }
+            ),
+            None => (
+                baseline + fragment.baseline - atomic.metrics.baseline + atomic.margin_top,
+                fragment.x,
+            ),
+        };
+        self.block_at(
+            *atomic.block,
+            FixedStart {
+                breaks: false,
+                force_hidden: false,
+                page: self.page,
+                y,
+                offset: [
+                    self.offset[0] + left + x + layer.offset[0],
+                    self.offset[1] + layer.offset[1],
+                ],
+                clip: layer.clip,
+                context: layer.context,
+                group: layer.group,
+                parent_3d: self.parent_3d.filter(|_| inline_box.is_none()),
+                key,
+                reserved_order: None,
+            },
+        )?;
+        self.close_inline_containers(&opened);
         Ok(())
     }
     /// Opens a container for each box of `chain` with layers `layers` that is the containing

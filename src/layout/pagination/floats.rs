@@ -379,7 +379,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             Ok(targets)
         })();
         if let Some(snapshot) = snapshot {
-            self.restore_state(snapshot);
+            self.restore_state(*snapshot);
         }
         let targets = result?;
         if targets.is_empty() {
