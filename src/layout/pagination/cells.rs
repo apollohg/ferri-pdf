@@ -518,72 +518,92 @@ impl<'a> Paginator<'a, '_, 'a> {
         cell: &mut CellContinuation<'a, 'a>,
     ) -> Result<Option<ActiveBox<'a>>, LayoutError> {
         let CellFlow {
-            mut frame,
+            frame,
             cursor,
             branch,
             request,
         } = cell.active.take().expect("a completed cell is not resumed");
         cell.parent.forced_breaks = cell.parent.forced_breaks.max(self.forced_breaks);
         self.resume_branch(branch)?;
-        let result = (|| {
-            if let Some(request) = request {
-                self.new_page(request.forced, request.preserve_empty)?;
-            }
-            let available = (self.height - self.bottom_reserve - self.y).max(0.0);
-            let previous_unbroken = self.unbroken;
-            if cell
-                .remaining_height
-                .is_some_and(|height| !overflows(height, available))
-            {
-                self.unbroken += 1;
-            }
-            let progress = self.resume_flow(cursor);
-            self.unbroken = previous_unbroken;
-            let suspended = if let Some(next) = progress? {
-                Some(next)
-            } else {
-                self.resume_block_end(&mut frame)?
-                    .map(|request| (FlowCursor::new(Vec::new(), BreakTail::default()), request))
-            };
-            if let Some((cursor, request)) = suspended {
-                if let Some(remaining) = &mut cell.remaining_height {
-                    *remaining = (*remaining - available).max(0.0);
-                }
-                let branch = self.suspend_branch(cell.depths);
-                cell.parent.forced_breaks =
-                    cell.parent.forced_breaks.max(branch.position.forced_breaks);
-                self.restore_flow_position(cell.parent.clone())?;
-                cell.active = Some(CellFlow {
-                    frame,
-                    cursor,
-                    branch,
-                    request: Some(request),
-                });
-                Ok(None)
-            } else {
-                let active = self.finish_block(frame)?;
-                for containing in cell.table_containing.iter().rev() {
-                    let pending = self
-                        .containers
-                        .pop()
-                        .expect("cell structural container remains active")
-                        .pending;
-                    if !pending.is_empty() {
-                        self.tables
-                            .last_mut()
-                            .expect("cell belongs to its active table")
-                            .positioned
-                            .push((containing.clone(), pending));
-                    }
-                }
-                Ok(Some(active))
-            }
-        })();
+        let result = self.advance_cell_flow(cell, Box::new(frame), (cursor, request));
         self.orders = cell.parent.orders.clone();
         self.measurer.named_pages = cell.parent.named_pages;
         self.parallel_depth = cell.parent.parallel_depth;
         self.reflow_lanes = cell.parent.reflow_lanes;
         self.forced_breaks = self.forced_breaks.max(cell.parent.forced_breaks);
         result
+    }
+
+    /// Resumes the flow of `cell`, whose frame is `frame`, at `cursor` past `request`.
+    fn advance_cell_flow(
+        &mut self,
+        cell: &mut CellContinuation<'a, 'a>,
+        frame: Box<BlockFrame<'a>>,
+        (cursor, request): (Box<FlowCursor<'a, 'a>>, Option<BreakRequest>),
+    ) -> Result<Option<ActiveBox<'a>>, LayoutError> {
+        if let Some(request) = request {
+            self.new_page(request.forced, request.preserve_empty)?;
+        }
+        let available = (self.height - self.bottom_reserve - self.y).max(0.0);
+        let previous_unbroken = self.unbroken;
+        if cell
+            .remaining_height
+            .is_some_and(|height| !overflows(height, available))
+        {
+            self.unbroken += 1;
+        }
+        let progress = self.resume_flow(cursor);
+        self.unbroken = previous_unbroken;
+        self.settle_cell(cell, frame, available, progress)
+    }
+
+    /// Suspends the flow of `cell` where `progress` broke it, or finishes the cell.
+    #[inline(never)]
+    fn settle_cell(
+        &mut self,
+        cell: &mut CellContinuation<'a, 'a>,
+        mut frame: Box<BlockFrame<'a>>,
+        available: f32,
+        progress: Result<Option<(Box<FlowCursor<'a, 'a>>, BreakRequest)>, LayoutError>,
+    ) -> Result<Option<ActiveBox<'a>>, LayoutError> {
+        let suspended = if let Some(next) = progress? {
+            Some(next)
+        } else {
+            self.resume_block_end(&mut frame)?
+                .map(|request| (FlowCursor::new(Vec::new(), BreakTail::default()), request))
+        };
+        if let Some((cursor, request)) = suspended {
+            if let Some(remaining) = &mut cell.remaining_height {
+                *remaining = (*remaining - available).max(0.0);
+            }
+            let branch = self.suspend_branch(cell.depths);
+            cell.parent.forced_breaks =
+                cell.parent.forced_breaks.max(branch.position.forced_breaks);
+            self.restore_flow_position(cell.parent.clone())?;
+            cell.active = Some(CellFlow {
+                frame: *frame,
+                cursor,
+                branch,
+                request: Some(request),
+            });
+            Ok(None)
+        } else {
+            let active = self.finish_block(*frame)?;
+            for containing in cell.table_containing.iter().rev() {
+                let pending = self
+                    .containers
+                    .pop()
+                    .expect("cell structural container remains active")
+                    .pending;
+                if !pending.is_empty() {
+                    self.tables
+                        .last_mut()
+                        .expect("cell belongs to its active table")
+                        .positioned
+                        .push((containing.clone(), pending));
+                }
+            }
+            Ok(Some(active))
+        }
     }
 }

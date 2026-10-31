@@ -257,6 +257,51 @@ fn avoided_break(
     }
 }
 
+/// What measuring the items of a flex container takes of the container (CSS Flexbox 1 §9).
+struct FlexContext<'a> {
+    block: BlockSource<'a>,
+    column: bool,
+    main_reverse: bool,
+    cross_reverse: bool,
+    vertical: VerticalBox,
+    content_height: Option<f32>,
+    main_size: Option<f32>,
+    cross_size: Option<f32>,
+    main_gap: f32,
+    cross_gap: f32,
+    main_sides: [usize; 2],
+    cross_sides: [usize; 2],
+}
+
+struct FlexLine {
+    range: std::ops::Range<usize>,
+    resolved: crate::flex::Line,
+    measured: Vec<Metrics>,
+    cross: f32,
+    baseline: f32,
+    /// The extent below the last-baseline group's baseline, to the line's cross end.
+    last_descent: f32,
+    /// The line's main size.
+    main: f32,
+}
+
+/// The lines of a flex container's items, with the main and cross sizes they give it.
+struct FlexLines {
+    lines: Vec<FlexLine>,
+    numeric: Vec<Item>,
+    used_main: f32,
+    used_cross: f32,
+}
+
+/// The margins of a flex item, by physical side and then by main-axis side.
+type ItemMargins = ([Option<f32>; 4], [Option<f32>; 2]);
+
+/// A row a flex container lays its items out in: where it starts, its extent, and the items
+/// and collapsed items it holds.
+type FlexGroup<'a> = (f32, f32, Vec<MeasuredCell<'a>>, Vec<CollapsedItem<'a>>);
+
+/// Measures a flex container. Its items' measurements nest the containers inside them, so
+/// each step of the algorithm keeps a frame of its own, apart from the items it measures.
 pub(super) fn measure<'a>(
     measurer: &mut Measurer<'a>,
     block: impl Into<BlockSource<'a>>,
@@ -264,7 +309,59 @@ pub(super) fn measure<'a>(
     containing_height: Option<f32>,
     used_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, Failure> {
-    let block = block.into();
+    let context = flex_context(
+        measurer,
+        block.into(),
+        geometry,
+        containing_height,
+        used_height,
+    );
+    let mut data = Vec::new();
+    for source in children(context.block.block)? {
+        data.push(flex_item(measurer, &context, geometry, source)?);
+    }
+    let lines = flex_lines(measurer, &context, geometry, &mut data)?;
+    let mut placement = FlexPlacement::new(&context, &lines);
+    let mut groups = Vec::new();
+    for line in &lines.lines {
+        placement.start_line(&context, &lines, line);
+        for (local, index) in line.range.clone().enumerate() {
+            let Some(place) =
+                placement.place(&context, (&data, &lines), (line, local, index), &mut groups)
+            else {
+                continue;
+            };
+            let measured = measure_item(
+                measurer,
+                &data[index],
+                geometry,
+                place.left,
+                place.width,
+                place.height,
+                context.content_height,
+            );
+            placement.push_item(&context, (&data[index], &place), measured, &mut groups)?;
+        }
+        placement.end_line(&context, line, &mut groups);
+    }
+    finish_flex(
+        measurer,
+        &context,
+        (geometry, containing_height),
+        &lines,
+        placement,
+        groups,
+    )
+}
+
+#[inline(never)]
+fn flex_context<'a>(
+    measurer: &mut Measurer<'a>,
+    block: BlockSource<'a>,
+    geometry: &HorizontalBox,
+    containing_height: Option<f32>,
+    used_height: Option<f32>,
+) -> FlexContext<'a> {
     let style = block.style();
     let flex = &style.flex;
     let column = flex.direction.column();
@@ -285,253 +382,280 @@ pub(super) fn measure<'a>(
     } else {
         content_height
     };
-    let main_gap = flex.gap[usize::from(!column)].resolve(main_size.unwrap_or(0.0));
-    let cross_gap = flex.gap[usize::from(column)].resolve(cross_size.unwrap_or(0.0));
-    let main_sides = if column { [0, 2] } else { [3, 1] };
-    let cross_sides = if column { [3, 1] } else { [0, 2] };
-    let mut data = Vec::new();
-    for source in children(block.block)? {
-        let child = source.style();
-        let natural = block_intrinsic::content(source, measurer, geometry.width)?;
-        let edges = measurer.box_edges(source, geometry.width)?;
-        let padding = edges.padding;
-        let border = edges.border;
-        let margins = child.margin.each_ref().map(|v| v.resolve(geometry.width));
-        let width_edges = padding[1] + padding[3] + border[1] + border[3];
-        let height_edges = padding[0] + padding[2] + border[0] + border[2];
-        let available_width =
-            (geometry.width - width_edges - margins[1].unwrap_or(0.0) - margins[3].unwrap_or(0.0))
-                .max(0.0);
-        let [widths, heights] = if source.image().is_some() {
-            crate::layout::images::constraints(source, geometry.width, content_height)
+    FlexContext {
+        block,
+        column,
+        main_reverse,
+        cross_reverse,
+        vertical,
+        content_height,
+        main_size,
+        cross_size,
+        main_gap: flex.gap[usize::from(!column)].resolve(main_size.unwrap_or(0.0)),
+        cross_gap: flex.gap[usize::from(column)].resolve(cross_size.unwrap_or(0.0)),
+        main_sides: if column { [0, 2] } else { [3, 1] },
+        cross_sides: if column { [3, 1] } else { [0, 2] },
+    }
+}
+
+/// The flex item `source` with its flex base size and its limits (CSS Flexbox 1 §9.2).
+#[inline(never)]
+fn flex_item<'a>(
+    measurer: &mut Measurer<'a>,
+    context: &FlexContext<'a>,
+    geometry: &HorizontalBox,
+    source: &'a BlockBox,
+) -> Result<FlexItem<'a>, Failure> {
+    let style = context.block.style();
+    let flex = &style.flex;
+    let FlexContext {
+        column,
+        main_reverse,
+        content_height,
+        main_size,
+        cross_size,
+        main_sides,
+        ..
+    } = *context;
+    let child = source.style();
+    let natural = block_intrinsic::content(source, measurer, geometry.width)?;
+    let edges = measurer.box_edges(source, geometry.width)?;
+    let padding = edges.padding;
+    let border = edges.border;
+    let margins = child.margin.each_ref().map(|v| v.resolve(geometry.width));
+    let width_edges = padding[1] + padding[3] + border[1] + border[3];
+    let height_edges = padding[0] + padding[2] + border[0] + border[2];
+    let available_width =
+        (geometry.width - width_edges - margins[1].unwrap_or(0.0) - margins[3].unwrap_or(0.0))
+            .max(0.0);
+    let [widths, heights] = if source.image().is_some() {
+        crate::layout::images::constraints(source, geometry.width, content_height)
+    } else {
+        [
+            SizeConstraints::new(
+                [&child.width, &child.min_width, &child.max_width],
+                Some(geometry.width),
+                child.box_sizing,
+                width_edges,
+            )
+            .with_intrinsic(
+                [&child.width, &child.min_width, &child.max_width],
+                natural,
+                Some(available_width),
+            ),
+            SizeConstraints::new(
+                [&child.height, &child.min_height, &child.max_height],
+                content_height,
+                child.box_sizing,
+                height_edges,
+            )
+            .with_stretch(
+                [&child.height, &child.min_height, &child.max_height],
+                content_height.map(|height| {
+                    (height - height_edges - margins[0].unwrap_or(0.0) - margins[2].unwrap_or(0.0))
+                        .max(0.0)
+                }),
+            ),
+        ]
+    };
+    let (align, align_overflow) = child.flex.used_align_self(flex);
+    let preliminary_width = widths.constrain(widths.preferred(
+        if matches!(align, Alignment::Normal | Alignment::Stretch) {
+            available_width
         } else {
-            [
-                SizeConstraints::new(
-                    [&child.width, &child.min_width, &child.max_width],
-                    Some(geometry.width),
-                    child.box_sizing,
-                    width_edges,
-                )
-                .with_intrinsic(
-                    [&child.width, &child.min_width, &child.max_width],
-                    natural,
-                    Some(available_width),
-                ),
-                SizeConstraints::new(
-                    [&child.height, &child.min_height, &child.max_height],
-                    content_height,
-                    child.box_sizing,
-                    height_edges,
-                )
-                .with_stretch(
-                    [&child.height, &child.min_height, &child.max_height],
-                    content_height.map(|height| {
+            natural.max.min(available_width).max(natural.min)
+        },
+    ));
+    let mut item = FlexItem {
+        source,
+        containing_rtl: style.used_rtl(),
+        main: Item {
+            collapsed: false,
+            basis: 0.0,
+            minimum: 0.0,
+            maximum: None,
+            grow: child.flex.grow,
+            shrink: child.flex.shrink,
+            edges: if column { height_edges } else { width_edges },
+            margins: main_sides.map(|side| margins[side]),
+        },
+        cross: if column { widths } else { heights },
+        padding,
+        border,
+        margins,
+        align,
+        align_overflow,
+        natural_cross: preliminary_width,
+        natural_main: 0.0,
+        inline_definite: false,
+    };
+    // CSS Flexbox 1 §9.8: a stretched item of a single-line container with a definite
+    // cross size has a definite cross size.
+    let ratio = source
+        .image()
+        .is_none()
+        .then(|| {
+            crate::layout::ratio::PreferredRatio::of_box(
+                child,
+                &crate::layout::geometry::Edges { padding, border },
+            )
+        })
+        .flatten();
+    let definite_cross = (!column).then_some(()).and_then(|()| {
+        item.cross
+            .specified
+            .map(|height| item.cross.constrain(height))
+            .or_else(|| {
+                (flex.wrap == FlexWrap::NoWrap
+                    && matches!(align, Alignment::Normal | Alignment::Stretch)
+                    && margins[0].is_some()
+                    && margins[2].is_some())
+                .then_some(content_height)
+                .flatten()
+                .map(|height| {
+                    item.cross.constrain(
                         (height
                             - height_edges
                             - margins[0].unwrap_or(0.0)
                             - margins[2].unwrap_or(0.0))
-                        .max(0.0)
-                    }),
-                ),
-            ]
-        };
-        let (align, align_overflow) = child.flex.used_align_self(flex);
-        let preliminary_width = widths.constrain(widths.preferred(
-            if matches!(align, Alignment::Normal | Alignment::Stretch) {
-                available_width
-            } else {
-                natural.max.min(available_width).max(natural.min)
-            },
-        ));
-        let mut item = FlexItem {
-            source,
-            containing_rtl: style.used_rtl(),
-            main: Item {
-                collapsed: false,
-                basis: 0.0,
-                minimum: 0.0,
-                maximum: None,
-                grow: child.flex.grow,
-                shrink: child.flex.shrink,
-                edges: if column { height_edges } else { width_edges },
-                margins: main_sides.map(|side| margins[side]),
-            },
-            cross: if column { widths } else { heights },
-            padding,
-            border,
-            margins,
-            align,
-            align_overflow,
-            natural_cross: preliminary_width,
-            natural_main: 0.0,
-            inline_definite: false,
-        };
-        // CSS Flexbox 1 §9.8: a stretched item of a single-line container with a definite
-        // cross size has a definite cross size.
-        let ratio = source
-            .image()
-            .is_none()
-            .then(|| {
-                crate::layout::ratio::PreferredRatio::of_box(
-                    child,
-                    &crate::layout::geometry::Edges { padding, border },
-                )
+                        .max(0.0),
+                    )
+                })
             })
-            .flatten();
-        let definite_cross = (!column).then_some(()).and_then(|()| {
-            item.cross
-                .specified
-                .map(|height| item.cross.constrain(height))
-                .or_else(|| {
-                    (flex.wrap == FlexWrap::NoWrap
-                        && matches!(align, Alignment::Normal | Alignment::Stretch)
-                        && margins[0].is_some()
-                        && margins[2].is_some())
-                    .then_some(content_height)
-                    .flatten()
-                    .map(|height| {
-                        item.cross.constrain(
-                            (height
-                                - height_edges
-                                - margins[0].unwrap_or(0.0)
-                                - margins[2].unwrap_or(0.0))
-                            .max(0.0),
-                        )
-                    })
-                })
-        });
-        let natural_main = if column {
-            let measured = item_metrics(
-                measurer,
-                &item,
-                geometry,
-                preliminary_width,
-                None,
-                content_height,
-            )?;
-            (measured.height - height_edges).max(0.0)
-        } else if let (Some(ratio), Some(cross)) = (ratio, definite_cross) {
-            // §9.2.3 B: the flex base size from the definite cross size and the ratio.
-            ratio.width(cross)
+    });
+    let natural_main = if column {
+        let measured = item_metrics(
+            measurer,
+            &item,
+            geometry,
+            preliminary_width,
+            None,
+            content_height,
+        )?;
+        (measured.height - height_edges).max(0.0)
+    } else if let (Some(ratio), Some(cross)) = (ratio, definite_cross) {
+        // §9.2.3 B: the flex base size from the definite cross size and the ratio.
+        ratio.width(cross)
+    } else {
+        natural.max
+    };
+    let constraints = SizeConstraints::new(
+        if column {
+            [&child.height, &child.min_height, &child.max_height]
         } else {
-            natural.max
-        };
-        let constraints = SizeConstraints::new(
-            if column {
-                [&child.height, &child.min_height, &child.max_height]
-            } else {
-                [&child.width, &child.min_width, &child.max_width]
-            },
-            main_size,
-            child.box_sizing,
-            item.main.edges,
-        );
-        let main_natural = if column {
-            crate::style::IntrinsicWidths {
-                min: natural_main,
-                max: natural_main,
-            }
-        } else {
-            natural
-        };
-        let constraints = constraints.with_intrinsic(
-            if column {
-                [&child.height, &child.min_height, &child.max_height]
-            } else {
-                [&child.width, &child.min_width, &child.max_width]
-            },
-            main_natural,
-            main_size.map(|v| {
-                (v - item.main.edges
-                    - item.main.margins[0].unwrap_or(0.0)
-                    - item.main.margins[1].unwrap_or(0.0))
-                .max(0.0)
-            }),
-        );
-        // §4.5: a non-replaced item's content size suggestion is clamped by the cross limits
-        // through its ratio, and its transferred size suggestion converts a definite cross size.
-        let auto_min = match ratio {
-            Some(ratio) if !column => {
-                let content = item
-                    .cross
-                    .maximum
-                    .map_or(natural.min, |maximum| natural.min.min(ratio.width(maximum)));
-                let content = if *child.min_height.basis() == Size::Auto {
-                    content
-                } else {
-                    content.max(ratio.width(item.cross.minimum))
-                };
-                item.cross.specified.map_or(content, |height| {
-                    content.max(ratio.width(item.cross.constrain(height)))
-                })
-            }
-            _ if column => natural_main,
-            _ => natural.min,
-        };
-        let min_main = if column {
-            &child.min_height
-        } else {
-            &child.min_width
-        };
-        let minimum = if *min_main.basis() == Size::Auto {
-            constraints.automatic_minimum(
-                constraints
-                    .maximum
-                    .map_or(auto_min, |v| auto_min.min(v))
-                    .min(constraints.specified.unwrap_or(f32::INFINITY)),
-            )
-        } else {
-            constraints.minimum
-        };
-        let basis = base_size(
-            &child.flex.basis,
-            &constraints,
-            main_size,
-            child.box_sizing,
-            item.main.edges,
-            main_natural,
-            natural_main,
-        );
-        let basis_definite = match &child.flex.basis {
-            FlexBasis::Size(size) if *size.basis() == Size::Auto => {
-                let preferred = if column { &child.height } else { &child.width };
-                preferred.resolve_definite(main_size).is_some()
-                    || (ratio.is_some() && definite_cross.is_some())
-            }
-            FlexBasis::Size(size) => size.resolve_definite(main_size).is_some(),
-            FlexBasis::Content => false,
-        };
-        item.inline_definite = !measurer.space.indefinite_inline
-            || if column {
-                child.width.resolve_definite(None).is_some()
-                    || (cross_size.is_some()
-                        && flex.wrap == FlexWrap::NoWrap
-                        && matches!(align, Alignment::Normal | Alignment::Stretch)
-                        && margins[1].is_some()
-                        && margins[3].is_some())
-                    || (ratio.is_some() && (main_size.is_some() || basis_definite))
-            } else {
-                main_size.is_some() || basis_definite
-            };
-        item.natural_main = natural_main;
-        item.main.basis = basis;
-        item.main.minimum = minimum;
-        item.main.maximum = constraints.maximum;
-        if main_reverse {
-            item.main.margins.swap(0, 1);
+            [&child.width, &child.min_width, &child.max_width]
+        },
+        main_size,
+        child.box_sizing,
+        item.main.edges,
+    );
+    let main_natural = if column {
+        crate::style::IntrinsicWidths {
+            min: natural_main,
+            max: natural_main,
         }
-        data.push(item);
+    } else {
+        natural
+    };
+    let constraints = constraints.with_intrinsic(
+        if column {
+            [&child.height, &child.min_height, &child.max_height]
+        } else {
+            [&child.width, &child.min_width, &child.max_width]
+        },
+        main_natural,
+        main_size.map(|v| {
+            (v - item.main.edges
+                - item.main.margins[0].unwrap_or(0.0)
+                - item.main.margins[1].unwrap_or(0.0))
+            .max(0.0)
+        }),
+    );
+    // §4.5: a non-replaced item's content size suggestion is clamped by the cross limits
+    // through its ratio, and its transferred size suggestion converts a definite cross size.
+    let auto_min = match ratio {
+        Some(ratio) if !column => {
+            let content = item
+                .cross
+                .maximum
+                .map_or(natural.min, |maximum| natural.min.min(ratio.width(maximum)));
+            let content = if *child.min_height.basis() == Size::Auto {
+                content
+            } else {
+                content.max(ratio.width(item.cross.minimum))
+            };
+            item.cross.specified.map_or(content, |height| {
+                content.max(ratio.width(item.cross.constrain(height)))
+            })
+        }
+        _ if column => natural_main,
+        _ => natural.min,
+    };
+    let min_main = if column {
+        &child.min_height
+    } else {
+        &child.min_width
+    };
+    let minimum = if *min_main.basis() == Size::Auto {
+        constraints.automatic_minimum(
+            constraints
+                .maximum
+                .map_or(auto_min, |v| auto_min.min(v))
+                .min(constraints.specified.unwrap_or(f32::INFINITY)),
+        )
+    } else {
+        constraints.minimum
+    };
+    let basis = base_size(
+        &child.flex.basis,
+        &constraints,
+        main_size,
+        child.box_sizing,
+        item.main.edges,
+        main_natural,
+        natural_main,
+    );
+    let basis_definite = match &child.flex.basis {
+        FlexBasis::Size(size) if *size.basis() == Size::Auto => {
+            let preferred = if column { &child.height } else { &child.width };
+            preferred.resolve_definite(main_size).is_some()
+                || (ratio.is_some() && definite_cross.is_some())
+        }
+        FlexBasis::Size(size) => size.resolve_definite(main_size).is_some(),
+        FlexBasis::Content => false,
+    };
+    item.inline_definite = !measurer.space.indefinite_inline
+        || if column {
+            child.width.resolve_definite(None).is_some()
+                || (cross_size.is_some()
+                    && flex.wrap == FlexWrap::NoWrap
+                    && matches!(align, Alignment::Normal | Alignment::Stretch)
+                    && margins[1].is_some()
+                    && margins[3].is_some())
+                || (ratio.is_some() && (main_size.is_some() || basis_definite))
+        } else {
+            main_size.is_some() || basis_definite
+        };
+    item.natural_main = natural_main;
+    item.main.basis = basis;
+    item.main.minimum = minimum;
+    item.main.maximum = constraints.maximum;
+    if main_reverse {
+        item.main.margins.swap(0, 1);
     }
+    Ok(item)
+}
+
+/// Collects the items into flex lines and resolves their flexible lengths and cross sizes
+/// (CSS Flexbox 1 §9.3–9.4), again with collapsed items' struts once any collapse.
+fn flex_lines<'a>(
+    measurer: &mut Measurer<'a>,
+    context: &FlexContext<'a>,
+    geometry: &HorizontalBox,
+    data: &mut [FlexItem<'a>],
+) -> Result<FlexLines, Failure> {
+    let style = context.block.style();
     let mut numeric: Vec<_> = data.iter().map(|item| item.main).collect();
-    struct FlexLine {
-        range: std::ops::Range<usize>,
-        resolved: crate::flex::Line,
-        measured: Vec<Metrics>,
-        cross: f32,
-        baseline: f32,
-        /// The extent below the last-baseline group's baseline, to the line's cross end.
-        last_descent: f32,
-    }
     let mut struts: Option<Vec<f32>> = None;
     let trimmed = style.margin_trim.sides(style.used_rtl());
     // Lines form from untrimmed margins; each pass trims the edges of its own lines.
@@ -539,353 +663,590 @@ pub(super) fn measure<'a>(
         .iter()
         .map(|item| (item.margins, item.main.margins))
         .collect();
-    let (lines, used_main, used_cross) = loop {
-        measurer.work.spend(numeric.len().max(1))?;
-        for ((item, numeric), (margins, main)) in data.iter_mut().zip(&mut numeric).zip(&untrimmed)
-        {
-            item.margins = *margins;
-            item.main.margins = *main;
-            numeric.margins = *main;
-        }
+    loop {
         let ranges =
-            crate::flex::line_ranges(&numeric, main_size, main_gap, flex.wrap != FlexWrap::NoWrap)?;
-        trim_margins(
-            &mut data,
-            &mut numeric,
-            &ranges,
-            trimmed,
-            column,
-            [main_reverse, cross_reverse],
-        );
+            break_flex_lines(measurer, context, data, &mut numeric, (&untrimmed, trimmed))?;
         let mut lines = Vec::new();
-        let mut used_main = main_size.unwrap_or(0.0);
+        let mut used_main = context.main_size.unwrap_or(0.0);
         for range in ranges {
-            let natural_main: f32 = range
+            let line = flex_line(
+                measurer,
+                context,
+                geometry,
+                (data, &numeric),
+                range,
+                struts.as_deref(),
+            )?;
+            used_main = used_main.max(line.main);
+            lines.push(line);
+        }
+        if let Some(used_cross) = settle_flex_lines(
+            context,
+            geometry,
+            data,
+            (&mut numeric, &mut lines),
+            &mut struts,
+        ) {
+            return Ok(FlexLines {
+                lines,
+                numeric,
+                used_main,
+                used_cross,
+            });
+        }
+    }
+}
+
+/// The items each flex line holds, with the margins at their edges trimmed.
+#[inline(never)]
+fn break_flex_lines<'a>(
+    measurer: &mut Measurer<'a>,
+    context: &FlexContext<'a>,
+    data: &mut [FlexItem<'a>],
+    numeric: &mut [Item],
+    (untrimmed, trimmed): (&[ItemMargins], [bool; 4]),
+) -> Result<Vec<std::ops::Range<usize>>, Failure> {
+    let style = context.block.style();
+    let flex = &style.flex;
+    measurer.work.spend(numeric.len().max(1))?;
+    for ((item, numeric), (margins, main)) in data.iter_mut().zip(numeric.iter_mut()).zip(untrimmed)
+    {
+        item.margins = *margins;
+        item.main.margins = *main;
+        numeric.margins = *main;
+    }
+    let ranges = crate::flex::line_ranges(
+        numeric,
+        context.main_size,
+        context.main_gap,
+        flex.wrap != FlexWrap::NoWrap,
+    )?;
+    trim_margins(
+        data,
+        numeric,
+        &ranges,
+        trimmed,
+        context.column,
+        [context.main_reverse, context.cross_reverse],
+    );
+    Ok(ranges)
+}
+
+/// The flex line of the items `range`, its items measured at their resolved main sizes.
+fn flex_line<'a>(
+    measurer: &mut Measurer<'a>,
+    context: &FlexContext<'a>,
+    geometry: &HorizontalBox,
+    (data, numeric): (&[FlexItem<'a>], &[Item]),
+    range: std::ops::Range<usize>,
+    struts: Option<&[f32]>,
+) -> Result<FlexLine, Failure> {
+    let (main, resolved) = resolve_flex_line(measurer, context, (data, numeric), &range)?;
+    let mut line = FlexLine {
+        range,
+        resolved,
+        measured: Vec::new(),
+        cross: 0.0,
+        baseline: 0.0,
+        last_descent: 0.0,
+        main,
+    };
+    let mut extents = LineExtents::default();
+    for (local, index) in line.range.clone().enumerate() {
+        let item = &data[index];
+        if numeric[index].collapsed {
+            line.cross = line.cross.max(struts.expect("second-pass struts")[index]);
+            line.measured.push(Metrics {
+                grid_rows: None,
+                grid_baselines: None,
+                height: 0.0,
+                baseline: None,
+                last_baseline: None,
+            });
+            continue;
+        }
+        let size = line.resolved.sizes[local];
+        let (width, height) = if context.column {
+            (item.natural_cross, Some(size))
+        } else {
+            (size, None)
+        };
+        let child = item_metrics(
+            measurer,
+            item,
+            geometry,
+            width,
+            height,
+            context.content_height,
+        )?;
+        extents.add(context, item, width, &child, &mut line);
+        line.measured.push(child);
+    }
+    line.cross = line
+        .cross
+        .max(extents.baseline + extents.descent)
+        .max(extents.last_ascent + line.last_descent);
+    Ok(line)
+}
+
+/// The main size of the flex line of the items `range`, and their resolved flexible lengths
+/// in it (CSS Flexbox 1 §9.7).
+#[inline(never)]
+fn resolve_flex_line(
+    measurer: &Measurer<'_>,
+    context: &FlexContext<'_>,
+    (data, numeric): (&[FlexItem<'_>], &[Item]),
+    range: &std::ops::Range<usize>,
+) -> Result<(f32, crate::flex::Line), Failure> {
+    let style = context.block.style();
+    let flex = &style.flex;
+    let natural_main: f32 = range
+        .clone()
+        .filter(|&i| !numeric[i].collapsed)
+        .map(|i| {
+            data[i]
+                .main
+                .basis
+                .max(data[i].main.minimum)
+                .min(data[i].main.maximum.unwrap_or(f32::INFINITY))
+                + data[i].main.edges
+                + data[i].main.margins.into_iter().flatten().sum::<f32>()
+        })
+        .sum::<f32>()
+        + context.main_gap
+            * range
                 .clone()
                 .filter(|&i| !numeric[i].collapsed)
-                .map(|i| {
-                    data[i]
-                        .main
-                        .basis
-                        .max(data[i].main.minimum)
-                        .min(data[i].main.maximum.unwrap_or(f32::INFINITY))
-                        + data[i].main.edges
-                        + data[i].main.margins.into_iter().flatten().sum::<f32>()
-                })
-                .sum::<f32>()
-                + main_gap
-                    * range
-                        .clone()
-                        .filter(|&i| !numeric[i].collapsed)
-                        .count()
-                        .saturating_sub(1) as f32;
-            let main = main_size.unwrap_or(natural_main);
-            used_main = used_main.max(main);
-            measurer.work.spend(range.len().max(1))?;
-            let resolved = crate::flex::resolve_line(
-                &numeric[range.clone()],
-                main,
-                main_gap,
-                alignment(flex.justify, flex.direction.reverse()),
-                flex.justify_overflow,
-            )?;
-            let mut measured = Vec::new();
-            let mut cross = 0.0f32;
-            let mut baseline = 0.0f32;
-            let mut descent = 0.0f32;
-            let [mut last_ascent, mut last_descent] = [0.0f32; 2];
-            for (local, index) in range.clone().enumerate() {
-                let item = &data[index];
-                if numeric[index].collapsed {
-                    cross = cross.max(struts.as_ref().expect("second-pass struts")[index]);
-                    measured.push(Metrics {
-                        grid_rows: None,
-                        grid_baselines: None,
-                        height: 0.0,
-                        baseline: None,
-                        last_baseline: None,
-                    });
-                    continue;
-                }
-                let size = resolved.sizes[local];
-                let (width, height) = if column {
-                    (item.natural_cross, Some(size))
-                } else {
-                    (size, None)
-                };
-                let child = item_metrics(measurer, item, geometry, width, height, content_height)?;
-                let outer_cross = if column {
-                    width + item.edges(false)
-                } else {
-                    child.height
-                };
-                let margins = cross_sides.map(|side| item.margins[side].unwrap_or(0.0));
-                cross = cross.max(outer_cross + margins[0] + margins[1]);
-                if !column
-                    && item.align == Alignment::Baseline
-                    && cross_sides.iter().all(|&side| item.margins[side].is_some())
-                {
-                    let first = child.baseline_from_start(cross_reverse);
-                    let start = usize::from(cross_reverse);
-                    baseline = baseline.max(first + margins[start]);
-                    descent = descent.max(child.height - first + margins[1 - start]);
-                }
-                // CSS Box Alignment 3 §9.3: last-baseline items align their last baselines
-                // as a group at the line's cross end, their fallback alignment.
-                if !column
-                    && item.align == Alignment::LastBaseline
-                    && cross_sides.iter().all(|&side| item.margins[side].is_some())
-                {
-                    let last = child.last_baseline_from_start(cross_reverse);
-                    let start = usize::from(cross_reverse);
-                    last_ascent = last_ascent.max(last + margins[start]);
-                    last_descent = last_descent.max(child.height - last + margins[1 - start]);
-                }
-                measured.push(child);
-            }
-            cross = cross
-                .max(baseline + descent)
-                .max(last_ascent + last_descent);
-            lines.push(FlexLine {
-                range,
-                resolved,
-                measured,
-                cross,
-                baseline,
-                last_descent,
-            });
-        }
-        let natural_cross = lines.iter().map(|line| line.cross).sum::<f32>()
-            + cross_gap * lines.len().saturating_sub(1) as f32;
-        let used_cross = if column {
-            geometry.width
+                .count()
+                .saturating_sub(1) as f32;
+    let main = context.main_size.unwrap_or(natural_main);
+    measurer.work.spend(range.len().max(1))?;
+    let resolved = crate::flex::resolve_line(
+        &numeric[range.clone()],
+        main,
+        context.main_gap,
+        alignment(flex.justify, flex.direction.reverse()),
+        flex.justify_overflow,
+    )?;
+    Ok((main, resolved))
+}
+
+/// The cross extents of a flex line's items around its first and last baselines.
+#[derive(Default)]
+struct LineExtents {
+    baseline: f32,
+    descent: f32,
+    last_ascent: f32,
+}
+
+impl LineExtents {
+    /// Adds the item `item`, of inline size `width` and measured as `child`, to `line`.
+    #[inline(never)]
+    fn add(
+        &mut self,
+        context: &FlexContext<'_>,
+        item: &FlexItem<'_>,
+        width: f32,
+        child: &Metrics,
+        line: &mut FlexLine,
+    ) {
+        let FlexContext {
+            column,
+            cross_reverse,
+            cross_sides,
+            ..
+        } = *context;
+        let outer_cross = if column {
+            width + item.edges(false)
         } else {
-            (vertical.used_height(
-                natural_cross
-                    + geometry.padding[0]
-                    + geometry.padding[2]
-                    + geometry.border[0]
-                    + geometry.border[2],
-            ) - geometry.padding[0]
-                - geometry.padding[2]
-                - geometry.border[0]
-                - geometry.border[2])
-                .max(0.0)
+            child.height
         };
-        if flex.wrap == FlexWrap::NoWrap && !lines.is_empty() {
-            lines[0].cross = used_cross;
-        } else if matches!(flex.align_content, Alignment::Normal | Alignment::Stretch)
-            && used_cross > natural_cross
-            && !lines.is_empty()
+        let margins = cross_sides.map(|side| item.margins[side].unwrap_or(0.0));
+        line.cross = line.cross.max(outer_cross + margins[0] + margins[1]);
+        if !column
+            && item.align == Alignment::Baseline
+            && cross_sides.iter().all(|&side| item.margins[side].is_some())
         {
-            let extra = (used_cross - natural_cross) / lines.len() as f32;
-            for line in &mut lines {
-                line.cross += extra;
-            }
+            let first = child.baseline_from_start(cross_reverse);
+            let start = usize::from(cross_reverse);
+            self.baseline = self.baseline.max(first + margins[start]);
+            self.descent = self.descent.max(child.height - first + margins[1 - start]);
+            line.baseline = self.baseline;
         }
-        if struts.is_some()
-            || !data
-                .iter()
-                .any(|item| item.source.style().visibility == crate::style::Visibility::Collapse)
+        // CSS Box Alignment 3 §9.3: last-baseline items align their last baselines as a group
+        // at the line's cross end, their fallback alignment.
+        if !column
+            && item.align == Alignment::LastBaseline
+            && cross_sides.iter().all(|&side| item.margins[side].is_some())
         {
-            break (lines, used_main, used_cross);
+            let last = child.last_baseline_from_start(cross_reverse);
+            let start = usize::from(cross_reverse);
+            self.last_ascent = self.last_ascent.max(last + margins[start]);
+            line.last_descent = line
+                .last_descent
+                .max(child.height - last + margins[1 - start]);
         }
-        let mut sizes = vec![0.0; data.len()];
-        for line in &lines {
-            for index in line.range.clone() {
-                if data[index].source.style().visibility == crate::style::Visibility::Collapse {
-                    numeric[index].collapsed = true;
-                    sizes[index] = line.cross;
-                }
-            }
-        }
-        struts = Some(sizes);
-    };
-    let total_cross = lines.iter().map(|line| line.cross).sum::<f32>()
+    }
+}
+
+/// The container's used cross size once its lines are final, or `None` once collapsed items
+/// first become struts and the lines form again.
+#[inline(never)]
+fn settle_flex_lines(
+    context: &FlexContext<'_>,
+    geometry: &HorizontalBox,
+    data: &[FlexItem<'_>],
+    (numeric, lines): (&mut [Item], &mut [FlexLine]),
+    struts: &mut Option<Vec<f32>>,
+) -> Option<f32> {
+    let style = context.block.style();
+    let flex = &style.flex;
+    let (column, vertical, cross_gap) = (context.column, &context.vertical, context.cross_gap);
+    let natural_cross = lines.iter().map(|line| line.cross).sum::<f32>()
         + cross_gap * lines.len().saturating_sub(1) as f32;
-    let (mut cross_cursor, cross_between) = spacing(
-        alignment(flex.align_content, flex.wrap == FlexWrap::WrapReverse),
-        flex.align_content_overflow,
-        used_cross - total_cross,
-        lines.len(),
-    );
-    let top = geometry.padding[0] + geometry.border[0];
-    let bottom = geometry.padding[2] + geometry.border[2];
-    let mut placed = Vec::new();
-    let mut column_collapsed = Vec::new();
-    let mut groups = Vec::new();
-    for line in lines {
-        let mut collapsed = Vec::new();
-        let line_start = if cross_reverse {
-            used_cross - cross_cursor - line.cross
+    let used_cross = if column {
+        geometry.width
+    } else {
+        (vertical.used_height(
+            natural_cross
+                + geometry.padding[0]
+                + geometry.padding[2]
+                + geometry.border[0]
+                + geometry.border[2],
+        ) - geometry.padding[0]
+            - geometry.padding[2]
+            - geometry.border[0]
+            - geometry.border[2])
+            .max(0.0)
+    };
+    if flex.wrap == FlexWrap::NoWrap && !lines.is_empty() {
+        lines[0].cross = used_cross;
+    } else if matches!(flex.align_content, Alignment::Normal | Alignment::Stretch)
+        && used_cross > natural_cross
+        && !lines.is_empty()
+    {
+        let extra = (used_cross - natural_cross) / lines.len() as f32;
+        for line in lines.iter_mut() {
+            line.cross += extra;
+        }
+    }
+    if struts.is_some()
+        || !data
+            .iter()
+            .any(|item| item.source.style().visibility == crate::style::Visibility::Collapse)
+    {
+        return Some(used_cross);
+    }
+    let mut sizes = vec![0.0; data.len()];
+    for line in lines.iter() {
+        for index in line.range.clone() {
+            if data[index].source.style().visibility == crate::style::Visibility::Collapse {
+                numeric[index].collapsed = true;
+                sizes[index] = line.cross;
+            }
+        }
+    }
+    *struts = Some(sizes);
+    None
+}
+
+/// Where a flex item lies in its line, and the sizes it is measured at.
+struct ItemPlace {
+    left: f32,
+    y: f32,
+    width: f32,
+    height: Option<f32>,
+    main: f32,
+    stretch: bool,
+    free: f32,
+}
+
+/// The placement of a flex container's items, line by line (CSS Flexbox 1 §9.4–9.6).
+struct FlexPlacement<'a> {
+    cross_cursor: f32,
+    cross_between: f32,
+    line_start: f32,
+    placed: Vec<MeasuredCell<'a>>,
+    collapsed: Vec<CollapsedItem<'a>>,
+    column_collapsed: Vec<CollapsedItem<'a>>,
+}
+
+impl<'a> FlexPlacement<'a> {
+    fn new(context: &FlexContext<'a>, lines: &FlexLines) -> Self {
+        let style = context.block.style();
+        let flex = &style.flex;
+        let total_cross = lines.lines.iter().map(|line| line.cross).sum::<f32>()
+            + context.cross_gap * lines.lines.len().saturating_sub(1) as f32;
+        let (cross_cursor, cross_between) = spacing(
+            alignment(flex.align_content, flex.wrap == FlexWrap::WrapReverse),
+            flex.align_content_overflow,
+            lines.used_cross - total_cross,
+            lines.lines.len(),
+        );
+        Self {
+            cross_cursor,
+            cross_between,
+            line_start: 0.0,
+            placed: Vec::new(),
+            collapsed: Vec::new(),
+            column_collapsed: Vec::new(),
+        }
+    }
+
+    fn start_line(&mut self, context: &FlexContext<'a>, lines: &FlexLines, line: &FlexLine) {
+        self.collapsed = Vec::new();
+        self.line_start = if context.cross_reverse {
+            lines.used_cross - self.cross_cursor - line.cross
         } else {
-            cross_cursor
+            self.cross_cursor
         };
-        for ((local, index), preliminary) in line.range.clone().enumerate().zip(line.measured) {
-            let item = &data[index];
-            if numeric[index].collapsed {
-                let start = line.resolved.starts[local];
-                let y = if main_reverse {
-                    used_main - start
-                } else {
-                    start
-                };
-                let mut event = CollapsedItem {
-                    source: item.source,
-                    offset: if column { y } else { 0.0 },
-                    after_events: block.block.following_events(item.source).collect(),
-                };
-                if column && flex.wrap == FlexWrap::NoWrap {
-                    event.offset = 0.0;
-                    groups.push((y, 0.0, Vec::new(), vec![event]));
-                } else if column {
-                    column_collapsed.push(event);
-                } else {
-                    collapsed.push(event);
-                }
-                continue;
-            }
-            let main = line.resolved.sizes[local];
-            let mut cross = if column {
-                item.natural_cross
+    }
+
+    /// Where the item `index`, at `local` in `line`, lies, unless it is collapsed, which
+    /// places it as a collapsed item instead.
+    #[inline(never)]
+    fn place(
+        &mut self,
+        context: &FlexContext<'a>,
+        (data, lines): (&[FlexItem<'a>], &FlexLines),
+        (line, local, index): (&FlexLine, usize, usize),
+        groups: &mut Vec<FlexGroup<'a>>,
+    ) -> Option<ItemPlace> {
+        let style = context.block.style();
+        let flex = &style.flex;
+        let FlexContext {
+            block,
+            column,
+            main_reverse,
+            cross_reverse,
+            cross_sides,
+            ..
+        } = *context;
+        let (used_main, line_start) = (lines.used_main, self.line_start);
+        let item = &data[index];
+        if lines.numeric[index].collapsed {
+            let start = line.resolved.starts[local];
+            let y = if main_reverse {
+                used_main - start
             } else {
-                (preliminary.height - item.edges(true)).max(0.0)
+                start
             };
-            let margins = cross_sides.map(|side| item.margins[side]);
-            let auto = margins.iter().filter(|m| m.is_none()).count();
-            let edges = item.edges(!column);
-            if matches!(item.align, Alignment::Normal | Alignment::Stretch)
-                && item.cross.specified.is_none()
-                && auto == 0
-            {
-                cross = item.cross.constrain(item.cross.preferred(
-                    (line.cross - edges - margins.into_iter().flatten().sum::<f32>()).max(0.0),
-                ));
-            }
-            let free = line.cross - cross - edges - margins.into_iter().flatten().sum::<f32>();
-            let physical_start = usize::from(cross_reverse);
-            let margin_start = margins[physical_start].unwrap_or(if free > 0.0 {
-                free / auto.max(1) as f32
-            } else {
-                0.0
-            });
-            let offset = if auto > 0 {
-                if free < 0.0 && margins[physical_start].is_none() {
-                    0.0
-                } else {
-                    margin_start
-                }
-            } else if item.align == Alignment::Baseline && !column {
-                line.baseline - preliminary.baseline_from_start(cross_reverse)
-            } else if item.align == Alignment::LastBaseline && !column {
-                line.cross - line.last_descent - preliminary.last_baseline_from_start(cross_reverse)
-            } else {
-                margin_start
-                    + spacing(
-                        alignment(item.align, flex.wrap == FlexWrap::WrapReverse),
-                        item.align_overflow,
-                        free,
-                        1,
-                    )
-                    .0
-            };
-            let cross_start = line_start
-                + if cross_reverse {
-                    line.cross - offset - cross - edges
-                } else {
-                    offset
-                };
-            let main_start = if main_reverse {
-                used_main - line.resolved.starts[local] - main - item.edges(column)
-            } else {
-                line.resolved.starts[local]
-            };
-            let (left, y, width, height) = if column {
-                (cross_start, main_start, cross, Some(main))
-            } else {
-                (main_start, cross_start, main, Some(cross))
-            };
-            let stretch = !column
-                && matches!(item.align, Alignment::Normal | Alignment::Stretch)
-                && item.cross.specified.is_none()
-                && auto == 0;
-            let mut measured = measure_item(
-                measurer,
-                item,
-                geometry,
-                left,
-                width,
-                height,
-                content_height,
-            )?;
-            // A preferred aspect ratio makes an automatic cross size definite.
-            let ratio = crate::layout::ratio::PreferredRatio::of_box(
-                item.source.style(),
-                &crate::layout::geometry::Edges {
-                    padding: item.padding,
-                    border: item.border,
-                },
-            );
-            // CSS Containment 2 §3.2: a size-contained item's content never sizes it, so
-            // fragmentation does not grow it to that content either.
-            let contained = item.source.style().containment().size[1];
-            if !contained
-                && ((!column
-                    && item.cross.specified.is_none()
-                    && item.cross.maximum.is_none()
-                    && (ratio.is_none() || stretch))
-                    || (column
-                        && item
-                            .source
-                            .style()
-                            .height
-                            .is_auto_block_size(item.source.image().is_some())
-                        && main == item.natural_main
-                        && ratio.is_none()))
-            {
-                measured.constrained = false;
-            }
-            let cell = MeasuredCell {
-                clipped_height: None,
+            let mut event = CollapsedItem {
+                source: item.source,
+                offset: if column { y } else { 0.0 },
                 after_events: block.block.following_events(item.source).collect(),
-                grid_cell: None,
-                backgrounds: Vec::new(),
-                paint_offset: None,
-                flex_item: true,
-                block: measured,
-                offset: if column { y } else { y - line_start },
-                stretch: stretch && free <= 0.0,
-                after: if column {
-                    0.0
-                } else {
-                    item.margins[2].unwrap_or(0.0)
-                },
             };
             if column && flex.wrap == FlexWrap::NoWrap {
-                let extent = cell.block.height;
-                groups.push((
-                    y,
-                    extent,
-                    vec![MeasuredCell {
-                        offset: 0.0,
-                        ..cell
-                    }],
-                    Vec::new(),
-                ));
+                event.offset = 0.0;
+                groups.push((y, 0.0, Vec::new(), vec![event]));
+            } else if column {
+                self.column_collapsed.push(event);
             } else {
-                placed.push(cell);
+                self.collapsed.push(event);
             }
+            return None;
         }
-        if !column {
-            groups.push((
-                line_start,
-                line.cross,
-                std::mem::take(&mut placed),
-                collapsed,
+        let preliminary = &line.measured[local];
+        let main = line.resolved.sizes[local];
+        let mut cross = if column {
+            item.natural_cross
+        } else {
+            (preliminary.height - item.edges(true)).max(0.0)
+        };
+        let margins = cross_sides.map(|side| item.margins[side]);
+        let auto = margins.iter().filter(|m| m.is_none()).count();
+        let edges = item.edges(!column);
+        if matches!(item.align, Alignment::Normal | Alignment::Stretch)
+            && item.cross.specified.is_none()
+            && auto == 0
+        {
+            cross = item.cross.constrain(item.cross.preferred(
+                (line.cross - edges - margins.into_iter().flatten().sum::<f32>()).max(0.0),
             ));
         }
-        cross_cursor += line.cross + cross_gap + cross_between;
+        let free = line.cross - cross - edges - margins.into_iter().flatten().sum::<f32>();
+        let physical_start = usize::from(cross_reverse);
+        let margin_start = margins[physical_start].unwrap_or(if free > 0.0 {
+            free / auto.max(1) as f32
+        } else {
+            0.0
+        });
+        let offset = if auto > 0 {
+            if free < 0.0 && margins[physical_start].is_none() {
+                0.0
+            } else {
+                margin_start
+            }
+        } else if item.align == Alignment::Baseline && !column {
+            line.baseline - preliminary.baseline_from_start(cross_reverse)
+        } else if item.align == Alignment::LastBaseline && !column {
+            line.cross - line.last_descent - preliminary.last_baseline_from_start(cross_reverse)
+        } else {
+            margin_start
+                + spacing(
+                    alignment(item.align, flex.wrap == FlexWrap::WrapReverse),
+                    item.align_overflow,
+                    free,
+                    1,
+                )
+                .0
+        };
+        let cross_start = line_start
+            + if cross_reverse {
+                line.cross - offset - cross - edges
+            } else {
+                offset
+            };
+        let main_start = if main_reverse {
+            used_main - line.resolved.starts[local] - main - item.edges(column)
+        } else {
+            line.resolved.starts[local]
+        };
+        let (left, y, width, height) = if column {
+            (cross_start, main_start, cross, Some(main))
+        } else {
+            (main_start, cross_start, main, Some(cross))
+        };
+        let stretch = !column
+            && matches!(item.align, Alignment::Normal | Alignment::Stretch)
+            && item.cross.specified.is_none()
+            && auto == 0;
+        Some(ItemPlace {
+            left,
+            y,
+            width,
+            height,
+            main,
+            stretch,
+            free,
+        })
     }
+
+    /// Adds the item `item` placed at `place` and measured as `measured`.
+    #[inline(never)]
+    fn push_item(
+        &mut self,
+        context: &FlexContext<'a>,
+        (item, place): (&FlexItem<'a>, &ItemPlace),
+        measured: Result<MeasuredBlock<'a>, Failure>,
+        groups: &mut Vec<FlexGroup<'a>>,
+    ) -> Result<(), Failure> {
+        let mut measured = measured?;
+        let style = context.block.style();
+        let flex = &style.flex;
+        let (column, block) = (context.column, context.block);
+        let ItemPlace {
+            y,
+            main,
+            stretch,
+            free,
+            ..
+        } = *place;
+        // A preferred aspect ratio makes an automatic cross size definite.
+        let ratio = crate::layout::ratio::PreferredRatio::of_box(
+            item.source.style(),
+            &crate::layout::geometry::Edges {
+                padding: item.padding,
+                border: item.border,
+            },
+        );
+        // CSS Containment 2 §3.2: a size-contained item's content never sizes it, so
+        // fragmentation does not grow it to that content either.
+        let contained = item.source.style().containment().size[1];
+        if !contained
+            && ((!column
+                && item.cross.specified.is_none()
+                && item.cross.maximum.is_none()
+                && (ratio.is_none() || stretch))
+                || (column
+                    && item
+                        .source
+                        .style()
+                        .height
+                        .is_auto_block_size(item.source.image().is_some())
+                    && main == item.natural_main
+                    && ratio.is_none()))
+        {
+            measured.constrained = false;
+        }
+        let cell = MeasuredCell {
+            clipped_height: None,
+            after_events: block.block.following_events(item.source).collect(),
+            grid_cell: None,
+            backgrounds: Vec::new(),
+            paint_offset: None,
+            flex_item: true,
+            block: measured,
+            offset: if column { y } else { y - self.line_start },
+            stretch: stretch && free <= 0.0,
+            after: if column {
+                0.0
+            } else {
+                item.margins[2].unwrap_or(0.0)
+            },
+        };
+        if column && flex.wrap == FlexWrap::NoWrap {
+            let extent = cell.block.height;
+            groups.push((
+                y,
+                extent,
+                vec![MeasuredCell {
+                    offset: 0.0,
+                    ..cell
+                }],
+                Vec::new(),
+            ));
+        } else {
+            self.placed.push(cell);
+        }
+        Ok(())
+    }
+
+    fn end_line(
+        &mut self,
+        context: &FlexContext<'a>,
+        line: &FlexLine,
+        groups: &mut Vec<FlexGroup<'a>>,
+    ) {
+        if !context.column {
+            groups.push((
+                self.line_start,
+                line.cross,
+                std::mem::take(&mut self.placed),
+                std::mem::take(&mut self.collapsed),
+            ));
+        }
+        self.cross_cursor += line.cross + context.cross_gap + self.cross_between;
+    }
+}
+
+/// The flex container's box around its placed items.
+#[inline(never)]
+fn finish_flex<'a>(
+    measurer: &mut Measurer<'a>,
+    context: &FlexContext<'a>,
+    (geometry, containing_height): (&HorizontalBox, Option<f32>),
+    lines: &FlexLines,
+    placement: FlexPlacement<'a>,
+    mut groups: Vec<FlexGroup<'a>>,
+) -> Result<MeasuredBlock<'a>, Failure> {
+    let style = context.block.style();
+    let flex = &style.flex;
+    let FlexContext {
+        block,
+        column,
+        main_reverse,
+        cross_reverse,
+        ref vertical,
+        ..
+    } = *context;
+    let FlexLines {
+        used_main,
+        used_cross,
+        ..
+    } = *lines;
+    let top = geometry.padding[0] + geometry.border[0];
+    let bottom = geometry.padding[2] + geometry.border[2];
     let content = if column { used_main } else { used_cross };
     let height = vertical.used_height(top + content + bottom);
     if !height.is_finite() {
@@ -894,8 +1255,8 @@ pub(super) fn measure<'a>(
         }
         .into());
     }
-    if column && (!placed.is_empty() || !column_collapsed.is_empty()) {
-        groups.push((0.0, content, placed, column_collapsed));
+    if column && (!placement.placed.is_empty() || !placement.column_collapsed.is_empty()) {
+        groups.push((0.0, content, placement.placed, placement.column_collapsed));
     }
     groups.sort_by(|a, b| a.0.total_cmp(&b.0));
     let has_forced = groups

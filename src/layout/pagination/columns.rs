@@ -330,10 +330,11 @@ struct RowPlacement<'a> {
     used: f32,
 }
 
-/// Owns nested layout state without retaining a borrow of the shared measurer.
+/// Owns nested layout state without retaining a borrow of the shared measurer. The state is
+/// boxed: balancing keeps several layouts at once in the frames that nested columns stack.
 #[derive(Clone)]
 struct ColumnLayout<'a, 't> {
-    state: PaginationState<'a, 't, ()>,
+    state: Box<PaginationState<'a, 't, ()>>,
     cursor: Option<Box<FlowCursor<'a, 't>>>,
     request: Option<BreakRequest>,
 }
@@ -347,7 +348,7 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
         measurer.work.spend(items.len().max(1))?;
         rows.offset = start.offset;
         Ok(Self {
-            state: Paginator::nested(measurer, rows, start).with_measurer(()),
+            state: Box::new(Paginator::nested(measurer, rows, start).with_measurer(())),
             cursor: Some(FlowCursor::new(items.to_vec(), BreakTail::default())),
             request: None,
         })
@@ -486,7 +487,7 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
     }
 
     fn advance(self, measurer: &mut Measurer<'t>) -> Result<Self, LayoutError> {
-        let mut paginator = self.state.with_measurer(measurer);
+        let mut paginator = (*self.state).with_measurer(measurer);
         let (mut cursor, mut request) = (None, None);
         // Content that needs a column past the limit ends the columns' flow.
         paginator.within_page_limit(|paginator| {
@@ -506,7 +507,7 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
             Ok(())
         })?;
         Ok(Self {
-            state: paginator.with_measurer(()),
+            state: Box::new(paginator.with_measurer(())),
             cursor,
             request,
         })
@@ -522,7 +523,7 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
             self.cursor.is_none(),
             "column output requires a completed flow"
         );
-        self.state.with_measurer(measurer).into_output()
+        (*self.state).with_measurer(measurer).into_output()
     }
 }
 

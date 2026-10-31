@@ -2426,26 +2426,45 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         }
         Ok(())
     }
+    /// Lays `block` out. Its content's flow nests the layout of the blocks inside it, so its
+    /// start and end stay apart from that flow, in frames of their own.
     fn block(
         &mut self,
         block: MeasuredBlock<'a>,
         tail: BreakTail,
     ) -> Result<ActiveBox<'a>, LayoutError> {
+        let (mut frame, monolithic) = self.open_block(block, tail)?;
+        self.unbroken += monolithic;
+        let flowed = self.flow(std::mem::take(&mut frame.items), tail);
+        self.unbroken -= monolithic;
+        flowed?;
+        self.close_block(frame)
+    }
+    /// The frame of `block` started in the flow, with the content it lays out unbroken.
+    #[inline(never)]
+    fn open_block(
+        &mut self,
+        block: MeasuredBlock<'a>,
+        tail: BreakTail,
+    ) -> Result<(Box<BlockFrame<'a>>, usize), LayoutError> {
         let (block, request) = self.prepare_block(block, tail)?;
         if let Some(request) = request {
             self.new_page(request.forced, request.preserve_empty)?;
         }
         // CSS Containment 2 §3.1: a size containment box is monolithic.
         let monolithic = usize::from(block.style.containment().size[1]);
-        let mut frame = self.start_block(block)?;
-        self.unbroken += monolithic;
-        let flowed = self.flow(std::mem::take(&mut frame.items), tail);
-        self.unbroken -= monolithic;
-        flowed?;
+        Ok((Box::new(self.start_block(block)?), monolithic))
+    }
+    /// Ends the block of `frame` once its content is laid out.
+    #[inline(never)]
+    fn close_block(
+        &mut self,
+        mut frame: Box<BlockFrame<'a>>,
+    ) -> Result<ActiveBox<'a>, LayoutError> {
         while let Some(request) = self.resume_block_end(&mut frame)? {
             self.new_page(request.forced, request.preserve_empty)?;
         }
-        self.finish_block(frame)
+        self.finish_block(*frame)
     }
     fn refresh_block(
         &mut self,
@@ -3417,61 +3436,95 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         mut cursor: Box<FlowCursor<'a, 't>>,
     ) -> Result<Option<(Box<FlowCursor<'a, 't>>, BreakRequest)>, LayoutError> {
         while !cursor.frames.is_empty() {
-            if let Some(mut columns) = cursor.columns.take() {
-                if let Some(request) = self.resume_columns(&mut columns)? {
-                    cursor.columns = Some(columns);
-                    return Ok(Some((cursor, request)));
-                }
-                continue;
-            }
-            if cursor.row_entry.is_some() {
+            let request = if cursor.columns.is_some() {
+                self.resume_cursor_columns(&mut cursor)?
+            } else if cursor.row_entry.is_some() {
                 self.open_row(&mut cursor)?;
-                continue;
-            }
-            if let Some(mut row) = cursor.row.take() {
-                if let Some(request) = self.resume_row(&mut row)? {
-                    cursor.row = Some(row);
-                    return Ok(Some((cursor, request)));
-                }
-                self.close_row(row)?;
-                continue;
-            }
-            if let Some((paragraph, tail)) = cursor.paragraph.take() {
-                if let Some((next, request)) = self.paragraph_fragment(paragraph, tail)? {
-                    cursor.paragraph = Some((next, tail));
-                    return Ok(Some((cursor, request)));
-                }
-                continue;
-            }
-            let (item, tails, ready) = if let Some((item, tails)) = cursor.ready.take() {
-                (item, tails, true)
+                None
+            } else if cursor.row.is_some() {
+                self.resume_cursor_row(&mut cursor)?
+            } else if cursor.paragraph.is_some() {
+                self.resume_cursor_paragraph(&mut cursor)?
             } else {
-                let frame = cursor.frames.last_mut().unwrap();
-                let Some((item, tail)) = frame.items.next() else {
-                    if let Some(request) = self.close_flow_frame(&mut cursor)? {
-                        return Ok(Some((cursor, request)));
-                    }
-                    continue;
-                };
-                self.measurer.work.spend(1)?;
-                (item, tail, false)
+                self.next_flow_item(&mut cursor)?
             };
-            let tail = tails.at(self.fragmentainers.breaks_page(self.page));
-            match item {
-                FlowItem::Positioned(item) => self.place_positioned(&item)?,
-                item => {
-                    if let Some(request) =
-                        self.flow_item(&mut cursor, item, (tails, tail), ready)?
-                    {
-                        return Ok(Some((cursor, request)));
-                    }
-                }
+            if let Some(request) = request {
+                return Ok(Some((cursor, request)));
             }
         }
         Ok(None)
     }
     // The helpers below keep their locals off `resume_flow`, whose frame each nested
-    // paragraph, float and row stacks.
+    // paragraph, float and row stacks, and keep each kind of content off the others' frames.
+    #[inline(never)]
+    fn resume_cursor_columns(
+        &mut self,
+        cursor: &mut FlowCursor<'a, 't>,
+    ) -> Result<Option<BreakRequest>, LayoutError> {
+        let Some(mut columns) = cursor.columns.take() else {
+            return Ok(None);
+        };
+        let request = self.resume_columns(&mut columns)?;
+        if request.is_some() {
+            cursor.columns = Some(columns);
+        }
+        Ok(request)
+    }
+    #[inline(never)]
+    fn resume_cursor_row(
+        &mut self,
+        cursor: &mut FlowCursor<'a, 't>,
+    ) -> Result<Option<BreakRequest>, LayoutError> {
+        let Some(mut row) = cursor.row.take() else {
+            return Ok(None);
+        };
+        if let Some(request) = self.resume_row(&mut row)? {
+            cursor.row = Some(row);
+            return Ok(Some(request));
+        }
+        self.close_row(row)?;
+        Ok(None)
+    }
+    #[inline(never)]
+    fn resume_cursor_paragraph(
+        &mut self,
+        cursor: &mut FlowCursor<'a, 't>,
+    ) -> Result<Option<BreakRequest>, LayoutError> {
+        let Some((paragraph, tail)) = cursor.paragraph.take() else {
+            return Ok(None);
+        };
+        let Some((next, request)) = self.paragraph_fragment(paragraph, tail)? else {
+            return Ok(None);
+        };
+        cursor.paragraph = Some((next, tail));
+        Ok(Some(request))
+    }
+    /// Places the next item of the flow, or closes its innermost frame once it has none,
+    /// returning the break it needs first.
+    #[inline(never)]
+    fn next_flow_item(
+        &mut self,
+        cursor: &mut FlowCursor<'a, 't>,
+    ) -> Result<Option<BreakRequest>, LayoutError> {
+        let (item, tails, ready) = if let Some((item, tails)) = cursor.ready.take() {
+            (item, tails, true)
+        } else {
+            let frame = cursor.frames.last_mut().unwrap();
+            let Some((item, tail)) = frame.items.next() else {
+                return self.close_flow_frame(cursor);
+            };
+            self.measurer.work.spend(1)?;
+            (item, tail, false)
+        };
+        let tail = tails.at(self.fragmentainers.breaks_page(self.page));
+        match item {
+            FlowItem::Positioned(item) => {
+                self.place_positioned(&item)?;
+                Ok(None)
+            }
+            item => self.flow_item(cursor, item, (tails, tail), ready),
+        }
+    }
     #[inline(never)]
     fn open_row(&mut self, cursor: &mut FlowCursor<'a, 't>) -> Result<(), LayoutError> {
         if let Some(entry) = cursor.row_entry.take() {

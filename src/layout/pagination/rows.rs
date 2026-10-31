@@ -14,6 +14,14 @@ type Stretch<'a> = (
     Option<usize>,
     Vec<&'a crate::document::SemanticEvent>,
 );
+/// What a row does with its first lane next.
+enum LaneTurn {
+    Advance,
+    /// The row's lanes all wait for the next source row.
+    Wait,
+    Yield(BreakRequest),
+}
+
 type Lane<'a, 't> = (
     cells::CellContinuation<'a, 't>,
     bool,
@@ -767,217 +775,268 @@ impl<'a> Paginator<'a, '_, 'a> {
             {
                 return Ok(Some(request));
             }
-            let RowCursor {
-                row,
-                end,
-                stretches,
-                plan,
-                active_cells,
-                origin,
-                row_ends,
-                source_rows,
-                grid_ends,
-                entered,
-                next_row,
-                boundary,
-                frontier,
-                frontier_y,
-                yielded,
-                ..
-            } = cursor;
-            let source_index = source_rows.start;
-            let source_row = row.band.as_ref().map(|_| source_index);
-            while !active_cells.is_empty() {
-                if *boundary {
-                    self.measurer.work.spend(active_cells.len())?;
-                    if active_cells
-                        .iter()
-                        .all(|(continuation, _, _, _, _, index)| {
-                            let range = continuation.grid_rows.clone().unwrap_or_else(|| {
-                                plan.as_ref().unwrap().cell_rows(index.unwrap())
-                            });
-                            let page = if row.grid.is_some() {
-                                row_ends
-                                    .get(&(source_index + 1))
-                                    .map_or(origin.1, |end| end.0.max(origin.1))
-                            } else {
-                                end.0.max(origin.1)
-                            };
-                            range.end > next_row.unwrap()
-                                && continuation.next_page(&self.fragmentainers) > page
-                        })
-                    {
-                        break;
-                    }
-                    let first = active_cells
-                        .iter()
-                        .enumerate()
-                        .min_by_key(|(_, (continuation, _, _, _, _, _))| {
-                            continuation.next_page(&self.fragmentainers)
-                        })
-                        .unwrap()
-                        .0;
-                    let next = active_cells.remove(first).unwrap();
-                    active_cells.push_front(next);
+            while !cursor.active_cells.is_empty() {
+                match self.next_lane(cursor)? {
+                    LaneTurn::Wait => break,
+                    LaneTurn::Yield(request) => return Ok(Some(request)),
+                    LaneTurn::Advance => {}
                 }
-                if self.unbroken == 0 {
-                    if active_cells
-                        .front()
-                        .unwrap()
-                        .0
-                        .next_page(&self.fragmentainers)
-                        > *frontier
-                    {
-                        self.measurer.work.spend(active_cells.len())?;
-                        let first = active_cells
-                            .iter()
-                            .enumerate()
-                            .min_by_key(|(_, (cell, _, _, _, _, _))| {
-                                cell.next_page(&self.fragmentainers)
-                            })
-                            .unwrap()
-                            .0;
-                        let next = active_cells.remove(first).unwrap();
-                        active_cells.push_front(next);
-                    }
-                    let lane = &active_cells.front().unwrap().0;
-                    if lane.next_page(&self.fragmentainers) > *frontier {
-                        let mut request = lane.break_request().unwrap_or_default();
-                        // Alignment can place a lane beyond an otherwise empty fragment.
-                        request.preserve_empty |= lane.position().0 > *frontier;
-                        self.select_page(*frontier, *frontier_y);
-                        // A frontier holding no content is not left, so the lane resumes on it
-                        // and starts it with the content it broke before.
-                        if self.leaves_page(request) {
-                            *yielded = true;
-                            return Ok(Some(request));
-                        }
-                    }
-                }
-                let (mut continuation, stretch, after, paint_start, backgrounds, grid_cell) =
-                    active_cells.pop_front().unwrap();
-                let Some(active) = self.advance_cell(&mut continuation)? else {
-                    let (page, y) = continuation.position();
-                    if page == *frontier {
-                        *frontier_y = frontier_y.max(y);
-                    }
-                    active_cells.push_back((
-                        continuation,
-                        stretch,
-                        after,
-                        paint_start,
-                        backgrounds,
-                        grid_cell,
-                    ));
-                    continue;
-                };
-                if self.page == *frontier {
-                    *frontier_y = frontier_y.max(self.y);
-                }
-                let after_events = std::mem::take(&mut continuation.after_events);
-                if stretch {
-                    if let Some(index) = grid_cell
-                        && !self
-                            .tables
-                            .last()
-                            .unwrap()
-                            .flow
-                            .plan
-                            .cell_has_explicit_height(index)
-                    {
-                        let height = active
-                            .fragments
-                            .iter()
-                            .map(|&(page, slot)| match &self.display_lists[page][slot].item {
-                                DisplayItem::Box(paint) => paint.rect.height,
-                                _ => unreachable!("cell fragments are box paints"),
-                            })
-                            .sum();
-                        self.tables.last_mut().unwrap().flow.heights[index].height = height;
-                    }
-                    stretches.push((
-                        active,
-                        after,
-                        paint_start,
-                        backgrounds,
-                        grid_cell,
-                        after_events,
-                    ));
-                } else {
-                    for event in after_events {
-                        self.string_locations.record(self.page, event);
-                    }
-                }
-                self.y += after;
-                if let Some(range) = &continuation.grid_rows
-                    && range.len() == 1
-                {
-                    let endpoint = row_ends.entry(range.end).or_insert((self.page, self.y));
-                    if self.page > endpoint.0 || (self.page == endpoint.0 && self.y > endpoint.1) {
-                        *endpoint = (self.page, self.y);
-                    }
-                }
-                if let Some(index) = grid_cell {
-                    let row_end = plan.as_ref().unwrap().cell_rows(index).end;
-                    let endpoint = row_ends.entry(row_end).or_insert((self.page, self.y));
-                    if self.page > endpoint.0 || (self.page == endpoint.0 && self.y > endpoint.1) {
-                        *endpoint = (self.page, self.y);
-                    }
-                }
-                if self.page > end.0 || (self.page == end.0 && self.y > end.1) {
-                    *end = (self.page, self.y);
-                }
-                self.pending.clear();
+                let lane = &mut cursor
+                    .active_cells
+                    .front_mut()
+                    .expect("the row has an active lane")
+                    .0;
+                let advanced = self.advance_cell(lane);
+                self.after_lane(cursor, advanced)?;
             }
-            if let Some(source_row) = source_row {
-                row_ends
-                    .entry(source_row + 1)
-                    .or_insert((origin.1, origin.2));
-            }
-            if let (Some(source_row), Some(plan)) = (source_row, plan.as_ref())
-                && source_row + 1 < row.band.as_ref().unwrap().end
-            {
-                let events = plan.row_exit_events(source_row);
-                if !events.is_empty() {
-                    let position = self.flow_position();
-                    let table = self.tables.last().unwrap();
-                    let geometry = self.measurer.run(|measurer| {
-                        plan.resolve_rows(
-                            measurer,
-                            &table.flow.heights,
-                            table.flow.spacing,
-                            &table.flow.geometry,
-                        )
-                    })?;
-                    let height = geometry.starts[source_row + 1]
-                        - geometry.starts[origin.0]
-                        - table.flow.spacing;
-                    self.finish_height(origin.1, origin.2, height)?;
-                    for event in events {
-                        self.string_locations.record(self.page, event);
-                    }
-                    self.restore_flow_position(position)?;
-                }
-            }
-            if let Some(grid) = &row.grid {
-                let track = &grid.tracks[source_index];
-                self.select_page(origin.1, origin.2);
-                self.finish_height(origin.1, origin.2, track.area.end - track.area.start)?;
-                if track.grows
-                    && let Some(&(page, y)) = row_ends.get(&(source_index + 1))
-                    && (page > self.page || (page == self.page && y > self.y))
-                {
-                    self.select_page(page, y);
-                }
-                grid_ends.push((self.page, self.y));
-                if self.page > end.0 || (self.page == end.0 && self.y > end.1) {
-                    *end = (self.page, self.y);
-                }
-            }
-            source_rows.start += 1;
-            *entered = false;
+            self.leave_source_row(cursor)?;
         }
         Ok(None)
+    }
+    // The helpers below keep their locals off `resume_row`, whose frame each table nested in
+    // a cell stacks.
+    /// Brings the lane to advance next to the front of the row's lanes, or finds that the
+    /// row waits for the next row or breaks first.
+    #[inline(never)]
+    fn next_lane(&mut self, cursor: &mut RowCursor<'a, 'a>) -> Result<LaneTurn, LayoutError> {
+        let RowCursor {
+            row,
+            end,
+            plan,
+            active_cells,
+            origin,
+            row_ends,
+            source_rows,
+            next_row,
+            boundary,
+            frontier,
+            frontier_y,
+            yielded,
+            ..
+        } = cursor;
+        let source_index = source_rows.start;
+        if *boundary {
+            self.measurer.work.spend(active_cells.len())?;
+            if active_cells
+                .iter()
+                .all(|(continuation, _, _, _, _, index)| {
+                    let range = continuation
+                        .grid_rows
+                        .clone()
+                        .unwrap_or_else(|| plan.as_ref().unwrap().cell_rows(index.unwrap()));
+                    let page = if row.grid.is_some() {
+                        row_ends
+                            .get(&(source_index + 1))
+                            .map_or(origin.1, |end| end.0.max(origin.1))
+                    } else {
+                        end.0.max(origin.1)
+                    };
+                    range.end > next_row.unwrap()
+                        && continuation.next_page(&self.fragmentainers) > page
+                })
+            {
+                return Ok(LaneTurn::Wait);
+            }
+            let first = active_cells
+                .iter()
+                .enumerate()
+                .min_by_key(|(_, (continuation, _, _, _, _, _))| {
+                    continuation.next_page(&self.fragmentainers)
+                })
+                .unwrap()
+                .0;
+            let next = active_cells.remove(first).unwrap();
+            active_cells.push_front(next);
+        }
+        if self.unbroken == 0 {
+            if active_cells
+                .front()
+                .unwrap()
+                .0
+                .next_page(&self.fragmentainers)
+                > *frontier
+            {
+                self.measurer.work.spend(active_cells.len())?;
+                let first = active_cells
+                    .iter()
+                    .enumerate()
+                    .min_by_key(|(_, (cell, _, _, _, _, _))| cell.next_page(&self.fragmentainers))
+                    .unwrap()
+                    .0;
+                let next = active_cells.remove(first).unwrap();
+                active_cells.push_front(next);
+            }
+            let lane = &active_cells.front().unwrap().0;
+            if lane.next_page(&self.fragmentainers) > *frontier {
+                let mut request = lane.break_request().unwrap_or_default();
+                // Alignment can place a lane beyond an otherwise empty fragment.
+                request.preserve_empty |= lane.position().0 > *frontier;
+                self.select_page(*frontier, *frontier_y);
+                // A frontier holding no content is not left, so the lane resumes on it
+                // and starts it with the content it broke before.
+                if self.leaves_page(request) {
+                    *yielded = true;
+                    return Ok(LaneTurn::Yield(request));
+                }
+            }
+        }
+        Ok(LaneTurn::Advance)
+    }
+    /// Places the cell that the row's first lane finished as `advanced`, or moves the lane
+    /// behind the others when it broke.
+    #[inline(never)]
+    fn after_lane(
+        &mut self,
+        cursor: &mut RowCursor<'a, 'a>,
+        advanced: Result<Option<ActiveBox<'a>>, LayoutError>,
+    ) -> Result<(), LayoutError> {
+        let RowCursor {
+            end,
+            stretches,
+            plan,
+            active_cells,
+            row_ends,
+            frontier,
+            frontier_y,
+            ..
+        } = cursor;
+        let Some(active) = advanced? else {
+            let lane = active_cells
+                .pop_front()
+                .expect("the row advanced its first lane");
+            let (page, y) = lane.0.position();
+            if page == *frontier {
+                *frontier_y = frontier_y.max(y);
+            }
+            active_cells.push_back(lane);
+            return Ok(());
+        };
+        let (mut continuation, stretch, after, paint_start, backgrounds, grid_cell) = active_cells
+            .pop_front()
+            .expect("the row advanced its first lane");
+        if self.page == *frontier {
+            *frontier_y = frontier_y.max(self.y);
+        }
+        let after_events = std::mem::take(&mut continuation.after_events);
+        if stretch {
+            if let Some(index) = grid_cell
+                && !self
+                    .tables
+                    .last()
+                    .unwrap()
+                    .flow
+                    .plan
+                    .cell_has_explicit_height(index)
+            {
+                let height = active
+                    .fragments
+                    .iter()
+                    .map(|&(page, slot)| match &self.display_lists[page][slot].item {
+                        DisplayItem::Box(paint) => paint.rect.height,
+                        _ => unreachable!("cell fragments are box paints"),
+                    })
+                    .sum();
+                self.tables.last_mut().unwrap().flow.heights[index].height = height;
+            }
+            stretches.push((
+                active,
+                after,
+                paint_start,
+                backgrounds,
+                grid_cell,
+                after_events,
+            ));
+        } else {
+            for event in after_events {
+                self.string_locations.record(self.page, event);
+            }
+        }
+        self.y += after;
+        if let Some(range) = &continuation.grid_rows
+            && range.len() == 1
+        {
+            let endpoint = row_ends.entry(range.end).or_insert((self.page, self.y));
+            if self.page > endpoint.0 || (self.page == endpoint.0 && self.y > endpoint.1) {
+                *endpoint = (self.page, self.y);
+            }
+        }
+        if let Some(index) = grid_cell {
+            let row_end = plan.as_ref().unwrap().cell_rows(index).end;
+            let endpoint = row_ends.entry(row_end).or_insert((self.page, self.y));
+            if self.page > endpoint.0 || (self.page == endpoint.0 && self.y > endpoint.1) {
+                *endpoint = (self.page, self.y);
+            }
+        }
+        if self.page > end.0 || (self.page == end.0 && self.y > end.1) {
+            *end = (self.page, self.y);
+        }
+        self.pending.clear();
+        Ok(())
+    }
+    /// Ends the source row the row's lanes have all passed.
+    #[inline(never)]
+    fn leave_source_row(&mut self, cursor: &mut RowCursor<'a, 'a>) -> Result<(), LayoutError> {
+        let RowCursor {
+            row,
+            end,
+            plan,
+            origin,
+            row_ends,
+            source_rows,
+            grid_ends,
+            entered,
+            ..
+        } = cursor;
+        let source_index = source_rows.start;
+        let source_row = row.band.as_ref().map(|_| source_index);
+        if let Some(source_row) = source_row {
+            row_ends
+                .entry(source_row + 1)
+                .or_insert((origin.1, origin.2));
+        }
+        if let (Some(source_row), Some(plan)) = (source_row, plan.as_ref())
+            && source_row + 1 < row.band.as_ref().unwrap().end
+        {
+            let events = plan.row_exit_events(source_row);
+            if !events.is_empty() {
+                let position = self.flow_position();
+                let table = self.tables.last().unwrap();
+                let geometry = self.measurer.run(|measurer| {
+                    plan.resolve_rows(
+                        measurer,
+                        &table.flow.heights,
+                        table.flow.spacing,
+                        &table.flow.geometry,
+                    )
+                })?;
+                let height = geometry.starts[source_row + 1]
+                    - geometry.starts[origin.0]
+                    - table.flow.spacing;
+                self.finish_height(origin.1, origin.2, height)?;
+                for event in events {
+                    self.string_locations.record(self.page, event);
+                }
+                self.restore_flow_position(position)?;
+            }
+        }
+        if let Some(grid) = &row.grid {
+            let track = &grid.tracks[source_index];
+            self.select_page(origin.1, origin.2);
+            self.finish_height(origin.1, origin.2, track.area.end - track.area.start)?;
+            if track.grows
+                && let Some(&(page, y)) = row_ends.get(&(source_index + 1))
+                && (page > self.page || (page == self.page && y > self.y))
+            {
+                self.select_page(page, y);
+            }
+            grid_ends.push((self.page, self.y));
+            if self.page > end.0 || (self.page == end.0 && self.y > end.1) {
+                *end = (self.page, self.y);
+            }
+        }
+        source_rows.start += 1;
+        *entered = false;
+        Ok(())
     }
     fn order_grid_text(&mut self, trace: &GridTrace) {
         for (page, lines) in self.pages.iter_mut().enumerate() {

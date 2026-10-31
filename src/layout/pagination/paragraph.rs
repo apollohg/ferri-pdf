@@ -31,6 +31,29 @@ impl FloatTrial {
     }
 }
 
+/// The fragment of a paragraph that a fragmentainer takes, while its lines are placed.
+struct ParagraphFragment<'a> {
+    cursor: Box<ParagraphCursor<'a, 'a>>,
+    /// The lines the fragment takes.
+    take: usize,
+    request: BreakRequest,
+    float_anchors: Vec<&'a crate::document::Anchor>,
+    fragment_trim: [bool; 2],
+}
+
+/// A line of a paragraph fragment being placed, with where it is placed.
+struct FragmentLine {
+    line: crate::text::Line,
+    x: f32,
+    width: f32,
+    /// The line's alignment offset.
+    offset: f32,
+    baseline: f32,
+    end_trim: f32,
+    /// The footnotes the line calls.
+    footnotes: Vec<usize>,
+}
+
 /// Retains source progress and inline paint state between physical page fragments.
 #[derive(Clone)]
 pub(super) struct ParagraphCursor<'a, 't> {
@@ -599,11 +622,28 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
         Ok(())
     }
+    /// Places the fragment of the paragraph at `cursor` that fits the fragmentainer, returning
+    /// where the paragraph continues. Its lines' atomic inlines nest the layout of their
+    /// content, so the lines place one by one apart from fitting and ending the fragment.
     pub(super) fn paragraph_fragment(
+        &mut self,
+        cursor: Box<ParagraphCursor<'a, 'a>>,
+        tail: BreakTail,
+    ) -> Result<Option<(Box<ParagraphCursor<'a, 'a>>, BreakRequest)>, LayoutError> {
+        let mut fragment = self.fit_paragraph_fragment(cursor, tail)?;
+        for _ in 0..fragment.take {
+            self.place_fragment_line(&mut fragment)?;
+        }
+        self.end_paragraph_fragment(fragment)
+    }
+    /// The fragment of the paragraph at `cursor` that fits the fragmentainer, with the inline
+    /// floats it takes placed.
+    #[inline(never)]
+    fn fit_paragraph_fragment(
         &mut self,
         mut cursor: Box<ParagraphCursor<'a, 'a>>,
         tail: BreakTail,
-    ) -> Result<Option<(Box<ParagraphCursor<'a, 'a>>, BreakRequest)>, LayoutError> {
+    ) -> Result<ParagraphFragment<'a>, LayoutError> {
         let float_anchors: Vec<_> = cursor
             .source
             .anchors()
@@ -638,32 +678,32 @@ impl<'a> Paginator<'a, '_, 'a> {
             source,
             style,
             mut prepared,
-            mut positions,
-            mut position,
-            mut lines,
-            mut x,
-            mut width,
-            mut containing_height,
+            positions,
+            position,
+            lines,
+            x,
+            width,
+            containing_height,
             candidate_complete,
             candidate_page,
-            mut geometry,
-            mut anchors,
-            mut atomics,
+            geometry,
+            anchors,
+            atomics,
             metrics,
-            mut first_line_atomics,
+            first_line_atomics,
             first_line_metrics,
-            mut consumed_anchors,
-            mut consumed_events,
+            consumed_anchors,
+            consumed_events,
             mut consumed_floats,
-            mut line_index,
+            line_index,
             mut layers,
             clamp,
-            mut letter,
-            mut started,
+            letter,
+            started,
         } = *cursor;
-        'fragment: {
+        let (take, fragment_trim) = 'fragment: {
             if !fits {
-                break 'fragment;
+                break 'fragment (0, [false; 2]);
             }
             layers.set_containing(InlineContaining {
                 width,
@@ -882,98 +922,249 @@ impl<'a> Paginator<'a, '_, 'a> {
             {
                 request.forced = Some(Forced::Page);
             }
-            if take == 0 {
-                break 'fragment;
-            }
-            for mut line in lines.by_ref().take(take) {
-                self.measurer.work.spend(line.range.len().max(1))?;
-                // CSS Inline 3 §6.2: the first and last formatted lines of each column, and of
-                // each fragment of a cloned box, trim unless the paragraph already trims them.
-                if !line.phantom
-                    && fragment_trim[0]
-                    && (!source.text_box_trim[0] || line.range.start != 0)
-                    && !self.has_flow
-                    && self.y <= FRAGMENTATION_TOLERANCE_PT
-                {
-                    crate::text::trim_line(text, style, &mut line, [true, false])?;
-                }
-                let end_trim = fragment_end_trim(text, style, source, &line, fragment_trim)?;
-                position = positions
-                    .next()
-                    .expect("each measured line has its source checkpoint");
-                let (line_x, line_width) = if let Some(placement) = geometry.pop_front() {
-                    self.y = placement.y;
-                    (placement.x, placement.width)
-                } else {
-                    (x, width)
-                };
-                let offset = line.alignment_offset(line_width, style.used_rtl());
-                while let Some(anchor) = anchors.next_if(|anchor| anchor.line == line_index) {
-                    consumed_anchors += 1;
-                    self.line_anchor(&anchor, line_x, line_width, offset, line.height, &layers);
-                }
-                let footnotes = self.line_events(source, &line, &mut consumed_events);
-                line_index += 1;
-                let baseline = self.top + self.y + line.ascent + self.offset[1];
-                if !line.phantom {
-                    self.record_baselines(self.page, [Some(baseline); 2]);
-                }
-                self.record_overflow(Rect {
-                    x: line_x + offset + self.offset[0],
-                    y: self.top + self.y + self.offset[1],
-                    width: line.width,
-                    height: line.height,
-                });
-                self.record_line_box(line.height);
-                let markers: Vec<_> = self
-                    .boxes
-                    .iter_mut()
-                    .filter_map(|active| {
-                        active
-                            .marker
-                            .take()
-                            .filter(|_| active.visible)
-                            .map(|mut marker| {
-                                marker.fragment.x += self.offset[0] - active.offset[0];
-                                marker
-                            })
-                    })
-                    .collect();
-                for mut marker in markers {
-                    marker.fragment.baseline = baseline;
-                    self.emit_marker(*marker);
-                }
-                let line_layers = layers.line(&line);
-                self.inline_content(
-                    &line,
-                    line_width,
-                    line_x + offset,
-                    (&mut atomics, &mut first_line_atomics),
-                    line_layers,
-                )?;
-                if !line.phantom {
-                    self.record_baselines(self.page, [Some(baseline); 2]);
-                }
-                letter = None;
-                self.emit_paragraph_line(
-                    index,
-                    style,
-                    &mut line,
-                    [line_x + offset + self.offset[0], baseline],
-                    line_layers,
-                );
-                self.y += line.height;
-                started = true;
-                self.trailing_line = (end_trim != 0.0).then_some((self.y, end_trim));
-                if !line.phantom && (line.height > 0.0 || !line.text.is_empty()) {
-                    self.has_flow = true;
-                    self.at_page_start = false;
-                }
-                if !footnotes.is_empty() && self.places_footnotes() {
-                    self.place_footnotes(&footnotes)?;
-                }
-            }
+            (take, fragment_trim)
+        };
+        Ok(ParagraphFragment {
+            cursor: Box::new(ParagraphCursor {
+                index,
+                source,
+                style,
+                prepared,
+                positions,
+                position,
+                lines,
+                x,
+                width,
+                containing_height,
+                candidate_complete,
+                candidate_page,
+                geometry,
+                anchors,
+                atomics,
+                metrics,
+                first_line_atomics,
+                first_line_metrics,
+                consumed_anchors,
+                consumed_events,
+                consumed_floats,
+                line_index,
+                layers,
+                clamp,
+                letter,
+                started,
+            }),
+            take,
+            request,
+            float_anchors,
+            fragment_trim,
+        })
+    }
+    /// Places the next line of `fragment`. The line's atomic inlines lay their content out
+    /// between its start and its end, which keep their own frames.
+    fn place_fragment_line(
+        &mut self,
+        fragment: &mut ParagraphFragment<'a>,
+    ) -> Result<(), LayoutError> {
+        let Some(mut line) = self.start_fragment_line(fragment)? else {
+            return Ok(());
+        };
+        let cursor = &mut *fragment.cursor;
+        let line_layers = cursor.layers.line(&line.line);
+        self.inline_content(
+            &line.line,
+            line.width,
+            line.x + line.offset,
+            (&mut cursor.atomics, &mut cursor.first_line_atomics),
+            line_layers,
+        )?;
+        self.finish_fragment_line(fragment, &mut line)
+    }
+    /// Takes the next line of `fragment` and places what precedes its inline content: its
+    /// anchors, events, baselines and markers.
+    #[inline(never)]
+    fn start_fragment_line(
+        &mut self,
+        fragment: &mut ParagraphFragment<'a>,
+    ) -> Result<Option<Box<FragmentLine>>, LayoutError> {
+        let text = self.measurer.text;
+        let fragment_trim = fragment.fragment_trim;
+        let ParagraphCursor {
+            source,
+            style,
+            positions,
+            position,
+            lines,
+            x,
+            width,
+            geometry,
+            anchors,
+            consumed_anchors,
+            consumed_events,
+            line_index,
+            layers,
+            ..
+        } = &mut *fragment.cursor;
+        let (source, style) = (*source, *style);
+        let Some(mut line) = lines.next() else {
+            return Ok(None);
+        };
+        self.measurer.work.spend(line.range.len().max(1))?;
+        // CSS Inline 3 §6.2: the first and last formatted lines of each column, and of
+        // each fragment of a cloned box, trim unless the paragraph already trims them.
+        if !line.phantom
+            && fragment_trim[0]
+            && (!source.text_box_trim[0] || line.range.start != 0)
+            && !self.has_flow
+            && self.y <= FRAGMENTATION_TOLERANCE_PT
+        {
+            crate::text::trim_line(text, style, &mut line, [true, false])?;
         }
+        let end_trim = fragment_end_trim(text, style, source, &line, fragment_trim)?;
+        *position = positions
+            .next()
+            .expect("each measured line has its source checkpoint");
+        let (line_x, line_width) = if let Some(placement) = geometry.pop_front() {
+            self.y = placement.y;
+            (placement.x, placement.width)
+        } else {
+            (*x, *width)
+        };
+        let offset = line.alignment_offset(line_width, style.used_rtl());
+        while let Some(anchor) = anchors.next_if(|anchor| anchor.line == *line_index) {
+            *consumed_anchors += 1;
+            self.line_anchor(&anchor, line_x, line_width, offset, line.height, layers);
+        }
+        let footnotes = self.line_events(source, &line, consumed_events);
+        *line_index += 1;
+        let baseline = self.top + self.y + line.ascent + self.offset[1];
+        if !line.phantom {
+            self.record_baselines(self.page, [Some(baseline); 2]);
+        }
+        self.record_overflow(Rect {
+            x: line_x + offset + self.offset[0],
+            y: self.top + self.y + self.offset[1],
+            width: line.width,
+            height: line.height,
+        });
+        self.record_line_box(line.height);
+        let markers: Vec<_> = self
+            .boxes
+            .iter_mut()
+            .filter_map(|active| {
+                active
+                    .marker
+                    .take()
+                    .filter(|_| active.visible)
+                    .map(|mut marker| {
+                        marker.fragment.x += self.offset[0] - active.offset[0];
+                        marker
+                    })
+            })
+            .collect();
+        for mut marker in markers {
+            marker.fragment.baseline = baseline;
+            self.emit_marker(*marker);
+        }
+        Ok(Some(Box::new(FragmentLine {
+            line,
+            x: line_x,
+            width: line_width,
+            offset,
+            baseline,
+            end_trim,
+            footnotes,
+        })))
+    }
+    /// Places what follows the inline content of the placed line `line` of `fragment`.
+    #[inline(never)]
+    fn finish_fragment_line(
+        &mut self,
+        fragment: &mut ParagraphFragment<'a>,
+        line: &mut FragmentLine,
+    ) -> Result<(), LayoutError> {
+        let ParagraphCursor {
+            index,
+            style,
+            layers,
+            letter,
+            started,
+            ..
+        } = &mut *fragment.cursor;
+        let FragmentLine {
+            line,
+            x: line_x,
+            width: _,
+            offset,
+            baseline,
+            end_trim,
+            footnotes,
+        } = line;
+        let (line_x, offset, baseline, end_trim) = (*line_x, *offset, *baseline, *end_trim);
+        let line_layers = layers.line(line);
+        if !line.phantom {
+            self.record_baselines(self.page, [Some(baseline); 2]);
+        }
+        *letter = None;
+        self.emit_paragraph_line(
+            *index,
+            style,
+            line,
+            [line_x + offset + self.offset[0], baseline],
+            line_layers,
+        );
+        self.y += line.height;
+        *started = true;
+        self.trailing_line = (end_trim != 0.0).then_some((self.y, end_trim));
+        if !line.phantom && (line.height > 0.0 || !line.text.is_empty()) {
+            self.has_flow = true;
+            self.at_page_start = false;
+        }
+        if !footnotes.is_empty() && self.places_footnotes() {
+            self.place_footnotes(footnotes)?;
+        }
+        Ok(())
+    }
+    /// Ends `fragment`: the paragraph continues past it, or its remaining floats and events
+    /// are placed.
+    #[inline(never)]
+    fn end_paragraph_fragment(
+        &mut self,
+        fragment: ParagraphFragment<'a>,
+    ) -> Result<Option<(Box<ParagraphCursor<'a, 'a>>, BreakRequest)>, LayoutError> {
+        let ParagraphFragment {
+            cursor,
+            request,
+            float_anchors,
+            ..
+        } = fragment;
+        let ParagraphCursor {
+            index,
+            source,
+            style,
+            prepared,
+            positions,
+            position,
+            lines,
+            mut x,
+            mut width,
+            mut containing_height,
+            candidate_complete,
+            candidate_page,
+            geometry,
+            anchors,
+            atomics,
+            metrics,
+            first_line_atomics,
+            first_line_metrics,
+            consumed_anchors,
+            consumed_events,
+            consumed_floats,
+            line_index,
+            layers,
+            clamp,
+            letter,
+            started,
+        } = *cursor;
         let mut trailing_clearance = false;
         if lines.as_slice().is_empty() && candidate_complete {
             let (clear, rtl) = source.clearance_at(source.text().len());

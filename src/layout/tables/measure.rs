@@ -708,8 +708,20 @@ impl<'a> TablePlan<'a> {
         measurer: &mut Measurer<'a>,
         resolved: &TableGeometry,
     ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), Failure> {
+        let planned = measure_plan(measurer, self, resolved, None, 0);
+        self.wrap(measurer, resolved, planned)
+    }
+
+    /// The table wrapper box around the measured table box `planned`, with its captions.
+    #[inline(never)]
+    fn wrap(
+        &self,
+        measurer: &mut Measurer<'a>,
+        resolved: &TableGeometry,
+        planned: Result<(MeasuredBlock<'a>, geometry::HorizontalBox), Failure>,
+    ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), Failure> {
         let containing_height = resolved.containing_height;
-        let (table, geometry) = measure_plan(measurer, self, resolved, None, 0)?;
+        let (table, geometry) = planned?;
         let mut table = captions::wrap(measurer, table, &self.data.captions, &geometry)?;
         let style = self.style;
         if self.has_captions()
@@ -941,6 +953,16 @@ impl<'a> TablePlan<'a> {
         let named_pages = std::mem::replace(&mut measurer.named_pages, false);
         let measured = measurer.measure_format(source, geometry, true, None, used_height);
         measurer.named_pages = named_pages;
+        self.finish_cell(index, resolved, measured)
+    }
+    /// The cell `index` its measurement `measured` measured, offset and decorated.
+    #[inline(never)]
+    fn finish_cell(
+        &self,
+        index: usize,
+        resolved: &TableGeometry,
+        measured: Result<MeasuredBlock<'a>, Failure>,
+    ) -> Result<MeasuredBlock<'a>, Failure> {
         let mut measured = measured?;
         crate::layout::mathml::table::align_cell(&mut measured);
         measured.offset = self.cell_offset(index, resolved.geometry.width);
@@ -956,6 +978,53 @@ impl<'a> TablePlan<'a> {
         crate::layout::writing::owner_decoration(&mut measured, &paint.decoration);
         measured.paint = Some(paint);
         Ok(measured)
+    }
+    /// Measures the cell `index` for the table's rows, or takes its height from the table's
+    /// previous fragment if that laid its row out ahead of the next body row `next_body`.
+    #[inline(never)]
+    fn measure_plan_cell(
+        &self,
+        measurer: &mut Measurer<'a>,
+        index: usize,
+        resolved: &TableGeometry,
+        (previous, next_body): (Option<&TableFlow<'a>>, usize),
+        cells: &mut PlanCells<'a>,
+    ) -> Result<(), Failure> {
+        let row = self.data.grid.cells[index].row;
+        if let Some(previous) = previous
+            && previous.body.contains(&row)
+            && row < next_body
+        {
+            cells.heights.push(previous.heights[index].clone());
+            cells.blocks.push(None);
+            return Ok(());
+        }
+        let measured = self.measure_cell(measurer, index, resolved, None)?;
+        cells.heights.push(cell_height(&measured));
+        cells.blocks.push(Some(measured));
+        Ok(())
+    }
+    /// Measures the cell `index` again at the height its rows give it, if it has an explicit
+    /// height that this changes.
+    #[inline(never)]
+    fn measure_constrained_cell(
+        &self,
+        measurer: &mut Measurer<'a>,
+        index: usize,
+        resolved: &TableGeometry,
+        rows: &RowGeometry,
+        cells: &mut PlanCells<'a>,
+    ) -> Result<(), Failure> {
+        let content_height = rows.content_height(self.cell_rows(index), resolved.spacing[1]);
+        if let Some(used_height) = self.cell_used_height(index, content_height, resolved) {
+            cells.constrained[index] =
+                Some(self.measure_cell(measurer, index, resolved, Some(used_height))?);
+        }
+        Ok(())
+    }
+    /// The cells of `band`, by index.
+    fn band_cells(&self, band: &Band) -> Range<usize> {
+        self.data.row_ranges[band.row].start..self.data.row_ranges[band.end - 1].end
     }
     pub(crate) fn cell_rows(&self, index: usize) -> Range<usize> {
         let cell = &self.data.grid.cells[index];
@@ -1450,6 +1519,16 @@ fn append_table_boxes<'a>(
     }
 }
 
+/// The cells of a table measured for its rows, past those its previous fragment laid out.
+struct PlanCells<'a> {
+    blocks: Vec<Option<MeasuredBlock<'a>>>,
+    heights: Vec<CellHeight>,
+    /// The cells measured again at the height their rows give them.
+    constrained: Vec<Option<MeasuredBlock<'a>>>,
+}
+
+/// Measures the table box of `plan`. Its cells, which nest tables of their own, measure apart
+/// from the assembly of its rows, whose frame each nested table would stack otherwise.
 fn measure_plan<'a>(
     measurer: &mut Measurer<'a>,
     plan: &Rc<TablePlan<'a>>,
@@ -1457,36 +1536,142 @@ fn measure_plan<'a>(
     previous: Option<&TableFlow<'a>>,
     next_body: usize,
 ) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), Failure> {
+    measurer.work.spend(plan.data.cells.len().max(1))?;
+    let mut cells = PlanCells {
+        blocks: Vec::new(),
+        heights: Vec::new(),
+        constrained: Vec::new(),
+    };
+    for index in 0..plan.data.grid.cells.len() {
+        plan.measure_plan_cell(measurer, index, resolved, (previous, next_body), &mut cells)?;
+    }
+    let rows = plan.resolve_rows(
+        measurer,
+        &cells.heights,
+        resolved.spacing[1],
+        &resolved.geometry,
+    )?;
+    cells.constrained = std::iter::repeat_with(|| None)
+        .take(cells.blocks.len())
+        .collect();
+    let repeated = Repeated::of(plan, &rows.starts);
+    let mut row = 0;
+    while row < plan.data.grid.rows {
+        let band = Band::at(measurer, plan, resolved, (&rows.starts, &repeated), row);
+        if !band.reused(previous, next_body) {
+            for index in plan.band_cells(&band) {
+                plan.measure_constrained_cell(measurer, index, resolved, &rows, &mut cells)?;
+            }
+        }
+        row = band.end;
+    }
+    assemble_plan(measurer, plan, resolved, (previous, next_body), cells, rows)
+}
+
+/// The rows of a table that repeat on each page it spans: its header and footer rows, and
+/// the height they take.
+struct Repeated {
+    header: Range<usize>,
+    footer: Range<usize>,
+    height: f32,
+}
+impl Repeated {
+    fn of(plan: &TablePlan<'_>, row_starts: &[f32]) -> Self {
+        let [header, footer] = repeated_rows(&plan.data);
+        let height = [&header, &footer]
+            .into_iter()
+            .map(|rows| row_starts[rows.end] - row_starts[rows.start])
+            .sum();
+        Self {
+            header,
+            footer,
+            height,
+        }
+    }
+}
+
+/// A band of a table's rows that fragments as one: a row, its row group where that keeps
+/// together and fits, and the rows the cells of either span.
+struct Band {
+    row: usize,
+    end: usize,
+    body: bool,
+    available_height: f32,
+    group_kept: bool,
+}
+impl Band {
+    fn at(
+        measurer: &Measurer<'_>,
+        plan: &TablePlan<'_>,
+        resolved: &TableGeometry,
+        (row_starts, repeated): (&[f32], &Repeated),
+        row: usize,
+    ) -> Self {
+        let data = &plan.data;
+        let geometry = &resolved.geometry;
+        let edges =
+            geometry.padding[0] + geometry.border[0] + geometry.padding[2] + geometry.border[2];
+        let group_index = data.row_groups[row];
+        let group_end = plan.layers.group_rows[group_index].end;
+        let body = row >= repeated.header.end && group_end <= repeated.footer.start;
+        let reserved_groups = if body { repeated.height } else { 0.0 };
+        let available_height =
+            crate::layout::breaks::fragmentainer_height(measurer.page_height) - reserved_groups;
+        let group_kept = data.groups[group_index]
+            .source
+            .is_some_and(|source| measurer.fragmentainer.keeps(source.style()))
+            && row_starts[group_end] - row_starts[row] + edges <= available_height;
+        let mut end = if group_kept { group_end } else { row + 1 };
+        let mut scan = row;
+        while scan < end {
+            for cell in &data.grid.cells[data.row_ranges[scan].clone()] {
+                end = end.max(cell.row + cell.rows);
+            }
+            scan += 1;
+        }
+        Self {
+            row,
+            end,
+            body,
+            available_height,
+            group_kept,
+        }
+    }
+
+    /// Whether the table's previous fragment laid the band out, ahead of the next body band.
+    fn reused(&self, previous: Option<&TableFlow<'_>>, next_body: usize) -> bool {
+        previous.is_some_and(|flow| flow.body.contains(&self.row)) && self.end <= next_body
+    }
+}
+
+/// Assembles the rows of the table box of `plan` from its measured `cells`.
+#[inline(never)]
+fn assemble_plan<'a>(
+    measurer: &mut Measurer<'a>,
+    plan: &Rc<TablePlan<'a>>,
+    resolved: &TableGeometry,
+    (previous, next_body): (Option<&TableFlow<'a>>, usize),
+    cells: PlanCells<'a>,
+    rows: RowGeometry,
+) -> Result<(MeasuredBlock<'a>, geometry::HorizontalBox), Failure> {
     let block = BlockSource {
         block: plan.source,
         selected: plan.style,
     };
     let style = block.style();
     let data = &plan.data;
-    measurer.work.spend(data.cells.len().max(1))?;
     let collapsed = data.collapsed.is_some();
     let geometry = resolved.geometry.clone();
     let table_edges = resolved.edges;
     let sizes = &resolved.sizes;
     let vertical = resolved.spacing[1];
     let columns = resolved.columns(style.used_rtl());
-    let mut blocks = Vec::new();
-    let mut heights = Vec::new();
-    for (cell_index, cell) in data.grid.cells.iter().enumerate() {
-        if let Some(previous) = previous
-            && previous.body.contains(&cell.row)
-            && cell.row < next_body
-        {
-            heights.push(previous.heights[cell_index].clone());
-            blocks.push(None);
-            continue;
-        }
-        let measured = plan.measure_cell(measurer, cell_index, resolved, None)?;
-        heights.push(cell_height(&measured));
-        blocks.push(Some(measured));
-    }
+    let PlanCells {
+        mut blocks,
+        heights,
+        mut constrained,
+    } = cells;
     let mut has_forced = blocks.iter().flatten().any(|block| block.has_forced);
-    let rows = plan.resolve_rows(measurer, &heights, vertical, &geometry)?;
     let row_starts = &rows.starts;
     let cell_offsets = &rows.offsets;
     let content_height = rows.height;
@@ -1499,13 +1684,14 @@ fn measure_plan<'a>(
         }
         .into());
     }
-    let [header_rows, footer_rows] = repeated_rows(data);
+    let repeated = Repeated::of(plan, row_starts);
+    let (header_rows, footer_rows, repeated_height) = (
+        repeated.header.clone(),
+        repeated.footer.clone(),
+        repeated.height,
+    );
     let mut header = Vec::new();
     let mut footer = Vec::new();
-    let repeated_height: f32 = [&header_rows, &footer_rows]
-        .into_iter()
-        .map(|rows| row_starts[rows.end] - row_starts[rows.start])
-        .sum();
     let mut tallest_body: f32 = 0.0;
     let mut zero_boxes: BTreeMap<usize, Vec<FlowItem<'a>>> = BTreeMap::new();
     for area in plan.structural_boxes(&measurer.work)? {
@@ -1553,30 +1739,20 @@ fn measure_plan<'a>(
     };
     let mut row = 0;
     while row < data.grid.rows {
-        let group_index = data.row_groups[row];
-        let group_end = plan.layers.group_rows[group_index].end;
-        let body_band = row >= header_rows.end && group_end <= footer_rows.start;
-        let reserved_groups = if body_band { repeated_height } else { 0.0 };
-        let available_height =
-            crate::layout::breaks::fragmentainer_height(measurer.page_height) - reserved_groups;
-        let group_kept = data.groups[group_index]
-            .source
-            .is_some_and(|source| measurer.fragmentainer.keeps(source.style()))
-            && row_starts[group_end] - row_starts[row] + top + bottom <= available_height;
-        let mut end = if group_kept { group_end } else { row + 1 };
-        let mut scan = row;
-        while scan < end {
-            for cell in &data.grid.cells[data.row_ranges[scan].clone()] {
-                end = end.max(cell.row + cell.rows);
-            }
-            scan += 1;
-        }
-        if previous.is_some_and(|flow| flow.body.contains(&row)) && end <= next_body {
+        let band = Band::at(measurer, plan, resolved, (row_starts, &repeated), row);
+        let Band {
+            end,
+            body: body_band,
+            available_height,
+            group_kept,
+            ..
+        } = band;
+        if band.reused(previous, next_body) {
             row = end;
             continue;
         }
         let band_height = (row_starts[end] - row_starts[row] - vertical).max(0.0);
-        let range = data.row_ranges[row].start..data.row_ranges[end - 1].end;
+        let range = plan.band_cells(&band);
         let forced = blocks[range.clone()]
             .iter()
             .flatten()
@@ -1633,17 +1809,14 @@ fn measure_plan<'a>(
         for (offset, slot) in blocks[range.clone()].iter_mut().enumerate() {
             let index = range.start + offset;
             let cell = &data.grid.cells[index];
-            let mut measured = slot.take().unwrap();
+            let first = slot.take().unwrap();
+            let mut measured = constrained[index].take().unwrap_or(first);
             let stretch = fragments || plan.has_scoped_internals;
             let rect = areas.rect(
                 cell.column..cell.column + cell.columns,
                 cell.row..cell.row + cell.rows,
                 row,
             );
-            let content_height = rows.content_height(cell.row..cell.row + cell.rows, vertical);
-            if let Some(used_height) = plan.cell_used_height(index, content_height, resolved) {
-                measured = plan.measure_cell(measurer, index, resolved, Some(used_height))?;
-            }
             measured.align_cell(cell_offsets[index], rect.height);
             cell_heights.push((index, rect.height));
             if plan.cell_collapsed(index) {

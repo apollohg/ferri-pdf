@@ -179,19 +179,56 @@ impl Measurer<'_> {
         containing_height: Option<f32>,
         measure: impl FnOnce(&mut Self) -> Result<MeasuredBlock<'a>, Failure>,
     ) -> Result<ItemMetrics, Failure> {
+        let key = match self.cached_metrics(block, geometry, height, containing_height) {
+            CachedMetrics::Hit(metrics) => return Ok(metrics),
+            CachedMetrics::Miss(key) => key,
+        };
+        let measured = measure(self);
+        self.store_metrics(key, measured)
+    }
+
+    /// The metrics measured before for `block` in the same context, or the key to keep
+    /// them by, unless they are not kept. Kept off the frames that nested items' measurements
+    /// stack.
+    #[inline(never)]
+    fn cached_metrics(
+        &self,
+        block: &BlockBox,
+        geometry: &HorizontalBox,
+        height: Option<f32>,
+        containing_height: Option<f32>,
+    ) -> CachedMetrics {
         // Clearance probes carry transient source-specific placement constraints.
         if !self.clearance_targets.is_empty() {
-            return measure(self).map(|block| ItemMetrics::of(&block));
+            return CachedMetrics::Miss(None);
         }
         let key = MetricsKey::new(self, block, geometry, height, containing_height);
-        if let Some(metrics) = self.item_metrics.get(&key) {
-            return Ok(metrics.clone());
+        match self.item_metrics.get(&key) {
+            Some(metrics) => CachedMetrics::Hit(metrics.clone()),
+            None => CachedMetrics::Miss(Some(Box::new(key))),
         }
-        let metrics = ItemMetrics::of(&measure(self)?);
-        if self.item_metrics.len() >= MAX_ITEM_METRICS {
-            self.item_metrics.clear();
+    }
+
+    /// The metrics of the item `measured`, kept by `key` when there is one.
+    #[inline(never)]
+    fn store_metrics(
+        &mut self,
+        key: Option<Box<MetricsKey>>,
+        measured: Result<MeasuredBlock<'_>, Failure>,
+    ) -> Result<ItemMetrics, Failure> {
+        let metrics = ItemMetrics::of(&measured?);
+        if let Some(key) = key {
+            if self.item_metrics.len() >= MAX_ITEM_METRICS {
+                self.item_metrics.clear();
+            }
+            self.item_metrics.insert(*key, metrics.clone());
         }
-        self.item_metrics.insert(key, metrics.clone());
         Ok(metrics)
     }
+}
+
+/// Item metrics measured before, or the key to keep them by once measured.
+enum CachedMetrics {
+    Hit(ItemMetrics),
+    Miss(Option<Box<MetricsKey>>),
 }
