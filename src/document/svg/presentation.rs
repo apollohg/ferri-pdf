@@ -53,7 +53,16 @@ const FARTHEST_SIDE: &str = "farthest-side";
 const OVERFLOW_ELEMENTS: [&str; 5] = ["image", "marker", "pattern", "svg", "symbol"];
 /// CSS Fonts 4 §2.1.3 generic families that the SVG renderer also takes as generic.
 const UNCONFIGURED_GENERICS: [&str; 2] = ["cursive", "fantasy"];
-const CALCULATED_LENGTH: &str = "a calculation mixing lengths and percentages in SVG content";
+pub(super) const CALCULATED_LENGTH: &str =
+    "unsupported CSS: a calculation mixing lengths and percentages in SVG content";
+const STROKE_WIDTH: &str = "stroke-width";
+const STROKE_DASHARRAY: &str = "stroke-dasharray";
+const STROKE_DASHOFFSET: &str = "stroke-dashoffset";
+const CLIP_PATH: &str = "clip-path";
+const BORDER_RADIUS: &str = "border-radius";
+pub(super) const TRANSFORM: &str = "transform";
+const PERSPECTIVE_ORIGIN: &str = "perspective-origin";
+const WORD_SPACING: &str = "word-spacing";
 
 pub(super) fn is_text_content(tag: &str) -> bool {
     TEXT_CONTENT.contains(&tag)
@@ -65,16 +74,29 @@ pub(super) fn takes_text_style(tag: &str, style: &Style) -> bool {
     is_text_content(tag) || !style.text_decorations.declared.lines.is_empty()
 }
 
+/// `value` where the SVG renderer can represent it. Otherwise the property `name` joins
+/// `discarded`: its value is invalid at computed-value time, so the renderer computes it as
+/// unset.
+fn representable(
+    discarded: &mut Vec<&'static str>,
+    name: &'static str,
+    value: Result<String, StyleError>,
+) -> Option<String> {
+    value.map_err(|_| discarded.push(name)).ok()
+}
+
 /// The `style` attribute value carrying the element's computed presentation properties, with
-/// `mask` its `mask` value. `None` marks the root, whose own box the document paints, which
-/// its opacity, blending, display and masks govern.
+/// `mask` its `mask` value, and the properties it omits as unrepresentable. `None` marks the
+/// root, whose own box the document paints, which its opacity, blending, display and masks
+/// govern.
 pub(super) fn declarations(
     tag: &str,
     style: &Style,
     mask: Option<&str>,
-) -> Result<String, StyleError> {
+) -> (String, Vec<&'static str>) {
     let root = mask.is_none();
     let svg = &style.svg;
+    let mut discarded = Vec::new();
     let mut output = String::new();
     let mut push = |name: &str, value: &str| {
         let _ = write!(output, "{name}:{value};");
@@ -87,22 +109,25 @@ pub(super) fn declarations(
     push("fill-rule", svg.fill_rule.name());
     push("stroke", &stroke(svg));
     push("stroke-opacity", &number(svg.stroke_opacity));
-    push("stroke-width", &length_percentage(&svg.stroke_width)?);
-    push(
-        "stroke-dasharray",
-        &match &svg.stroke_dasharray {
-            None => NONE.to_owned(),
-            Some(dashes) => dashes
-                .iter()
-                .map(length_percentage)
-                .collect::<Result<Vec<_>, _>>()?
-                .join(","),
-        },
-    );
-    push(
-        "stroke-dashoffset",
-        &length_percentage(&svg.stroke_dashoffset)?,
-    );
+    for (name, value) in [
+        (STROKE_WIDTH, length_percentage(&svg.stroke_width)),
+        (
+            STROKE_DASHARRAY,
+            match &svg.stroke_dasharray {
+                None => Ok(NONE.to_owned()),
+                Some(dashes) => dashes
+                    .iter()
+                    .map(length_percentage)
+                    .collect::<Result<Vec<_>, _>>()
+                    .map(|dashes| dashes.join(",")),
+            },
+        ),
+        (STROKE_DASHOFFSET, length_percentage(&svg.stroke_dashoffset)),
+    ] {
+        if let Some(value) = representable(&mut discarded, name, value) {
+            push(name, &value);
+        }
+    }
     push("stroke-linecap", svg.stroke_linecap.name());
     push("stroke-linejoin", svg.stroke_linejoin.name());
     push("stroke-miterlimit", &number(svg.stroke_miterlimit));
@@ -183,7 +208,9 @@ pub(super) fn declarations(
         if let Some(mask) = mask {
             push("mask", mask);
         }
-        push("clip-path", &clip_path(style)?);
+        if let Some(value) = representable(&mut discarded, CLIP_PATH, clip_path(style)) {
+            push(CLIP_PATH, &value);
+        }
         match style.display {
             Display::None => push("display", "none"),
             Display::Contents => push("display", "contents"),
@@ -197,15 +224,23 @@ pub(super) fn declarations(
         .flatten()
         .any(|radius| *radius != LengthPercentage::ZERO)
     {
-        push(
-            "border-radius",
-            &radii_css(&style.decoration.radii, motion_length)?,
-        );
+        if let Some(value) = representable(
+            &mut discarded,
+            BORDER_RADIUS,
+            radii_css(&style.decoration.radii, motion_length),
+        ) {
+            push(BORDER_RADIUS, &value);
+        }
     }
     // The root's transform places its box in the document.
     if !root && css_transform(style) {
-        for (name, value) in transform_declarations(style)? {
-            push(name, &value);
+        match transform_declarations(style) {
+            Ok(declarations) => {
+                for (name, value) in declarations {
+                    push(name, &value);
+                }
+            }
+            Err(_) => discarded.push(TRANSFORM),
         }
     }
     // CSS Transforms 2 §11: the 3D properties of SVG content. The root's own box takes its
@@ -215,10 +250,13 @@ pub(super) fn declarations(
         "perspective",
         &style.perspective.map_or_else(|| NONE.to_owned(), pixels),
     );
-    push(
-        "perspective-origin",
-        &position(&style.perspective_origin, length_percentage)?,
-    );
+    if let Some(value) = representable(
+        &mut discarded,
+        PERSPECTIVE_ORIGIN,
+        position(&style.perspective_origin, length_percentage),
+    ) {
+        push(PERSPECTIVE_ORIGIN, &value);
+    }
     let preserves = if root {
         style.preserves_3d()
     } else {
@@ -241,7 +279,13 @@ pub(super) fn declarations(
     push("font-family", &families(&style.families));
     push("font-size", &pixels(style.size));
     push("letter-spacing", &pixels(style.letter_spacing));
-    push("word-spacing", &length_percentage(&style.word_spacing)?);
+    if let Some(value) = representable(
+        &mut discarded,
+        WORD_SPACING,
+        length_percentage(&style.word_spacing),
+    ) {
+        push(WORD_SPACING, &value);
+    }
     push(
         "font-optical-sizing",
         if style.font_adjustments.optical_sizing {
@@ -276,17 +320,19 @@ pub(super) fn declarations(
         push("font-weight", &number(style.font_weight.value()));
         push("font-stretch", &font_width(style.font_width));
     }
-    Ok(output)
+    (output, discarded)
 }
 
 /// The geometry attributes of `tag` with their computed values (SVG 2 §7), `None` where the
-/// value is `auto` or `none` and the renderer's absent-attribute behaviour applies.
+/// value is `auto` or `none` and the renderer's absent-attribute behaviour applies, and the
+/// attributes it omits as unrepresentable.
 pub(super) fn geometry(
     tag: &str,
     style: &Style,
-) -> Result<Vec<(&'static str, String)>, StyleError> {
+) -> (Vec<(&'static str, String)>, Vec<&'static str>) {
     let svg = &style.svg;
     let mut attributes = Vec::new();
+    let mut discarded = Vec::new();
     for (name, value) in [
         ("cx", Some(&svg.cx)),
         ("cy", Some(&svg.cy)),
@@ -298,13 +344,14 @@ pub(super) fn geometry(
     ] {
         if let Some(value) = value
             && crate::style::svg_values::presentation_property(tag, name).is_some()
+            && let Some(value) = representable(&mut discarded, name, length_percentage(value))
         {
-            attributes.push((name, length_percentage(value)?));
+            attributes.push((name, value));
         }
     }
     for (name, value) in [("width", &style.width), ("height", &style.height)] {
         if crate::style::svg_values::presentation_property(tag, name).is_some()
-            && let Some(value) = size(value)?
+            && let Some(value) = size(value).map_err(|_| discarded.push(name)).ok().flatten()
         {
             attributes.push((name, value));
         }
@@ -314,7 +361,7 @@ pub(super) fn geometry(
     {
         attributes.push(("d", path.to_string()));
     }
-    Ok(attributes)
+    (attributes, discarded)
 }
 
 /// Whether the SVG renderer evaluates the element's transform properties as CSS in its

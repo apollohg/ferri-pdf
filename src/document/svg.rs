@@ -374,12 +374,9 @@ impl<'a, 'd> Serializer<'a, 'd> {
             }
             attribute(&mut self.xml, prefix, local, value);
         }
-        attribute(
-            &mut self.xml,
-            "",
-            STYLE_ATTRIBUTE,
-            &presentation::declarations(root.name(), style, None)?,
-        );
+        let (declarations, discarded) = presentation::declarations(root.name(), style, None);
+        self.discarded(&discarded);
+        attribute(&mut self.xml, "", STYLE_ATTRIBUTE, &declarations);
         self.xml.push('>');
         for child in root.as_node().children(TreeRelation::Selector) {
             self.subtree(child, style, None)?;
@@ -564,10 +561,13 @@ impl<'a, 'd> Serializer<'a, 'd> {
                 &(self.text_styles.len() - 1).to_string(),
             );
         }
-        for (name, value) in presentation::geometry(tag, style)?
-            .into_iter()
-            .chain(presentation::transform(tag, style)?)
-        {
+        let (geometry, discarded) = presentation::geometry(tag, style);
+        self.discarded(&discarded);
+        let transform = presentation::transform(tag, style).unwrap_or_else(|_| {
+            self.discarded(&[presentation::TRANSFORM]);
+            Vec::new()
+        });
+        for (name, value) in geometry.into_iter().chain(transform) {
             attribute(&mut self.xml, "", name, &value);
         }
         let mask = if let Some(mask) = presentation::mask(&style.decoration.masks) {
@@ -576,13 +576,23 @@ impl<'a, 'd> Serializer<'a, 'd> {
             self.layer_masks.push((self.load_masks)(style));
             crate::svg::layer_mask_value(self.layer_masks.len() - 1)
         };
-        attribute(
-            &mut self.xml,
-            "",
-            STYLE_ATTRIBUTE,
-            &presentation::declarations(tag, style, Some(&mask))?,
-        );
+        let (declarations, discarded) = presentation::declarations(tag, style, Some(&mask));
+        self.discarded(&discarded);
+        attribute(&mut self.xml, "", STYLE_ATTRIBUTE, &declarations);
         Ok(())
+    }
+
+    /// Reports the presentation properties the renderer cannot represent, which it computes
+    /// as unset.
+    fn discarded(&self, properties: &[&'static str]) {
+        for property in properties {
+            self.styling
+                .sheet
+                .degrade(crate::style::Degradation::InvalidAtComputedValueTime {
+                    declaration: (*property).to_owned(),
+                    reason: presentation::CALCULATED_LENGTH.to_owned(),
+                });
+        }
     }
 }
 
