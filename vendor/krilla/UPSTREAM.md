@@ -51,6 +51,8 @@ The local patch changes these source files:
 - `content.rs`, `graphics/graphics_state.rs` and `graphics/shading_function.rs`: content
   whose transform takes it beyond finite coordinates no longer panics. It adds nothing to
   its stream's bounding box, a clip path transformed that way clips everything, and a
-  shading with a degenerate transform covers only the box it fills.
+  shading with a degenerate transform covers only the box it fills. `page.rs`:
+  `PageSettings::from_wh` returns `None` for sizes whose media box is not finite instead of
+  panicking.
 
 Canvas allocation uses checked arithmetic. Every other recorded upstream file matches the registry package.
