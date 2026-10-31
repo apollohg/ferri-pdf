@@ -359,8 +359,13 @@ fn fill(runs: &[Run<'_>], mut cursor: Cursor, height: f32, limit: Option<usize>)
         let column = columns.last_mut().expect("a column is open");
         let room = height - column.extent;
         let whole = run.bottom - cursor.top + cursor.repeated + run.repeated[1];
-        let candidates = &run.breaks[run.breaks.partition_point(|&offset| offset <= cursor.top)
-            ..run.breaks.partition_point(|&offset| offset < run.bottom)];
+        let first = run.breaks.partition_point(|&offset| offset <= cursor.top);
+        // A cursor at or past the run's bottom has no break left in it.
+        let candidates = &run.breaks[first
+            ..run
+                .breaks
+                .partition_point(|&offset| offset < run.bottom)
+                .max(first)];
         let slice = if overflows(whole, room) {
             let fitting = candidates.partition_point(|&offset| {
                 !overflows(offset - cursor.top + cursor.repeated + run.cloned[1], room)
