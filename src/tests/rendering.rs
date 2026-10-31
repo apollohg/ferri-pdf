@@ -635,27 +635,51 @@ fn overfull_lines_fall_back_to_directional_start_for_every_alignment() {
     }
 }
 
+/// The text of every line `output` lays out, after asserting that it omitted a box for
+/// `reason`.
+fn omitting_box(output: crate::RenderOutput, reason: &str) -> Vec<String> {
+    assert!(
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::RenderDiagnostic::Layout(crate::LayoutDiagnostic::OmittedBox { reason: found })
+                if found.contains(reason)
+        )),
+        "the box is omitted for {reason:?}, got {:?}",
+        output.diagnostics
+    );
+    output
+        .layout
+        .unwrap()
+        .pages
+        .into_iter()
+        .flatten()
+        .map(|line| line.text)
+        .collect()
+}
+
 #[test]
-fn overflowing_text_spacing_returns_a_layout_error_before_pdf_painting() {
+fn overflowing_text_spacing_omits_its_paragraph_before_pdf_painting() {
     for (property, value) in [("letter-spacing", "3e38pt"), ("word-spacing", "-3e38pt")] {
         let html = format!(
-            "<style>{PROFILE}p{{{property}:{value};text-align:center}}</style><p>i i i i</p>"
+            "<style>{PROFILE}p{{text-align:center}}.over{{{property}:{value}}}</style><p>kept</p><p class=over>i i i i</p>"
         );
-        let Err(error) = render_html(&html, &local_options()) else {
-            panic!("{property} accumulated beyond finite text geometry")
-        };
-        assert!(
-            matches!(error, crate::Error::Layout(ref message) if message.contains("non-finite text geometry")),
-            "{property} must report the text measurement failure: {error}"
+        let output = render_html(&html, &local_options())
+            .unwrap_or_else(|error| panic!("{property} beyond finite text geometry: {error}"));
+        assert_eq!(
+            omitting_box(output, "non-finite text geometry"),
+            ["kept"],
+            "{property} omits only the paragraph whose text geometry overflows"
         );
     }
     let html = format!(
-        "<style>{PROFILE}p{{font-size:1e-38pt;text-align:justify;text-align-last:justify}}</style><p>i i i</p>"
+        "<style>{PROFILE}.tiny{{font-size:1e-38pt;text-align:justify;text-align-last:justify}}</style><p>kept</p><p class=tiny>i i i</p>"
     );
-    let result = render_html(&html, &local_options());
-    assert!(
-        matches!(result, Err(crate::Error::Layout(ref message)) if message.contains("non-finite text geometry")),
-        "justification must reject spacing that cannot be represented in glyph em units"
+    let output = render_html(&html, &local_options())
+        .expect("justification spacing beyond glyph em units still renders");
+    assert_eq!(
+        omitting_box(output, "non-finite text geometry"),
+        ["kept"],
+        "justification spacing that cannot be represented in glyph em units omits its paragraph"
     );
 }
 
@@ -1456,15 +1480,17 @@ fn avoidance_respects_nested_forced_boundaries_and_traverses_empty_fragments() {
 }
 
 #[test]
-fn overflowing_percentage_margins_fail_before_pdf_serialization() {
+fn overflowing_percentage_margins_omit_their_box_before_pdf_serialization() {
     let html = format!(
-        "<style>{PROFILE}</style><div style='width:3e38pt'><p style='margin-top:200%'>A</p></div>"
+        "<style>{PROFILE}</style><p>kept</p><div style='width:3e38pt'><p style='margin-top:200%'>A</p></div>"
     );
-    let result = render_html(&html, &local_options());
-    assert!(
-        matches!(&result, Err(crate::Error::Layout(message)) if message.contains("non-finite")),
-        "percentage resolution must reject overflow as a layout error, before coordinates reach the writer: {:?}",
-        result.err()
+    let output = render_html(&html, &local_options())
+        .expect("percentage margins that overflow still render");
+    assert_eq!(
+        omitting_box(output, "not finite"),
+        ["kept"],
+        "percentage resolution omits the box whose margins overflow, before coordinates reach \
+         the writer"
     );
 }
 

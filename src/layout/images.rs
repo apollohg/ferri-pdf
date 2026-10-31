@@ -332,7 +332,7 @@ pub(super) fn measure<'a>(
     let height = top + height + bottom;
     if !height.is_finite() {
         return Err(LayoutError::NonFiniteBlockGeometry {
-            block: measurer.sources.block(block.block),
+            block: std::ptr::from_ref(block.block),
         });
     }
     let edges = measurer.fragmentainer.edges(style);

@@ -704,44 +704,50 @@ impl BlockBox {
     pub(crate) fn children(&self) -> &[BlockContent] {
         &self.children
     }
-    /// Removes `target`, a box of this subtree, and the content after it in document order;
-    /// whether `target` is in the subtree. Paragraphs holding `target` are removed whole, and
-    /// a subtree's root that is `target` keeps no content.
-    pub(crate) fn omit_from(&mut self, target: *const BlockBox) -> bool {
+    /// Removes `target`, a box of this subtree, with the content after it in document order
+    /// where `following`; whether `target` is in the subtree. Paragraphs holding `target` are
+    /// removed whole, and a subtree's root that is `target` keeps no content.
+    pub(crate) fn omit(&mut self, target: *const BlockBox, following: bool) -> bool {
         if std::ptr::eq(self, target) {
             self.omit_content();
             return true;
         }
         for index in 0..self.children.len() {
-            let kept = match &mut self.children[index] {
+            // The child holding `target`, and whether it is removed with it.
+            let found = match &mut self.children[index] {
                 BlockContent::Block(block) | BlockContent::Positioned(block) => {
                     if std::ptr::eq(block, target) {
-                        Some(index)
+                        Some(true)
                     } else {
-                        block.omit_from(target).then_some(index + 1)
+                        block.omit(target, following).then_some(false)
                     }
                 }
                 BlockContent::Inline(paragraph) => paragraph
                     .anchors()
                     .iter()
                     .chain(paragraph.inline_blocks())
-                    .any(|anchor| anchor.block.holds(target))
-                    .then_some(index),
+                    .any(|anchor| anchor.block().holds(target))
+                    .then_some(true),
                 BlockContent::Events(_) => None,
             };
-            if let Some(kept) = kept {
-                self.children.truncate(kept);
+            if let Some(removed) = found {
+                if following {
+                    self.children.truncate(index + usize::from(!removed));
+                } else if removed {
+                    self.children.remove(index);
+                }
                 return true;
             }
         }
-        [
-            &mut self.first_line_box,
-            &mut self.math_content,
-            &mut self.flow,
-        ]
-        .into_iter()
-        .flatten()
-        .any(|block| block.omit_from(target))
+        // A first-line copy holding `target` is shared, so the box goes without it.
+        if self.first_line_box().is_some_and(|copy| copy.holds(target)) {
+            self.first_line_box = None;
+            return true;
+        }
+        [&mut self.math_content, &mut self.flow]
+            .into_iter()
+            .flatten()
+            .any(|block| block.omit(target, following))
     }
     pub(crate) fn omit_content(&mut self) {
         self.children.clear();
@@ -755,13 +761,17 @@ impl BlockBox {
                     .anchors()
                     .iter()
                     .chain(paragraph.inline_blocks())
-                    .any(|anchor| anchor.block.holds(target)),
+                    .any(|anchor| anchor.block().holds(target)),
                 BlockContent::Events(_) => false,
             })
-            || [&self.first_line_box, &self.math_content, &self.flow]
-                .into_iter()
-                .flatten()
-                .any(|block| block.holds(target))
+            || [
+                self.first_line_box(),
+                self.math_content.as_deref(),
+                self.flow.as_deref(),
+            ]
+            .into_iter()
+            .flatten()
+            .any(|block| block.holds(target))
     }
     /// Marks the paragraphs holding the first and last formatted lines that this box or the
     /// ancestors in `requested` trim (CSS Inline 3 §6.2): trimming passes into the first and

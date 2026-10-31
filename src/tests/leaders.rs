@@ -204,19 +204,35 @@ fn leaders_with_multiple_script_runs_repeat_the_complete_pattern() {
 }
 
 #[test]
-fn huge_leader_expansion_fails_before_allocating_repetitions() {
+fn huge_leader_expansion_omits_its_paragraph_before_allocating_repetitions() {
     let html = format!(
         "<style>{PROFILE}p{{width:200pt;font:10pt Spike}}p::after{{font-size:0.000001pt;content:leader('.') 'Z'}}</style><p>A</p>"
     );
-    let error = crate::render_html(&html, &local_options())
-        .err()
-        .expect("the expansion must exceed its text bound");
+    let output = crate::render_html(&html, &local_options())
+        .expect("a leader past its text bound still renders");
+    let reason = crate::text::TextError::LeaderExpansionLimit {
+        limit: crate::document::MAX_INLINE_TEXT_BYTES,
+    }
+    .to_string();
     assert!(
-        matches!(
-            error,
-            crate::Error::Layout(ref message) if *message == crate::text::TextError::LeaderExpansionLimit { limit: crate::document::MAX_INLINE_TEXT_BYTES }.to_string()
-        ),
-        "{error:?}"
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::RenderDiagnostic::Layout(crate::LayoutDiagnostic::OmittedBox { reason: found })
+                if *found == reason
+        )),
+        "the expansion past its text bound omits its paragraph, got {:?}",
+        output.diagnostics
+    );
+    assert!(
+        output
+            .layout
+            .unwrap()
+            .pages
+            .iter()
+            .flatten()
+            .next()
+            .is_none(),
+        "no repetitions are allocated or laid out"
     );
 }
 

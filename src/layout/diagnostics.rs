@@ -11,6 +11,13 @@ pub enum LayoutDiagnostic {
     PageLimit { limit: usize },
     #[error("layout exceeds {limit} work units; {kept}")]
     WorkLimit { limit: usize, kept: WorkFallback },
+    /// A box whose geometry lies beyond finite coordinates, or whose structure or effects
+    /// layout cannot form, is omitted with its content.
+    #[error("a box layout cannot form is omitted: {reason}")]
+    OmittedBox { reason: String },
+    /// Re-laying out the document failed at a box, so the last completed layout is kept.
+    #[error("re-laying out failed ({reason}); the last completed layout is kept")]
+    FailedRelayout { reason: String },
     #[error(
         "fixed boxes repeated on every page exceed {limit} placements; they repeat on the first \
          {pages} pages"

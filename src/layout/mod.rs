@@ -55,6 +55,8 @@ pub(crate) const MAX_LAYOUT_WORK: usize = 100_000_000;
 const MAX_FOOTNOTE_PAGINATIONS: usize = 64;
 /// Layout passes that size pages to the content the pass before measured.
 const MAX_PAGE_SIZE_PASSES: usize = 16;
+/// Boxes omitted one at a time where layout fails at them, before all content is omitted.
+const MAX_OMITTED_BOXES: usize = 16;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct TextLine {
@@ -193,27 +195,41 @@ fn layout_within(
 ) -> Result<(StyledDocument, LayoutTrace), LayoutError> {
     // A first layout pass that runs out of work completes no layout to keep, so the layouts
     // after it omit the content from the box it started with half its work spent, then a
-    // quarter, and so on; the last omits all content.
+    // quarter, and so on; one that fails at a box omits that box. The last omits all content.
     let mut marks: Option<Vec<_>> = None;
+    let mut omitted_boxes = 0;
     let mut content = true;
     loop {
         let budget = work::Budget::new(work_limit);
-        match stabilize(&mut document, resolver, &budget, Vec::new()) {
-            Err(LayoutError::WorkLimit { limit }) if content => {
-                let marks = marks.get_or_insert_with(|| budget.marks());
-                content = std::iter::from_fn(|| marks.pop())
-                    .flatten()
-                    .any(|mark| document.omit_from(mark));
-                if !content {
-                    document.omit_content();
-                }
-                document.record_layout([LayoutDiagnostic::WorkLimit {
-                    limit,
-                    kept: WorkFallback::Truncated,
-                }]);
-            }
+        let error = match stabilize(&mut document, resolver, &budget, Vec::new()) {
+            Err(error) if content => error,
             result => return Ok((document, result?)),
+        };
+        let diagnostic = if let LayoutError::WorkLimit { limit } = error {
+            let marks = marks.get_or_insert_with(|| budget.marks());
+            content = std::iter::from_fn(|| marks.pop())
+                .flatten()
+                .any(|mark| document.omit(mark, true));
+            LayoutDiagnostic::WorkLimit {
+                limit,
+                kept: WorkFallback::Truncated,
+            }
+        } else if error.fails_at_box() {
+            omitted_boxes += 1;
+            content = omitted_boxes <= MAX_OMITTED_BOXES
+                && error
+                    .failed_box(budget.frontier())
+                    .is_some_and(|failed| document.omit(failed, false));
+            LayoutDiagnostic::OmittedBox {
+                reason: error.to_string(),
+            }
+        } else {
+            return Err(error);
+        };
+        if !content {
+            document.omit_content();
         }
+        document.record_layout([diagnostic]);
     }
 }
 
@@ -252,6 +268,14 @@ fn stabilize(
                 diagnostics.push(LayoutDiagnostic::WorkLimit {
                     limit,
                     kept: WorkFallback::LastPass,
+                });
+                return Ok(kept(document, trace, diagnostics));
+            }
+            // Reformatting restores the boxes a layout omits, so a re-layout failing at one
+            // keeps the layout before it.
+            (Err(error), Some((trace, mut diagnostics))) if error.fails_at_box() => {
+                diagnostics.push(LayoutDiagnostic::FailedRelayout {
+                    reason: error.to_string(),
                 });
                 return Ok(kept(document, trace, diagnostics));
             }
@@ -864,6 +888,45 @@ fn paged_content<'t>(
     )?)
 }
 
+impl LayoutError {
+    /// Whether the error follows from one box's geometry or structure, which layout cannot
+    /// form.
+    fn fails_at_box(&self) -> bool {
+        matches!(
+            self,
+            Self::NonFiniteBlockGeometry { .. }
+                | Self::Text(
+                    TextError::NonFiniteGeometry
+                        | TextError::GlyphMatchingLimit { .. }
+                        | TextError::BidiExpansionLimit { .. }
+                        | TextError::CaseExpansionLimit
+                        | TextError::LeaderExpansionLimit { .. },
+                )
+                | Self::Table(_)
+                | Self::Flex(_)
+                | Self::Grid(_)
+                | Self::UnsupportedFlex { .. }
+                | Self::InvalidTableStructure
+                | Self::InvalidGridStructure
+                | Self::MissingClipFragment { .. }
+                | Self::MissingContainingFragment { .. }
+                | Self::Raster(_)
+        )
+    }
+
+    /// The box an error that [fails at a box](Self::fails_at_box) fails at: the one it names,
+    /// else `frontier`, the box layout last started.
+    fn failed_box(
+        &self,
+        frontier: Option<*const crate::document::BlockBox>,
+    ) -> Option<*const crate::document::BlockBox> {
+        match self {
+            Self::NonFiniteBlockGeometry { block } => Some(*block),
+            _ => frontier,
+        }
+    }
+}
+
 #[derive(Debug, thiserror::Error)]
 pub(crate) enum LayoutError {
     #[error("{0}")]
@@ -885,8 +948,10 @@ pub(crate) enum LayoutError {
     PageLimit { limit: usize },
     #[error("layout exceeds {limit} work units")]
     WorkLimit { limit: usize },
-    #[error("non-finite geometry at block {block}")]
-    NonFiniteBlockGeometry { block: usize },
+    #[error("block geometry is not finite")]
+    NonFiniteBlockGeometry {
+        block: *const crate::document::BlockBox,
+    },
     #[error("{0}")]
     Text(#[from] TextError),
     #[error("{0}")]

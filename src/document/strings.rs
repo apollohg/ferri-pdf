@@ -42,9 +42,9 @@ impl RunningElement {
     fn blocks_mut(&mut self) -> impl Iterator<Item = &mut BlockBox> {
         std::iter::once(&mut self.block).chain(self.copies.iter_mut().map(|(_, block)| block))
     }
-    /// See [`BlockBox::omit_from`].
-    pub(crate) fn omit_from(&mut self, target: *const BlockBox) -> bool {
-        self.blocks_mut().any(|block| block.omit_from(target))
+    /// See [`BlockBox::omit`].
+    pub(crate) fn omit(&mut self, target: *const BlockBox, following: bool) -> bool {
+        self.blocks_mut().any(|block| block.omit(target, following))
     }
     pub(crate) fn omit_content(&mut self) {
         self.blocks_mut().for_each(BlockBox::omit_content);

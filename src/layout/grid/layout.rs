@@ -286,7 +286,7 @@ pub(crate) fn measure<'a>(
     let height = vertical.used_height(top + rows.extent() + bottom);
     if !height.is_finite() {
         return Err(LayoutError::NonFiniteBlockGeometry {
-            block: measurer.sources.block(block.block),
+            block: std::ptr::from_ref(block.block),
         }
         .into());
     }

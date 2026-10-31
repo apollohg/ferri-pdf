@@ -747,7 +747,6 @@ impl<'a> TablePlan<'a> {
         )?;
         let style = self.style;
         let data = &self.data;
-        let index = measurer.sources.block(self.source);
         let place = self.place;
         let collapsed = data.collapsed.is_some();
         let table_edges = data.table_edges(style, width);
@@ -840,7 +839,10 @@ impl<'a> TablePlan<'a> {
             },
         );
         if !geometry.x.is_finite() || !geometry.width.is_finite() {
-            return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
+            return Err(LayoutError::NonFiniteBlockGeometry {
+                block: std::ptr::from_ref(self.source),
+            }
+            .into());
         }
         let mut starts = Vec::with_capacity(data.grid.columns);
         let mut cursor = horizontal;
@@ -1459,7 +1461,6 @@ fn measure_plan<'a>(
         block: plan.source,
         selected: plan.style,
     };
-    let index = measurer.sources.block(block.block);
     let style = block.style();
     let data = &plan.data;
     measurer.work.spend(data.cells.len().max(1))?;
@@ -1493,7 +1494,10 @@ fn measure_plan<'a>(
     let bottom = geometry.padding[2] + geometry.border[2];
     let height = top + content_height + bottom;
     if !height.is_finite() {
-        return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
+        return Err(LayoutError::NonFiniteBlockGeometry {
+            block: std::ptr::from_ref(block.block),
+        }
+        .into());
     }
     let [header_rows, footer_rows] = repeated_rows(data);
     let mut header = Vec::new();

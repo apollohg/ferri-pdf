@@ -1908,7 +1908,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 );
                 if !height.is_finite() {
                     return Err(LayoutError::NonFiniteBlockGeometry {
-                        block: self.measurer.sources.block(flow.source),
+                        block: std::ptr::from_ref(flow.source),
                     });
                 }
                 flow.height = height;

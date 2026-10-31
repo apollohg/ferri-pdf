@@ -1503,7 +1503,6 @@ impl<'a> Measurer<'a> {
                     .space
                     .enter(block, &geometry, containing_height, used_height);
             }
-            let index = self.sources.block(block.block);
             if !geometry.width.is_finite()
                 || !geometry.x.is_finite()
                 || geometry
@@ -1512,7 +1511,10 @@ impl<'a> Measurer<'a> {
                     .chain(geometry.margin.iter().flatten())
                     .any(|p| !p.is_finite())
             {
-                return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
+                return Err(LayoutError::NonFiniteBlockGeometry {
+                    block: std::ptr::from_ref(block.block),
+                }
+                .into());
             }
             if block.image().is_some() {
                 return crate::layout::images::measure(
@@ -1614,7 +1616,6 @@ impl<'a> Measurer<'a> {
             Ok(FlowStart::Pending(FlowFrame {
                 block,
                 root,
-                index,
                 containing_height,
                 used_height,
                 cell_percentage_chain: false,
@@ -2179,7 +2180,6 @@ struct FlowFrame<'a> {
     block: BlockSource<'a>,
     geometry: crate::layout::geometry::HorizontalBox,
     root: bool,
-    index: usize,
     containing_height: Option<f32>,
     used_height: Option<f32>,
     cell_percentage_chain: bool,
@@ -2294,7 +2294,6 @@ impl<'a> FlowFrame<'a> {
             block,
             geometry,
             root,
-            index,
             containing_height,
             used_height,
             vertical,
@@ -2378,7 +2377,10 @@ impl<'a> FlowFrame<'a> {
         let top_edge = legend.map_or(top_edge, |(_, start)| start);
         let mut height = items.iter().map(FlowItem::height).sum::<f32>();
         if !height.is_finite() {
-            return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
+            return Err(LayoutError::NonFiniteBlockGeometry {
+                block: std::ptr::from_ref(block.block),
+            }
+            .into());
         }
         if height < 0.0 {
             items.push(FlowItem::Space(-height));
@@ -2387,7 +2389,10 @@ impl<'a> FlowFrame<'a> {
         let mut natural_height = height;
         height = vertical.used_height(height);
         if !height.is_finite() {
-            return Err(LayoutError::NonFiniteBlockGeometry { block: index }.into());
+            return Err(LayoutError::NonFiniteBlockGeometry {
+                block: std::ptr::from_ref(block.block),
+            }
+            .into());
         }
         let constrained = height != natural_height || vertical.definite().is_some();
         let alignment = content_alignment(style, height - natural_height);

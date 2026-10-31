@@ -102,6 +102,11 @@ impl Budget {
         }
     }
 
+    /// The box layout last started.
+    pub(crate) fn frontier(&self) -> Frontier {
+        self.frontier.get()
+    }
+
     /// The boxes layout last started where it had spent each of [`MARK_SHIFTS`]'s fractions of
     /// the budget, smallest first: the content before each took at most that fraction.
     pub(crate) fn marks(&self) -> Vec<Frontier> {

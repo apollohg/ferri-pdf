@@ -755,17 +755,17 @@ impl StyledDocument {
         }
     }
 
-    /// Omits `target`, a formatting box of the document, and the content after it in
-    /// document order; whether the document holds `target`.
-    pub(crate) fn omit_from(&mut self, target: *const BlockBox) -> bool {
+    /// Omits `target`, a formatting box of the document, with the content after it in
+    /// document order where `following`; whether the document holds `target`.
+    pub(crate) fn omit(&mut self, target: *const BlockBox, following: bool) -> bool {
         std::iter::once(&mut self.root)
             .chain(self.footnotes.bodies.iter_mut().map(|body| &mut body.block))
-            .any(|tree| tree.omit_from(target))
+            .any(|tree| tree.omit(target, following))
             || self
                 .running_strings
                 .iter_mut()
                 .filter_map(|assignment| assignment.element.as_mut())
-                .any(|element| element.omit_from(target))
+                .any(|element| element.omit(target, following))
     }
 
     pub(crate) fn omit_content(&mut self) {

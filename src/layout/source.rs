@@ -1,17 +1,18 @@
 use crate::document::{BlockBox, BlockContent, Paragraph};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
-/// Identities of the immutable formatting tree, independent of measurement probes.
+/// Identities of the immutable formatting tree's paragraphs, independent of measurement probes.
 #[derive(Clone)]
 pub(super) struct SourceIds {
-    blocks: HashMap<*const BlockBox, usize>,
     paragraphs: HashMap<*const Paragraph, usize>,
+    /// The first-line boxes registered, which the boxes they restyle alike share.
+    shared: HashSet<*const BlockBox>,
 }
 impl SourceIds {
     pub(crate) fn new(root: &BlockBox) -> Self {
         let mut ids = Self {
-            blocks: HashMap::new(),
             paragraphs: HashMap::new(),
+            shared: HashSet::new(),
         };
         ids.register(root);
         ids
@@ -28,7 +29,7 @@ impl SourceIds {
         let mut pending = vec![Entry::Block(root)];
         while let Some(entry) = pending.pop() {
             match entry {
-                Entry::Shared(block) if ids.blocks.contains_key(&std::ptr::from_ref(block)) => {}
+                Entry::Shared(block) if !ids.shared.insert(std::ptr::from_ref(block)) => {}
                 Entry::Block(block) | Entry::Shared(block) => {
                     if let Some(flow) = block.flow() {
                         pending.push(Entry::Block(flow));
@@ -42,11 +43,6 @@ impl SourceIds {
                     if let Some(radical) = block.math().and_then(|math| math.radical.as_ref()) {
                         pending.push(Entry::Paragraph(radical));
                     }
-                    let index = ids.blocks.len();
-                    assert!(
-                        ids.blocks.insert(block, index).is_none(),
-                        "formatting boxes have one owner"
-                    );
                     pending.extend(
                         block
                             .children()
@@ -88,9 +84,6 @@ impl SourceIds {
                 }
             }
         }
-    }
-    pub(crate) fn block(&self, block: &BlockBox) -> usize {
-        self.blocks[&std::ptr::from_ref(block)]
     }
     pub(crate) fn paragraph(&self, paragraph: &Paragraph) -> usize {
         self.paragraphs[&std::ptr::from_ref(paragraph)]
