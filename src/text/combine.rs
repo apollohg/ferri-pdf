@@ -91,19 +91,15 @@ pub(crate) fn groups(paragraph: &Paragraph) -> Vec<Group> {
                     };
                     adjacent.is_some_and(|(index, ch)| {
                         property.accepts(ch)
-                            && paragraph
-                                .spans()
-                                .iter()
-                                .find(|span| span.range.contains(&index))
-                                .is_some_and(|other| {
-                                    other.inline_box != span.inline_box
-                                        && common_property(
-                                            paragraph,
-                                            span.inline_box,
-                                            other.inline_box,
-                                            ch,
-                                        )
-                                })
+                            && paragraph.span_at(index).is_some_and(|other| {
+                                other.inline_box != span.inline_box
+                                    && common_property(
+                                        paragraph,
+                                        span.inline_box,
+                                        other.inline_box,
+                                        ch,
+                                    )
+                            })
                     })
                 });
             if !interrupted {
@@ -122,11 +118,13 @@ pub(super) fn constrain<T>(
     entries: &mut Vec<T>,
     offset: impl Fn(&T) -> usize,
 ) {
+    // The groups follow each other in the text.
     let groups = groups(paragraph);
     entries.retain(|entry| {
-        !groups
-            .iter()
-            .any(|group| group.range.start < offset(entry) && offset(entry) < group.range.end)
+        let offset = offset(entry);
+        groups
+            .get(groups.partition_point(|group| group.range.end <= offset))
+            .is_none_or(|group| offset <= group.range.start)
     });
 }
 

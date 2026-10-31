@@ -726,14 +726,21 @@ impl Paragraph {
         (self.text, atomics)
     }
     pub(crate) fn leader_at(&self, offset: usize) -> bool {
-        self.spans
-            .get(self.spans.partition_point(|span| span.range.end <= offset))
-            .is_some_and(|span| span.leader)
+        self.following_span(offset).is_some_and(|span| span.leader)
     }
     pub(crate) fn style_at(&self, offset: usize) -> &Style {
+        self.following_span(offset)
+            .map_or(&self.style, |span| &span.style)
+    }
+    /// The span holding the text at `offset`.
+    pub(crate) fn span_at(&self, offset: usize) -> Option<&TextSpan> {
+        self.following_span(offset)
+            .filter(|span| span.range.contains(&offset))
+    }
+    /// The first span ending after `offset`.
+    fn following_span(&self, offset: usize) -> Option<&TextSpan> {
         self.spans
             .get(self.spans.partition_point(|span| span.range.end <= offset))
-            .map_or(&self.style, |span| &span.style)
     }
 }
 
