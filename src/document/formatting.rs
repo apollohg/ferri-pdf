@@ -3508,7 +3508,7 @@ fn block<'a>(
                         }
                         "svg" => {
                             let resolver = resources.resolver;
-                            let svg = crate::document::svg::serialize(
+                            let image = crate::document::svg::serialize(
                                 element,
                                 &frame.style,
                                 &crate::document::svg::Styling {
@@ -3517,14 +3517,30 @@ fn block<'a>(
                                     work: &traversal.work,
                                 },
                                 &mut |style| resources.masks(style),
-                            )?;
-                            Some(resources.cache.inline_svg_in_namespace(
-                                svg.xml,
-                                svg.styling,
-                                resources.base,
-                                resolver,
-                                frame.style.element_font_namespace(),
-                            )?)
+                            )
+                            .and_then(|svg| {
+                                Ok(resources.cache.inline_svg_in_namespace(
+                                    svg.xml,
+                                    svg.styling,
+                                    resources.base,
+                                    resolver,
+                                    frame.style.element_font_namespace(),
+                                )?)
+                            });
+                            match image {
+                                Ok(image) => Some(image),
+                                // The work budget bounds the whole formatting, not this element.
+                                Err(error @ DocumentError::FormattingWorkLimit { .. }) => {
+                                    return Err(error);
+                                }
+                                // SVG content in error renders nothing (SVG 2 §1.9).
+                                Err(error) => {
+                                    sheet.degrade(crate::style::Degradation::SvgInError {
+                                        reason: error.to_string(),
+                                    });
+                                    None
+                                }
+                            }
                         }
                         "video" if is_replaced(element) => Some(crate::document::media::poster(
                             element,

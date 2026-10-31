@@ -79,6 +79,9 @@ pub enum Degradation {
     /// no element of the document: the target's value is empty.
     #[error("target reference {reference:?} is unresolved ({reason}) and renders as empty text")]
     UnresolvedTarget { reference: String, reason: String },
+    /// An inline `svg` element the renderer cannot process renders nothing (SVG 2 §1.9).
+    #[error("inline SVG content is in error and renders nothing: {reason}")]
+    SvgInError { reason: String },
     /// A resource limit that bounds pathological input was reached.
     #[error("{reason}; {consequence}")]
     Limit {
