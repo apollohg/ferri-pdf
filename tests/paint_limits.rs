@@ -203,6 +203,37 @@ fn transforms_beyond_finite_coordinates_render_without_their_content() {
 }
 
 #[test]
+fn outlines_past_finite_coordinates_are_not_drawn() {
+    let output = render_html(
+        "<!doctype html><div style='width:100px;height:100px;background:rgb(0,0,255);\
+         outline:calc(1e38px * 100) solid red'></div>",
+        &local_options(),
+    )
+    .expect("an outline wider than finite coordinates does not fail the document");
+    let faults = pdf_number_faults(&output.pdf);
+    assert!(
+        faults.is_empty(),
+        "the outline writes no number:\n{}",
+        faults.join("\n")
+    );
+    assert!(
+        output.diagnostics.is_empty(),
+        "the outline encloses no finite area and is not drawn, leaving nothing for the writer \
+         to omit: {:?}",
+        output.diagnostics
+    );
+    let (pixels, _) = first_page_pixels(&output);
+    assert!(
+        pixels.iter().all(|pixel| pixel[..3] != RED),
+        "no part of the outline paints"
+    );
+    assert!(
+        pixels.iter().any(|pixel| pixel[..3] == [0, 0, 255]),
+        "the box the outline surrounds still paints"
+    );
+}
+
+#[test]
 fn items_with_numbers_pdf_cannot_write_are_omitted_with_a_diagnostic() {
     const BLUE: [u8; 3] = [0, 0, 255];
     for unwritable in [

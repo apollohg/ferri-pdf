@@ -744,6 +744,13 @@ impl<I> BoxPaint<I> {
         };
         let (x, outer_width) = side(self.rect.x, self.rect.width);
         let (y, outer_height) = side(self.rect.y, self.rect.height);
+        // An outline past finite coordinates encloses no area to draw.
+        if ![x, y, outer_width, outer_height]
+            .iter()
+            .all(|value| value.is_finite())
+        {
+            return None;
+        }
         let fragment = Self {
             background_box: None,
             ..self.clone()
