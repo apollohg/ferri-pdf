@@ -107,7 +107,7 @@ fn empty_values_css_wide_keywords_and_escaped_functions_remain_distinct() {
 }
 
 #[test]
-fn recursive_expansion_is_rejected_before_unbounded_allocation() {
+fn recursive_expansion_stops_at_its_byte_bound_before_unbounded_allocation() {
     const EXPANSION_LEVELS: usize = 22;
     let mut css = String::from("#root{--v0:x;");
     for level in 1..EXPANSION_LEVELS {
@@ -129,15 +129,32 @@ fn recursive_expansion_is_rejected_before_unbounded_allocation() {
         .select(&Selector::parse("#root").unwrap())
         .next()
         .unwrap();
+    assert_custom_properties_discarded(&sheet, element, "expanded value bytes");
+}
+
+/// Computing `element` must stop at the variable limit on `resource` and discard the
+/// element's custom properties as invalid at computed-value time, keeping the inherited ones.
+fn assert_custom_properties_discarded(
+    sheet: &Stylesheet,
+    element: crate::dom::Element<'_>,
+    resource: &str,
+) {
+    let style = sheet
+        .computed_with_resolver(element, &Style::default(), &FileResolver::default())
+        .unwrap_or_else(|error| panic!("a variable limit must not fail computing: {error}"));
+    let degradations = sheet.take_degradations();
     assert!(
-        matches!(
-            sheet.computed_with_resolver(element, &Style::default(), &FileResolver::default()),
-            Err(crate::style::StyleError::VariableLimit {
-                resource: "expanded value bytes",
-                ..
-            })
-        ),
-        "exponential substitution must stop at its explicit byte bound"
+        degradations.iter().any(|degradation| matches!(
+            degradation,
+            crate::style::Degradation::InvalidAtComputedValueTime { declaration, reason }
+                if declaration == "custom properties" && reason.contains(resource)
+        )),
+        "the {resource} bound must be reported: {degradations:?}"
+    );
+    assert!(
+        style.custom_properties.get("--v1").is_none()
+            && style.custom_properties.get("--empty0").is_none(),
+        "the element's custom properties compute as unset, inheriting nothing"
     );
 }
 
@@ -158,7 +175,7 @@ fn overlapping_cycles_invalidate_all_members_independently_of_hash_order() {
 }
 
 #[test]
-fn empty_custom_properties_still_consume_the_environment_budget() {
+fn empty_custom_properties_still_consume_the_environment_budget_and_are_discarded() {
     const PROPERTY_COUNT: usize = 20_000;
     let mut css = String::from("#root{");
     for index in 0..PROPERTY_COUNT {
@@ -173,16 +190,7 @@ fn empty_custom_properties_still_consume_the_environment_budget() {
     let html = DocumentTree::parse("<p id=root>X</p>").expect("parse test HTML");
     let selector = Selector::parse("#root").unwrap();
     let element = html.select(&selector).next().unwrap();
-    assert!(
-        matches!(
-            sheet.computed_with_resolver(element, &Style::default(), &FileResolver::default()),
-            Err(crate::style::StyleError::VariableLimit {
-                resource: "environment entries",
-                ..
-            })
-        ),
-        "empty values must not bypass the variable map allocation bound"
-    );
+    assert_custom_properties_discarded(&sheet, element, "environment entries");
 }
 
 #[test]

@@ -146,12 +146,24 @@ fn repeated_attribute_expansion_is_bounded_before_inline_collection() {
     let html = format!(
         "<style>{PROFILE}p::before{{content:{content}}}</style><p data-value='{attribute}'>Body</p>"
     );
-    let error = render_html(&html, &local_options())
-        .err()
-        .expect("repeated attribute expansion must be bounded");
+    let output = render_html(&html, &local_options())
+        .unwrap_or_else(|error| panic!("repeated attribute expansion must not fail: {error}"));
     const SUBSTITUTION_LIMIT_BYTES: usize = 1024 * 1024;
+    let bound = format!("CSS variable expanded value bytes exceeds {SUBSTITUTION_LIMIT_BYTES}");
     assert!(
-        matches!(&error,crate::Error::Css(crate::style::StyleError::VariableLimit{resource:"expanded value bytes",limit}) if *limit==SUBSTITUTION_LIMIT_BYTES),
-        "shared computed substitution must bound expansion before inline collection: {error}"
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::RenderDiagnostic::Degraded(crate::style::Degradation::InvalidAtComputedValueTime {
+                declaration,
+                reason,
+            }) if declaration.starts_with("content: ") && *reason == bound
+        )),
+        "shared computed substitution must bound expansion before inline collection: {:?}",
+        output.diagnostics
+    );
+    assert_eq!(
+        output.layout.unwrap().pages[0][0].text,
+        "Body",
+        "the bounded content is invalid at computed-value time, so ::before generates nothing"
     );
 }

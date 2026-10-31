@@ -126,7 +126,8 @@ pub(crate) use decoration_values::{
     DecorationInset, DecorationLines, DecorationSkip, TextDecoration, TextDecorations,
     UnderlinePosition,
 };
-pub(crate) use diagnostics::{SourceLocation, StyleDiagnostic, StyleDiagnosticKind};
+pub use diagnostics::Degradation;
+pub(crate) use diagnostics::{Degradations, SourceLocation, StyleDiagnostic, StyleDiagnosticKind};
 pub(crate) use flex_values::{Alignment, FlexBasis, FlexStyle, FlexWrap, Gap, OverflowPosition};
 pub(crate) use float_values::{Clear, Float, FloatSide, FootnoteDisplay, FootnotePolicy};
 pub(crate) use font_values::{

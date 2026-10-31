@@ -1,7 +1,9 @@
 use super::common;
 use crate::dom::{DocumentTree, Selector};
 use crate::resources::{FileResolver, ResourceResolver};
-use crate::style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
+use crate::style::{
+    Degradation, LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource,
+};
 use std::fmt::Write;
 
 const FONT_SIZE_PT: f32 = 20.0;
@@ -37,6 +39,18 @@ fn computed_in(
     settings: &crate::style::PrintSettings,
     resolver: &dyn ResourceResolver,
 ) -> Result<Style, StyleError> {
+    computed_reporting(css, html, selector, settings, resolver).map(|(style, _)| style)
+}
+
+/// The computed style of the element `selector` selects, and the degradations computing it
+/// and its ancestors reported.
+fn computed_reporting(
+    css: &str,
+    html: &str,
+    selector: &str,
+    settings: &crate::style::PrintSettings,
+    resolver: &dyn ResourceResolver,
+) -> Result<(Style, Vec<Degradation>), StyleError> {
     let sheet = Stylesheet::parse_with_settings(
         &[StylesheetSource {
             text: css.into(),
@@ -60,7 +74,34 @@ fn computed_in(
     for element in ancestors.into_iter().chain([element]) {
         style = sheet.computed_with_resolver(element, &style, resolver)?;
     }
-    Ok(style)
+    Ok((style, sheet.take_degradations()))
+}
+
+/// The target's computed style and the degradations computing it reported.
+fn discarding(css: &str, resolver: &dyn ResourceResolver) -> (Style, Vec<Degradation>) {
+    computed_reporting(
+        css,
+        "<div id=parent><p id=target>0</p></div>",
+        "#target",
+        &crate::style::PrintSettings::default(),
+        resolver,
+    )
+    .unwrap_or_else(|error| panic!("CSS {css} must compute: {error}"))
+}
+
+/// The sources and dependencies of the first dependency cycle in `degradations`.
+fn cycle(degradations: &[Degradation]) -> (&[crate::style::SourceLocation], &[String]) {
+    degradations
+        .iter()
+        .find_map(|degradation| match degradation {
+            Degradation::DependencyCycle {
+                sources,
+                dependencies,
+                ..
+            } => Some((sources.as_slice(), dependencies.as_slice())),
+            _ => None,
+        })
+        .unwrap_or_else(|| panic!("a reported dependency cycle: {degradations:?}"))
 }
 
 fn points(value: &Size) -> f32 {
@@ -129,24 +170,28 @@ fn attribute_typed_strings_parse_css_escapes_and_custom_ident_rejects_reserved_v
 }
 
 #[test]
-fn attribute_recursion_preserves_the_shared_resource_error_instead_of_using_fallback() {
-    let error = computed_in(
-        "#target{width:attr(data-size <length>,17pt)}",
+fn attribute_recursion_stops_at_the_nesting_bound_instead_of_using_fallback() {
+    let (style, degradations) = computed_reporting(
+        "#target{width:12pt;width:attr(data-size <length>,17pt)}",
         "<p id=target data-size='attr(data-size &lt;length>,19pt)'>Attribute</p>",
         "#target",
         &Default::default(),
         &FileResolver::default(),
     )
-    .unwrap_err();
+    .expect("recursive attribute substitution must not fail computing");
     assert!(
-        matches!(
-            error,
-            StyleError::VariableLimit {
-                resource: "value nesting",
-                ..
-            }
-        ),
-        "equal-size recursive DOM substitutions must remain bounded and keep their typed error: {error:?}"
+        degradations.iter().any(|degradation| matches!(
+            degradation,
+            Degradation::InvalidAtComputedValueTime { declaration, reason }
+                if declaration == "width: attr(data-size <length>,17pt)"
+                    && reason.contains("value nesting")
+        )),
+        "equal-size recursive DOM substitutions must remain bounded and be reported: {degradations:?}"
+    );
+    assert_eq!(
+        style.width,
+        Style::default().width,
+        "the declaration is invalid at computed-value time, not its fallback"
     );
 }
 
@@ -586,56 +631,42 @@ fn conditional_style_ranges_share_typed_units_and_element_metrics() {
 
 #[test]
 fn conditional_style_queries_report_computed_property_cycles_with_sources() {
-    let error=computed_with("#target{width:if(style(height:20pt):17pt;else:99pt);\nheight:if(style(width:17pt):20pt;else:88pt)}",&FileResolver::default()).expect_err("mutually dependent queries must not use provisional styles");
-    let StyleError::DependencyCycle {
-        sources,
-        dependencies,
-    } = error
-    else {
-        panic!("expected a computed-property cycle, got {error:?}");
-    };
+    let (_, degradations) = discarding(
+        "#target{width:if(style(height:20pt):17pt;else:99pt);\nheight:if(style(width:17pt):20pt;else:88pt)}",
+        &FileResolver::default(),
+    );
+    let (sources, dependencies) = cycle(&degradations);
     assert_eq!(
         sources.len(),
         2,
         "both authored declarations need locations: {sources:?}"
     );
-    assert!(
-        dependencies.iter().any(|name| name.ends_with("width")),
-        "{dependencies:?}"
-    );
-    assert!(
-        dependencies.iter().any(|name| name.ends_with("height")),
-        "{dependencies:?}"
-    );
+    for property in ["width", "height"] {
+        assert!(
+            dependencies.iter().any(|name| name.ends_with(property)),
+            "{property}: {dependencies:?}"
+        );
+    }
 }
 
 #[test]
 fn conditional_style_queries_report_cross_custom_and_ordinary_property_cycles() {
-    let error = computed_with(
+    let (_, degradations) = discarding(
         "#target{--size:if(style(width:17pt):20pt;else:99pt);\nwidth:var(--size)}",
         &FileResolver::default(),
-    )
-    .expect_err("a custom-property query cycle must not read a provisional width");
-    let StyleError::DependencyCycle {
-        sources,
-        dependencies,
-    } = error
-    else {
-        panic!("expected a cross-property dependency cycle, got {error:?}");
-    };
+    );
+    let (sources, dependencies) = cycle(&degradations);
     assert_eq!(
         sources.len(),
         2,
         "the custom and ordinary declarations need locations: {sources:?}"
     );
-    assert!(
-        dependencies.iter().any(|name| name.ends_with("--size")),
-        "{dependencies:?}"
-    );
-    assert!(
-        dependencies.iter().any(|name| name.ends_with("width")),
-        "{dependencies:?}"
-    );
+    for property in ["--size", "width"] {
+        assert!(
+            dependencies.iter().any(|name| name.ends_with(property)),
+            "{property}: {dependencies:?}"
+        );
+    }
 }
 
 #[test]
@@ -752,34 +783,20 @@ fn conditional_font_queries_resolve_absolute_dimensions_without_font_cycles() {
     );
     common::assert_pt(style.size, 17.0);
     common::assert_pt(points(&style.width), 34.0);
-    let error = computed_with(
+    let (_, degradations) = discarding(
         "#target{height:2em;font-size:if(style(height:34pt):17pt;else:99pt)}",
         &FileResolver::default(),
-    )
-    .unwrap_err();
-    match error {
-        StyleError::DependencyCycle {
-            sources,
-            dependencies,
-        } => {
-            assert!(
-                sources.len() >= 2,
-                "both authored sources must be retained: {sources:?}"
-            );
-            assert!(
-                dependencies
-                    .iter()
-                    .any(|dependency| dependency.ends_with("font-size")),
-                "font dependency: {dependencies:?}"
-            );
-            assert!(
-                dependencies
-                    .iter()
-                    .any(|dependency| dependency.ends_with("height")),
-                "dimension dependency: {dependencies:?}"
-            );
-        }
-        error => panic!("expected a font-size/dimension dependency cycle, got {error:?}"),
+    );
+    let (sources, dependencies) = cycle(&degradations);
+    assert!(
+        sources.len() >= 2,
+        "both authored sources must be retained: {sources:?}"
+    );
+    for dependency in ["font-size", "height"] {
+        assert!(
+            dependencies.iter().any(|node| node.ends_with(dependency)),
+            "{dependency} dependency: {dependencies:?}"
+        );
     }
 }
 
@@ -1573,13 +1590,21 @@ fn calc_mix_uses_element_fonts_variables_and_capability_checks() {
 #[test]
 fn calc_mix_reports_excluded_animation_timelines_without_fabricating_progress() {
     for timeline in ["--clock", "scroll()", "view()"] {
-        let result = computed_with(
-            &format!("#target{{width:calc-mix({timeline},10pt,30pt)}}"),
+        let (style, degradations) = discarding(
+            &format!("#target{{width:12pt;width:calc-mix({timeline},10pt,30pt)}}"),
             &FileResolver::default(),
         );
         assert!(
-            matches!(result,Err(StyleError::Unsupported(ref message)) if message.contains("timeline")),
-            "valid timeline syntax must report the approved profile exclusion: {timeline}: {result:?}"
+            degradations.iter().any(|degradation| matches!(
+                degradation,
+                Degradation::InvalidAtComputedValueTime { reason, .. } if reason.contains("timeline")
+            )),
+            "valid timeline syntax must report the approved profile exclusion: {timeline}: {degradations:?}"
+        );
+        assert_eq!(
+            style.width,
+            Style::default().width,
+            "{timeline}: the width computes as unset, not the earlier declaration"
         );
     }
     let style = computed(
@@ -3100,7 +3125,7 @@ fn page_geometry_resolves_acyclic_cross_axis_dependencies() {
 }
 
 #[test]
-fn undefined_geometry_cycles_are_reported_instead_of_using_provisional_values() {
+fn undefined_geometry_cycles_discard_a_cyclic_declaration_instead_of_using_provisional_values() {
     for css in [
         "@page{size:400pt 600pt;margin:2em}html{font-size:1vw}",
         "@page{size:100vw 600pt;margin:20pt}",
@@ -3108,20 +3133,18 @@ fn undefined_geometry_cycles_are_reported_instead_of_using_provisional_values() 
         "@page{size:400pt 600pt;margin:20pt;padding-left:1vw}",
         "@page{size:400pt 600pt;margin:20pt;border:1vw solid}",
     ] {
-        let result = crate::render_html(
+        let output = crate::render_html(
             &format!("<style>{css}</style><p>Cycle</p>"),
             &common::local_options(),
-        );
-        let Err(error) = result else {
-            panic!("geometry cycle was silently accepted: {css}")
-        };
+        )
+        .unwrap_or_else(|error| panic!("a geometry cycle must not fail rendering: {css}: {error}"));
         assert!(
-            matches!(error, crate::Error::Css(_)),
-            "cycle must be a style dependency error: {error}"
-        );
-        assert!(
-            error.to_string().contains("cycle"),
-            "cycle must retain its disposition: {error}"
+            output.diagnostics.iter().any(|diagnostic| matches!(
+                diagnostic,
+                crate::RenderDiagnostic::Degraded(Degradation::DependencyCycle { .. })
+            )),
+            "the cycle must be reported: {css}: {:?}",
+            output.diagnostics
         );
     }
 }
@@ -3202,44 +3225,38 @@ fn geometry_cycle_reports_winning_declarations_and_the_closed_dependency_chain()
         }])
         .unwrap();
         let tree = DocumentTree::parse("<p>Cycle</p>").unwrap();
-        let error = sheet
+        sheet
             .resolve_document_root(tree.root_element(), &FileResolver::default())
-            .unwrap_err();
-        match error {
-            StyleError::DependencyCycle {
-                sources,
-                dependencies,
-            } => {
-                assert!(
-                    sources.len() >= 2,
-                    "retain both page and root declaration sites: {sources:?}"
-                );
-                assert!(
-                    sources.iter().all(|source| source.base == font_base()),
-                    "retain declaring resource identity: {sources:?}"
-                );
-                assert!(
-                    sources.iter().any(|source| source.line == 2),
-                    "retain root declaration line: {sources:?}"
-                );
-                assert_eq!(
-                    dependencies.first(),
-                    dependencies.last(),
-                    "close the cycle: {dependencies:?}"
-                );
-                assert!(
-                    dependencies.iter().any(|name| name == "Root.font-size"),
-                    "name the root dependency: {dependencies:?}"
-                );
-                assert!(
-                    dependencies
-                        .iter()
-                        .any(|name| name.starts_with("Page.margin-")),
-                    "name the page dependency: {dependencies:?}"
-                );
-            }
-            error => panic!("wrong geometry-cycle error for {css}: {error}"),
-        }
+            .unwrap_or_else(|error| panic!("{css}: a cycle must not fail computing: {error}"));
+        let degradations = sheet.take_degradations();
+        let (sources, dependencies) = cycle(&degradations);
+        assert!(
+            sources.len() >= 2,
+            "retain both page and root declaration sites: {sources:?}"
+        );
+        assert!(
+            sources.iter().all(|source| source.base == font_base()),
+            "retain declaring resource identity: {sources:?}"
+        );
+        assert!(
+            sources.iter().any(|source| source.line == 2),
+            "retain root declaration line: {sources:?}"
+        );
+        assert_eq!(
+            dependencies.first(),
+            dependencies.last(),
+            "close the cycle: {dependencies:?}"
+        );
+        assert!(
+            dependencies.iter().any(|name| name == "Root.font-size"),
+            "name the root dependency: {dependencies:?}"
+        );
+        assert!(
+            dependencies
+                .iter()
+                .any(|name| name.starts_with("Page.margin-")),
+            "name the page dependency: {dependencies:?}"
+        );
     }
 }
 

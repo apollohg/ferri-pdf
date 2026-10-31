@@ -2,7 +2,7 @@ use crate::dom::{DocumentTree, Selector};
 use crate::paint::{Easing, LengthPercentage};
 use crate::resources::FileResolver;
 use crate::style::{
-    Style, StyleError, Stylesheet, StylesheetSource,
+    Degradation, Style, StyleError, Stylesheet, StylesheetSource,
     calc::Kind,
     grammar::Property,
     inert::{Computed, InertValues},
@@ -264,12 +264,13 @@ fn mandatory_scroll_snapping_remains_unsupported() {
             "scroll-snap-type-y: mandatory",
         ),
     ] {
-        match styles(&format!("#parent{{{declaration}}}")) {
-            Err(StyleError::Unsupported(message)) => assert_eq!(
-                message, expected,
-                "mandatory snapping can move the printed scroll position"
-            ),
-            other => panic!("`{declaration}` must stay unsupported, got {other:?}"),
-        }
+        assert_eq!(
+            super::discarded(&format!("#target{{{declaration}}}")),
+            [Degradation::InvalidAtComputedValueTime {
+                declaration: expected.into(),
+                reason: "unsupported CSS".into(),
+            }],
+            "mandatory snapping can move the printed scroll position, so it computes as unset"
+        );
     }
 }

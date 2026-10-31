@@ -1,10 +1,11 @@
 //! Conformance of the engine to the CSS specification data in `spec/css`: grammars accept
 //! generated valid values and reject invalid mutations, initial values compute to the
-//! engine's defaults, inheritance follows the data, and every other property is rejected.
+//! engine's defaults, inheritance follows the data, and every other property's values are
+//! invalid at computed-value time.
 use crate::dom::{DocumentTree, Selector};
 use crate::resources::FileResolver;
 use crate::style::{
-    Style, StyleError, Stylesheet, StylesheetSource,
+    Degradation, Style, StyleError, Stylesheet, StylesheetSource,
     component::Component,
     declaration,
     grammar::{
@@ -862,6 +863,11 @@ fn custom_idents_yield_only_to_keywords_valid_at_their_position() {
 }
 
 fn styles(css: &str) -> Result<(Style, Style), StyleError> {
+    styles_reporting(css).map(|(parent, child, _)| (parent, child))
+}
+
+/// The parent's and child's styles, and the degradations computing them reported.
+fn styles_reporting(css: &str) -> Result<(Style, Style, Vec<Degradation>), StyleError> {
     let sheet = Stylesheet::parse(&[StylesheetSource {
         text: css.into(),
         base: Default::default(),
@@ -879,7 +885,7 @@ fn styles(css: &str) -> Result<(Style, Style), StyleError> {
     )?;
     let child =
         sheet.computed_with_resolver(select(CHILD_ELEMENT), &parent, &FileResolver::default())?;
-    Ok((parent, child))
+    Ok((parent, child, sheet.take_degradations()))
 }
 
 fn styles_in_context(property: Property, css: &str) -> Result<(Style, Style), StyleError> {
@@ -1012,7 +1018,8 @@ fn inheritance_follows_the_specification_data() {
 }
 
 #[test]
-fn unsupported_properties_keep_their_initial_value_or_fail() {
+fn unsupported_values_compute_as_invalid_at_computed_value_time_and_are_reported() {
+    let (_, unstyled, _) = styles_reporting("").expect("the unstyled document computes");
     let mut failures = Vec::new();
     for property in Property::ALL {
         if computed(property) || !declaration::longhands(property).eq([property]) {
@@ -1021,11 +1028,13 @@ fn unsupported_properties_keep_their_initial_value_or_fail() {
         let name = property.name();
         if let Some(initial) =
             initial_text(property).filter(|_| declaration::initial(property).is_some())
-            && let Err(error) = styles(&format!("{CHILD_ELEMENT}{{{name}:{initial}}}"))
         {
-            failures.push(format!(
-                "{name}: its initial value `{initial}` must render as the engine does: {error}"
-            ));
+            match styles_reporting(&format!("{CHILD_ELEMENT}{{{name}:{initial}}}")) {
+                Ok((_, _, degradations)) if degradations.is_empty() => {}
+                other => failures.push(format!(
+                    "{name}: its initial value `{initial}` must render as the engine does, got {other:?}"
+                )),
+            }
         }
         let non_initial = Sampler::new()
             .samples(property.data().root)
@@ -1037,14 +1046,34 @@ fn unsupported_properties_keep_their_initial_value_or_fail() {
                     .flatten()
                     .is_some_and(|value| Some(&value) != declaration::initial(property))
             });
-        if let Some(sample) = non_initial {
-            match styles(&format!("{CHILD_ELEMENT}{{{name}:{sample}}}")) {
-                Err(StyleError::Unsupported(_)) => {}
-                other => failures.push(format!(
-                    "{name}: unsupported value `{sample}` must be rejected as unsupported, got {:?}",
-                    other.err()
-                )),
+        let Some(sample) = non_initial else {
+            continue;
+        };
+        // CSS Values 5 §2.4.1: the property computes as `unset`, here exactly as undeclared.
+        match styles_reporting(&format!("{CHILD_ELEMENT}{{{name}:{sample}}}")) {
+            Ok((_, child, degradations)) => {
+                if !degradations.iter().any(|degradation| {
+                    matches!(
+                        degradation,
+                        Degradation::InvalidAtComputedValueTime { declaration, .. }
+                            if declaration.starts_with(&format!("{name}: "))
+                    )
+                }) {
+                    failures.push(format!(
+                        "{name}: unsupported value `{sample}` must be reported as invalid at computed-value time, got {degradations:?}"
+                    ));
+                }
+                if computed_text(&child) != computed_text(&unstyled) {
+                    failures.push(format!(
+                        "{name}: unsupported value `{sample}` must compute as unset:\n  {}\nnot\n  {}",
+                        computed_text(&unstyled),
+                        computed_text(&child)
+                    ));
+                }
             }
+            Err(error) => failures.push(format!(
+                "{name}: unsupported value `{sample}` must not fail rendering: {error}"
+            )),
         }
     }
     report("unsupported-property failures", &failures);
@@ -1222,9 +1251,20 @@ fn supports_accepts_pending_values_without_promising_computed_capability() {
             &Style::default(),
             crate::style::PseudoElement::Before,
         );
+        // The substituted value is invalid at computed-value time: `content` computes as
+        // `unset`, `normal`, which generates no `::before`.
         assert!(
-            matches!(result, Err(StyleError::Unsupported(_))),
+            matches!(result, Ok(None)),
             "acceptance defers capability failure to actual computation instead of dropping the declaration: {value}: {result:?}"
+        );
+        let degradations = sheet.take_degradations();
+        assert!(
+            degradations.iter().any(|degradation| matches!(
+                degradation,
+                Degradation::InvalidAtComputedValueTime { declaration, .. }
+                    if declaration.starts_with("content: ")
+            )),
+            "the computation reports the declaration it discards: {value}: {degradations:?}"
         );
     }
 }

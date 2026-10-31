@@ -296,7 +296,6 @@ pub(crate) enum Display {
     RunIn(Box<Display>),
     Contents,
     None,
-    Unsupported(String),
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Serialize)]
@@ -620,16 +619,6 @@ impl Display {
         }
     }
 
-    pub(crate) fn validate(&self) -> Result<(), StyleError> {
-        match self {
-            Self::Unsupported(value) => Err(StyleError::Unsupported(format!(
-                "{}{}{value}",
-                crate::style::grammar::Property::Display.name(),
-                crate::style::properties::DECLARATION_SEPARATOR
-            ))),
-            _ => Ok(()),
-        }
-    }
     pub(crate) fn is_row_group(&self) -> bool {
         matches!(
             self,
@@ -671,7 +660,6 @@ impl Display {
         match self {
             Self::Inline | Self::InlineListItem | Self::Ruby | Self::RunIn(_) => true,
             atomic if atomic.is_atomic_inline() => true,
-            Self::Unsupported(value) => value.to_ascii_lowercase().starts_with("inline-"),
             _ => false,
         }
     }
@@ -765,38 +753,23 @@ impl Display {
         }
     }
     /// `||` and `&&` slots follow the grammar, so keywords arrive as outside, inside, marker.
-    pub(super) fn from_component(value: &Component) -> Self {
+    pub(super) fn from_component(value: &Component) -> Result<Self, StyleError> {
         let mut keywords = Vec::new();
         value.keywords(&mut keywords);
         if keywords.first() == Some(&Keyword::RunIn) {
             // A run-in box is the inline-level box of the same inner display (§2.1).
             keywords[0] = Keyword::Inline;
-            let inline = Self::from_keywords(&keywords);
-            return if inline.is_inline_level() && !matches!(inline, Self::Unsupported(_)) {
-                Self::RunIn(Box::new(inline))
-            } else {
-                keywords[0] = Keyword::RunIn;
-                Self::unsupported(&keywords)
-            };
+            return Self::from_keywords(&keywords)
+                .filter(Self::is_inline_level)
+                .map(|inline| Self::RunIn(Box::new(inline)))
+                .ok_or_else(|| unsupported(value));
         }
-        Self::from_keywords(&keywords)
+        Self::from_keywords(&keywords).ok_or_else(|| unsupported(value))
     }
-    fn unsupported(keywords: &[Keyword]) -> Self {
-        Self::Unsupported(
-            keywords
-                .iter()
-                .map(|keyword| keyword.name())
-                .collect::<Vec<_>>()
-                .join(" "),
-        )
-    }
-    fn from_keywords(keywords: &[Keyword]) -> Self {
+    fn from_keywords(keywords: &[Keyword]) -> Option<Self> {
         DISPLAY_FORMS
             .iter()
             .find(|(_, forms)| forms.contains(&keywords))
-            .map_or_else(
-                || Self::unsupported(keywords),
-                |(display, _)| display.clone(),
-            )
+            .map(|(display, _)| display.clone())
     }
 }

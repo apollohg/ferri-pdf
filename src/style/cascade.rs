@@ -1,5 +1,5 @@
 use crate::style::{
-    Style, StyleError,
+    Degradations, Style, StyleError,
     declaration::{self, Declared, Pending, PropertyDeclaration, Specified},
     grammar::Property,
     layers::{LayerId, LayerPriority},
@@ -519,25 +519,57 @@ fn custom_properties(
     }
 }
 
+/// How diagnostics name an element's custom property declarations together.
+const CUSTOM_PROPERTIES: &str = "custom properties";
+
+/// A substitution that cannot compute leaves its declaration invalid at computed-value time
+/// (CSS Values 5 §2.4.1): reported, it substitutes nothing, so its longhands are unset.
+pub(super) fn substituted(
+    pending: &Pending,
+    substitution: Result<Option<Vec<(Property, Specified)>>, StyleError>,
+    degradations: &Degradations,
+) -> Option<Vec<(Property, Specified)>> {
+    substitution.unwrap_or_else(|error| {
+        degradations.record(crate::style::properties::invalid(
+            pending.property.name(),
+            &pending.source,
+            error,
+        ));
+        None
+    })
+}
+
 /// Invalid computed values become unset; only valid rollback keywords revisit candidates.
 pub(super) fn resolve(
     values: Cascaded,
     style: &mut Style,
     parent: &Style,
+    degradations: &Degradations,
 ) -> Result<Winners, StyleError> {
-    resolve_located(values, style, parent, |_, _| {})
+    resolve_located(values, style, parent, degradations, |_, _| {})
 }
 
 pub(super) fn resolve_located(
     values: Cascaded,
     style: &mut Style,
     parent: &Style,
+    degradations: &Degradations,
     mut selected: impl FnMut(Property, Option<&crate::style::SourceLocation>),
 ) -> Result<Winners, StyleError> {
     let (declarations, custom) = values.into_parts();
-    style.custom_properties = custom_properties(&style.custom_properties, custom)?;
+    // Custom properties past the variable limits are invalid at computed-value time: unset,
+    // they keep the inherited environment.
+    match custom_properties(&style.custom_properties, custom) {
+        Ok(computed) => style.custom_properties = computed,
+        Err(error) => {
+            degradations.record(crate::style::Degradation::InvalidAtComputedValueTime {
+                declaration: CUSTOM_PROPERTIES.to_owned(),
+                reason: error.to_string(),
+            });
+        }
+    }
     let flows = if declarations.flow_relative() {
-        Some(element_flows(&declarations, style, parent)?)
+        Some(element_flows(&declarations, style, parent, degradations)?)
     } else {
         None
     };
@@ -548,11 +580,15 @@ pub(super) fn resolve_located(
             &mut || Ok(style.align),
             &mut || Ok(flows.expect("flow-relative candidates computed the element's flows")),
             &mut |pending, _| {
-                declaration::substitute(
+                Ok(substituted(
                     pending,
-                    &style.custom_properties,
-                    &style.inherited_custom_properties,
-                )
+                    declaration::substitute(
+                        pending,
+                        &style.custom_properties,
+                        &style.inherited_custom_properties,
+                    ),
+                    degradations,
+                ))
             },
         )?;
         if let Some(winner) = winner {
@@ -577,6 +613,7 @@ fn element_flows(
     declarations: &Properties,
     style: &Style,
     parent: &Style,
+    degradations: &Degradations,
 ) -> Result<Flows, StyleError> {
     let mut element = parent.clone();
     for property in [Property::Direction, Property::WritingMode] {
@@ -585,11 +622,15 @@ fn element_flows(
             &mut || Ok(style.align),
             &mut || unreachable!("flow properties belong to no logical property group"),
             &mut |pending, _| {
-                declaration::substitute(
+                Ok(substituted(
                     pending,
-                    &style.custom_properties,
-                    &style.inherited_custom_properties,
-                )
+                    declaration::substitute(
+                        pending,
+                        &style.custom_properties,
+                        &style.inherited_custom_properties,
+                    ),
+                    degradations,
+                ))
             },
         )?;
         if let Some(value) = value {
@@ -599,7 +640,7 @@ fn element_flows(
                 &mut element,
                 parent,
                 &crate::style::units::Relative::initial(),
-            )?;
+            );
         }
     }
     Ok(Flows {

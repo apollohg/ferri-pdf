@@ -1,6 +1,6 @@
 use super::common;
 
-use crate::style::StyleDiagnosticKind;
+use crate::style::{Degradation, StyleDiagnosticKind};
 use crate::{
     RenderDiagnostic, Resource, ResourceBase, ResourceError, ResourceResolver, StyleError, Url,
     render_html, render_with_resolver,
@@ -102,20 +102,36 @@ fn eof_closes_valid_constructs_and_at_rule_names_are_case_insensitive() {
     assert_pt(trace.pages[0][0].font_size, 18.0);
 }
 
+/// Whether `output` reports `declaration` as invalid at computed-value time.
+fn discarded(output: &crate::RenderOutput, declaration: &str) -> bool {
+    output.diagnostics.iter().any(|diagnostic| {
+        matches!(
+            diagnostic,
+            RenderDiagnostic::Degraded(Degradation::InvalidAtComputedValueTime {
+                declaration: discarded,
+                ..
+            }) if discarded == declaration
+        )
+    })
+}
+
 #[test]
-fn unsupported_active_winner_is_still_an_error() {
-    let error = render_html(
-        "<style>p{scroll-initial-target:none;scroll-initial-target:nearest}</style><p>grid</p>",
-        &local_options(),
-    )
-    .err()
-    .expect("active unsupported initial scroll target must fail");
+fn unsupported_active_winner_is_invalid_at_computed_value_time() {
+    let output =
+        render_css("p{scroll-initial-target:none;scroll-initial-target:nearest;font-size:18pt}");
     assert!(
-        matches!(error, crate::Error::Css(StyleError::Unsupported(_))),
-        "active unsupported capability must retain CSS classification: {error:?}"
+        discarded(&output, "scroll-initial-target: nearest"),
+        "the active unsupported winner is reported: {:?}",
+        output.diagnostics
     );
+    assert_pt(output.layout.unwrap().pages[0][0].font_size, 18.0);
     let output =
         render_css("p{scroll-initial-target:nearest;scroll-initial-target:none;font-size:18pt}");
+    assert!(
+        !discarded(&output, "scroll-initial-target: nearest"),
+        "an unsupported value the cascade discards is never computed: {:?}",
+        output.diagnostics
+    );
     assert_pt(output.layout.unwrap().pages[0][0].font_size, 18.0);
 }
 
@@ -249,16 +265,17 @@ fn invalid_page_rule_and_font_face_do_not_remove_valid_siblings() {
 }
 
 #[test]
-fn unsupported_generated_winner_keeps_css_error_classification() {
-    let error = render_html(
-        "<style>p::before{content:'grid';scroll-initial-target:nearest}</style><p>body</p>",
-        &local_options(),
-    )
-    .err()
-    .expect("active generated unsupported initial scroll target must fail");
+fn unsupported_generated_winner_is_invalid_at_computed_value_time() {
+    let output = render_css("p::before{content:'grid';scroll-initial-target:nearest}");
     assert!(
-        matches!(error, crate::Error::Css(StyleError::Unsupported(_))),
-        "generated capability classification: {error:?}"
+        discarded(&output, "scroll-initial-target: nearest"),
+        "the generated box's unsupported winner is reported: {:?}",
+        output.diagnostics
+    );
+    assert_eq!(
+        output.layout.unwrap().pages[0][0].text,
+        "gridsurvives",
+        "the pseudo-element still generates its content"
     );
 }
 

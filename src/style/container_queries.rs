@@ -577,7 +577,7 @@ impl QueryValues for ContainerValues<'_> {
         } else {
             self.relative()
         };
-        properties::apply(property, value, &mut candidate, &parent, &relative)?;
+        properties::apply(property, value, &mut candidate, &parent, &relative);
         Ok(candidate)
     }
     fn custom(&self, name: &str) -> Result<Option<variables::Expanded>, StyleError> {

@@ -424,6 +424,8 @@ pub(crate) struct Relative<'a> {
     pub(crate) query_sizes: Option<&'a crate::style::QuerySizes>,
     /// The element's measured anchors, which its anchor functions resolve against.
     pub(crate) anchoring: Option<crate::style::anchor_values::Anchoring<'a>>,
+    /// Where values computed as invalid at computed-value time are reported.
+    pub(crate) degradations: Rc<crate::style::Degradations>,
 }
 impl Relative<'_> {
     /// Initial values and the default page area, for values computed without an element
@@ -449,6 +451,7 @@ impl Relative<'_> {
             containers: crate::style::QueryContainers::default(),
             query_sizes: None,
             anchoring: None,
+            degradations: Rc::default(),
         }
     }
     pub(crate) fn media(paper: [f32; 2], font: Option<Arc<InitialFont>>) -> Self {

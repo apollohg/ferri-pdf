@@ -64,6 +64,7 @@ pub(crate) struct Stylesheet {
     pub(super) paper: [f32; 2],
     pub(super) document_base: ResourceBase,
     pub(super) diagnostics: RefCell<Vec<StyleDiagnostic>>,
+    pub(super) degradations: std::rc::Rc<crate::style::Degradations>,
     pub(super) rule_indices: [Vec<usize>; crate::style::selector::SELECTOR_TARGET_COUNT],
     pub page: [f32; 2],
     pub margin: [f32; 4],
@@ -373,6 +374,7 @@ impl Stylesheet {
             paper: self.paper,
             document_base: self.document_base.clone(),
             diagnostics: RefCell::default(),
+            degradations: std::rc::Rc::default(),
             rule_indices: self.rule_indices.clone(),
             page: self.page,
             margin: self.margin,
@@ -612,6 +614,7 @@ impl Stylesheet {
             paper: settings.paper,
             document_base: document_base.clone(),
             diagnostics,
+            degradations: std::rc::Rc::default(),
             rule_indices: std::array::from_fn(|_| Vec::new()),
             page: settings.paper,
             margin: [DEFAULT_PAGE_MARGIN; 4],
@@ -998,6 +1001,16 @@ impl Stylesheet {
 
     pub(crate) fn take_diagnostics(&mut self) -> Vec<StyleDiagnostic> {
         std::mem::take(self.diagnostics.get_mut())
+    }
+
+    /// Reports input rendered without, instead of failing.
+    pub(crate) fn degrade(&self, degradation: crate::style::Degradation) {
+        self.degradations.record(degradation);
+    }
+
+    /// The degradations recorded since the last call.
+    pub(crate) fn take_degradations(&self) -> Vec<crate::style::Degradation> {
+        self.degradations.take()
     }
 
     pub(super) fn font_namespace(&self, scope: Option<crate::dom::TreeScopeId>) -> FontNamespace {

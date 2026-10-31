@@ -82,6 +82,8 @@ pub enum DocumentDiagnostic {
     ImageDecode { error: String },
     #[error("{0}")]
     Css(crate::style::StyleDiagnostic),
+    #[error("{0}")]
+    Degraded(crate::style::Degradation),
     #[error("decoding {reference:?} as {encoding} replaced malformed byte sequences")]
     Decoding {
         base: crate::resources::ResourceBase,
@@ -749,6 +751,12 @@ impl StyledDocument {
         }
     }
     pub(crate) fn into_diagnostics(mut self) -> Vec<DocumentDiagnostic> {
+        self.diagnostics.extend(
+            self.styles
+                .take_degradations()
+                .into_iter()
+                .map(DocumentDiagnostic::Degraded),
+        );
         self.diagnostics
             .extend(self.source.embedded.take_diagnostics());
         self.diagnostics.extend(

@@ -95,13 +95,23 @@ fn supports_requires_usable_behavior_not_only_known_grammar() {
         })
         .expect("supported flex width and background reach the display list");
     assert_pt(paint.rect.width, 120.0);
-    assert!(matches!(
-        render_html(
-            "<style>@supports (width:12pt){p{scroll-initial-target:nearest}}</style><p>Unsupported</p>",
-            &local_options()
-        ),
-        Err(ferri_pdf::Error::Css(StyleError::Unsupported(_)))
-    ));
+    // A supported condition still applies values the engine does not implement: they are
+    // invalid at computed-value time and reported.
+    let output = render_html(
+        "<style>@supports (width:12pt){p{scroll-initial-target:nearest}}</style><p>Unsupported</p>",
+        &local_options(),
+    )
+    .expect("an unsupported value in an applied rule must not fail rendering");
+    assert!(
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            ferri_pdf::RenderDiagnostic::Degraded(
+                ferri_pdf::Degradation::InvalidAtComputedValueTime { declaration, .. }
+            ) if declaration == "scroll-initial-target: nearest"
+        )),
+        "{:?}",
+        output.diagnostics
+    );
 }
 
 #[test]

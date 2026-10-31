@@ -107,6 +107,8 @@ pub(crate) struct ToggleArgument {
 #[derive(Debug)]
 pub(super) struct Pending {
     pub(crate) property: Property,
+    /// The declared value, which diagnostics name.
+    pub(crate) source: Box<str>,
     pub(crate) value: variables::Value,
     pub(crate) location: crate::style::SourceLocation,
     pub(crate) namespaces: Option<crate::style::selector::Namespaces>,
@@ -173,6 +175,7 @@ pub(crate) fn parse_at_origin(
     if let Some(value) = variables::Value::with_property_substitutions(&declaration.value)? {
         let pending = Rc::new(Pending {
             property,
+            source: declaration.value.as_str().into(),
             value,
             location: declaration.location.clone(),
             namespaces: declaration.namespaces.clone(),

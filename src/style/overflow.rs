@@ -142,7 +142,7 @@ pub(super) fn compute(
     } else {
         for (property, value) in AXIS_PROPERTIES.into_iter().zip(specified) {
             if let Some(value) = value {
-                crate::style::properties::apply(property, &value, style, parent, relative)?;
+                crate::style::properties::apply(property, &value, style, parent, relative);
             }
         }
     }
@@ -259,7 +259,7 @@ impl<'a, 'r, 's> Axes<'a, 'r, 's> {
             &mut style,
             self.parent,
             self.relative,
-        )?;
+        );
         Ok(style.overflow[axis])
     }
 

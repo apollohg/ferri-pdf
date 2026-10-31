@@ -156,18 +156,39 @@ fn percentage_line_height_inherits_the_computed_length() {
 }
 
 #[test]
-fn overflowing_percentage_typography_is_rejected_before_layout() {
-    for (declaration, expected) in [
-        ("font-size:10000%", "non-finite font size"),
-        ("line-height:10000%", "non-finite line height"),
+fn overflowing_percentage_typography_is_invalid_at_computed_value_time() {
+    for (declaration, reported, reason) in [
+        (
+            "font-size:10000%",
+            "font-size: 10000%",
+            "non-finite font size",
+        ),
+        (
+            "line-height:10000%",
+            "line-height: 10000%",
+            "non-finite line height",
+        ),
     ] {
+        // The paragraph has no text, so the inherited 1e38pt size lays out no line.
         let html = format!(
-            "<style>{PROFILE}section{{font-size:1e38pt}}p{{{declaration}}}</style><section><p>Overflow</p></section>"
+            "<style>{PROFILE}section{{font-size:1e38pt}}p{{{declaration}}}</style><section><p></p></section><div>After</div>"
         );
-        let result = render_html(&html, &local_options());
+        let output = render_html(&html, &local_options())
+            .unwrap_or_else(|error| panic!("overflowing {declaration} must not fail: {error}"));
         assert!(
-            matches!(result, Err(ferri_pdf::Error::Css(ferri_pdf::StyleError::Invalid(ref message))) if message == expected),
-            "overflowing {declaration} must fail during CSS computation"
+            output.diagnostics.iter().any(|diagnostic| matches!(
+                diagnostic,
+                ferri_pdf::RenderDiagnostic::Degraded(
+                    ferri_pdf::Degradation::InvalidAtComputedValueTime { declaration, reason: found }
+                ) if declaration == reported && found == reason
+            )),
+            "overflowing {declaration} is discarded during CSS computation: {:?}",
+            output.diagnostics
+        );
+        assert_eq!(
+            output.layout.unwrap().pages[0][0].text,
+            "After",
+            "the rest of the document renders"
         );
     }
 }

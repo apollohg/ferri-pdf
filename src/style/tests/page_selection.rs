@@ -1,7 +1,7 @@
 use crate::dom::{DocumentTree, Selector};
 use crate::resources::FileResolver;
 use crate::style::{
-    FirstPageStart, Page, PageSide, PageStyleTarget, StyleError, Stylesheet, StylesheetSource,
+    Degradation, FirstPageStart, Page, PageSide, PageStyleTarget, Stylesheet, StylesheetSource,
 };
 
 fn sheet(css: &str) -> Stylesheet {
@@ -50,7 +50,7 @@ fn selected_page_cycle_records_the_named_property_and_viewport_request() {
     let selected = tree.select(&Selector::parse("p").unwrap()).next().unwrap();
     let mut sheet =
         sheet("@page A{size:400pt 500pt}p{page:if(style(width:100pt):A;else:B);width:10vw}");
-    let error = sheet
+    sheet
         .resolve_document_root_with_pages(
             &tree,
             &FileResolver::default(),
@@ -66,37 +66,39 @@ fn selected_page_cycle_records_the_named_property_and_viewport_request() {
             },
             &|_| Ok(PageSide::Right),
         )
-        .unwrap_err();
-    let StyleError::DependencyCycle {
-        sources,
-        dependencies,
-    } = error
+        .expect("a dependency cycle discards a declaration instead of failing");
+    let degradations = sheet.take_degradations();
+    let Some((sources, dependencies)) =
+        degradations
+            .iter()
+            .find_map(|degradation| match degradation {
+                Degradation::DependencyCycle {
+                    sources,
+                    dependencies,
+                    ..
+                } => Some((sources, dependencies)),
+                _ => None,
+            })
     else {
-        panic!("{error}");
+        panic!("the cyclic declaration must be reported: {degradations:?}");
     };
-    assert_ne!(sources, [] as [crate::style::SourceLocation; 0]);
+    assert_ne!(sources, &[] as &[crate::style::SourceLocation]);
     assert!(
         dependencies
             .iter()
             .any(|dependency| dependency == "first-page-start"),
         "{dependencies:?}"
     );
-    assert!(
-        dependencies
-            .iter()
-            .any(|dependency| std::path::Path::new(dependency)
-                .extension()
-                .is_some_and(|ext| ext.eq_ignore_ascii_case("page"))),
-        "{dependencies:?}"
-    );
-    assert!(
-        dependencies
-            .iter()
-            .any(|dependency| std::path::Path::new(dependency)
-                .extension()
-                .is_some_and(|ext| ext.eq_ignore_ascii_case("width"))),
-        "{dependencies:?}"
-    );
+    for extension in ["page", "width"] {
+        assert!(
+            dependencies
+                .iter()
+                .any(|dependency| std::path::Path::new(dependency)
+                    .extension()
+                    .is_some_and(|ext| ext.eq_ignore_ascii_case(extension))),
+            "{extension}: {dependencies:?}"
+        );
+    }
 }
 
 #[test]

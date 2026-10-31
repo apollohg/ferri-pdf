@@ -1766,7 +1766,7 @@ impl Stylesheet {
             .unwrap_or(Specified::Wide(
                 crate::style::wide_keywords::WideKeyword::Initial,
             ));
-        properties::apply(Property::Content, &value, style, parent, relative)?;
+        properties::apply(Property::Content, &value, style, parent, relative);
         Ok(match style.computed_content.as_ref() {
             crate::style::generated::ComputedContent::Items { content, .. } => {
                 Some(content.clone())
@@ -1787,7 +1787,7 @@ impl Stylesheet {
         let Some(declared) = declared.filter(|_| content.has_images()) else {
             return Ok(content);
         };
-        properties::apply(Property::Content, &declared, style, parent, relative)?;
+        properties::apply(Property::Content, &declared, style, parent, relative);
         Ok(style.computed_content.items().cloned().unwrap_or(content))
     }
 
@@ -1798,22 +1798,22 @@ impl Stylesheet {
         relative: &Relative<'_>,
     ) -> Result<(), StyleError> {
         if let Some(value) = winners.remove(&Property::WritingMode) {
-            properties::apply(Property::WritingMode, &value, style, parent, relative)?;
+            properties::apply(Property::WritingMode, &value, style, parent, relative);
         }
         if let Some(value) = winners.remove(&Property::TextOrientation) {
-            properties::apply(Property::TextOrientation, &value, style, parent, relative)?;
+            properties::apply(Property::TextOrientation, &value, style, parent, relative);
         }
         if let Some(value) = winners.remove(&Property::Position) {
-            properties::apply(Property::Position, &value, style, parent, relative)?;
+            properties::apply(Property::Position, &value, style, parent, relative);
         }
         if let Some(value) = winners.remove(&Property::Float) {
-            properties::apply(Property::Float, &value, style, parent, relative)?;
+            properties::apply(Property::Float, &value, style, parent, relative);
         }
         if let Some(value) = winners.remove(&Property::FootnoteDisplay) {
-            properties::apply(Property::FootnoteDisplay, &value, style, parent, relative)?;
+            properties::apply(Property::FootnoteDisplay, &value, style, parent, relative);
         }
         if let Some(value) = winners.remove(&Property::Display) {
-            properties::apply(Property::Display, &value, style, parent, relative)?;
+            properties::apply(Property::Display, &value, style, parent, relative);
         } else {
             style.normalize_display(relative);
         }
@@ -1855,6 +1855,7 @@ impl Stylesheet {
     pub(super) fn initial_relative(&self) -> Relative<'static> {
         Relative {
             counter_styles: Some(self.counter_styles.clone()),
+            degradations: self.degradations.clone(),
             ..Relative::with_initial_font(self.environment.relative.initial_font.clone())
         }
     }
@@ -1935,6 +1936,7 @@ impl Stylesheet {
                 containers: parent.containers.clone(),
                 query_sizes: Some(&self.query_sizes),
                 anchoring: None,
+                degradations: self.degradations.clone(),
             },
         }
     }
@@ -1956,14 +1958,14 @@ impl Stylesheet {
             inherited.viewport = Viewport::Known(size, style.writing_mode.vertical());
         }
         if let Some(value) = winners.remove(&Property::ColorScheme) {
-            properties::apply(Property::ColorScheme, &value, style, parent, &inherited)?;
+            properties::apply(Property::ColorScheme, &value, style, parent, &inherited);
         }
         let color_scheme = self.used_color_scheme(&style.color_scheme);
         // `AccentColor` in `color` takes the element's accent colour, whose `currentcolor`
         // is then recomputed against the element's own colour.
         let accent = winners.remove(&Property::AccentColor);
         if let Some(value) = &accent {
-            properties::apply(Property::AccentColor, value, style, parent, &inherited)?;
+            properties::apply(Property::AccentColor, value, style, parent, &inherited);
         }
         let initial_page_font_size = inherited.initial_page_font_size;
         for property in [
@@ -1978,7 +1980,7 @@ impl Stylesheet {
             inherited.initial_page_font_size =
                 initial_page_font_size && *property == Property::FontSize;
             if let Some(value) = winners.remove(property) {
-                properties::apply(*property, &value, style, parent, &inherited)?;
+                properties::apply(*property, &value, style, parent, &inherited);
             }
         }
         style.font_candidates = self.fonts.candidates_in_namespace(
@@ -2005,7 +2007,7 @@ impl Stylesheet {
                 ),
                 ..inherited.clone()
             };
-            properties::apply(*property, &value, style, parent, &measured)?;
+            properties::apply(*property, &value, style, parent, &measured);
         }
         let Relative {
             physical_unit_scale,
@@ -2018,6 +2020,7 @@ impl Stylesheet {
             containers,
             query_sizes,
             anchoring,
+            degradations,
             ..
         } = inherited;
         let own = |line| {
@@ -2059,9 +2062,10 @@ impl Stylesheet {
             containers: containers.clone(),
             query_sizes,
             anchoring,
+            degradations: degradations.clone(),
         };
         if let Some(value) = winners.remove(&Property::LineHeight) {
-            properties::apply(Property::LineHeight, &value, style, parent, &line_basis)?;
+            properties::apply(Property::LineHeight, &value, style, parent, &line_basis);
         }
         if root {
             self.capture_root_font(style);
@@ -2104,6 +2108,7 @@ impl Stylesheet {
             containers,
             query_sizes,
             anchoring,
+            degradations,
         };
         // The root's initial `canvastext` follows its own colour scheme.
         let initial = Specified::Wide(crate::style::wide_keywords::WideKeyword::Initial);
@@ -2111,10 +2116,10 @@ impl Stylesheet {
             .remove(&Property::Color)
             .or_else(|| root.then_some(initial))
         {
-            properties::apply(Property::Color, &value, style, parent, &relative)?;
+            properties::apply(Property::Color, &value, style, parent, &relative);
         }
         if let Some(value) = &accent {
-            properties::apply(Property::AccentColor, value, style, parent, &relative)?;
+            properties::apply(Property::AccentColor, value, style, parent, &relative);
             relative.accent_color = style.accent_color;
         }
         style.decoration = initial_decoration();
@@ -2156,9 +2161,25 @@ impl Stylesheet {
         relative: &Relative<'_>,
     ) -> Result<Style, StyleError> {
         if let Some(value) = winners.remove(&Property::Zoom) {
-            properties::apply(Property::Zoom, &value, &mut style, parent, relative)?;
+            properties::apply(Property::Zoom, &value, &mut style, parent, relative);
         }
-        style.effective_zoom = crate::style::accumulate_zoom(parent.effective_zoom, style.zoom)?;
+        style.effective_zoom =
+            match crate::style::accumulate_zoom(parent.effective_zoom, style.zoom) {
+                Ok(zoom) => zoom,
+                Err(error) => {
+                    properties::discard(
+                        Property::Zoom,
+                        crate::style::Degradation::InvalidAtComputedValueTime {
+                            declaration: Property::Zoom.name().to_owned(),
+                            reason: error.to_string(),
+                        },
+                        &mut style,
+                        parent,
+                        relative,
+                    );
+                    parent.effective_zoom * style.zoom
+                }
+            };
         for property in Property::BorderStyle.longhands().iter().chain([
             &Property::OutlineStyle,
             &Property::Direction,
@@ -2166,7 +2187,7 @@ impl Stylesheet {
             &Property::PositionArea,
         ]) {
             if let Some(value) = winners.remove(property) {
-                properties::apply(*property, &value, &mut style, parent, relative)?;
+                properties::apply(*property, &value, &mut style, parent, relative);
             }
         }
         let initial = Specified::Wide(crate::style::wide_keywords::WideKeyword::Initial);
@@ -2182,11 +2203,11 @@ impl Stylesheet {
                 &mut style,
                 parent,
                 relative,
-            )?;
+            );
         }
         crate::style::overflow::compute(&mut style, parent, &mut winners, relative)?;
         for (property, value) in &winners {
-            properties::apply(*property, value, &mut style, parent, relative)?;
+            properties::apply(*property, value, &mut style, parent, relative);
         }
         if style.content_context == crate::style::generated::ContentContext::Element
             && matches!(relative.tree, Tree::Element(element) if element.namespace() == crate::dom::MATHML_NAMESPACE)
@@ -2214,35 +2235,90 @@ impl Stylesheet {
         if style.display.is_ruby() {
             style.unicode_bidi = style.unicode_bidi.forced_isolation();
         }
-        let finite_zoomed_length = |length: f32| (length * style.effective_zoom).is_finite();
-        if style.decoration.shadows.iter().any(|shadow| {
-            [
-                shadow.offset[0],
-                shadow.offset[1],
-                shadow.blur,
-                shadow.spread,
-            ]
-            .into_iter()
-            .any(|length| !finite_zoomed_length(length))
-        }) {
-            return Err("non-finite zoomed box-shadow dimensions".into());
-        }
-        if style.text_paint.shadows.iter().any(|shadow| {
-            [shadow.offset[0], shadow.offset[1], shadow.blur]
-                .into_iter()
-                .any(|length| !finite_zoomed_length(length))
-        }) {
-            return Err("non-finite zoomed text-shadow dimensions".into());
-        }
-        if !style.size.is_finite()
-            || style.size < 0.0
-            || style
-                .line_height
-                .resolve(style.size)
-                .is_some_and(|height| !height.is_finite() || height < 0.0)
-        {
-            return Err("negative or non-finite text dimensions".into());
-        }
+        discard_unusable(
+            Property::BoxShadow,
+            "non-finite zoomed box-shadow dimensions",
+            (&mut style, parent, relative),
+            |style| {
+                style.decoration.shadows.iter().any(|shadow| {
+                    unusable_zoomed(
+                        style,
+                        &[
+                            shadow.offset[0],
+                            shadow.offset[1],
+                            shadow.blur,
+                            shadow.spread,
+                        ],
+                    )
+                })
+            },
+        );
+        discard_unusable(
+            Property::TextShadow,
+            "non-finite zoomed text-shadow dimensions",
+            (&mut style, parent, relative),
+            |style| {
+                style.text_paint.shadows.iter().any(|shadow| {
+                    unusable_zoomed(style, &[shadow.offset[0], shadow.offset[1], shadow.blur])
+                })
+            },
+        );
+        discard_unusable(
+            Property::FontSize,
+            "negative or non-finite font size",
+            (&mut style, parent, relative),
+            |style| !style.size.is_finite() || style.size < 0.0,
+        );
+        discard_unusable(
+            Property::LineHeight,
+            "negative or non-finite line height",
+            (&mut style, parent, relative),
+            |style| {
+                style
+                    .line_height
+                    .resolve(style.size)
+                    .is_some_and(|height| !height.is_finite() || height < 0.0)
+            },
+        );
         Ok(style)
+    }
+}
+
+/// Whether `lengths` overflow once zoomed by the element's effective zoom.
+fn unusable_zoomed(style: &Style, lengths: &[f32]) -> bool {
+    lengths
+        .iter()
+        .any(|length| !(length * style.effective_zoom).is_finite())
+}
+
+/// A computed value layout cannot use is invalid at computed-value time: `property` computes
+/// as `unset`, and as `initial` if what it inherits is unusable too.
+fn discard_unusable(
+    property: Property,
+    reason: &str,
+    (style, parent, relative): (&mut Style, &Style, &Relative<'_>),
+    unusable: impl Fn(&Style) -> bool,
+) {
+    if !unusable(style) {
+        return;
+    }
+    properties::discard(
+        property,
+        crate::style::Degradation::InvalidAtComputedValueTime {
+            declaration: property.name().to_owned(),
+            reason: reason.to_owned(),
+        },
+        style,
+        parent,
+        relative,
+    );
+    if unusable(style) {
+        properties::reset(
+            property,
+            crate::style::wide_keywords::WideKeyword::Initial,
+            style,
+            parent,
+            relative,
+        );
     }
 }

@@ -1,8 +1,5 @@
-use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
-use crate::style::{
-    Style, StyleError, Stylesheet, StylesheetSource, declaration, grammar::Property,
-};
+use super::discarded;
+use crate::style::{Degradation, declaration, grammar::Property};
 
 #[test]
 fn values_serialize_as_css() {
@@ -55,39 +52,32 @@ fn values_serialize_as_css() {
     }
 }
 
-fn error(css: &str) -> String {
-    let sheet = Stylesheet::parse(&[StylesheetSource {
-        text: css.into(),
-        base: Default::default(),
-    }])
-    .unwrap();
-    let html = DocumentTree::parse("<p id=target>Text</p>").unwrap();
-    let element = html
-        .select(&Selector::parse("#target").unwrap())
-        .next()
-        .unwrap();
-    match sheet.computed_with_resolver(element, &Style::default(), &FileResolver::default()) {
-        Err(StyleError::Unsupported(message)) => message,
-        other => panic!("`{css}` must be unsupported, got {other:?}"),
-    }
-}
-
 #[test]
 fn unsupported_values_name_their_declaration_once() {
-    for (css, expected) in [
+    for (css, declaration, reason) in [
         (
             "#target{scroll-snap-type:x mandatory}",
             "scroll-snap-type: x mandatory",
+            "unsupported CSS",
         ),
         (
             "#target{scroll-initial-target:nearest}",
             "scroll-initial-target: nearest",
+            "unsupported CSS",
         ),
         (
             "#target{width:calc-mix(--clock,10pt,30pt)}",
-            "width: calc-mix(--clock,10pt,30pt) (animation timeline interpolation is outside the static print profile)",
+            "width: calc-mix(--clock,10pt,30pt)",
+            "unsupported CSS: animation timeline interpolation is outside the static print profile",
         ),
     ] {
-        assert_eq!(error(css), expected, "message for `{css}`");
+        assert_eq!(
+            discarded(css),
+            [Degradation::InvalidAtComputedValueTime {
+                declaration: declaration.into(),
+                reason: reason.into(),
+            }],
+            "the one report for `{css}`"
+        );
     }
 }

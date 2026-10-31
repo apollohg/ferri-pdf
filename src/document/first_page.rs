@@ -434,7 +434,6 @@ impl Collector {
                     };
                     let source = target(element, None);
                     let mut display = selection.styles.display(source)?;
-                    display.validate()?;
                     let replaced = selection.replaced(element)?;
                     // CSS Display 3 §2.5: `display: contents` on a replaced element is `none`.
                     if replaced && display == Display::Contents {
@@ -520,7 +519,6 @@ impl Collector {
             return Ok(());
         };
         let mut display = selection.styles.display(source)?;
-        display.validate()?;
         let replaced = content.replacement().is_some();
         formatting::normalize_child_display(&mut display, replaced, &self.display);
         if display == Display::None || (replaced && display == Display::Contents) {
@@ -692,7 +690,6 @@ impl<'a> Selection<'a> {
     ) -> Result<Option<(PageStyleTarget, BreakBetween)>, StyleError> {
         let root = target(self.document.root_element(), None);
         let mut display = self.styles.display(root)?;
-        display.validate()?;
         if display == Display::None {
             return Ok(None);
         }

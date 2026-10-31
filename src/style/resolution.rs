@@ -722,13 +722,19 @@ impl<'a> Geometry<'a> {
                     namespaces: pending.namespaces.clone(),
                     base: Some(pending.location.base.clone()),
                 };
-                let Some(value) = self.substitute(context, &pending.value, &query)? else {
-                    return Ok(None);
-                };
-                if computed.cyclic_properties.borrow().contains(&property) {
-                    return Ok(None);
-                }
-                crate::style::declaration::expand_substitution(pending, &value)
+                let substitution = self.substitute(context, &pending.value, &query).and_then(
+                    |value| match value {
+                        Some(value) if !computed.cyclic_properties.borrow().contains(&property) => {
+                            crate::style::declaration::expand_substitution(pending, &value)
+                        }
+                        _ => Ok(None),
+                    },
+                );
+                Ok(crate::style::cascade::substituted(
+                    pending,
+                    substitution,
+                    &self.sheet.degradations,
+                ))
             },
         )?;
         let value = if let Some(winner) = winner {
@@ -862,7 +868,8 @@ impl<'a> Geometry<'a> {
         }
         let parent = self.parent_style(context);
         self.with_relative(context, property, |relative| {
-            properties::apply(property, value, &mut target, &parent, relative)
+            properties::apply(property, value, &mut target, &parent, relative);
+            Ok(())
         })?;
         Ok(target)
     }
@@ -971,6 +978,7 @@ impl<'a> Geometry<'a> {
                 containers: inherited.containers.clone(),
                 query_sizes: inherited.query_sizes,
                 anchoring: inherited.anchoring,
+                degradations: self.sheet.degradations.clone(),
             });
         }
         compute(&Relative {
@@ -1002,6 +1010,7 @@ impl<'a> Geometry<'a> {
             containers: Default::default(),
             query_sizes: Some(&self.sheet.query_sizes),
             anchoring: None,
+            degradations: self.sheet.degradations.clone(),
         })
     }
 
@@ -1393,6 +1402,7 @@ impl<'a> Geometry<'a> {
             Node::Paper(axis) => match self.page_size()? {
                 None => Ok(self.sheet.paper[usize::from(axis != Axis::Width)]),
                 Some(value) => {
+                    let sheet = self.sheet.paper[usize::from(axis != Axis::Width)];
                     let page_font = FontContext {
                         geometry: self,
                         context: Context::Page,
@@ -1424,13 +1434,23 @@ impl<'a> Geometry<'a> {
                         containers: Default::default(),
                         query_sizes: None,
                         anchoring: None,
+                        degradations: self.sheet.degradations.clone(),
                     };
-                    crate::style::page_values::page_dimension(
+                    // A `size` that cannot compute is invalid at computed-value time: `auto`.
+                    Ok(crate::style::page_values::page_dimension(
                         &value,
                         axis,
                         &relative,
                         self.sheet.paper,
                     )
+                    .unwrap_or_else(|error| {
+                        self.sheet.degrade(properties::invalid(
+                            Descriptor::PageSize.data().name,
+                            &value.to_string(),
+                            error,
+                        ));
+                        sheet
+                    }))
                 }
             },
             Node::Area(axis) => self.page_axis(axis),
@@ -2221,7 +2241,8 @@ pub(super) fn resolve_values(
     context: &ValueContext<'_>,
 ) -> Result<(Style, Winners), StyleError> {
     if !values.contextual(&sheet.registrations) {
-        let winners = crate::style::cascade::resolve(values, &mut style, parent)?;
+        let winners =
+            crate::style::cascade::resolve(values, &mut style, parent, &sheet.degradations)?;
         return Ok((style, winners));
     }
     let graph = Geometry {

@@ -1,8 +1,8 @@
 use super::common;
 
-use crate::document::{BlockBox, BlockContent, DocumentError, StyledDocument};
+use crate::document::{BlockBox, BlockContent, DocumentDiagnostic, DocumentError, StyledDocument};
 use crate::resources::FileResolver;
-use crate::style::StyleError;
+use crate::style::Degradation;
 use common::{PROFILE, local_options};
 
 const PAGE_RULES: &str = "@page{size:200pt 300pt;margin:10pt}@page A{size:400pt 500pt;margin:20pt}@page B{size:600pt 700pt;margin:30pt}";
@@ -44,19 +44,17 @@ fn first_page_side_and_name_are_selected_before_viewport_lengths() {
 
 #[test]
 fn leading_side_selection_reports_its_viewport_cycle() {
-    let Err(error) = parse(
+    let document = parse(
         "@page:left{size:300pt 400pt}p{break-before:if(style(width:100pt):left;else:right);width:10vw}",
         "<p>Coupled side</p>",
-    ) else {
-        panic!("side-dependent geometry must not be resolved by guessing a side")
-    };
-    let DocumentError::Style(StyleError::DependencyCycle {
-        sources,
-        dependencies,
-    }) = error
-    else {
-        panic!("expected a source-bearing side cycle, got {error}");
-    };
+    )
+    .expect("side-dependent geometry discards a cyclic declaration instead of failing");
+    assert_eq!(
+        document.styles().page,
+        [200.0, 300.0],
+        "without the cyclic declaration the first page is a right page"
+    );
+    let (sources, dependencies) = reported_cycle(document);
     assert_ne!(sources, [] as [crate::style::SourceLocation; 0]);
     for expected in ["first-page-side", ".break-before", ".width"] {
         assert!(
@@ -152,6 +150,22 @@ fn parse(css: &str, body: &str) -> Result<StyledDocument, DocumentError> {
     )
 }
 
+/// The sources and dependencies of the cycle `document` reports discarding a declaration for.
+fn reported_cycle(document: StyledDocument) -> (Vec<crate::style::SourceLocation>, Vec<String>) {
+    let diagnostics = document.into_diagnostics();
+    diagnostics
+        .iter()
+        .find_map(|diagnostic| match diagnostic {
+            DocumentDiagnostic::Degraded(Degradation::DependencyCycle {
+                sources,
+                dependencies,
+                ..
+            }) => Some((sources.clone(), dependencies.clone())),
+            _ => None,
+        })
+        .unwrap_or_else(|| panic!("a discarded cyclic declaration: {diagnostics:?}"))
+}
+
 fn block_with_text<'a>(root: &'a BlockBox, text: &str) -> &'a BlockBox {
     let mut pending = vec![root];
     while let Some(block) = pending.pop() {
@@ -201,41 +215,27 @@ fn generated_before_and_order_modified_items_select_the_first_page_without_loadi
 
 #[test]
 fn first_page_selection_reports_a_source_bearing_viewport_dependency_cycle() {
-    let Err(error) = parse(
+    let document = parse(
         "p{page:if(style(width: 100pt): A; else: B);width:10vw}",
         "<p>Coupled selection</p>",
-    ) else {
-        panic!("page selection and its own viewport cannot be resolved by guessing a default page")
-    };
-    let DocumentError::Style(StyleError::DependencyCycle {
-        sources,
-        dependencies,
-    }) = error
-    else {
-        panic!("expected a typed first-page dependency cycle, got {error}");
-    };
+    )
+    .expect("page selection discards a cyclic declaration instead of guessing a default page");
+    assert_eq!(
+        document.styles().page,
+        [600.0, 700.0],
+        "without the cyclic width the selection takes its else branch, page B"
+    );
+    let (sources, dependencies) = reported_cycle(document);
     assert!(
         !sources.is_empty(),
         "the cycle must retain authored page/width locations"
     );
-    assert!(
-        dependencies
-            .iter()
-            .any(|node| node.contains("first-page-start")),
-        "{dependencies:?}"
-    );
-    assert!(
-        dependencies.iter().any(|node| std::path::Path::new(node)
-            .extension()
-            .is_some_and(|ext| ext.eq_ignore_ascii_case("page"))),
-        "{dependencies:?}"
-    );
-    assert!(
-        dependencies.iter().any(|node| std::path::Path::new(node)
-            .extension()
-            .is_some_and(|ext| ext.eq_ignore_ascii_case("width"))),
-        "{dependencies:?}"
-    );
+    for expected in ["first-page-start", ".page", ".width"] {
+        assert!(
+            dependencies.iter().any(|node| node.ends_with(expected)),
+            "missing {expected}: {dependencies:?}"
+        );
+    }
 }
 
 #[test]

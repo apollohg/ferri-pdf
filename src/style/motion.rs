@@ -535,7 +535,7 @@ pub(crate) fn svg_style<'a>(
                 crate::style::shorthands::expand(property, value)?
             };
             for (property, value) in longhands {
-                properties::apply(property, &value, &mut style, &initial, relative)?;
+                properties::apply(property, &value, &mut style, &initial, relative);
             }
         }
     }

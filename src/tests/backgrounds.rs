@@ -881,11 +881,32 @@ fn colour_stop_currentcolor_and_invalid_gradients_are_resolved_at_computed_time(
             "{invalid} must be dropped, keeping the earlier two-stop gradient"
         );
     }
+    // Inside the grammar but undrawable: invalid at computed-value time, so the property
+    // computes as unset rather than keeping the earlier declaration.
     let undrawable = "radial-gradient(circle 10% 20%,red,blue)";
-    let html = format!("<style>{PROFILE}div{{background-image:{undrawable}}}</style><div>A</div>");
+    let css =
+        format!("div{{background-image:linear-gradient(red,blue);background-image:{undrawable}}}");
+    let output = render_html(
+        &format!("<style>{PROFILE}{css}</style><div>A</div>"),
+        &options(),
+    )
+    .unwrap_or_else(|error| panic!("{undrawable} must not fail rendering: {error}"));
     assert!(
-        render_html(&html, &options()).is_err(),
-        "a circle with two radii must be reported rather than painted: {undrawable}"
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::RenderDiagnostic::Degraded(
+                crate::style::Degradation::InvalidAtComputedValueTime { declaration, .. }
+            ) if declaration.starts_with("background-image: radial-gradient(circle 10% 20%")
+        )),
+        "a circle with two radii must be reported rather than painted: {:?}",
+        output.diagnostics
+    );
+    assert!(
+        paints(&css, "<div>A</div>")
+            .iter()
+            .flatten()
+            .all(|paint| paint.background_layers(PAGE_AREA).unwrap().is_empty()),
+        "{undrawable} computes as unset, no background image"
     );
 }
 

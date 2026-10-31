@@ -2423,7 +2423,6 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             style.display != Display::Contents && style.position == crate::style::Position::Running;
         let element_page_scope =
             crate::document::page::used_name(&parent.page, self.element_page_scope.as_ref());
-        validate_box(&style)?;
         let replacement = content.replacement();
         normalize_child_display(&mut style.display, replacement.is_some(), parent_display);
         // CSS Display 3 §2.5: `display: contents` on a replaced element computes to `none`.
@@ -2635,9 +2634,6 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 );
                 self.atomic(atomic, parent)?;
             }
-            Display::Unsupported(value) => {
-                return Err(StyleError::Unsupported(format!("generated display: {value}")).into());
-            }
             Display::ListItem
             | Display::FlowRootListItem
             | Display::InlineListItem
@@ -2761,7 +2757,6 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         mut style: Style,
         markers: Vec<GeneratedBox>,
     ) -> Result<(), DocumentError> {
-        validate_box(&style)?;
         normalize_child_display(&mut style.display, false, &self.style.display);
         let run_in = style.display.run_in().cloned();
         if let Some(inner) = run_in.clone() {
@@ -2960,10 +2955,6 @@ impl<'a> BlockBuilder<'a, '_, '_> {
 }
 
 /// Rejects computed values that boxes cannot render.
-fn validate_box(style: &Style) -> Result<(), StyleError> {
-    style.display.validate()
-}
-
 /// Elements whose content is an image or a nested navigable rather than child boxes (HTML
 /// §15.4). A `canvas` represents its fallback content with scripting disabled (HTML §4.12.5).
 pub(super) fn is_replaced(element: Element<'_>) -> bool {
@@ -3778,7 +3769,6 @@ fn block<'a>(
                     canvas_background(&resources.backgrounds(&child_style))
                 };
             }
-            validate_box(&child_style)?;
             let replaced = is_replaced(child) || child_style.content_replacement().is_some();
             // CSS Display 3 §2.5: `display: contents` on a replaced element computes to `none`.
             if replaced && child_style.display == Display::Contents {
@@ -4048,13 +4038,6 @@ fn block<'a>(
                             continue;
                         }
                         None
-                    }
-                    Display::Unsupported(value) => {
-                        return Err(StyleError::Unsupported(format!(
-                            "display {value} on {}",
-                            child.name()
-                        ))
-                        .into());
                     }
                 }
             };
@@ -4356,7 +4339,6 @@ fn format(
     };
     let pages = first_pages(input, sheet, &style, &resources, generated.bindings())?;
     *style = style.used();
-    validate_box(&style)?;
     if style.display == Display::None {
         hidden_root(
             input, sheet, &style, &resources, navigation, generated, pages,

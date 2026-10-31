@@ -3,9 +3,10 @@
 use crate::fonts::FontNamespace;
 use crate::paint::{BorderStyle, DEFAULT_BORDER_WIDTH, LengthPercentage, OutlineStyle};
 use crate::style::{
-    BoxSizing, BreakBetween, BreakInside, Display, HangingPunctuation, HyphenateLimitChars,
-    LineBreak, ListStylePosition, ListStyleType, Style, StyleError, TextAlign, TextAutospace,
-    TextJustify, TextSpacingTrim, TextWrapStyle, Visibility, WhiteSpaceCollapse, WordBreak,
+    BoxSizing, BreakBetween, BreakInside, Degradation, Display, HangingPunctuation,
+    HyphenateLimitChars, LineBreak, ListStylePosition, ListStyleType, Style, StyleError, TextAlign,
+    TextAutospace, TextJustify, TextSpacingTrim, TextWrapStyle, Visibility, WhiteSpaceCollapse,
+    WordBreak,
     anchor_values::{self, AnchorTarget, HORIZONTAL, VERTICAL},
     box_values::{length_percentage, unsupported},
     calc::Kind,
@@ -18,11 +19,15 @@ use crate::style::{
     svg_values,
     text_values::{self, LineHeight, OverflowWrap, TextTransform},
     units::Relative,
-    wide_keywords::Resolved,
+    wide_keywords::{Resolved, WideKeyword},
 };
 
 /// Between a property name and its value in unsupported-value errors.
 pub(super) const DECLARATION_SEPARATOR: &str = ": ";
+/// How diagnostics name a `toggle()` value, whose arguments compute one by one.
+const TOGGLE_VALUE: &str = "toggle()";
+/// Why a valid value the engine does not implement is discarded.
+const UNSUPPORTED: &str = "unsupported CSS";
 const RELATIVE_FONT_SIZE_RATIO: f32 = 6.0 / 5.0;
 const THIN_BORDER_PT: f32 = 0.5625;
 const THICK_BORDER_PT: f32 = 2.8125;
@@ -91,7 +96,98 @@ pub(super) fn supports_value(
 }
 
 /// Applies the cascaded value of one longhand, resolving relative lengths against `relative`.
+/// A value the engine cannot compute is invalid at computed-value time: the property computes
+/// as `unset` (CSS Values 5 §2.4.1) and the declaration is reported.
 pub(crate) fn apply(
+    property: Property,
+    specified: &Specified,
+    style: &mut Style,
+    parent: &Style,
+    relative: &Relative<'_>,
+) {
+    let Err(error) = apply_specified(property, specified, style, parent, relative) else {
+        return;
+    };
+    let degradation = invalid(property.name(), &specified_text(specified), error);
+    discard(property, degradation, style, parent, relative);
+}
+
+/// What discarding the declaration `name: value`, whose value failed to compute with `error`,
+/// reports: it is invalid at computed-value time.
+pub(crate) fn invalid(name: &str, value: &str, error: StyleError) -> Degradation {
+    let declaration = format!("{name}{DECLARATION_SEPARATOR}{value}");
+    match error {
+        StyleError::DependencyCycle {
+            sources,
+            dependencies,
+        } => Degradation::DependencyCycle {
+            declaration,
+            sources,
+            dependencies,
+        },
+        // The value names what is unsupported, unless that is only part of a substituted value.
+        StyleError::Unsupported(detail) => Degradation::InvalidAtComputedValueTime {
+            declaration,
+            reason: if value.contains(&detail) {
+                UNSUPPORTED.to_owned()
+            } else {
+                format!("{UNSUPPORTED}{DECLARATION_SEPARATOR}{detail}")
+            },
+        },
+        error => Degradation::InvalidAtComputedValueTime {
+            declaration,
+            reason: error.to_string(),
+        },
+    }
+}
+
+/// Reports a declaration of `property` as invalid at computed-value time and computes
+/// `property` as `unset` (CSS Values 5 §2.4.1).
+pub(crate) fn discard(
+    property: Property,
+    degradation: Degradation,
+    style: &mut Style,
+    parent: &Style,
+    relative: &Relative<'_>,
+) {
+    relative.degradations.record(degradation);
+    reset(property, WideKeyword::Unset, style, parent, relative);
+}
+
+/// Computes `property`, or each longhand of a shorthand, as the CSS-wide `keyword`.
+pub(crate) fn reset(
+    property: Property,
+    keyword: WideKeyword,
+    style: &mut Style,
+    parent: &Style,
+    relative: &Relative<'_>,
+) {
+    let longhands = match property.longhands() {
+        [] => std::slice::from_ref(&property),
+        longhands => longhands,
+    };
+    for longhand in longhands {
+        apply_specified(
+            *longhand,
+            &Specified::Wide(keyword),
+            style,
+            parent,
+            relative,
+        )
+        .expect("a property's inherited and initial values compute");
+    }
+}
+
+fn specified_text(specified: &Specified) -> String {
+    match specified {
+        Specified::Value(value) | Specified::Unexpanded(_, value) => value.to_string(),
+        Specified::Wide(keyword) => keyword.name().to_owned(),
+        Specified::Toggle(_) => TOGGLE_VALUE.to_owned(),
+        Specified::FlowRelative(_, specified) => specified_text(specified),
+    }
+}
+
+fn apply_specified(
     property: Property,
     specified: &Specified,
     style: &mut Style,
@@ -218,10 +314,10 @@ fn apply_value(
         None => match input {
             Input::Copy(_) => Ok(()),
             Input::Value(value) if declaration::initial(property) == Some(value) => Ok(()),
-            Input::Value(_) => Err(unsupported_property(property, input)),
+            Input::Value(value) => Err(unsupported(value)),
         },
     };
-    result.map_err(|error| attributed(property, input, error))?;
+    result?;
     if property == Property::Display {
         if style.display == Display::RubyText
             && parent.ruby.position == crate::style::RubyPosition::InterCharacter
@@ -295,38 +391,6 @@ pub(super) fn projection(property: Property, source: &Style) -> Style {
         value.quotes = source.quotes.clone();
     }
     value
-}
-
-/// Unsupported values report the declaration they came from, once: errors that already name
-/// a property, such as those of a property this one depends on, pass through. A reason other
-/// than the unsupported part of the value follows the declaration.
-fn attributed(property: Property, input: Input<'_>, error: StyleError) -> StyleError {
-    let StyleError::Unsupported(detail) = error else {
-        return error;
-    };
-    if detail
-        .split_once(DECLARATION_SEPARATOR)
-        .is_some_and(|(name, _)| Property::from_name(name).is_some())
-    {
-        return StyleError::Unsupported(detail);
-    }
-    match (unsupported_property(property, input), input) {
-        (StyleError::Unsupported(declaration), Input::Value(value))
-            if !value.to_string().contains(&detail) =>
-        {
-            StyleError::Unsupported(format!("{declaration} ({detail})"))
-        }
-        (declaration, _) => declaration,
-    }
-}
-
-fn unsupported_property(property: Property, input: Input<'_>) -> StyleError {
-    match input {
-        Input::Value(value) => {
-            StyleError::Unsupported(format!("{}{DECLARATION_SEPARATOR}{value}", property.name()))
-        }
-        Input::Copy(_) => StyleError::Unsupported(property.name().to_owned()),
-    }
 }
 
 fn quotes(
@@ -675,10 +739,7 @@ fn handler(property: Property) -> Option<Handler> {
             Some(|v, r| anchor_values::supports(v, r, AnchorTarget::Size(VERTICAL))),
         ),
         P::BoxSizing => (box_sizing, Some(|_, _| true)),
-        P::Display => (
-            display,
-            Some(|v, _| Display::from_component(v).validate().is_ok()),
-        ),
+        P::Display => (display, Some(|v, _| Display::from_component(v).is_ok())),
         P::Position => (
             position,
             Some(|v, _| crate::style::Position::from_component(v).is_ok()),
@@ -2372,7 +2433,7 @@ fn display(
             style.flex.legacy_box = source.flex.legacy_box;
         }
         Input::Value(value) => {
-            style.display = Display::from_component(value);
+            style.display = Display::from_component(value)?;
             style.flex.legacy_box = Display::is_legacy_box(value);
         }
     }

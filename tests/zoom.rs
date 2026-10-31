@@ -5,7 +5,7 @@ use ferri_pdf::{DisplayItem, LayoutTrace, render_html};
 const TOLERANCE_PT: f32 = 0.001;
 
 #[test]
-fn zoom_rejects_shadow_lengths_that_overflow_used_coordinates() {
+fn zoom_discards_shadow_lengths_that_overflow_used_coordinates() {
     for (property, shadow) in [
         ("box-shadow", "1e30pt 0 blue"),
         ("box-shadow", "0 1e30pt blue"),
@@ -22,19 +22,34 @@ fn zoom_rejects_shadow_lengths_that_overflow_used_coordinates() {
             } else {
                 ""
             };
-            let result = render_html(
-                &format!(
-                    "<style>{PROFILE}{selector}{{{content}zoom:1e20;font-size:1e-19pt;line-height:1e-19pt;width:1e-19pt;height:1e-19pt;{property}:{shadow}}}</style><div><span>X</span></div>"
-                ),
-                &local_options(),
-            );
+            let document = |declaration: &str| {
+                format!(
+                    "<style>{PROFILE}{selector}{{{content}zoom:1e20;font-size:1e-19pt;line-height:1e-19pt;width:1e-19pt;height:1e-19pt;{declaration}}}</style><div><span>X</span></div>"
+                )
+            };
+            let output = render_html(&document(&format!("{property}:{shadow}")), &local_options())
+                .unwrap_or_else(|error| {
+                    panic!("{selector}, {property}:{shadow}: overflowing paint lengths must not fail: {error}")
+                });
+            let reason = format!("non-finite zoomed {property} dimensions");
             assert!(
-                matches!(&result, Err(ferri_pdf::Error::Css(error)) if error.to_string().contains(&format!("non-finite zoomed {property}"))),
-                "{selector}, {property}:{shadow}: overflowing paint lengths must report a CSS error, got {}",
-                result
-                    .as_ref()
-                    .err()
-                    .map_or_else(|| "successful render".into(), ToString::to_string)
+                output.diagnostics.iter().any(|diagnostic| matches!(
+                    diagnostic,
+                    ferri_pdf::RenderDiagnostic::Degraded(
+                        ferri_pdf::Degradation::InvalidAtComputedValueTime { declaration, reason: found }
+                    ) if declaration == property && *found == reason
+                )),
+                "{selector}, {property}:{shadow}: overflowing paint lengths must be reported: {:?}",
+                output.diagnostics
+            );
+            let unshadowed = render_html(&document(""), &local_options())
+                .expect("the unshadowed document renders")
+                .layout
+                .unwrap();
+            assert_eq!(
+                format!("{:?}", output.layout.unwrap().display_lists),
+                format!("{:?}", unshadowed.display_lists),
+                "{selector}, {property}:{shadow}: the shadow computes as unset, painting none"
             );
         }
         let finite = shadow.replace("1e30pt", "1e-19pt");

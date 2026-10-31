@@ -291,7 +291,7 @@ pub(crate) fn computed_style(
         } else {
             *property
         };
-        crate::style::properties::apply(property, value, &mut style, parent, relative)?;
+        crate::style::properties::apply(property, value, &mut style, parent, relative);
     }
     Ok(style)
 }

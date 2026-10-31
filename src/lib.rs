@@ -66,7 +66,8 @@ pub use crate::resources::{
 #[cfg(feature = "http")]
 pub use crate::resources::{LoaderOptions, UrlResolver};
 pub use crate::style::{
-    ColorScheme, ContrastPreference, MotionPreference, PrintPreferences, PrintSettings, StyleError,
+    ColorScheme, ContrastPreference, Degradation, MotionPreference, PrintPreferences,
+    PrintSettings, StyleError,
 };
 pub use crate::text::{GlyphRun, PositionedGlyph};
 pub use crate::writer::{
