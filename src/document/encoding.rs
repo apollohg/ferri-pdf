@@ -125,7 +125,7 @@ fn xml_encoding(bytes: &[u8]) -> Option<&'static Encoding> {
 fn parse_html(
     text: &str,
     current_encoding: Option<&'static Encoding>,
-) -> Result<ControlFlow<&'static Encoding, DocumentTree>, crate::dom::DomError> {
+) -> ControlFlow<&'static Encoding, DocumentTree> {
     let mut tentative_encoding = current_encoding;
     DocumentTree::parse_with_encoding(text, |declaration| {
         if tentative_encoding.is_some() {
@@ -148,7 +148,7 @@ fn parse_html(
 pub(crate) fn decode_document(
     bytes: &[u8],
     transport_charset: Option<&str>,
-) -> Result<(DecodedHtml, DocumentTree), crate::dom::DomError> {
+) -> (DecodedHtml, DocumentTree) {
     let bom = Encoding::for_bom(bytes).map(|(encoding, _)| encoding);
     let transport = transport_charset.and_then(label);
     let encoding = bom
@@ -158,16 +158,16 @@ pub(crate) fn decode_document(
     let certain =
         bom.is_some() || transport.is_some() || encoding == UTF_16BE || encoding == UTF_16LE;
     let mut result = decoded(bytes, encoding);
-    let html = match parse_html(&result.text, (!certain).then_some(encoding))? {
+    let html = match parse_html(&result.text, (!certain).then_some(encoding)) {
         ControlFlow::Continue(html) => html,
         ControlFlow::Break(declared) => {
             if declared != encoding {
                 result = decoded(bytes, declared);
             }
-            DocumentTree::parse(&result.text)?
+            DocumentTree::parse(&result.text)
         }
     };
-    Ok((result, html))
+    (result, html)
 }
 
 /// Decode a plain text resource by its BOM, else its transport charset, else as UTF-8.
@@ -181,11 +181,8 @@ pub(crate) fn decode_text(bytes: &[u8], transport_charset: Option<&str>) -> Deco
 
 /// Decode buffered HTML, honoring BOM/transport and actual parser encoding declarations.
 #[cfg(test)]
-pub(crate) fn decode_html(
-    bytes: &[u8],
-    transport_charset: Option<&str>,
-) -> Result<DecodedHtml, crate::dom::DomError> {
-    decode_document(bytes, transport_charset).map(|(decoded, _)| decoded)
+pub(crate) fn decode_html(bytes: &[u8], transport_charset: Option<&str>) -> DecodedHtml {
+    decode_document(bytes, transport_charset).0
 }
 
 fn css_declared_encoding(bytes: &[u8]) -> Option<&'static Encoding> {

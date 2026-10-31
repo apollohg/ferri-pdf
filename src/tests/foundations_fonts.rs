@@ -12,7 +12,7 @@ fn computed_at(css: &str, base: crate::ResourceBase) -> Result<Style, StyleError
         text: css.into(),
         base,
     }])?;
-    let tree = DocumentTree::parse("<div id=parent><p id=target>Font text</p></div>").unwrap();
+    let tree = DocumentTree::parse("<div id=parent><p id=target>Font text</p></div>");
     let parent = tree
         .select(&Selector::parse("#parent").unwrap())
         .next()

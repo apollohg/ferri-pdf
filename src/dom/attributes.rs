@@ -76,8 +76,7 @@ mod tests {
     fn css_attribute_lookup_respects_html_foreign_and_xml_name_rules() {
         let tree = DocumentTree::parse(
             "<p data-x='Value' data-empty='' data-Σ='Upper'></p><svg viewBox='0 0 20 10'></svg>",
-        )
-        .unwrap();
+        );
         let html = tree.select(&Selector::parse("p").unwrap()).next().unwrap();
         assert_eq!(html.attr_in_namespace(None, "DATA-X"), Some("Value"));
         assert_eq!(html.attr_in_namespace(None, "data-empty"), Some(""));

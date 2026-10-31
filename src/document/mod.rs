@@ -50,9 +50,7 @@ pub(crate) use semantics::{InlineEvent, SemanticEvent};
 pub(crate) use strings::{RunningElement, RunningStringAssignment};
 
 #[derive(Debug, thiserror::Error)]
-pub enum DocumentError {
-    #[error("{0}")]
-    Tree(#[from] crate::dom::DomError),
+pub(crate) enum DocumentError {
     #[error("{0}")]
     Image(#[from] crate::images::ImageError),
     #[error("{0}")]
@@ -84,6 +82,8 @@ pub enum DocumentDiagnostic {
     Css(crate::style::StyleDiagnostic),
     #[error("{0}")]
     Degraded(crate::style::Degradation),
+    #[error("{0}; the document content past it is ignored")]
+    TreeLimit(crate::dom::DomError),
     #[error("decoding {reference:?} as {encoding} replaced malformed byte sequences")]
     Decoding {
         base: crate::resources::ResourceBase,
@@ -251,7 +251,7 @@ impl StyledDocument {
     ) -> Result<Self, DocumentError> {
         Self::from_input(
             HtmlInput {
-                tree: DocumentTree::parse(html)?,
+                tree: DocumentTree::parse(html),
                 encoding: "UTF-8".into(),
                 diagnostics: Vec::new(),
             },
@@ -318,7 +318,7 @@ impl StyledDocument {
         options.settings.validate()?;
         Self::from_input(
             HtmlInput {
-                tree: DocumentTree::parse(html)?,
+                tree: DocumentTree::parse(html),
                 encoding: "UTF-8".into(),
                 diagnostics: Vec::new(),
             },
@@ -338,7 +338,7 @@ impl StyledDocument {
         options.settings.validate()?;
         Self::from_input(
             HtmlInput {
-                tree: DocumentTree::parse(html)?,
+                tree: DocumentTree::parse(html),
                 encoding: encoding.into(),
                 diagnostics: Vec::new(),
             },
@@ -377,7 +377,7 @@ impl StyledDocument {
         resolver: &dyn ResourceResolver,
     ) -> Result<Self, DocumentError> {
         options.settings.validate()?;
-        let (decoded, html) = encoding::decode_document(bytes, None)?;
+        let (decoded, html) = encoding::decode_document(bytes, None);
         let mut diagnostics = Vec::new();
         if decoded.had_errors {
             diagnostics.push(DocumentDiagnostic::Decoding {
@@ -418,6 +418,11 @@ impl StyledDocument {
             encoding: document_encoding,
             mut diagnostics,
         } = input;
+        diagnostics.extend(
+            std::mem::take(&mut html.limits)
+                .into_iter()
+                .map(DocumentDiagnostic::TreeLimit),
+        );
         let sources = stylesheets::discover(&html, base, &document_encoding, additional, user);
         html.set_document_urls(sources.document_url.clone(), sources.base.resolve("")?);
         let base = &sources.base;

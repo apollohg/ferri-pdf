@@ -26,14 +26,13 @@ fn column_combinator_matches_cells_in_any_column_of_the_column_element() {
         "<!doctype html><table><col span=2><col class=selected>\
          <tr><td>A<td>B<td id=C>C<tr><td colspan=2>D<td id=E>E\
          <tr><td>F<td id=G colspan=2>G</table>",
-    )
-    .unwrap();
+    );
     assert_eq!(
         matched(&example, "col.selected || td"),
         ["C", "E", "G"],
         "Selectors 5 §8.1 example"
     );
-    let tree = DocumentTree::parse(TABLE).unwrap();
+    let tree = DocumentTree::parse(TABLE);
     for (selector, expected) in [
         ("#wide || td", &["f", "h"][..]),
         ("#wide || :is(td, th)", &["c", "f", "h"]),
@@ -62,7 +61,7 @@ fn column_combinator_matches_cells_in_any_column_of_the_column_element() {
 
 #[test]
 fn column_combinator_inside_has_searches_the_whole_table() {
-    let tree = DocumentTree::parse(TABLE).unwrap();
+    let tree = DocumentTree::parse(TABLE);
     for (selector, expected) in [
         ("col:has(|| #e)", &["third"][..]),
         ("colgroup:has(> col || #c)", &["second"]),
@@ -76,7 +75,7 @@ fn column_combinator_inside_has_searches_the_whole_table() {
 
 #[test]
 fn nth_col_counts_every_column_a_cell_spans_from_either_end() {
-    let tree = DocumentTree::parse(TABLE).unwrap();
+    let tree = DocumentTree::parse(TABLE);
     for (selector, expected) in [
         (":nth-col(1)", &["a", "g", "i", "nested"][..]),
         ("td:nth-col(2)", &["b", "d", "g"]),
@@ -95,8 +94,7 @@ fn nth_col_counts_every_column_a_cell_spans_from_either_end() {
     let math = DocumentTree::parse(
         "<!doctype html><math><mtable><mtr><mtd id=x columnspan=2>x</mtd><mtd id=y>y</mtd>\
          </mtr><mtr><mtd id=z>z</mtd></mtr></mtable></math>",
-    )
-    .unwrap();
+    );
     assert_eq!(matched(&math, ":nth-col(2)"), ["x"], "MathML Core §3.5.3");
     assert_eq!(matched(&math, ":nth-last-col(1)"), ["y"]);
 }
@@ -105,7 +103,7 @@ fn nth_col_counts_every_column_a_cell_spans_from_either_end() {
 fn column_combinator_does_not_take_a_namespace_separator() {
     let mut namespaces = NamespaceMap::new();
     namespaces.insert("h".into(), crate::dom::HTML_NAMESPACE.into());
-    let tree = DocumentTree::parse(TABLE).unwrap();
+    let tree = DocumentTree::parse(TABLE);
     for (selector, expected) in [
         ("h|col || h|td", &["b", "e", "f", "g", "h", "nested"][..]),
         ("*|col||*|td#a", &[]),

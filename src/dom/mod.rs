@@ -18,7 +18,7 @@ pub(crate) use state::{
     Directionality, InitialState, ScrollMarker, ScrollMarkerStates, TargetPosition,
 };
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Clone, Debug, Eq, PartialEq, thiserror::Error)]
 pub enum DomError {
     #[error("{resource} exceeds {limit}")]
     TreeLimit {
@@ -62,11 +62,11 @@ pub(crate) struct EncodingDeclaration<'a> {
 }
 
 impl DocumentTree {
-    pub(crate) fn parse(html: &str) -> Result<Self, DomError> {
+    pub(crate) fn parse(html: &str) -> Self {
         match Self::parse_with_encoding(html, |_| {
             ControlFlow::<std::convert::Infallible>::Continue(())
-        })? {
-            ControlFlow::Continue(tree) => Ok(tree),
+        }) {
+            ControlFlow::Continue(tree) => tree,
             ControlFlow::Break(never) => match never {},
         }
     }
@@ -75,7 +75,7 @@ impl DocumentTree {
     pub(crate) fn parse_with_encoding<T>(
         html: &str,
         mut on_encoding: impl FnMut(EncodingDeclaration<'_>) -> ControlFlow<T>,
-    ) -> Result<ControlFlow<T, Self>, DomError> {
+    ) -> ControlFlow<T, Self> {
         let options = TreeBuilderOpts {
             scripting_enabled: false,
             ..Default::default()
@@ -108,7 +108,7 @@ impl DocumentTree {
                                 .and_then(|_| element.attr(CONTENT_ATTRIBUTE)),
                         };
                         if let ControlFlow::Break(value) = on_encoding(declaration) {
-                            return Ok(ControlFlow::Break(value));
+                            return ControlFlow::Break(value);
                         }
                     }
                 }
@@ -116,13 +116,14 @@ impl DocumentTree {
             }
         }
         tokenizer.end();
-        let (html, shadow) = tokenizer.sink.0.sink.finish()?;
+        let (html, shadow, limit) = tokenizer.sink.0.sink.finish();
         let mut tree = Self::from_parsed(html, shadow);
+        tree.limits.extend(limit);
         tree.update_selectedcontents();
-        tree.attach_use_instances()?;
+        tree.attach_use_instances();
         tree.attach_details_shadow_trees();
         tree.attach_select_shadow_trees();
-        Ok(ControlFlow::Continue(tree))
+        ControlFlow::Continue(tree)
     }
 }
 

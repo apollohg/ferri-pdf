@@ -97,7 +97,7 @@ impl DocumentTree {
     /// holding that element's clone (§5.5.1), nested `use` elements in clones included. A
     /// reference whose instance would contain the referencing element is circular, and gets
     /// none (§5.5.1); neither does a reference to another document.
-    pub(crate) fn attach_use_instances(&mut self) -> Result<(), DomError> {
+    pub(crate) fn attach_use_instances(&mut self) {
         let mut identified: HashMap<(NodeId, &str), NodeId> = HashMap::new();
         let mut pending = Vec::new();
         for element in self.shadow_including_elements() {
@@ -150,10 +150,22 @@ impl DocumentTree {
             if circular {
                 continue;
             }
-            let Some((_, clones)) =
-                self.attach_instance(target, instance.host, Some(scope), MAX_INSTANCE_NODES)?
-            else {
-                continue;
+            // An instance past the node limit is not created: the `use` element renders
+            // nothing, as for a reference to no element (SVG 2 §5.5.1).
+            let clones = match self.attach_instance(
+                target,
+                instance.host,
+                Some(scope),
+                MAX_INSTANCE_NODES,
+            ) {
+                Ok(Some((_, clones))) => clones,
+                Ok(None) => continue,
+                Err(limit) => {
+                    if !self.limits.contains(&limit) {
+                        self.limits.push(limit);
+                    }
+                    continue;
+                }
             };
             let mut enclosing = instance.enclosing;
             enclosing.push(instance.original);
@@ -169,6 +181,5 @@ impl DocumentTree {
                 enclosing: enclosing.clone(),
             }));
         }
-        Ok(())
     }
 }

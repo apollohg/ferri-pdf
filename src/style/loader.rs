@@ -1101,7 +1101,7 @@ pub(super) fn inline(
         ..Default::default()
     };
     prepare_with_limits(
-        &DocumentTree::parse("").expect("an empty document has no shadow tree"),
+        &DocumentTree::parse(""),
         &sources,
         &crate::resources::FileResolver::default(),
         settings,
@@ -1144,7 +1144,9 @@ mod tests {
     fn visual_hebrew_ua_rules_preserve_control_exceptions_and_selector_specificity() {
         use crate::dom::Selector;
         use crate::style::{Style, Stylesheet, UnicodeBidi};
-        let tree = DocumentTree::parse("<!doctype html><p id=paragraph></p><span id=inline></span><math><mi id=foreign>x</mi></math><svg><a id=foreign-link href='https://example.test'>Link</a></svg><input id=text dir=auto><input id=unknown type=unknown dir=auto><input id=email type=email dir=auto><input id=submit type=SUBMIT><input id=reset type=reset dir=auto><input id=button type=button><textarea id=textarea></textarea><textarea id=auto dir=auto></textarea><pre id=pre dir=auto></pre><bdo id=override dir=rtl></bdo><bdi id=isolate></bdi><bdi id=directed dir=auto></bdi>").unwrap();
+        let tree = DocumentTree::parse(
+            "<!doctype html><p id=paragraph></p><span id=inline></span><math><mi id=foreign>x</mi></math><svg><a id=foreign-link href='https://example.test'>Link</a></svg><input id=text dir=auto><input id=unknown type=unknown dir=auto><input id=email type=email dir=auto><input id=submit type=SUBMIT><input id=reset type=reset dir=auto><input id=button type=button><textarea id=textarea></textarea><textarea id=auto dir=auto></textarea><pre id=pre dir=auto></pre><bdo id=override dir=rtl></bdo><bdi id=isolate></bdi><bdi id=directed dir=auto></bdi>",
+        );
         let sources = StylesheetSources {
             document_encoding: VISUAL_HEBREW_ENCODING.into(),
             ..Default::default()
@@ -1204,7 +1206,7 @@ mod tests {
     }
     #[test]
     fn nesting_declaration_runs_charge_the_shared_rule_budget() {
-        let tree = DocumentTree::parse("<p>Bounded</p>").expect("parse test HTML");
+        let tree = DocumentTree::parse("<p>Bounded</p>");
         let resolver = Resolver {
             calls: Cell::new(0),
         };
@@ -1231,7 +1233,7 @@ mod tests {
     fn nesting_work_is_bounded_before_binding_large_selector_lists() {
         const PARENT_SELECTORS: usize = 10_000;
         const CHILD_SELECTORS: usize = 200;
-        let tree = DocumentTree::parse("<p>Bounded</p>").expect("parse test HTML");
+        let tree = DocumentTree::parse("<p>Bounded</p>");
         let resolver = Resolver {
             calls: Cell::new(0),
         };
@@ -1263,7 +1265,7 @@ mod tests {
     #[test]
     fn nesting_work_counts_repeated_resolved_parent_references() {
         const STYLE_DEPTH: usize = 24;
-        let tree = DocumentTree::parse("<p>Bounded</p>").expect("parse test HTML");
+        let tree = DocumentTree::parse("<p>Bounded</p>");
         let resolver = Resolver {
             calls: Cell::new(0),
         };
@@ -1324,7 +1326,7 @@ mod tests {
     #[test]
     fn loader_byte_and_rule_limits_are_inclusive_and_source_aware() {
         const CSS: &str = "p{color:red}";
-        let tree = DocumentTree::parse("<p>Bounds</p>").expect("parse test HTML");
+        let tree = DocumentTree::parse("<p>Bounds</p>");
         let resolver = Resolver {
             calls: Cell::new(0),
         };
@@ -1411,7 +1413,7 @@ mod tests {
         let resolver = Resolver {
             calls: Cell::new(0),
         };
-        let tree = DocumentTree::parse("<p>Depth</p>").expect("parse test HTML");
+        let tree = DocumentTree::parse("<p>Depth</p>");
         let prepared = prepare_with_limits(
             &tree,
             &sources,
@@ -1463,7 +1465,7 @@ mod tests {
             }],
             ..Default::default()
         };
-        let tree = DocumentTree::parse("<p>Canonical cycle</p>").expect("parse test HTML");
+        let tree = DocumentTree::parse("<p>Canonical cycle</p>");
         let prepared = prepare_with_limits(
             &tree,
             &sources,
@@ -1490,7 +1492,7 @@ mod tests {
 
     #[test]
     fn loader_rule_limits_cover_nested_groups_and_page_margin_rules() {
-        let tree = DocumentTree::parse("<p>Nested limits</p>").expect("parse test HTML");
+        let tree = DocumentTree::parse("<p>Nested limits</p>");
         let resolver = Resolver {
             calls: Cell::new(0),
         };
@@ -1524,7 +1526,7 @@ mod tests {
     }
     #[test]
     fn loader_nested_limit_errors_retain_the_declaring_source_and_line() {
-        let tree = DocumentTree::parse("<p>Source</p>").expect("parse test HTML");
+        let tree = DocumentTree::parse("<p>Source</p>");
         let resolver = Resolver {
             calls: Cell::new(0),
         };
@@ -1599,7 +1601,7 @@ mod tests {
             ..Default::default()
         };
         let result = prepare_with_limits(
-            &DocumentTree::parse("<!doctype html><p>Limit</p>").expect("parse test HTML"),
+            &DocumentTree::parse("<!doctype html><p>Limit</p>"),
             &sources,
             &WrongType,
             &PrintSettings::default(),

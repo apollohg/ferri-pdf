@@ -14,7 +14,7 @@ fn computed(css: &str) -> [Style; 2] {
         base: Default::default(),
     }])
     .unwrap();
-    let html = DocumentTree::parse("<div id=root><p id=child>X</p></div>").expect("parse HTML");
+    let html = DocumentTree::parse("<div id=root><p id=child>X</p></div>");
     let mut styles: Vec<Style> = Vec::new();
     for element in html.select(&Selector::parse("#root, #child").unwrap()) {
         let parent = styles.last().cloned().unwrap_or_default();

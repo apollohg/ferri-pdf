@@ -29,7 +29,7 @@ fn heading_levels_include_offsets_resets_and_namespace_boundaries() {
          <svg headingoffset=8 headingreset><foreignObject><h1 id=foreign>I</h1></foreignObject></svg>",
         "9".repeat(1024),
     );
-    let tree = DocumentTree::parse(&markup).expect("parse test HTML");
+    let tree = DocumentTree::parse(&markup);
     for (id, expected) in [
         ("base", Some(3)),
         ("nested", Some(5)),

@@ -1619,8 +1619,7 @@ mod tests {
                     base: Default::default(),
                 }])
                 .expect("a selector at the inclusive resolved limit parses");
-                let tree = crate::dom::DocumentTree::parse("<!doctype html><html class=item>")
-                    .expect("parse test HTML");
+                let tree = crate::dom::DocumentTree::parse("<!doctype html><html class=item>");
                 let style = sheet
                     .computed(tree.root_element(), &crate::style::Style::default())
                     .expect("match a selector at the inclusive resolved limit");
@@ -1644,8 +1643,7 @@ mod tests {
             base: Default::default(),
         }])
         .expect("the existing component-depth limit remains usable");
-        let tree = crate::dom::DocumentTree::parse("<!doctype html><html class=item>")
-            .expect("parse test HTML");
+        let tree = crate::dom::DocumentTree::parse("<!doctype html><html class=item>");
         let style = sheet
             .computed(tree.root_element(), &crate::style::Style::default())
             .expect("match a selector at its component-depth limit");
@@ -1670,8 +1668,7 @@ mod tests {
                     base: Default::default(),
                 }])
                 .expect("scope groups at the inclusive bound parse");
-                let tree = crate::dom::DocumentTree::parse("<!doctype html><p>Scoped</p>")
-                    .expect("parse test HTML");
+                let tree = crate::dom::DocumentTree::parse("<!doctype html><p>Scoped</p>");
                 let target = tree
                     .elements()
                     .find(|element| element.name() == "p")

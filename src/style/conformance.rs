@@ -872,7 +872,7 @@ fn styles_reporting(css: &str) -> Result<(Style, Style, Vec<Degradation>), Style
         text: css.into(),
         base: Default::default(),
     }])?;
-    let html = DocumentTree::parse(DOCUMENT).expect("parse test HTML");
+    let html = DocumentTree::parse(DOCUMENT);
     let select = |selector: &str| {
         html.select(&Selector::parse(selector).expect("static selector"))
             .next()
@@ -1190,7 +1190,7 @@ fn supports_classification_agrees_with_real_computation_for_concrete_generated_v
                         base: Default::default(),
                     }]);
                     sheet.and_then(|sheet| {
-                        let html = DocumentTree::parse(DOCUMENT).expect("parse test HTML");
+                        let html = DocumentTree::parse(DOCUMENT);
                         let element = html
                             .select(&Selector::parse(CHILD_ELEMENT).unwrap())
                             .next()
@@ -1241,7 +1241,7 @@ fn supports_accepts_pending_values_without_promising_computed_capability() {
             base: Default::default(),
         }])
         .unwrap();
-        let tree = DocumentTree::parse(DOCUMENT).unwrap();
+        let tree = DocumentTree::parse(DOCUMENT);
         let element = tree
             .select(&Selector::parse(CHILD_ELEMENT).unwrap())
             .next()

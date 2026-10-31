@@ -33,7 +33,7 @@ fn discarded(css: &str) -> Vec<Degradation> {
         base: Default::default(),
     }])
     .unwrap_or_else(|error| panic!("`{css}` must parse: {error}"));
-    let html = DocumentTree::parse("<p id=target>Text</p>").expect("parse test HTML");
+    let html = DocumentTree::parse("<p id=target>Text</p>");
     let element = html
         .select(&Selector::parse(TARGET).expect("static selector"))
         .next()

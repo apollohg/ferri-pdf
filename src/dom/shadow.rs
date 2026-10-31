@@ -199,7 +199,9 @@ impl ShadowState {
 pub(crate) struct DocumentSink {
     pub html: HtmlTreeSink,
     shadow: RefCell<ShadowState>,
-    error: RefCell<Option<DomError>>,
+    /// The shadow root nesting limit, once a declarative shadow root past it stayed an
+    /// ordinary template.
+    limit: RefCell<Option<DomError>>,
     /// Source spelling of the `shadowrootmode` keyword canonicalised for the current token.
     shadow_root_mode: RefCell<Option<StrTendril>>,
 }
@@ -208,7 +210,7 @@ impl DocumentSink {
         Self {
             html: HtmlTreeSink::new(Html::new_document()),
             shadow: RefCell::default(),
-            error: RefCell::default(),
+            limit: RefCell::default(),
             shadow_root_mode: RefCell::default(),
         }
     }
@@ -251,17 +253,14 @@ impl TokenSink for DocumentTokens {
 }
 impl TreeSink for DocumentSink {
     type Handle = NodeId;
-    type Output = Result<(Html, ShadowState), DomError>;
+    type Output = (Html, ShadowState, Option<DomError>);
     type ElemName<'a> = Ref<'a, QualName>;
 
     fn finish(self) -> Self::Output {
-        if let Some(error) = self.error.into_inner() {
-            return Err(error);
-        }
         let html = self.html.finish();
         let mut shadow = self.shadow.into_inner();
         shadow.finish(&html);
-        Ok((html, shadow))
+        (html, shadow, self.limit.into_inner())
     }
     fn parse_error(&self, message: Cow<'static, str>) {
         self.html.parse_error(message);
@@ -382,8 +381,9 @@ impl TreeSink for DocumentSink {
                 break;
             }
         }
+        // Attaching fails, so the template stays an ordinary one (HTML §13.2.6.4.4).
         if depth > MAX_SHADOW_DEPTH {
-            self.error.borrow_mut().get_or_insert(DomError::TreeLimit {
+            self.limit.borrow_mut().get_or_insert(DomError::TreeLimit {
                 resource: SHADOW_DEPTH,
                 limit: MAX_SHADOW_DEPTH,
             });

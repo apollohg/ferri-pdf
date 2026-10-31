@@ -66,7 +66,9 @@ fn matched_ids(tree: &DocumentTree, selector: &str) -> Vec<String> {
 
 #[test]
 fn disabled_fieldsets_exempt_only_their_first_legend_and_keep_outer_disabling() {
-    let tree = DocumentTree::parse("<!doctype html><div id=unrelated disabled></div><fieldset id=outer disabled=false><legend><input id=first><fieldset id=nested disabled><legend><input id=nested-first></legend><input id=nested-body></fieldset></legend><legend><input id=later></legend><input id=body><fieldset id=inherited><legend><input id=inherited-first></legend></fieldset></fieldset><input id=hidden type=hidden><button id=button disabled></button><textarea id=textarea></textarea>").unwrap();
+    let tree = DocumentTree::parse(
+        "<!doctype html><div id=unrelated disabled></div><fieldset id=outer disabled=false><legend><input id=first><fieldset id=nested disabled><legend><input id=nested-first></legend><input id=nested-body></fieldset></legend><legend><input id=later></legend><input id=body><fieldset id=inherited><legend><input id=inherited-first></legend></fieldset></fieldset><input id=hidden type=hidden><button id=button disabled></button><textarea id=textarea></textarea>",
+    );
     assert_eq!(
         matched_ids(&tree, ":disabled"),
         [
@@ -92,7 +94,9 @@ fn disabled_fieldsets_exempt_only_their_first_legend_and_keep_outer_disabling() 
 
 #[test]
 fn options_and_groups_include_select_disabling_without_fieldset_shortcuts() {
-    let tree = DocumentTree::parse("<!doctype html><select id=select disabled><optgroup id=group><option id=option>A</option></optgroup></select><select id=enabled-select><optgroup id=disabled-group disabled><option id=group-option>B</option></optgroup><optgroup id=enabled-group><option id=explicit disabled>C</option><option id=enabled-option>D</option></optgroup></select><fieldset id=fieldset disabled><option id=standalone-option>X</option><optgroup id=standalone-group></optgroup></fieldset><svg><g id=foreign disabled=''/></svg>").unwrap();
+    let tree = DocumentTree::parse(
+        "<!doctype html><select id=select disabled><optgroup id=group><option id=option>A</option></optgroup></select><select id=enabled-select><optgroup id=disabled-group disabled><option id=group-option>B</option></optgroup><optgroup id=enabled-group><option id=explicit disabled>C</option><option id=enabled-option>D</option></optgroup></select><fieldset id=fieldset disabled><option id=standalone-option>X</option><optgroup id=standalone-group></optgroup></fieldset><svg><g id=foreign disabled=''/></svg>",
+    );
     assert_eq!(
         matched_ids(&tree, ":disabled"),
         [
@@ -133,7 +137,9 @@ fn disabled_state_uses_dom_ancestry_across_shadow_and_slot_relationships() {
             vec!["outer", "light"],
         ),
     ] {
-        let tree = DocumentTree::parse(&format!("<!doctype html><fieldset id=outer {outer}><div><template shadowrootmode=open><fieldset id=inner {inner}><legend>Legend</legend><slot></slot><input id=shadow></fieldset></template><input id=light></div></fieldset>")).unwrap();
+        let tree = DocumentTree::parse(&format!(
+            "<!doctype html><fieldset id=outer {outer}><div><template shadowrootmode=open><fieldset id=inner {inner}><legend>Legend</legend><slot></slot><input id=shadow></fieldset></template><input id=light></div></fieldset>"
+        ));
         for (selector, expected) in [(":disabled", disabled), (":enabled", enabled)] {
             let mut actual: Vec<_> = tree
                 .shadow_including_elements()
@@ -181,7 +187,7 @@ fn option_disabled_ancestry_stops_at_the_first_defined_boundary_in_xml() {
 }
 
 fn ids_matching(html: &str, selector: &str) -> Vec<String> {
-    let tree = DocumentTree::parse(&format!("<!doctype html>{html}")).expect("parse test HTML");
+    let tree = DocumentTree::parse(&format!("<!doctype html>{html}"));
     matched_ids(&tree, selector)
 }
 
@@ -466,8 +472,7 @@ fn value_sanitization_matches_each_type_state() {
         <input id=color type=color value=rebeccapurple><input id=nocolor type=color value=nope>\
         <input id=mid type=range min=0 max=100 step=20 value=50><input id=default type=range min=10 max=20>\
         <input id=clamped type=range min=0 max=10 value=99><input id=reversed type=range min=10 max=0>",
-    )
-    .unwrap();
+    );
     for (id, expected) in [
         ("text", "ab"),
         ("url", "https://x.test/"),
@@ -497,8 +502,7 @@ fn meter_and_progress_points_are_clamped_in_specified_order() {
     let tree = DocumentTree::parse(
         "<!doctype html><meter id=m min=10 max=5 value=20 low=1 high=0 optimum=99></meter>\
         <meter id=plain value=0.25></meter><progress id=p value=7 max=-1></progress>",
-    )
-    .unwrap();
+    );
     let gauge = element_by_id(&tree, "m").meter_gauge();
     assert_eq!(
         [

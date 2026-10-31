@@ -209,7 +209,7 @@ pub(crate) fn load_document(
     let charset = metadata.charset.as_deref();
     let frame = if computed == sniffing::HTML {
         // HTML §7.5.2.
-        let (decoded, _) = crate::document::encoding::decode_document(&resource.bytes, charset)?;
+        let (decoded, _) = crate::document::encoding::decode_document(&resource.bytes, charset);
         let frame = Frame::new(
             Source::Html {
                 text: decoded.text,

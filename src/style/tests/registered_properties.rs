@@ -13,7 +13,7 @@ fn computed_in(css: &str, base: ResourceBase) -> (Vec<Style>, Vec<String>) {
         base,
     }])
     .unwrap_or_else(|error| panic!("parse `{css}`: {error}"));
-    let html = DocumentTree::parse(TREE).expect("parse test HTML");
+    let html = DocumentTree::parse(TREE);
     let mut styles = Vec::new();
     for element in html.select(&Selector::parse("#root, #child, #leaf").unwrap()) {
         let parent = styles.last().cloned().unwrap_or_default();

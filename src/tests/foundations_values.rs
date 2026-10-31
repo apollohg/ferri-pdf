@@ -61,7 +61,7 @@ fn computed_reporting(
         settings,
     )
     .unwrap();
-    let tree = DocumentTree::parse(html).unwrap();
+    let tree = DocumentTree::parse(html);
     let element = tree
         .select(&Selector::parse(selector).unwrap())
         .next()
@@ -3224,7 +3224,7 @@ fn geometry_cycle_reports_winning_declarations_and_the_closed_dependency_chain()
             base: font_base(),
         }])
         .unwrap();
-        let tree = DocumentTree::parse("<p>Cycle</p>").unwrap();
+        let tree = DocumentTree::parse("<p>Cycle</p>");
         sheet
             .resolve_document_root(tree.root_element(), &FileResolver::default())
             .unwrap_or_else(|error| panic!("{css}: a cycle must not fail computing: {error}"));
@@ -3431,7 +3431,7 @@ fn page_border_metrics_follow_computed_styles_before_geometry_dependencies() {
             base: Default::default(),
         }])
         .unwrap();
-        let tree = DocumentTree::parse("<p>Borders</p>").unwrap();
+        let tree = DocumentTree::parse("<p>Borders</p>");
         sheet
             .resolve_document_root(tree.root_element(), &FileResolver::default())
             .unwrap_or_else(|error| panic!("page border {css}: {error}"));
@@ -3517,7 +3517,7 @@ fn large_negative_page_margins_keep_the_resolved_content_size() {
         text: "@page{size:400pt 600pt;width:100pt;height:100pt;margin:-1e20pt}html{width:100vw;height:100vh}".into(),
         base: Default::default(),
     }]).unwrap();
-    let tree = DocumentTree::parse("<p>Finite content area</p>").unwrap();
+    let tree = DocumentTree::parse("<p>Finite content area</p>");
     let root = sheet
         .resolve_document_root(tree.root_element(), &FileResolver::default())
         .expect("finite negative margins must not erase an independently resolved content size");
@@ -3535,7 +3535,7 @@ fn overflowing_page_margin_extents_are_rejected_before_viewport_computation() {
         base: Default::default(),
     }])
     .unwrap();
-    let tree = DocumentTree::parse("<p>Finite geometry</p>").unwrap();
+    let tree = DocumentTree::parse("<p>Finite geometry</p>");
     let result = sheet.resolve_document_root(tree.root_element(), &FileResolver::default());
     assert!(
         matches!(result, Err(StyleError::Invalid(_))),
@@ -3666,7 +3666,7 @@ fn zero_authored_page_sizes_keep_css_geometry_on_a_positive_output_sheet() {
             &options.print,
         )
         .unwrap();
-        let tree = DocumentTree::parse("<p>Viewport</p>").unwrap();
+        let tree = DocumentTree::parse("<p>Viewport</p>");
         let root = sheet
             .resolve_document_root(tree.root_element(), &FileResolver::default())
             .unwrap();
@@ -3684,7 +3684,7 @@ fn zero_page_area_is_a_valid_first_page_viewport() {
         base: Default::default(),
     }])
     .unwrap();
-    let tree = DocumentTree::parse("<p>Zero viewport</p>").unwrap();
+    let tree = DocumentTree::parse("<p>Zero viewport</p>");
     let root = sheet
         .resolve_document_root(tree.root_element(), &FileResolver::default())
         .expect("zero dimensions are valid CSS sizes, not dependency cycles or invalid geometry");

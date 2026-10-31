@@ -10,8 +10,7 @@ fn computed(css: &str) -> Result<Style, StyleError> {
         text: css.into(),
         base: Default::default(),
     }])?;
-    let html = DocumentTree::parse("<section id=parent><div id=child>X</div></section>")
-        .expect("parse test HTML");
+    let html = DocumentTree::parse("<section id=parent><div id=child>X</div></section>");
     let select = |id: &str| html.select(&Selector::parse(id).unwrap()).next().unwrap();
     let parent = sheet.computed_with_resolver(
         select("#parent"),

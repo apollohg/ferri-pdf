@@ -14,8 +14,7 @@ fn sheet(css: &str) -> Stylesheet {
 
 #[test]
 fn selected_geometry_and_tree_attribute_custom_values_share_the_dependency_graph() {
-    let tree =
-        DocumentTree::parse("<body><section data-name=A><p>Text</p></section></body>").unwrap();
+    let tree = DocumentTree::parse("<body><section data-name=A><p>Text</p></section></body>");
     let selected = tree.select(&Selector::parse("p").unwrap()).next().unwrap();
     let mut sheet = sheet(
         "@page{size:200pt 300pt;margin:10pt}@page A{size:400pt 500pt;margin:20pt}html{padding-left:10vw}section{--name:attr(data-name <custom-ident>)}p{page:var(--name)}",
@@ -46,7 +45,7 @@ fn selected_geometry_and_tree_attribute_custom_values_share_the_dependency_graph
 
 #[test]
 fn selected_page_cycle_records_the_named_property_and_viewport_request() {
-    let tree = DocumentTree::parse("<p>Text</p>").unwrap();
+    let tree = DocumentTree::parse("<p>Text</p>");
     let selected = tree.select(&Selector::parse("p").unwrap()).next().unwrap();
     let mut sheet =
         sheet("@page A{size:400pt 500pt}p{page:if(style(width:100pt):A;else:B);width:10vw}");
@@ -109,7 +108,7 @@ fn selecting_a_deep_target_prepares_ancestors_without_recursive_stack_growth() {
         "<section>".repeat(ANCESTORS),
         "</section>".repeat(ANCESTORS)
     );
-    let tree = DocumentTree::parse(&html).unwrap();
+    let tree = DocumentTree::parse(&html);
     let selected = tree.select(&Selector::parse("p").unwrap()).next().unwrap();
     let mut sheet = sheet(
         "@page A{size:400pt 500pt}html{white-space:pre-wrap;--page-name:A}p{page:var(--page-name)}",

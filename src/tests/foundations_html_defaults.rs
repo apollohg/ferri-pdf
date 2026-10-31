@@ -86,8 +86,7 @@ fn horizontal_rules_use_html_borders_and_attribute_hints() {
         ("color=transparent size=8", Size::Auto, [4.0; 4], true),
         ("size=0", Size::Auto, [1.0; 4], false),
     ] {
-        let tree = DocumentTree::parse(&format!("<!doctype html><hr id=target {attributes}>"))
-            .expect("parse test HTML");
+        let tree = DocumentTree::parse(&format!("<!doctype html><hr id=target {attributes}>"));
         let element = tree
             .select(&Selector::parse("#target").unwrap())
             .next()
@@ -108,8 +107,7 @@ fn horizontal_rules_use_html_borders_and_attribute_hints() {
             }));
     }
     let tree =
-        DocumentTree::parse("<!doctype html><hr id=target color=red width='50%junk' align=left>")
-            .expect("parse test HTML");
+        DocumentTree::parse("<!doctype html><hr id=target color=red width='50%junk' align=left>");
     let element = tree
         .select(&Selector::parse("#target").unwrap())
         .next()
@@ -237,7 +235,7 @@ fn quirks_margin_rules_distinguish_text_comments_blank_nodes_and_cell_edges() {
         ),
         ("<!doctype html><p id=target>X</p>", 12.0, 12.0),
     ] {
-        let tree = DocumentTree::parse(markup).expect("parse test HTML");
+        let tree = DocumentTree::parse(markup);
         let target = tree
             .select(&Selector::parse("#target").unwrap())
             .next()
@@ -300,8 +298,7 @@ fn legacy_text_alignment_keywords_apply_only_to_their_defined_elements() {
             TextAlign::Center,
         ),
     ] {
-        let tree =
-            DocumentTree::parse(&format!("<!doctype html>{markup}")).expect("parse test HTML");
+        let tree = DocumentTree::parse(&format!("<!doctype html>{markup}"));
         let target = tree
             .select(&Selector::parse("#target").unwrap())
             .next()
@@ -322,8 +319,7 @@ fn header_alignment_default_obeys_parent_and_cascade_rollback() {
     use crate::style::{Style, Stylesheet, TextAlign};
 
     let tree =
-        DocumentTree::parse("<!doctype html><table><tr><th id=target>Heading</th></tr></table>")
-            .unwrap();
+        DocumentTree::parse("<!doctype html><table><tr><th id=target>Heading</th></tr></table>");
     let target = tree
         .select(&Selector::parse("#target").unwrap())
         .next()

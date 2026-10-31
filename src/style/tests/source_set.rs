@@ -18,7 +18,7 @@ fn environment() -> PrintEnvironment {
 }
 
 fn selected(html: &str) -> (Option<ImageSource>, Option<String>) {
-    let tree = DocumentTree::parse(html).unwrap();
+    let tree = DocumentTree::parse(html);
     let img = tree
         .elements()
         .find(|element| element.namespace() == HTML_NAMESPACE && element.name() == "img")

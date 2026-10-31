@@ -967,7 +967,7 @@ fn marked_sources(sources: &[&str], html: &str) -> Vec<String> {
         })
         .collect();
     let sheet = Stylesheet::parse(&sources).expect("recoverable selector stylesheet");
-    let tree = DocumentTree::parse(html).expect("parse test HTML");
+    let tree = DocumentTree::parse(html);
     tree.elements()
         .filter_map(|element| {
             let id = element.attr("id")?;
@@ -1182,8 +1182,7 @@ fn target_resolution_checks_literal_fragments_before_decoding() {
         ),
         ("top", "<p id=sample>Top</p>", vec![]),
     ] {
-        let mut tree =
-            DocumentTree::parse(&format!("<!doctype html>{html}")).expect("parse test HTML");
+        let mut tree = DocumentTree::parse(&format!("<!doctype html>{html}"));
         tree.set_document_urls(
             Some(crate::Url::parse(&format!("https://example.test/page#{fragment}")).unwrap()),
             crate::Url::parse("https://base.test/elsewhere/").unwrap(),
@@ -1204,7 +1203,7 @@ fn target_resolution_checks_literal_fragments_before_decoding() {
 fn radio_initial_state_respects_fragment_roots_and_empty_form_references() {
     let tree = DocumentTree::parse(
         "<!doctype html><form id=''><input id=outer name=x type=radio checked></form><input id=orphan form='' name=x type=radio checked><template><input id=first name=x type=radio checked><input id=last name=x type=radio checked></template>",
-    ).expect("parse test HTML");
+    );
     for id in ["outer", "orphan"] {
         let selector = crate::dom::Selector::parse(&format!("#{id}")).unwrap();
         assert!(

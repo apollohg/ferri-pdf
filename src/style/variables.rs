@@ -1154,7 +1154,7 @@ mod tests {
             base: Default::default(),
         }])
         .unwrap();
-        let tree = DocumentTree::parse("<p data-empty='' data-token='t'>Attribute</p>").unwrap();
+        let tree = DocumentTree::parse("<p data-empty='' data-token='t'>Attribute</p>");
         let element = tree.select(&Selector::parse("p").unwrap()).next().unwrap();
         sheet
             .computed(element, &Style::default())
@@ -1214,7 +1214,7 @@ mod tests {
         }])
         .unwrap();
         let html = "<div data-token=t>".repeat(ELEMENTS) + &"</div>".repeat(ELEMENTS);
-        let tree = DocumentTree::parse(&html).unwrap();
+        let tree = DocumentTree::parse(&html);
         let selector = Selector::parse("div").unwrap();
         let mut parent = Style::default();
         let mut text_bytes = 0;

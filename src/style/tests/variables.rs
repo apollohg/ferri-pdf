@@ -9,7 +9,7 @@ fn computed(css: &str, html: &str) -> Vec<Style> {
         base: Default::default(),
     }])
     .unwrap();
-    let html = DocumentTree::parse(html).expect("parse test HTML");
+    let html = DocumentTree::parse(html);
     let mut styles = Vec::new();
     for element in html.select(&Selector::parse("#root, #child, #leaf").unwrap()) {
         let parent = styles.last().cloned().unwrap_or_default();
@@ -124,7 +124,7 @@ fn recursive_expansion_stops_at_its_byte_bound_before_unbounded_allocation() {
         base: Default::default(),
     }])
     .unwrap();
-    let html = DocumentTree::parse("<p id=root>X</p>").expect("parse test HTML");
+    let html = DocumentTree::parse("<p id=root>X</p>");
     let element = html
         .select(&Selector::parse("#root").unwrap())
         .next()
@@ -187,7 +187,7 @@ fn empty_custom_properties_still_consume_the_environment_budget_and_are_discarde
         base: Default::default(),
     }])
     .unwrap();
-    let html = DocumentTree::parse("<p id=root>X</p>").expect("parse test HTML");
+    let html = DocumentTree::parse("<p id=root>X</p>");
     let selector = Selector::parse("#root").unwrap();
     let element = html.select(&selector).next().unwrap();
     assert_custom_properties_discarded(&sheet, element, "environment entries");
@@ -199,7 +199,7 @@ fn invalid_substitutions_reset_display_content_and_page_size() {
         text: "#root{--bad:red;--display:potato potato;display:block;display:var(--display)}#root::before{content:'Old';content:var(--bad)}@page{size:400pt 500pt;size:var(--bad)}".into(),
         base: Default::default(),
     }]).unwrap();
-    let html = DocumentTree::parse("<p id=root>Body</p>").expect("parse test HTML");
+    let html = DocumentTree::parse("<p id=root>Body</p>");
     let selector = Selector::parse("#root").unwrap();
     let element = html.select(&selector).next().unwrap();
     let style = sheet
@@ -253,7 +253,7 @@ fn deeply_nested_values_are_rejected_during_stylesheet_parsing() {
         }),
         "nested source must be bounded and reported before variable evaluation: {diagnostics:?}"
     );
-    let html = DocumentTree::parse("<p id=root>X</p>").expect("parse test HTML");
+    let html = DocumentTree::parse("<p id=root>X</p>");
     let element = html
         .select(&Selector::parse("#root").unwrap())
         .next()
@@ -304,7 +304,7 @@ fn substitution_preserves_display_values_and_white_space_longhands() {
         base: Default::default(),
     }])
     .unwrap();
-    let html = DocumentTree::parse("<p id=root>X</p>").expect("parse test HTML");
+    let html = DocumentTree::parse("<p id=root>X</p>");
     let selector = Selector::parse("#root").unwrap();
     let style = sheet
         .computed_with_resolver(
@@ -331,7 +331,7 @@ fn generated_function_argument_types_are_checked_after_substitution() {
             base: Default::default(),
         }])
         .unwrap();
-        let html = DocumentTree::parse("<p id=root>Body</p>").expect("parse test HTML");
+        let html = DocumentTree::parse("<p id=root>Body</p>");
         let selector = Selector::parse("#root").unwrap();
         let element = html.select(&selector).next().unwrap();
         assert!(
@@ -356,7 +356,7 @@ fn color_functions_compute_after_substitution() {
         base: Default::default(),
     }])
     .unwrap();
-    let html = DocumentTree::parse("<p id=root>Body</p>").expect("parse test HTML");
+    let html = DocumentTree::parse("<p id=root>Body</p>");
     let selector = Selector::parse("#root").unwrap();
     let style = sheet
         .computed_with_resolver(

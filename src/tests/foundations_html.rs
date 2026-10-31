@@ -29,7 +29,7 @@ fn formatting_element<'a>(tree: &'a DocumentTree, id: &str) -> crate::dom::Eleme
 fn declarative_shadow_slots_preserve_three_relationships() {
     let tree = DocumentTree::parse(
         "<!doctype html><div id=host><template shadowrootmode=open><section id=shadow><slot name=n id=named>Named fallback</slot><slot id=defaultslot>Default fallback</slot></section></template><p id=assigned slot=n>Named</p><p id=default>Default</p><p id=hidden slot=missing>Hidden</p></div>",
-    ).expect("parse test HTML");
+    );
     let host = select(&tree, "#host");
     let assigned = select(&tree, "#assigned");
     let named = formatting_element(&tree, "named");
@@ -158,7 +158,7 @@ fn slot_fallback_and_hidden_assigned_content_have_correct_presence() {
 fn shadow_headings_use_host_ancestry_and_ignore_slot_offsets() {
     let tree = DocumentTree::parse(
         "<!doctype html><section headingoffset=2><div id=host headingoffset=1><template shadowrootmode=open><section headingoffset=1><h1 id=inner>Inner</h1><slot headingoffset=8></slot><div headingreset headingoffset=1><h1 id=reset>Reset</h1></div></section></template><h1 id=slotted>Light</h1></div></section>",
-    ).expect("parse test HTML");
+    );
     assert_eq!(
         formatting_element(&tree, "inner").heading_level(),
         Some(5),
@@ -199,7 +199,9 @@ fn shadow_root_host_validation_and_ascii_mode_matching() {
         );
     }
     for host in ["a", "button", "font-face", "x!invalid-name"] {
-        let tree = DocumentTree::parse(&format!("<!doctype html><{host} id=host><template shadowrootmode=open><p>Inert</p></template><p>Light</p></{host}>")).expect("parse test HTML");
+        let tree = DocumentTree::parse(&format!(
+            "<!doctype html><{host} id=host><template shadowrootmode=open><p>Inert</p></template><p>Light</p></{host}>"
+        ));
         let target = select(&tree, "#host");
         assert!(
             target
@@ -326,28 +328,40 @@ fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
 }
 
 #[test]
-fn excessive_shadow_nesting_returns_an_html_tree_error() {
+fn excessive_shadow_nesting_leaves_an_ordinary_template_and_is_reported() {
     const TOO_DEEP: usize = 65;
     let html = format!(
         "<!doctype html>{}<p>Deep</p>{}",
         "<div><template shadowrootmode=open>".repeat(TOO_DEEP),
         "</template></div>".repeat(TOO_DEEP)
     );
-    for error in [
-        render_html(&html, &local_options()).err(),
-        crate::render_bytes(html.as_bytes(), &local_options()).err(),
+    for output in [
+        render_html(&html, &local_options()),
+        crate::render_bytes(html.as_bytes(), &local_options()),
     ] {
+        let output =
+            output.unwrap_or_else(|error| panic!("deep shadow roots must render: {error}"));
         assert!(
-            matches!(
-                error,
-                Some(crate::Error::Html(crate::document::DocumentError::Tree(
-                    crate::dom::DomError::TreeLimit {
-                        resource: "shadow tree nesting",
-                        limit: 64
-                    }
-                )))
-            ),
-            "both HTML input paths must preserve the typed shadow-depth failure"
+            output.diagnostics.iter().any(|diagnostic| matches!(
+                diagnostic,
+                crate::RenderDiagnostic::TreeLimit(crate::dom::DomError::TreeLimit {
+                    resource: "shadow tree nesting",
+                    limit: 64
+                })
+            )),
+            "both HTML input paths must report the shadow-depth limit: {:?}",
+            output.diagnostics
+        );
+        assert!(
+            output
+                .layout
+                .unwrap()
+                .pages
+                .iter()
+                .flatten()
+                .next()
+                .is_none(),
+            "the template past the limit stays an ordinary, unrendered template"
         );
     }
     let html = format!(
@@ -355,7 +369,7 @@ fn excessive_shadow_nesting_returns_an_html_tree_error() {
         "<div><template shadowrootmode=open>".repeat(TOO_DEEP - 1),
         "</template></div>".repeat(TOO_DEEP - 1)
     );
-    DocumentTree::parse(&html).expect("parse the inclusive shadow bound");
+    DocumentTree::parse(&html);
     let trace = render_html(&html, &local_options())
         .expect("the inclusive shadow bound remains usable")
         .layout
@@ -375,12 +389,10 @@ fn excessive_shadow_nesting_returns_an_html_tree_error() {
 fn html_tree_recovery_preserves_namespaces_and_quirks() {
     let tree = DocumentTree::parse(
         "<!doctype html><table id=t>outside<tr><td id=cell>A<td>B</table><p id=duplicate CLASS=first class=second>C</p><svg><circle id=circle /><foreignObject><p id=foreign>HTML</p></foreignObject></svg><math><mi id=mi>x</mi><annotation-xml encoding=text/html><div id=annotation>HTML</div></annotation-xml></math>",
-    ).expect("parse test HTML");
+    );
     assert_eq!(tree.quirks_mode(), QuirksMode::NoQuirks);
     assert_eq!(
-        DocumentTree::parse("<p>quirks")
-            .expect("parse test HTML")
-            .quirks_mode(),
+        DocumentTree::parse("<p>quirks").quirks_mode(),
         QuirksMode::Quirks
     );
     let cell = select(&tree, "#cell");
@@ -403,7 +415,7 @@ fn html_tree_recovery_preserves_namespaces_and_quirks() {
     assert_eq!(select(&tree, "#foreign").namespace(), HTML_NAMESPACE);
     assert_eq!(select(&tree, "#mi").namespace(), MATHML_NAMESPACE);
     assert_eq!(select(&tree, "#annotation").namespace(), HTML_NAMESPACE);
-    let malformed = DocumentTree::parse("<b><i>A</b>B</i>").expect("parse test HTML");
+    let malformed = DocumentTree::parse("<b><i>A</b>B</i>");
     assert_eq!(
         select(&malformed, "body > b > i")
             .text()
@@ -420,7 +432,7 @@ fn html_tree_recovery_preserves_namespaces_and_quirks() {
 fn scripting_disabled_noscript_and_template_parse_correctly() {
     let tree = DocumentTree::parse(
         "<head><noscript><style id=head>p{font-size:18pt}</style></noscript></head><body><noscript><p id=fallback>fallback</p></noscript><template id=t><style id=inert>p{display:none}</style><p id=inside>inert</p></template><p id=live>live</p>",
-    ).expect("parse test HTML");
+    );
     assert_eq!(
         select(&tree, "#fallback").text().collect::<String>(),
         "fallback"
@@ -466,8 +478,7 @@ fn scripting_disabled_noscript_and_template_parse_correctly() {
 #[test]
 fn ordinary_tree_relations_preserve_existing_rendering() {
     let tree =
-        DocumentTree::parse("<section id=parent><p id=child>A<em id=em>B</em>C</p></section>")
-            .expect("parse test HTML");
+        DocumentTree::parse("<section id=parent><p id=child>A<em id=em>B</em>C</p></section>");
     let child = select(&tree, "#child");
     let parent = select(&tree, "#parent");
     for relation in [
@@ -537,7 +548,9 @@ fn quirks_mode_reaches_selector_matching_in_rendering() {
 
 #[test]
 fn language_and_direction_use_dom_parents_while_css_inherits_through_slots() {
-    let tree=DocumentTree::parse("<!doctype html><div id=host lang=en dir=ltr><template shadowrootmode=open><section lang=fr dir=rtl><slot></slot></section></template><span id=assigned>ABC</span></div>").unwrap();
+    let tree = DocumentTree::parse(
+        "<!doctype html><div id=host lang=en dir=ltr><template shadowrootmode=open><section lang=fr dir=rtl><slot></slot></section></template><span id=assigned>ABC</span></div>",
+    );
     let assigned = select(&tree, "#assigned");
     assert_eq!(
         assigned.language(),
@@ -557,19 +570,25 @@ fn language_and_direction_use_dom_parents_while_css_inherits_through_slots() {
 
 #[test]
 fn automatic_direction_scans_dom_text_and_uses_shadow_slot_host_direction() {
-    let host=DocumentTree::parse("<!doctype html><div id=host dir=auto><template shadowrootmode=open><p>Latin shadow text</p><slot></slot></template><span>אב</span></div>").unwrap();
+    let host = DocumentTree::parse(
+        "<!doctype html><div id=host dir=auto><template shadowrootmode=open><p>Latin shadow text</p><slot></slot></template><span>אב</span></div>",
+    );
     assert_eq!(
         select(&host, "#host").directionality(),
         crate::dom::Directionality::Rtl,
         "shadow text must not replace the host's own descendant text in dir=auto discovery"
     );
-    let fallback=DocumentTree::parse("<!doctype html><div dir=rtl><template shadowrootmode=open><p id=automatic dir=auto><slot>Latin fallback</slot></p></template></div>").unwrap();
+    let fallback = DocumentTree::parse(
+        "<!doctype html><div dir=rtl><template shadowrootmode=open><p id=automatic dir=auto><slot>Latin fallback</slot></p></template></div>",
+    );
     assert_eq!(
         formatting_element(&fallback, "automatic").directionality(),
         crate::dom::Directionality::Rtl,
         "a descendant slot in a shadow tree contributes its host direction before scanning fallback text"
     );
-    let assigned=DocumentTree::parse("<!doctype html><div><template shadowrootmode=open><p><slot id=automatic dir=auto></slot></p></template><span dir=ltr>Latin isolated</span><span>אב</span></div>").unwrap();
+    let assigned = DocumentTree::parse(
+        "<!doctype html><div><template shadowrootmode=open><p><slot id=automatic dir=auto></slot></p></template><span dir=ltr>Latin isolated</span><span>אב</span></div>",
+    );
     assert_eq!(
         formatting_element(&assigned, "automatic").directionality(),
         crate::dom::Directionality::Rtl,

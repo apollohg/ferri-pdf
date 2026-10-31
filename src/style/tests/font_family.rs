@@ -9,7 +9,7 @@ fn families(declaration: &str) -> Vec<FontFamily> {
         base: Default::default(),
     }])
     .unwrap();
-    let html = DocumentTree::parse("<p>Text</p>").expect("parse test HTML");
+    let html = DocumentTree::parse("<p>Text</p>");
     let element = html.select(&Selector::parse("p").unwrap()).next().unwrap();
     sheet
         .computed_with_resolver(element, &Style::default(), &FileResolver::default())

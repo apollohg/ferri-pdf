@@ -22,7 +22,7 @@ fn html_encoding_precedence_and_unicode_entry_are_distinct() {
         (b"<meta charset=bad http-equiv=content-type content='text/html;charset=latin1'><p>caf\xe9".as_slice(), None, "windows-1252", "<meta charset=bad http-equiv=content-type content='text/html;charset=latin1'><p>café"),
         (b"<?xml encoding='windows-1252'?><p>caf\xe9".as_slice(), None, "windows-1252", "<?xml encoding='windows-1252'?><p>café"),
     ] {
-        let decoded = decode_html(bytes, transport).expect("decode test HTML");
+        let decoded = decode_html(bytes, transport);
         assert_eq!(decoded.text, expected, "HTML decoding with {transport:?}: {bytes:?}");
         assert_eq!(decoded.encoding, encoding);
         assert!(!decoded.had_errors, "valid bytes for {encoding}");
@@ -57,7 +57,7 @@ fn late_meta_and_utf16_restart_from_original_buffered_bytes() {
     )
     .into_bytes();
     bytes.push(0xe9);
-    let decoded = decode_html(&bytes, None).expect("decode test HTML");
+    let decoded = decode_html(&bytes, None);
     assert_eq!(decoded.encoding, "windows-1252");
     assert!(decoded.text.ends_with("<p>café"));
     assert!(
@@ -78,7 +78,7 @@ fn late_meta_and_utf16_restart_from_original_buffered_bytes() {
                 unit.to_le_bytes()
             });
         }
-        let decoded = decode_html(&bytes, Some("windows-1251")).expect("decode test HTML");
+        let decoded = decode_html(&bytes, Some("windows-1251"));
         assert_eq!(decoded.text, source);
         assert_eq!(
             decoded.encoding,
@@ -88,7 +88,7 @@ fn late_meta_and_utf16_restart_from_original_buffered_bytes() {
     let source = "<?xml version='1.0'?><p>café";
     let bytes: Vec<_> = source.encode_utf16().flat_map(u16::to_le_bytes).collect();
     assert_eq!(
-        decode_html(&bytes, None).expect("decode test HTML").text,
+        decode_html(&bytes, None).text,
         source,
         "UTF-16 XML prefix is recognized without a BOM"
     );

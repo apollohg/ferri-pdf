@@ -760,7 +760,7 @@ mod tests {
     #[test]
     fn quote_history_releases_long_unique_tails_and_shared_checkpoints() {
         const EVENT_COUNT: usize = 30_000;
-        let document = DocumentTree::parse("<p>quote history</p>").unwrap();
+        let document = DocumentTree::parse("<p>quote history</p>");
         let target = target(document.root_element(), None);
         let mut history = None;
         let mut checkpoint = None;

@@ -518,8 +518,7 @@ mod target_tests {
     fn target_lookup_reuses_first_id_ownership_without_link_only_fallbacks() {
         let document = DocumentTree::parse(
             "<h2 id='chap ter'>First</h2><h2 id='chap ter'>Second</h2><a name=legacy>Named</a>",
-        )
-        .unwrap();
+        );
         let base: ResourceBase = Url::parse("https://example.org/docs/index.html")
             .unwrap()
             .into();

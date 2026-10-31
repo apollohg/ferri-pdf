@@ -28,7 +28,7 @@ fn target(css: &str) -> (Style, Stylesheet) {
         base: Default::default(),
     }])
     .unwrap_or_else(|error| panic!("{css}: {error}"));
-    let html = DocumentTree::parse("<div id=target>X</div>").expect("parse test HTML");
+    let html = DocumentTree::parse("<div id=target>X</div>");
     let select = |selector: &str| {
         html.select(&Selector::parse(selector).unwrap())
             .next()

@@ -10,8 +10,7 @@ fn displays(css: &str) -> [Display; 3] {
         base: Default::default(),
     }])
     .unwrap_or_else(|error| panic!("`{css}` must parse: {error}"));
-    let html = DocumentTree::parse("<div id=run><div id=child><div id=leaf>X</div></div></div>")
-        .expect("parse test HTML");
+    let html = DocumentTree::parse("<div id=run><div id=child><div id=leaf>X</div></div></div>");
     let mut parent = Style::default();
     ["#run", "#child", "#leaf"].map(|id| {
         let element = html.select(&Selector::parse(id).unwrap()).next().unwrap();
@@ -118,7 +117,7 @@ fn math_inner_display_uses_namespace_and_table_tag_before_box_fixup() {
                 },
             ),
         ] {
-            let document = DocumentTree::parse(markup).unwrap();
+            let document = DocumentTree::parse(markup);
             let target = document
                 .select(&Selector::parse("#target").unwrap())
                 .next()
@@ -135,7 +134,7 @@ fn math_inner_display_uses_namespace_and_table_tag_before_box_fixup() {
         }
     }
     let sheet = Stylesheet::parse(&[]).unwrap();
-    let document = DocumentTree::parse("<math><mtable id=target></mtable></math>").unwrap();
+    let document = DocumentTree::parse("<math><mtable id=target></mtable></math>");
     let target = document
         .select(&Selector::parse("#target").unwrap())
         .next()

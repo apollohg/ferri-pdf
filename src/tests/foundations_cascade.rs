@@ -22,7 +22,7 @@ fn computed(sheet: &Stylesheet, element: Element<'_>) -> Style {
 }
 
 fn style(author: &str, user: &str, markup: &str) -> Style {
-    let tree = DocumentTree::parse(&format!("<!doctype html>{markup}")).expect("parse test HTML");
+    let tree = DocumentTree::parse(&format!("<!doctype html>{markup}"));
     let target = tree
         .select(&Selector::parse("#target").unwrap())
         .next()
@@ -308,8 +308,7 @@ fn pseudo_page_and_margin_boxes_use_the_same_origins_and_defaults() {
             .any(|run| run.text == "A" && run.font_size == 23.0),
         "user important applies in page-margin context"
     );
-    let tree =
-        DocumentTree::parse("<!doctype html><p id=target>Text</p>").expect("parse test HTML");
+    let tree = DocumentTree::parse("<!doctype html><p id=target>Text</p>");
     let target = tree
         .select(&Selector::parse("#target").unwrap())
         .next()
@@ -479,8 +478,7 @@ fn html_hints_use_the_html_attribute_parsers_and_parent_context() {
 
 #[test]
 fn page_context_resets_and_inherits_through_the_common_registry() {
-    let tree =
-        DocumentTree::parse("<!doctype html><html><p>Text</p></html>").expect("parse test HTML");
+    let tree = DocumentTree::parse("<!doctype html><html><p>Text</p></html>");
     let mut styles = sheet(
         "html{margin:11pt;font-size:20pt}@page{margin:inherit;@top-center{all:inherit;content:'Header'}}",
         "",
@@ -510,8 +508,7 @@ fn page_context_resets_and_inherits_through_the_common_registry() {
 
 #[test]
 fn page_inherits_computed_values_from_a_hidden_root() {
-    let tree =
-        DocumentTree::parse("<!doctype html><p>Hidden document</p>").expect("parse test HTML");
+    let tree = DocumentTree::parse("<!doctype html><p>Hidden document</p>");
     let mut styles = sheet(
         "html{display:none;font-size:20pt;color:#123456;margin:11pt}\
          @page{margin:inherit;@top-center{content:'Header'}}",
@@ -597,8 +594,7 @@ fn unregistered_url_tokens_resolve_in_the_consuming_stylesheet() {
 #[test]
 fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
     let styles = sheet("body{font-size:24pt}", "");
-    let tree = DocumentTree::parse("<table><tr><td id=target nowrap width=20>Text</table>")
-        .expect("parse test HTML");
+    let tree = DocumentTree::parse("<table><tr><td id=target nowrap width=20>Text</table>");
     let target = tree
         .select(&Selector::parse("#target").unwrap())
         .next()
@@ -606,7 +602,7 @@ fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
     let target = computed(&styles, target);
     assert_pt(target.size, 12.0);
     assert_eq!(target.white_space, crate::style::WhiteSpace::NORMAL);
-    let tree = DocumentTree::parse("<li id=target>Orphan</li>").expect("parse test HTML");
+    let tree = DocumentTree::parse("<li id=target>Orphan</li>");
     let target = tree
         .select(&Selector::parse("#target").unwrap())
         .next()
@@ -623,8 +619,7 @@ fn quirks_presentation_enters_the_ua_origin_and_hint_origin() {
     assert_pt(standard.size, 24.0);
     assert_eq!(standard.white_space, crate::style::WhiteSpace::NOWRAP);
     let styles = sheet("td{white-space:pre}table{font-size:20pt}", "");
-    let tree = DocumentTree::parse("<table><tr><td id=target nowrap width=20>Text</table>")
-        .expect("parse test HTML");
+    let tree = DocumentTree::parse("<table><tr><td id=target nowrap width=20>Text</table>");
     let target = tree
         .select(&Selector::parse("#target").unwrap())
         .next()
@@ -896,8 +891,7 @@ fn quirks_image_spacing_is_a_ua_default_below_hspace_and_author_rules() {
             ("hspace=8", "img{float:none}", "img{margin:9pt}", 6.0),
             ("hspace=8", "img{float:none;margin:5pt}", "", 5.0),
         ] {
-            let tree = DocumentTree::parse(&format!("<img id=target align={align} {hint}>"))
-                .expect("parse test HTML");
+            let tree = DocumentTree::parse(&format!("<img id=target align={align} {hint}>"));
             let selector = Selector::parse("#target").unwrap();
             let target = tree.select(&selector).next().unwrap();
             let result = computed(&sheet(author, user), target);
@@ -1116,8 +1110,7 @@ fn layer_registration_spans_stylesheets_but_is_scoped_to_each_origin() {
     let users = [source(
         "@layer b,a;@layer b{p{font-size:17pt}}@layer a{p{font-size:13pt}}",
     )];
-    let tree =
-        DocumentTree::parse("<!doctype html><p id=target>Text</p>").expect("parse test HTML");
+    let tree = DocumentTree::parse("<!doctype html><p id=target>Text</p>");
     let target = tree
         .select(&Selector::parse("#target").unwrap())
         .next()
@@ -1147,8 +1140,7 @@ fn layer_rollback_is_shared_by_shorthands_pseudos_pages_and_margins() {
     );
     let css = "@layer low,high;@layer high{p::before{content:'High';font-size:23pt}@page{size:350pt 450pt;margin:19pt;--size:23pt;@top-center{content:'High';font-size:var(--size)}}}@layer low{p::before{content:'Low';font-size:19pt}@page{size:300pt 400pt;margin:11pt;--size:19pt;@top-center{content:'Low';font-size:var(--size)}}}@layer high{p::before{font-size:revert-layer}@page{size:revert-layer;margin:revert-layer;--size:revert-layer;@top-center{font-size:revert-layer}}}";
     let mut styles = sheet(css, "");
-    let tree =
-        DocumentTree::parse("<!doctype html><p id=target>Text</p>").expect("parse test HTML");
+    let tree = DocumentTree::parse("<!doctype html><p id=target>Text</p>");
     let target = tree
         .select(&Selector::parse("#target").unwrap())
         .next()

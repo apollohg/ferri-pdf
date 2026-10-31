@@ -69,6 +69,8 @@ pub(crate) struct DocumentTree {
     pub(crate) scroll_markers: RefCell<crate::dom::ScrollMarkerStates>,
     /// Nodes cloned into use-element shadow trees so far.
     instance_nodes: usize,
+    /// The tree limits building the tree reached, past which it dropped content.
+    pub(crate) limits: Vec<crate::dom::DomError>,
 }
 
 impl DocumentTree {
@@ -99,6 +101,7 @@ impl DocumentTree {
             base_selects: RefCell::default(),
             scroll_markers: RefCell::default(),
             instance_nodes: 0,
+            limits: Vec::new(),
         };
         let connected = if tree.shadow.roots.is_empty() {
             Vec::new()

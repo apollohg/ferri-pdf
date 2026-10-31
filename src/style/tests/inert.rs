@@ -15,7 +15,7 @@ fn styles(css: &str) -> Result<(Style, Style), StyleError> {
         text: css.into(),
         base: Default::default(),
     }])?;
-    let html = DocumentTree::parse(DOCUMENT).expect("parse test HTML");
+    let html = DocumentTree::parse(DOCUMENT);
     let select = |id: &str| html.select(&Selector::parse(id).unwrap()).next().unwrap();
     let parent = sheet.computed_with_resolver(
         select("#parent"),

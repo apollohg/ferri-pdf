@@ -7,8 +7,7 @@ fn styles(child: &str) -> (Style, Style) {
         text: format!("#parent{{zoom:2;width:40pt;font-size:10pt;line-height:12pt}}#child{{width:inherit;font-size:inherit;line-height:inherit;{child}}}"),
         base: Default::default(),
     }]).unwrap();
-    let html =
-        DocumentTree::parse("<section id=parent><div id=child>Text</div></section>").unwrap();
+    let html = DocumentTree::parse("<section id=parent><div id=child>Text</div></section>");
     let select = |id| html.select(&Selector::parse(id).unwrap()).next().unwrap();
     let resolver = FileResolver::default();
     let parent = sheet

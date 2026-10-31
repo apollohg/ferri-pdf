@@ -10,7 +10,7 @@ fn colors(css: &str) -> [([u8; 3], [u8; 3]); 2] {
         base: Default::default(),
     }])
     .unwrap_or_else(|error| panic!("`{css}` must parse: {error}"));
-    let html = DocumentTree::parse("<div id=parent><span id=child>X</span></div>").unwrap();
+    let html = DocumentTree::parse("<div id=parent><span id=child>X</span></div>");
     let mut parent = Style::default();
     ["#parent", "#child"].map(|id| {
         let element = html.select(&Selector::parse(id).unwrap()).next().unwrap();

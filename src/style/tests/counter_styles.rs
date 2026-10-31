@@ -556,7 +556,7 @@ fn ethiopic_numeric_matches_the_specification_examples() {
 
 fn list_style_type(css: &str) -> Result<ListStyleType, crate::style::StyleError> {
     let sheet = sheet(css);
-    let html = DocumentTree::parse("<ol><li id=item>x</li></ol>").unwrap();
+    let html = DocumentTree::parse("<ol><li id=item>x</li></ol>");
     let item = html
         .select(&Selector::parse("#item").unwrap())
         .next()

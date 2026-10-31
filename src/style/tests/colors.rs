@@ -96,7 +96,7 @@ fn computed_with(
         &Default::default(),
         &settings,
     )?;
-    let tree = DocumentTree::parse(html).expect("parse test HTML");
+    let tree = DocumentTree::parse(html);
     let element = tree
         .select(&Selector::parse(selector).unwrap())
         .next()

@@ -275,7 +275,9 @@ fn the_computed_page_property_keeps_auto_distinct_from_explicit_inheritance() {
     let sheet = sheet(
         "#parent{page:cases_page}#inherited{page:inherit}#unset{page:unset}#variable{--page:other;page:var(--page)}#invalid{page:cases_page;page:auto auto}#missing{page:cases_page;page:var(--missing)}#query{page:cases_page;margin-left:if(style(page:cases_page):10pt;else:90pt)}",
     );
-    let tree=DocumentTree::parse("<section id=parent><p id=auto></p><p id=inherited></p><p id=unset></p><p id=variable></p><p id=invalid></p><p id=missing></p><p id=query></p></section>").unwrap();
+    let tree = DocumentTree::parse(
+        "<section id=parent><p id=auto></p><p id=inherited></p><p id=unset></p><p id=variable></p><p id=invalid></p><p id=missing></p><p id=query></p></section>",
+    );
     let element = |name: &str| {
         tree.select(&Selector::parse(&format!("#{name}")).unwrap())
             .next()

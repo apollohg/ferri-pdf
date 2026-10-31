@@ -846,7 +846,7 @@ mod tests {
 
     #[test]
     fn independent_counter_scans_share_the_selection_work_limit() {
-        let document = crate::dom::DocumentTree::parse("<p>Counter scans</p>").unwrap();
+        let document = crate::dom::DocumentTree::parse("<p>Counter scans</p>");
         let target = PageStyleTarget {
             element: document.root_element().id(),
             pseudo: None,

@@ -92,7 +92,7 @@ mod tests {
              <meta name=subject content='Topic'><meta name=description content='Ignored'>\
              <meta name=generator content=''><meta name=generator content='Tool 2'></head>\
              <body><svg><title>Not the document title</title></svg></body></html>",
-        ).expect("parse test HTML");
+        );
         assert_eq!(
             DocumentMetadata::from_html(&html),
             DocumentMetadata {
@@ -110,8 +110,7 @@ mod tests {
     fn svg_titles_and_empty_values_give_no_metadata() {
         let html = DocumentTree::parse(
             "<html lang=''><title> </title><body><svg><title>Drawing</title></svg></body></html>",
-        )
-        .expect("parse test HTML");
+        );
         assert_eq!(
             DocumentMetadata::from_html(&html),
             DocumentMetadata::default()

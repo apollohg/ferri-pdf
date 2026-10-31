@@ -23,7 +23,7 @@ fn serialized_within(
     html: &str,
     work: &crate::layout::work::Budget,
 ) -> Result<SerializedSvg, DocumentError> {
-    let tree = DocumentTree::parse(html).expect("parse test HTML");
+    let tree = DocumentTree::parse(html);
     let sheet = Stylesheet::parse(&[StylesheetSource {
         text: css.into(),
         base: Default::default(),
@@ -469,7 +469,7 @@ fn sprites_in_other_svg_elements_and_nested_uses_get_instances_and_cycles_render
                 <g id=loop><use id=back href='#loop'/></g></svg>\
                 <p style='color:rgb(10,20,30)'><svg><use id=first href='#icon'/><use id=cycle href='#loop'/>\
                 <use id=missing href='#nowhere'/></svg></p>";
-    let tree = DocumentTree::parse(html).expect("parse");
+    let tree = DocumentTree::parse(html);
     let selector = Selector::parse("svg").unwrap();
     let second = tree.select(&selector).nth(1).unwrap();
     let sheet = Stylesheet::parse(&[]).unwrap();

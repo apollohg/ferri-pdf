@@ -1,7 +1,8 @@
 //! HTML and CSS to PDF, implemented in Rust.
 //!
 //! The compatibility corpus is executable with `python3 tests/oracle/run.py`.
-//! Unsupported formatting returns an error rather than an inaccurate PDF.
+//! Input never makes rendering fail: what the engine cannot render as specified degrades as
+//! the specifications' error handling says, and is reported in [`RenderOutput::diagnostics`].
 //!
 //! ```
 //! use ferri_pdf::{render_html, RenderOptions};
@@ -120,8 +121,6 @@ pub enum Error {
         first: usize,
         second: usize,
     },
-    #[error("HTML: {0}")]
-    Html(#[source] DocumentError),
     #[error("image: {0}")]
     Image(#[from] ImageError),
     #[error("resource error: {0}")]
@@ -234,7 +233,6 @@ fn prepare_document(
     resolver: &dyn ResourceResolver,
 ) -> Result<(StyledDocument, LayoutTrace), Error> {
     let document = document.map_err(|error| match error {
-        error @ DocumentError::Tree(_) => Error::Html(error),
         DocumentError::Style(error) => Error::Css(error),
         DocumentError::Resource(error) => Error::Css(StyleError::Resource(error)),
         DocumentError::Image(error) => Error::Image(error),
