@@ -39,10 +39,12 @@ pub(crate) enum Work {
     /// A style rule whose selectors are tried against an element or one of its
     /// pseudo-elements.
     RuleCandidate,
+    /// A pseudo-element whose style computes.
+    PseudoStyle,
 }
 
 #[cfg(test)]
-const KINDS: usize = 17;
+const KINDS: usize = 18;
 
 #[cfg(test)]
 thread_local! {

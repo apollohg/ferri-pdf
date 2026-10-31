@@ -1595,7 +1595,15 @@ impl Stylesheet {
         resolver: &dyn ResourceResolver,
     ) -> Result<Option<(Style, crate::style::GeneratedContent)>, StyleError> {
         let parent = parent.canonical();
-        let (seed, original) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
+        let (original, _) =
+            self.rule_winners(element, Some(pseudo), &parent.containers, resolver)?;
+        // Without a declaration, `content` is `normal`, which for these pseudo-elements
+        // computes to `none`: they generate no box (CSS Content 3 §2).
+        if original.is_empty() {
+            return Ok(None);
+        }
+        crate::work::count(crate::work::Work::PseudoStyle, 1);
+        let seed = self.pseudo_seed(element, parent, pseudo);
         let (mut style, mut winners) = crate::style::resolution::resolve_values(
             self,
             seed.clone(),
@@ -1693,6 +1701,7 @@ impl Stylesheet {
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
         let parent = parent.canonical();
+        crate::work::count(crate::work::Work::PseudoStyle, 1);
         let (style, winners) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
         let (mut style, mut winners) = crate::style::resolution::resolve_values(
             self,
@@ -1731,6 +1740,7 @@ impl Stylesheet {
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
         let parent = parent.canonical();
+        crate::work::count(crate::work::Work::PseudoStyle, 1);
         let (style, winners) = self.prepare_pseudo(element, parent, pseudo, resolver)?;
         let (mut style, mut winners) = crate::style::resolution::resolve_values(
             self,
@@ -1778,6 +1788,16 @@ impl Stylesheet {
     ) -> Result<(Style, Cascaded), StyleError> {
         let (winners, _) =
             self.rule_winners(element, Some(pseudo), &parent.containers, resolver)?;
+        Ok((self.pseudo_seed(element, parent, pseudo), winners))
+    }
+
+    /// The style a pseudo-element of `element` starts from before its cascaded values apply.
+    fn pseudo_seed(
+        &self,
+        element: Element<'_>,
+        parent: &Style,
+        pseudo: crate::style::PseudoElement,
+    ) -> Style {
         let mut style = parent.anonymous(Display::Inline);
         style.grid.parent_justify_items = parent.grid.default_justify();
         style.element_font_namespace = self.font_namespace(Some(element.tree_scope()));
@@ -1790,7 +1810,7 @@ impl Stylesheet {
             || (parent.display == Display::Contents && parent.item_parent);
         style.math_parent = matches!(parent.display, Display::InlineMath | Display::BlockMath);
         style.inlinifying_parent = parent.inlinifies_children();
-        Ok((style, winners))
+        style
     }
 
     pub(super) fn generated(

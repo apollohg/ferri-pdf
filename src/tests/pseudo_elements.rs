@@ -41,6 +41,33 @@ fn run<'a>(runs: &'a [(String, [u8; 3], f32, f32)], text: &str) -> &'a (String, 
 }
 
 #[test]
+fn only_pseudo_elements_a_rule_targets_compute_styles() {
+    // A ::before or ::after no rule matches has `content: normal`, which generates no box,
+    // so its style is never needed; a list item's ::marker is generated without any rule.
+    for paragraphs in [4, 8] {
+        let body = format!(
+            "<p class=marked>Marked</p>{}<ol><li>Item</li></ol>",
+            "<p>Plain</p>".repeat(paragraphs)
+        );
+        let (trace, styles) = crate::work::measured(crate::work::Work::PseudoStyle, || {
+            trace("p.marked::before{content:'+ ';color:blue}", &body)
+        });
+        let runs = runs(&trace);
+        assert_eq!(
+            run(&runs, "+ ").1,
+            BLUE,
+            "the targeted ::before renders: {runs:#?}"
+        );
+        run(&runs, "1. ");
+        assert_eq!(
+            styles, 2,
+            "with {paragraphs} unmarked paragraphs, only the marked paragraph's ::before and \
+             the list item's ::marker compute styles"
+        );
+    }
+}
+
+#[test]
 fn marker_rules_style_the_marker_text_and_not_the_list_item() {
     let trace = trace(
         "li{color:blue}li::marker{color:red;font-size:20pt}",
