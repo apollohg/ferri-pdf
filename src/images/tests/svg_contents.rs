@@ -2023,3 +2023,31 @@ fn ellipsized_svg_text_hides_its_overflow_in_linear_time() {
         "CSS Overflow 4 §4.1: the words that fit the line then an ellipsis show, got {shown:?}"
     );
 }
+
+#[test]
+fn svg_declarations_without_presentation_values_compute_as_unset_and_are_reported() {
+    let mut cache = ImageCache::default();
+    let image = cache
+        .inline_svg(
+            format!(
+                "{SVG_OPEN}<text x='0' y='20' style='text-transform:toggle(uppercase, none)'>AB</text></svg>"
+            ),
+            &ResourceBase::default(),
+            &FileResolver::default(),
+        )
+        .expect("a toggle() in SVG content renders rather than failing");
+    assert!(
+        matches!(image.as_ref(), Image::Svg(_)),
+        "the SVG renders with the declaration unset"
+    );
+    let diagnostics = cache.take_limited();
+    assert!(
+        diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            crate::document::DocumentDiagnostic::Degraded(
+                crate::style::Degradation::InvalidAtComputedValueTime { declaration, reason }
+            ) if declaration == "text-transform" && reason == crate::images::SVG_UNSET_VALUE
+        )),
+        "the unset declaration is reported: {diagnostics:?}"
+    );
+}

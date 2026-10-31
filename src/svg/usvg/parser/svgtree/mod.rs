@@ -108,6 +108,8 @@ pub(crate) struct TreeLimits {
     pub(crate) flattened: bool,
     /// Content past the node limit was omitted.
     pub(crate) truncated: bool,
+    /// The first property whose value has no SVG presentation value, which computed as unset.
+    pub(crate) unset: Option<&'static str>,
 }
 
 /// An SVG tree container.

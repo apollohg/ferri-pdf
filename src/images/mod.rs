@@ -381,6 +381,7 @@ const OMITTED_SVG_NODES: &str = "the content after them is left out";
 pub(crate) const SVG_REFERENCE_RESOURCE: &str = "SVG reference nesting";
 const OMITTED_SVG_REFERENCES: &str =
     "resources referenced deeper are left out as invalid references are";
+pub(crate) const SVG_UNSET_VALUE: &str = "the value has no SVG presentation value";
 
 #[derive(Debug, thiserror::Error)]
 #[error("image {reference} is unavailable: {error}")]
@@ -646,6 +647,14 @@ impl ImageCache {
                     }
                 },
             ));
+        self.limited.extend(limits.unset.map(|property| {
+            crate::document::DocumentDiagnostic::Degraded(
+                crate::style::Degradation::InvalidAtComputedValueTime {
+                    declaration: property.to_owned(),
+                    reason: SVG_UNSET_VALUE.to_owned(),
+                },
+            )
+        }));
     }
     pub(crate) fn take_limited(&mut self) -> Vec<crate::document::DocumentDiagnostic> {
         std::mem::take(&mut self.limited)

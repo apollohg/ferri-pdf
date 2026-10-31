@@ -184,6 +184,7 @@ impl Document<'_> {
     fn append_document(&mut self, other: &Document<'_>, local: &str) {
         self.limits.flattened |= other.limits.flattened;
         self.limits.truncated |= other.limits.truncated;
+        self.limits.unset = self.limits.unset.or(other.limits.unset);
         let Some((root, _)) = other.nodes[0].children else {
             return;
         };

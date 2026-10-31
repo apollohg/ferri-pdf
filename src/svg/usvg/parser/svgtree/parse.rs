@@ -647,6 +647,16 @@ pub(crate) fn parse_svg_element<'input>(
             && crate::style::svg_values::presentation_property(tag_name.to_str(), name).is_some()
     };
     let mut declared: HashMap<&'static str, (String, bool)> = HashMap::new();
+    // The first longhand whose value has no SVG presentation value, which computes as unset.
+    let unset: std::cell::Cell<Option<&'static str>> = std::cell::Cell::new(None);
+    let expanded = |name: &str, source: &str| {
+        crate::style::svg_cascade::expand(name, source).map(|expansion| {
+            if unset.get().is_none() {
+                unset.set(expansion.unset);
+            }
+            expansion.longhands
+        })
+    };
     let mut write_declaration = |declaration: &Declaration,
                                  override_presentation: bool|
      -> Result<(), crate::style::StyleError> {
@@ -671,7 +681,7 @@ pub(crate) fn parse_svg_element<'input>(
                 insert_attribute(AId::CssZoom, &value, imp, override_presentation);
             }
         } else if declaration.name == "offset" {
-            for (property, value) in crate::style::svg_cascade::expand("offset", val)? {
+            for (property, value) in expanded("offset", val)? {
                 if let Some(aid) = AId::from_str(property) {
                     insert_attribute(aid, &value, imp, override_presentation);
                 }
@@ -682,7 +692,7 @@ pub(crate) fn parse_svg_element<'input>(
             "scale" => Some(AId::CssScale),
             _ => None,
         } {
-            if !crate::style::svg_cascade::expand(&declaration.name, val)?.is_empty() {
+            if !expanded(&declaration.name, val)?.is_empty() {
                 insert_attribute(aid, val, imp, override_presentation);
             }
         } else if declaration.name == "marker" {
@@ -692,7 +702,7 @@ pub(crate) fn parse_svg_element<'input>(
         } else if declaration.name == "font" {
             if crate::style::svg_cascade::WideKeyword::parse(val).is_some() {
                 insert_attribute(AId::FontVariant, val, imp, override_presentation);
-                for (property, value) in crate::style::svg_cascade::expand("font", val)? {
+                for (property, value) in expanded("font", val)? {
                     let aid = if property == "font-width" {
                         Some(AId::FontStretch)
                     } else {
@@ -773,7 +783,7 @@ pub(crate) fn parse_svg_element<'input>(
             .filter(|&aid| aid.is_presentation() || dimension(aid, &declaration.name))
         {
             if (dimension(aid, &declaration.name) || declaration.name.starts_with("offset-"))
-                && crate::style::svg_cascade::expand(&declaration.name, val)?.is_empty()
+                && expanded(&declaration.name, val)?.is_empty()
             {
                 return Ok(());
             }
@@ -781,7 +791,7 @@ pub(crate) fn parse_svg_element<'input>(
         } else {
             // Other properties reach the text's computed style; an important declaration
             // keeps its place against later normal ones.
-            for (longhand, value) in crate::style::svg_cascade::expand(&declaration.name, val)? {
+            for (longhand, value) in expanded(&declaration.name, val)? {
                 if declared
                     .get(longhand)
                     .is_none_or(|(_, important)| imp || !important)
@@ -800,6 +810,9 @@ pub(crate) fn parse_svg_element<'input>(
         });
     if let Err(error) = styled {
         doc.style_error.get_or_insert(std::sync::Arc::new(error));
+    }
+    if doc.limits.unset.is_none() {
+        doc.limits.unset = unset.get();
     }
     if pseudo == Some(PseudoElement::FirstLine) {
         doc.append_attribute(

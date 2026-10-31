@@ -296,28 +296,33 @@ pub(crate) fn computed_style(
     Ok(style)
 }
 
-pub(crate) fn expand(name: &str, source: &str) -> Result<Vec<(&'static str, String)>, StyleError> {
+/// A declaration's longhands with their values, and the first longhand whose value, such as
+/// a `toggle()`, has no SVG presentation value: it is invalid at computed-value time and its
+/// value `unset`.
+#[derive(Default)]
+pub(crate) struct Expansion {
+    pub(crate) longhands: Vec<(&'static str, String)>,
+    pub(crate) unset: Option<&'static str>,
+}
+
+pub(crate) fn expand(name: &str, source: &str) -> Result<Expansion, StyleError> {
     use declaration::Specified;
     let Some(property) = Property::from_name(name) else {
-        return Ok(Vec::new());
+        return Ok(Expansion::default());
     };
-    declaration::expand(property, source)?
-        .unwrap_or_default()
-        .into_iter()
-        .map(|(property, value)| {
-            let value = match value {
-                Specified::Value(value) => value.to_string(),
-                Specified::Wide(keyword) => keyword.name().to_owned(),
-                _ => {
-                    return Err(StyleError::Unsupported(format!(
-                        "SVG declaration {}",
-                        property.name()
-                    )));
-                }
-            };
-            Ok((property.name(), value))
-        })
-        .collect()
+    let mut expansion = Expansion::default();
+    for (property, value) in declaration::expand(property, source)?.unwrap_or_default() {
+        let value = match value {
+            Specified::Value(value) => value.to_string(),
+            Specified::Wide(keyword) => keyword.name().to_owned(),
+            Specified::Toggle(_) | Specified::Unexpanded(..) | Specified::FlowRelative(..) => {
+                expansion.unset.get_or_insert(property.name());
+                WideKeyword::Unset.name().to_owned()
+            }
+        };
+        expansion.longhands.push((property.name(), value));
+    }
+    Ok(expansion)
 }
 
 pub(crate) fn initial(name: &str) -> Option<String> {
