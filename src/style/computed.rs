@@ -917,6 +917,14 @@ pub(super) const FONT_ADJUSTMENT: [Property; 3] = [
 pub(super) use crate::style::cascade::cascade;
 use crate::style::cascade::{Cascaded, DeclarationContext, Origin, Winners, insert};
 
+/// The seed style and cascaded values a box's position options compute from again, kept only
+/// where a cascaded `position` can take the box out of flow: no other box has options.
+fn option_basis(seed: &Style, cascaded: &Cascaded) -> Option<(Style, Cascaded)> {
+    cascaded
+        .declares(Property::Position)
+        .then(|| (seed.clone(), cascaded.clone()))
+}
+
 impl Stylesheet {
     #[cfg(test)]
     pub(crate) fn computed(
@@ -972,10 +980,10 @@ impl Stylesheet {
     ) -> Result<Style, StyleError> {
         let parent = parent.canonical();
         let (seed, cascaded) = self.prepare_element(element, parent, resolver)?;
-        let original = cascaded.clone();
+        let basis = option_basis(&seed, &cascaded);
         let (style, winners) = crate::style::resolution::resolve_values(
             self,
-            seed.clone(),
+            seed,
             parent,
             cascaded,
             resolver,
@@ -996,13 +1004,14 @@ impl Stylesheet {
         self.position_options(
             (element, None, None),
             parent,
-            &seed,
-            &original,
+            basis.as_ref().map(|(seed, original)| (seed, original)),
             style,
             resolver,
         )
     }
 
+    /// `basis` is what the style of `target` computed from, which its position options
+    /// compute from again; `None` where it cannot be out of flow.
     fn position_options(
         &self,
         target: (
@@ -1011,18 +1020,19 @@ impl Stylesheet {
             Option<usize>,
         ),
         parent: &Style,
-        seed: &Style,
-        original: &Cascaded,
+        basis: Option<(&Style, &Cascaded)>,
         mut style: Style,
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
         let (element, pseudo, page) = target;
-        if style.position.is_out_of_flow() && !style.anchor.fallbacks.is_empty() {
-            style = self.fallback_options(target, parent, seed, original, &style, resolver)?;
-        }
-        if page.is_none() && style.position.is_out_of_flow() && style.anchor.anchors() {
-            style.anchor.pages =
-                self.page_variants((element, pseudo), parent, seed, original, resolver)?;
+        if let Some((seed, original)) = basis {
+            if style.position.is_out_of_flow() && !style.anchor.fallbacks.is_empty() {
+                style = self.fallback_options(target, parent, seed, original, &style, resolver)?;
+            }
+            if page.is_none() && style.position.is_out_of_flow() && style.anchor.anchors() {
+                style.anchor.pages =
+                    self.page_variants((element, pseudo), parent, seed, original, resolver)?;
+            }
         }
         style.origin = StyleOrigin::of(element, pseudo, parent);
         for option in Arc::make_mut(&mut style.anchor.options) {
@@ -1213,8 +1223,7 @@ impl Stylesheet {
             let page_style = self.position_options(
                 (element, pseudo, Some(page)),
                 parent,
-                seed,
-                original,
+                Some((seed, original)),
                 page_style,
                 resolver,
             )?;
@@ -1604,11 +1613,12 @@ impl Stylesheet {
         }
         crate::work::count(crate::work::Work::PseudoStyle, 1);
         let seed = self.pseudo_seed(element, parent, pseudo);
+        let basis = option_basis(&seed, &original);
         let (mut style, mut winners) = crate::style::resolution::resolve_values(
             self,
-            seed.clone(),
+            seed,
             parent,
-            original.clone(),
+            original,
             resolver,
             &crate::style::resolution::ValueContext {
                 tree: Tree::Element(element),
@@ -1656,8 +1666,7 @@ impl Stylesheet {
         let style = self.position_options(
             (element, Some(pseudo), None),
             parent,
-            &seed,
-            &original,
+            basis.as_ref().map(|(seed, original)| (seed, original)),
             style,
             resolver,
         )?;

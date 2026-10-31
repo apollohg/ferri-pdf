@@ -321,6 +321,10 @@ impl Cascaded {
     pub(super) fn is_empty(&self) -> bool {
         self.properties.is_empty() && self.custom.is_empty()
     }
+    /// Whether a declaration of `property`, or of a shorthand of it, cascaded.
+    pub(super) fn declares(&self, property: Property) -> bool {
+        self.properties.contains_key(&property)
+    }
     pub(super) fn extend(&mut self, other: Self) {
         for (property, values) in other.properties {
             self.properties.entry(property).or_default().extend(values);
