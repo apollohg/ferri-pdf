@@ -184,6 +184,10 @@ http = ["dep:ureq", "dep:rustls-rustcrypto"]
 name = "remote"
 required-features = ["http"]
 
+[[bench]]
+name = "render"
+harness = false
+
 [build-dependencies]
 serde_json.workspace = true
 thiserror.workspace = true
