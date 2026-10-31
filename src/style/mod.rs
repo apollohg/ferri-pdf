@@ -193,11 +193,6 @@ pub(crate) use {
 
 #[derive(Debug, thiserror::Error)]
 pub enum StyleError {
-    #[error("invalid target reference {reference:?}: {reason}")]
-    TargetReference {
-        reference: String,
-        reason: TargetReferenceError,
-    },
     #[error("CSS {resource} exceeds {limit} at {location:?}")]
     StylesheetLimit {
         resource: &'static str,

@@ -221,7 +221,7 @@ impl CounterRequest {
     }
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq, thiserror::Error)]
-pub enum TargetReferenceError {
+pub(crate) enum TargetReferenceError {
     #[error("invalid URL")]
     InvalidUrl,
     #[error("reference points outside the current document")]

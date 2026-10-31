@@ -123,6 +123,7 @@ pub(crate) struct GeneratedBindings {
     running: Rc<RefCell<HashMap<PageStyleTarget, ShownCounters>>>,
     /// The page counters content shows when it formats a copy of a running element.
     copy: Option<PageNumbers>,
+    degradations: Rc<crate::style::Degradations>,
 }
 impl GeneratedBindings {
     pub(crate) fn bind<'a>(
@@ -192,7 +193,17 @@ impl GeneratedBindings {
             bound = std::borrow::Cow::Owned(content.bind_targets(
                 MAX_INLINE_TEXT_BYTES,
                 &mut |request| {
-                    let owner = self.index.target(&request.reference)?;
+                    let owner = match self.index.target(&request.reference) {
+                        Ok(owner) => owner,
+                        Err(error) => {
+                            self.degradations
+                                .record(crate::style::Degradation::UnresolvedTarget {
+                                    reference: request.reference.to_string(),
+                                    reason: error.to_string(),
+                                });
+                            return Ok(String::new());
+                        }
+                    };
                     self.requests.borrow_mut().insert(request.clone(), owner);
                     Ok(self
                         .values
@@ -225,7 +236,11 @@ pub(crate) struct GeneratedPass {
     page_initials: Vec<(usize, std::sync::Arc<str>, i128)>,
 }
 impl GeneratedPass {
-    pub(crate) fn new(index: Rc<FragmentIndex>, values: GeneratedValues) -> Self {
+    pub(crate) fn new(
+        index: Rc<FragmentIndex>,
+        values: GeneratedValues,
+        degradations: Rc<crate::style::Degradations>,
+    ) -> Self {
         Self {
             bindings: GeneratedBindings {
                 index,
@@ -235,6 +250,7 @@ impl GeneratedPass {
                 requests: Rc::default(),
                 running: Rc::default(),
                 copy: None,
+                degradations,
             },
             elements: HashMap::new(),
             page_initials: Vec::new(),

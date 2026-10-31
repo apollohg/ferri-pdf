@@ -272,8 +272,9 @@ fn target_reference_in_an_explicit_bookmark_label_resolves() {
 }
 
 #[test]
-fn target_reference_errors_retain_the_reason_without_loading_external_documents() {
-    use crate::style::{StyleError, TargetReferenceError};
+fn unresolved_target_references_render_empty_and_retain_the_reason_without_loading_external_documents()
+ {
+    use crate::style::{Degradation, TargetReferenceError};
     for (reference, expected) in [
         ("#absent", TargetReferenceError::MissingId),
         ("#", TargetReferenceError::MissingFragment),
@@ -283,16 +284,27 @@ fn target_reference_errors_retain_the_reason_without_loading_external_documents(
         ),
     ] {
         let html = format!(
-            "<style>p::after{{content:target-text('{reference}')}}</style><p>Reference</p>"
+            "<style>p::after{{content:'[' target-text('{reference}') ']'}}</style><p>Reference</p>"
         );
-        match render_html(&html, &local_options()) {
-            Err(crate::Error::Css(StyleError::TargetReference { reason, .. })) => assert_eq!(
-                reason, expected,
-                "wrong failure classification for {reference}"
-            ),
-            Err(error) => panic!("unexpected failure for {reference}: {error}"),
-            Ok(_) => panic!("invalid target {reference} produced a PDF"),
-        }
+        let output = render_html(&html, &local_options()).unwrap_or_else(|error| {
+            panic!("an unresolved target {reference} must render: {error}")
+        });
+        assert!(
+            output.diagnostics.iter().any(|diagnostic| matches!(
+                diagnostic,
+                crate::RenderDiagnostic::Degraded(Degradation::UnresolvedTarget {
+                    reference: found,
+                    reason,
+                }) if found == reference && *reason == expected.to_string()
+            )),
+            "wrong classification for {reference}: {:?}",
+            output.diagnostics
+        );
+        assert_eq!(
+            output.layout.unwrap().pages[0][0].text,
+            "Reference[]",
+            "the unresolved target {reference} renders as empty text"
+        );
     }
 }
 

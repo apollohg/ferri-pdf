@@ -75,6 +75,10 @@ pub enum Degradation {
         sources: Vec<SourceLocation>,
         dependencies: Vec<String>,
     },
+    /// A `target-counter()`, `target-counters()` or `target-text()` reference that identifies
+    /// no element of the document: the target's value is empty.
+    #[error("target reference {reference:?} is unresolved ({reason}) and renders as empty text")]
+    UnresolvedTarget { reference: String, reason: String },
     /// A resource limit that bounds pathological input was reached.
     #[error("{reason}; {consequence}")]
     Limit {

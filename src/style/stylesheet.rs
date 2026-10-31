@@ -1016,6 +1016,11 @@ impl Stylesheet {
         self.degradations.record(degradation);
     }
 
+    /// Where computing styles and content reports what it renders without.
+    pub(crate) fn degradations(&self) -> &std::rc::Rc<crate::style::Degradations> {
+        &self.degradations
+    }
+
     /// The degradations recorded since the last call.
     pub(crate) fn take_degradations(&self) -> Vec<crate::style::Degradation> {
         self.degradations.take()

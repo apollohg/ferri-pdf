@@ -4323,8 +4323,11 @@ fn format(
     (values, first_line_copies): (crate::document::generated::GeneratedValues, bool),
 ) -> Result<Formatted, DocumentError> {
     sheet.anchor_nodes.borrow_mut().clear();
-    let generated =
-        crate::document::generated::GeneratedPass::new(navigation.targets.clone(), values);
+    let generated = crate::document::generated::GeneratedPass::new(
+        navigation.targets.clone(),
+        values,
+        sheet.degradations().clone(),
+    );
     let mut style = root_style(input.html, sheet, resolver, &generated)?;
     input.images.borrow_mut().adopt_palettes(&sheet.fonts);
     let sheet = &*sheet;

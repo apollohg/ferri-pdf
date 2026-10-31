@@ -137,25 +137,25 @@ impl FragmentIndex {
     pub(crate) fn element(&self, id: &str) -> Option<ElementId> {
         self.ids.get(id).copied()
     }
-    pub(crate) fn target(&self, reference: &str) -> Result<ElementId, crate::style::StyleError> {
-        use crate::style::{StyleError, TargetReferenceError};
-        let invalid = |reason| StyleError::TargetReference {
-            reference: reference.to_owned(),
-            reason,
-        };
+    /// The element a target reference identifies, or why it identifies none.
+    pub(crate) fn target(
+        &self,
+        reference: &str,
+    ) -> Result<ElementId, crate::style::TargetReferenceError> {
+        use crate::style::TargetReferenceError;
         let url = self
             .base
             .resolve(reference)
-            .map_err(|_| invalid(TargetReferenceError::InvalidUrl))?;
+            .map_err(|_| TargetReferenceError::InvalidUrl)?;
         if without_fragment(url.clone()) != self.document {
-            return Err(invalid(TargetReferenceError::ExternalDocument));
+            return Err(TargetReferenceError::ExternalDocument);
         }
         let fragment = url
             .fragment()
             .filter(|fragment| !fragment.is_empty())
-            .ok_or_else(|| invalid(TargetReferenceError::MissingFragment))?;
+            .ok_or(TargetReferenceError::MissingFragment)?;
         fragment_match(fragment, |name| self.ids.get(name).copied())
-            .ok_or_else(|| invalid(TargetReferenceError::MissingId))
+            .ok_or(TargetReferenceError::MissingId)
     }
 }
 
@@ -512,7 +512,7 @@ fn label(
 #[cfg(test)]
 mod target_tests {
     use super::*;
-    use crate::style::{StyleError, TargetReferenceError};
+    use crate::style::TargetReferenceError;
 
     #[test]
     fn target_lookup_reuses_first_id_ownership_without_link_only_fallbacks() {
@@ -548,16 +548,11 @@ mod target_tests {
             ),
             ("http://[", TargetReferenceError::InvalidUrl),
         ] {
-            match index.target(reference) {
-                Err(StyleError::TargetReference {
-                    reference: actual,
-                    reason,
-                }) => {
-                    assert_eq!(actual, reference);
-                    assert_eq!(reason, expected, "target error for {reference:?}");
-                }
-                result => panic!("expected {expected:?} for {reference:?}, got {result:?}"),
-            }
+            assert_eq!(
+                index.target(reference),
+                Err(expected),
+                "target error for {reference:?}"
+            );
         }
     }
 }
