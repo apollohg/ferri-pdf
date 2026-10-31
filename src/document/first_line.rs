@@ -250,70 +250,84 @@ impl Restyle<'_> {
     /// The style the box of `origin` takes on the first line; `None` for a box outside the
     /// block, or one whose inheritance through `::first-line` is undefined: `::marker`
     /// (CSS Pseudo-Elements 4 §4.2, issue 4506).
+    // Walks the boxes up to one whose style is known, then styles them down again, without
+    // recursion, as boxes nest as deeply as the formatting depth allows.
     fn origin(&mut self, origin: &StyleOrigin) -> Result<Option<Style>, DocumentError> {
-        if origin.same(self.block) {
-            return Ok(Some(self.root.clone()));
-        }
-        let Some(node) = origin.node() else {
-            return Ok(None);
-        };
-        let key = std::sync::Arc::as_ptr(node);
-        if let Some(style) = self.styles.get(&key) {
-            return Ok(style.clone());
-        }
-        let style = match self.origin(&node.parent)? {
-            Some(parent) => {
-                let element = element(self.document, node.element);
-                match node.pseudo {
-                    None => Some(self.sheet.computed_with_resolver(
-                        element,
-                        &parent,
-                        self.resolver,
-                    )?),
-                    Some(
-                        pseudo @ (PseudoElement::Before
-                        | PseudoElement::After
-                        | PseudoElement::FootnoteCall
-                        | PseudoElement::FootnoteMarker
-                        | PseudoElement::Checkmark
-                        | PseudoElement::PickerIcon),
-                    ) => self
-                        .sheet
-                        .pseudo_with_resolver(element, &parent, pseudo, self.resolver)?
-                        .map(|(style, _)| style),
-                    Some(
-                        pseudo @ (PseudoElement::FirstLetter
-                        | PseudoElement::FirstLetterPrefix
-                        | PseudoElement::FirstLetterSuffix),
-                    ) => Some(crate::document::formatting::inline_pseudo_style(
-                        self.sheet.typographic_pseudo_with_resolver(
-                            element,
-                            &parent,
-                            pseudo,
-                            self.resolver,
-                        )?,
-                    )),
-                    // Control internals are atomic inlines, which no first line reaches, and
-                    // it reaches `::details-content` as its backing element. The scroll
-                    // marker pseudo-elements inherit from originating elements outside the
-                    // line their boxes may lie on.
-                    Some(
-                        PseudoElement::ScrollMarkerGroup
-                        | PseudoElement::ScrollMarker
-                        | PseudoElement::Marker
-                        | PseudoElement::FirstLine
-                        | PseudoElement::Placeholder
-                        | PseudoElement::FileSelectorButton
-                        | PseudoElement::DetailsContent
-                        | PseudoElement::Absent(_),
-                    ) => None,
-                }
+        let mut unstyled = Vec::new();
+        let mut current = origin;
+        let mut style = loop {
+            if current.same(self.block) {
+                break Some(self.root.clone());
             }
-            None => None,
+            let Some(node) = current.node() else {
+                break None;
+            };
+            if let Some(style) = self.styles.get(&std::sync::Arc::as_ptr(node)) {
+                break style.clone();
+            }
+            unstyled.push(node);
+            current = &node.parent;
         };
-        let style = style.map(|style| style.used());
-        self.styles.insert(key, style.clone());
+        for node in unstyled.into_iter().rev() {
+            style = match style {
+                Some(parent) => self.node_style(node, &parent)?.map(|style| style.used()),
+                None => None,
+            };
+            self.styles
+                .insert(std::sync::Arc::as_ptr(node), style.clone());
+        }
         Ok(style)
+    }
+    /// The style of the box of `node` on the first line, inside `parent` there.
+    fn node_style(
+        &self,
+        node: &OriginNode,
+        parent: &Style,
+    ) -> Result<Option<Style>, DocumentError> {
+        let element = element(self.document, node.element);
+        Ok(match node.pseudo {
+            None => Some(
+                self.sheet
+                    .computed_with_resolver(element, parent, self.resolver)?,
+            ),
+            Some(
+                pseudo @ (PseudoElement::Before
+                | PseudoElement::After
+                | PseudoElement::FootnoteCall
+                | PseudoElement::FootnoteMarker
+                | PseudoElement::Checkmark
+                | PseudoElement::PickerIcon),
+            ) => self
+                .sheet
+                .pseudo_with_resolver(element, parent, pseudo, self.resolver)?
+                .map(|(style, _)| style),
+            Some(
+                pseudo @ (PseudoElement::FirstLetter
+                | PseudoElement::FirstLetterPrefix
+                | PseudoElement::FirstLetterSuffix),
+            ) => Some(crate::document::formatting::inline_pseudo_style(
+                self.sheet.typographic_pseudo_with_resolver(
+                    element,
+                    parent,
+                    pseudo,
+                    self.resolver,
+                )?,
+            )),
+            // Control internals are atomic inlines, which no first line reaches, and
+            // it reaches `::details-content` as its backing element. The scroll
+            // marker pseudo-elements inherit from originating elements outside the
+            // line their boxes may lie on.
+            Some(
+                PseudoElement::ScrollMarkerGroup
+                | PseudoElement::ScrollMarker
+                | PseudoElement::Marker
+                | PseudoElement::FirstLine
+                | PseudoElement::Placeholder
+                | PseudoElement::FileSelectorButton
+                | PseudoElement::DetailsContent
+                | PseudoElement::Absent(_),
+            ) => None,
+        })
     }
 }
 
