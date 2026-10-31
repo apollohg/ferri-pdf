@@ -482,7 +482,7 @@ impl BoxMetrics {
             .face(font, style)?
             .ok_or(TextError::NoFontCandidates)?;
         let vertical = style.vertical_typographic_mode();
-        let metrics = instance.metrics();
+        let metrics = instance.metrics;
         Ok(Self::of_face(
             &if vertical {
                 metrics.upright(&instance.face)

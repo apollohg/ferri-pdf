@@ -790,14 +790,10 @@ struct ShapingInstance<'a> {
     variations: Arc<[FontVariation]>,
     synthesis: FontSynthesis,
     oblique_skew: f32,
-    metric_overrides: crate::fonts::MetricOverrides,
+    /// The face's metrics, with the `@font-face` overrides.
+    metrics: crate::fonts::FaceMetrics,
     /// Used font size per computed size, from `size-adjust` and `font-size-adjust`.
     scale: f32,
-}
-impl ShapingInstance<'_> {
-    fn metrics(&self) -> crate::fonts::FaceMetrics {
-        crate::fonts::FaceMetrics::of(&self.face).overridden(self.metric_overrides)
-    }
 }
 impl ShapingInstance<'_> {
     fn used_size(&self, style: &Style) -> f32 {
@@ -1044,12 +1040,14 @@ impl<'a> TextContext<'a> {
             .sized_instance(id, selection, adjustments, style.size, self.resolver)?
             .map(|(instance, used)| {
                 let (synthesis, oblique_skew) = instance.synthesis(selection);
+                let face = Face::from_face(instance.face);
                 Arc::new(ShapingInstance {
-                    face: Face::from_face(instance.face),
+                    metrics: crate::fonts::FaceMetrics::of(&face)
+                        .overridden(instance.metric_overrides),
+                    face,
                     variations: instance.variations,
                     synthesis,
                     oblique_skew,
-                    metric_overrides: instance.metric_overrides,
                     scale: if style.size == 0.0 {
                         1.0
                     } else {
@@ -1157,7 +1155,7 @@ impl<'a> TextContext<'a> {
                 font_id: id,
                 synthesis: instance.synthesis,
                 oblique_skew: instance.oblique_skew,
-                metric_overrides: instance.metric_overrides,
+                metrics: instance.metrics,
                 variations: &instance.variations,
                 narrow_space_advance,
                 missing,
