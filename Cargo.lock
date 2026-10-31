@@ -630,7 +630,7 @@ checksum = "3296eb97d869113eaf148a6bdf01884e90b3828ad7ae2340b0f93362fc158611"
 
 [[package]]
 name = "ferri-pdf"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "base64 0.22.1",
  "brotli-decompressor",
@@ -758,7 +758,7 @@ dependencies = [
 
 [[package]]
 name = "ferri-pdf-python"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "ferri-pdf",
  "pyo3",
