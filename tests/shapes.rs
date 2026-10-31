@@ -536,12 +536,12 @@ fn element_renderings_shape_floats_by_their_alpha() {
 }
 
 #[test]
-fn shapes_whose_element_rendering_never_stands_are_a_layout_cycle() {
+fn shapes_whose_element_rendering_never_stands_keep_the_last_layout() {
     // The float's shape is the rendering of `#e`, which wraps around it: an empty shape puts
     // the inline block at the left of `#e`, which makes the shape the left half; that puts
     // the block at the right, which makes the shape the right half; that pushes the block
     // below the float, out of `#e`'s 20pt box, which empties the shape again.
-    let error = ferri_pdf::render_html(
+    let output = ferri_pdf::render_html(
         &format!(
             "<style>{PROFILE}.f{{float:left;width:100pt;height:20pt;shape-outside:element(#e)}}\
              #e{{position:relative;z-index:0;width:100pt;height:20pt;line-height:20pt}}\
@@ -550,11 +550,20 @@ fn shapes_whose_element_rendering_never_stands_are_a_layout_cycle() {
         ),
         &common::local_options(),
     )
-    .err()
-    .expect("a shape whose rendering changes on every layout has no fixed layout");
-    assert_eq!(
-        error.to_string(),
-        "layout: element() image renderings repeat without reaching a fixed layout",
-        "the cycle is reported as such: {error:?}"
+    .expect("a shape whose rendering changes on every layout keeps a completed layout");
+    assert!(
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            ferri_pdf::RenderDiagnostic::Layout(ferri_pdf::LayoutDiagnostic::Unsettled(
+                ferri_pdf::Convergence::ElementImages
+            ))
+        )),
+        "the cycle is reported as such: {:?}",
+        output.diagnostics
+    );
+    let block = common::painted_box(&output.layout.unwrap(), [255, 0, 0]);
+    assert!(
+        (block.width - 50.0).abs() < 0.01 && (block.height - 20.0).abs() < 0.01,
+        "the kept layout places the inline block once, at its size: {block:?}"
     );
 }

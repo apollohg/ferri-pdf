@@ -98,16 +98,33 @@ fn overflowing_pages_do_not_move_the_normal_flow_sibling() {
 }
 
 #[test]
-fn enormous_fixed_height_returns_a_page_limit_error_before_allocation() {
-    let error = render_html(
-        &format!("<style>{PROFILE}div{{height:1e30pt}}</style><div>Large</div>"),
+fn enormous_fixed_height_stops_at_the_page_limit_before_allocation() {
+    let output = render_html(
+        &format!("<style>{PROFILE}div{{height:1e30pt}}</style><div>Large</div><p>After</p>"),
         &local_options(),
     )
-    .err()
-    .expect("enormous specified height must be bounded");
+    .expect("enormous specified height is bounded by the page limit");
     assert!(
-        error.to_string().contains("layout exceeds"),
-        "unexpected error: {error}"
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            ferri_pdf::RenderDiagnostic::Layout(ferri_pdf::LayoutDiagnostic::PageLimit { .. })
+        )),
+        "the content past the last page is reported: {:?}",
+        output.diagnostics
+    );
+    let text: Vec<_> = output
+        .layout
+        .unwrap()
+        .pages
+        .iter()
+        .flatten()
+        .map(|line| line.text.clone())
+        .collect();
+    assert_eq!(
+        text,
+        ["Large"],
+        "the box's text is kept and the paragraph after it lies past the last page; trailing \
+         unpainted pages are not produced"
     );
 }
 

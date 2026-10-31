@@ -341,14 +341,38 @@ fn content_sized_pages_break_cycles_through_their_content() {
 
 /// A footnote area limited to half the page area its own height sizes has no settled layout.
 #[test]
-fn content_sized_pages_report_layouts_that_do_not_settle() {
-    let error = pages(
-        "@page{height:max-content;@footnote{max-height:50%}}",
-        "<p>A<span style=float:footnote>B<br>C<br>D<br>E</span></p>",
+fn content_sized_pages_keep_the_last_layout_where_they_do_not_settle() {
+    let output = render_html(
+        &format!(
+            "<style>{}body{{margin:0;font:10pt/12pt 'Liberation Mono'}}p{{margin:0}}{PAGE}\
+             @page{{height:max-content;@footnote{{max-height:50%}}}}</style>\
+             <p>A<span style=float:footnote>B<br>C<br>D<br>E</span></p>",
+            common::PROFILE
+        ),
+        &local_options(),
     )
-    .expect_err("the footnote area never fits the page it sizes");
+    .expect("the footnote area never fits the page it sizes, but a layout is kept");
     assert!(
-        error.to_string().contains("intrinsically sized pages"),
-        "{error}"
+        output.diagnostics.iter().any(|diagnostic| matches!(
+            diagnostic,
+            ferri_pdf::RenderDiagnostic::Layout(ferri_pdf::LayoutDiagnostic::Unsettled(
+                ferri_pdf::Convergence::PageSizes
+            ))
+        )),
+        "the unsettled page sizes are reported: {:?}",
+        output.diagnostics
+    );
+    let trace = output.layout.unwrap();
+    assert!(
+        trace.page_records.iter().all(|record| record
+            .geometry
+            .area
+            .iter()
+            .all(|extent| extent.is_finite() && *extent > 0.0)),
+        "every kept page has a usable area"
+    );
+    assert!(
+        trace.pages[0].iter().any(|line| line.text.starts_with('A')),
+        "the kept layout shows the call's paragraph on the first page"
     );
 }
