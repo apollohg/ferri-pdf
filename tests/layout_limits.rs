@@ -300,3 +300,21 @@ fn footnote_areas_layout_cannot_form_are_omitted_with_their_footnotes() {
         "the footnote is omitted with its area"
     );
 }
+
+#[test]
+fn root_boxes_layout_cannot_form_take_the_initial_box_geometry() {
+    let (texts, omitted) = texts_and_omitted_boxes(
+        "<!doctype html><style>*{padding:calc(1e38px * 1e38)}</style><p>text</p>",
+    );
+    assert!(
+        omitted
+            .iter()
+            .all(|reason| reason == "block geometry is not finite")
+            && !omitted.is_empty(),
+        "the boxes whose padding overflows the page are reported omitted, got {omitted:?}"
+    );
+    assert!(
+        texts.is_empty(),
+        "the root's content goes with its geometry, got {texts:?}"
+    );
+}

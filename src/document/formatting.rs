@@ -730,10 +730,12 @@ impl BlockBox {
     }
     /// Removes `target`, a box of this subtree, with the content after it in document order
     /// where `following`; whether `target` is in the subtree. Paragraphs holding `target` are
-    /// removed whole, and a subtree's root that is `target` keeps no content.
+    /// removed whole, and a subtree's root that is `target` keeps no content and takes the
+    /// initial box geometry, since its own is what layout could not form.
     pub(crate) fn omit(&mut self, target: *const BlockBox, following: bool) -> bool {
         if std::ptr::eq(self, target) {
             self.omit_content();
+            self.reset_geometry();
             return true;
         }
         for index in 0..self.children.len() {
@@ -775,6 +777,22 @@ impl BlockBox {
     }
     pub(crate) fn omit_content(&mut self) {
         self.children.clear();
+    }
+    /// Gives the box the initial sizes, margins, padding, borders and offsets.
+    fn reset_geometry(&mut self) {
+        let initial = Style::default();
+        let style = &mut *self.style;
+        style.margin = initial.margin;
+        style.padding = initial.padding;
+        style.inset = initial.inset;
+        style.width = initial.width;
+        style.min_width = initial.min_width;
+        style.max_width = initial.max_width;
+        style.height = initial.height;
+        style.min_height = initial.min_height;
+        style.max_height = initial.max_height;
+        style.decoration.borders = initial.decoration.borders;
+        self.decoration.borders = initial.decoration.borders;
     }
     /// Whether `target` is this box or a box of its subtree.
     fn holds(&self, target: *const BlockBox) -> bool {
