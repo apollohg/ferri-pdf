@@ -32,10 +32,12 @@ pub(crate) enum Work {
     /// A step of a paint order path that placing a retained lane's paints in the enclosing
     /// traversal copies.
     PlacedStep,
+    /// A run of text the shaper shapes.
+    ShapedRun,
 }
 
 #[cfg(test)]
-const KINDS: usize = 14;
+const KINDS: usize = 15;
 
 #[cfg(test)]
 thread_local! {

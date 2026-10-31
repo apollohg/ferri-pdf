@@ -1,8 +1,8 @@
 use crate::document::Paragraph;
 use crate::text::{
-    AtomicMetrics, GlyphRun, Line, Piece, TextContext, TextError, autospace::Autospace, breaking,
-    ellipsis, hanging, hyphenation, line_boxes, paragraph_bidi, ruby, shape_line, spacing,
-    spacing_trim, whitespace,
+    AtomicMetrics, GlyphRun, Line, Piece, ShapedPieces, TextContext, TextError,
+    autospace::Autospace, breaking, ellipsis, hanging, hyphenation, line_boxes, paragraph_bidi,
+    ruby, shape_line, spacing, spacing_trim, whitespace,
 };
 use std::ops::Range;
 use unicode_linebreak::{BreakClass, BreakOpportunity, break_property};
@@ -67,6 +67,7 @@ pub(crate) struct PreparedParagraph<'p, 'context, 'font> {
     emergency: Vec<usize>,
     monotone: bool,
     plans: wrapping::Plans,
+    shaped: ShapedPieces,
     clamp: Option<ParagraphClamp>,
     ruby: Option<ruby::RubyLayout<'p, 'context, 'font>>,
     /// The `::first-line` copy, which shapes and breaks the line from the paragraph's start.
@@ -143,6 +144,7 @@ impl<'p, 'context, 'font> PreparedParagraph<'p, 'context, 'font> {
                     && span.style.word_spacing.resolve(span.style.size) >= 0.0
             }),
             plans: wrapping::Plans::default(),
+            shaped: ShapedPieces::default(),
             clamp: None,
             ruby: ruby::RubyLayout::of(context, paragraph, source),
             first_line: paragraph
@@ -389,6 +391,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             breaking::context_range(&prepared.opportunities, from..to),
             paragraph,
             &prepared.traits,
+            Some(&prepared.shaped),
         )?;
         let hyphen = if visible.end == to {
             hyphenation::decorate(

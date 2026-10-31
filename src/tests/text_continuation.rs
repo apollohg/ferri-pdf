@@ -654,3 +654,73 @@ fn intrinsic_indentation_uses_zero_percentage_and_the_selected_line() {
         assert_pt(widths.max, baseline.max + max_extra);
     }
 }
+
+/// A paragraph of `words` words, every other one bold, so each line holds many spans.
+fn alternating_spans(words: usize) -> StyledDocument {
+    let body = (0..words)
+        .map(|index| {
+            if index % 2 == 0 {
+                format!("w{index:03}")
+            } else {
+                format!("<b>w{index:03}</b>")
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ");
+    document("", &format!("<p>{body}</p>"))
+}
+
+/// The runs the shaper shapes to lay `prepared`'s paragraph out at `width`, and its lines.
+fn shaped_runs(
+    prepared: &crate::text::PreparedParagraph<'_, '_, '_>,
+    width: f32,
+) -> (usize, usize) {
+    let (lines, runs) = crate::work::measured(crate::work::Work::ShapedRun, || {
+        prepared
+            .lines(prepared.start(), width, &[])
+            .unwrap()
+            .collect::<Result<Vec<_>, _>>()
+            .unwrap()
+    });
+    (runs, lines.len())
+}
+
+#[test]
+fn line_candidates_shape_each_whole_span_once() {
+    // Every candidate end of a line reshapes the line from its start; the spans before the
+    // candidate end shape alike in each, so shaping must grow with the spans, not with the
+    // spans times the candidates.
+    crate::work::assert_linear(
+        "runs shaped for one line of alternating spans",
+        64,
+        |words| {
+            let document = alternating_spans(words);
+            let resolver = FileResolver::default();
+            let context = TextContext::new(&document.styles().fonts, &resolver);
+            let prepared = context.prepare_paragraph(paragraphs(&document)[0]);
+            let (runs, lines) = shaped_runs(&prepared, 1.0e5);
+            assert_eq!(lines, 1, "{words} words fit one line");
+            runs
+        },
+    );
+}
+
+#[test]
+fn relaying_a_paragraph_reshapes_only_the_pieces_line_ends_clip() {
+    const WORDS: usize = 120;
+    let document = alternating_spans(WORDS);
+    let resolver = FileResolver::default();
+    let context = TextContext::new(&document.styles().fonts, &resolver);
+    let prepared = context.prepare_paragraph(paragraphs(&document)[0]);
+    let (first, lines) = shaped_runs(&prepared, 200.0);
+    let (second, relaid) = shaped_runs(&prepared, 200.0);
+    assert_eq!(relaid, lines, "the same width lays out the same lines");
+    // Each candidate end tried, one per word and the overflowing one per line, clips the
+    // piece it ends in; every other piece was shaped by the first layout.
+    let clipped = WORDS + lines;
+    assert!(
+        second <= clipped,
+        "relaying {WORDS} words on {lines} lines shaped {second} runs after the first layout \
+         shaped {first}; at most {clipped} candidate ends clip a piece"
+    );
+}

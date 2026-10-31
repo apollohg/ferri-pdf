@@ -3,11 +3,14 @@ use crate::style::{FontVariantEmoji, FontVariantPosition, POINTS_PER_PIXEL, Styl
 use crate::text::features::{self, CapsPlan, FaceFeatures};
 use crate::text::{GlyphRun, PositionedGlyph, TextError};
 
+use crate::work::{self, Work};
 use icu_properties::{
     CodePointMapData, CodePointSetData,
     props::{DefaultIgnorableCodePoint, EmojiPresentation, GeneralCategory, VariationSelector},
 };
-use rustybuzz::{BufferFlags, Direction, Face, Feature, Language, UnicodeBuffer, ttf_parser::Tag};
+use rustybuzz::{
+    BufferFlags, Direction, Face, Feature, GlyphBuffer, Language, UnicodeBuffer, ttf_parser::Tag,
+};
 use std::collections::BTreeMap;
 use std::ops::Range;
 use std::sync::Arc;
@@ -167,7 +170,7 @@ fn clusters(
         Direction::LeftToRight
     });
     buffer.guess_segment_properties();
-    let shaped = rustybuzz::shape(face, features, buffer);
+    let shaped = shape_buffer(face, features, buffer);
     let mut clusters = BTreeMap::<u32, Vec<u32>>::new();
     for info in shaped.glyph_infos() {
         clusters
@@ -176,6 +179,16 @@ fn clusters(
             .push(info.glyph_id);
     }
     clusters
+}
+
+/// The glyphs `face` shapes `buffer` into with `features`.
+pub(crate) fn shape_buffer(
+    face: &Face<'_>,
+    features: &[Feature],
+    buffer: UnicodeBuffer,
+) -> GlyphBuffer {
+    work::count(Work::ShapedRun, 1);
+    rustybuzz::shape(face, features, buffer)
 }
 
 /// Whether `letter_spacing` tracks text of `size` so far apart that common ligatures do not
@@ -452,7 +465,7 @@ fn shape_run(
         },
         tracked(style.letter_spacing, size),
     )));
-    let shaped = rustybuzz::shape(face, &shaper, buffer);
+    let shaped = shape_buffer(face, &shaper, buffer);
     let boundaries = crate::fonts::cluster_boundaries(
         shaped
             .glyph_infos()

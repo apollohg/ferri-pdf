@@ -220,6 +220,20 @@ impl LineTraits {
     }
 }
 
+/// A span, the range of the paragraph that shapes a piece of it, the piece's range and
+/// whether it is right-to-left.
+type PieceKey = (usize, Range<usize>, Range<usize>, bool);
+
+/// The runs of the pieces of a paragraph's spans that end before the line end. Every candidate
+/// line from one start that holds such a piece shapes it alike, as do layouts of the paragraph
+/// at other widths.
+#[derive(Default)]
+struct ShapedPieces(RefCell<HashMap<PieceKey, Vec<GlyphRun>>>);
+
+#[expect(
+    clippy::too_many_arguments,
+    reason = "a line's text, bidi and break context, and the pieces shaped for its paragraph"
+)]
 fn shape_line(
     context: &TextContext<'_>,
     text: &str,
@@ -228,6 +242,7 @@ fn shape_line(
     context_range: Range<usize>,
     paragraph: &Paragraph,
     traits: &LineTraits,
+    shaped: Option<&ShapedPieces>,
 ) -> Result<Vec<Piece>, TextError> {
     if range.is_empty() {
         return Ok(Vec::new());
@@ -295,20 +310,32 @@ fn shape_line(
                 let (style, source) = (&piece.style, piece.range.clone());
                 let shaping_context =
                     source.start.max(context_range.start)..source.end.min(context_range.end);
-                let mut runs = tabs::shape(
-                    context,
-                    &paragraph.text()[shaping_context.clone()],
-                    (r.start - shaping_context.start)..(r.end - shaping_context.start),
-                    rtl,
-                    style,
-                )?;
-                for run in &mut runs {
-                    run.bidi_scoped = bidi.has_controls();
-                    run.source_range.start += shaping_context.start;
-                    run.source_range.end += shaping_context.start;
-                    run.source_span = span;
-                    run.leader = piece.leader;
-                }
+                let key = (span, shaping_context.clone(), r.clone(), rtl);
+                let memoized = shaped.and_then(|shaped| shaped.0.borrow().get(&key).cloned());
+                let runs = if let Some(runs) = memoized {
+                    runs
+                } else {
+                    let mut runs = tabs::shape(
+                        context,
+                        &paragraph.text()[shaping_context.clone()],
+                        (r.start - shaping_context.start)..(r.end - shaping_context.start),
+                        rtl,
+                        style,
+                    )?;
+                    for run in &mut runs {
+                        run.bidi_scoped = bidi.has_controls();
+                        run.source_range.start += shaping_context.start;
+                        run.source_range.end += shaping_context.start;
+                        run.source_span = span;
+                        run.leader = piece.leader;
+                    }
+                    if let Some(shaped) = shaped
+                        && source.end < context_range.end
+                    {
+                        shaped.0.borrow_mut().insert(key, runs.clone());
+                    }
+                    runs
+                };
                 result.extend(runs.into_iter().map(|run| Piece::Text(Box::new(run))));
             }
         }
@@ -920,6 +947,7 @@ impl<'a> TextContext<'a> {
                 context_range,
                 paragraph,
                 &source.traits,
+                None,
             )?;
             if visible.end == range.end {
                 hyphenation::decorate(

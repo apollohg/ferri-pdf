@@ -217,7 +217,7 @@ fn halt(
             buffer.set_language(language.clone());
         }
         buffer.guess_segment_properties();
-        rustybuzz::shape(face, features, buffer)
+        crate::text::shaping::shape_buffer(face, features, buffer)
     };
     let plain = shape(&[]);
     let halved = shape(&[Feature::new(Tag::from_bytes(&HALT), 1, ..)]);
