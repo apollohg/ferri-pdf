@@ -308,6 +308,9 @@ pub(crate) struct TablePlan<'a> {
     data: Rc<Data<'a>>,
     entry_events: Vec<&'a SemanticEvent>,
     cell_indices: HashMap<*const BlockBox, usize>,
+    /// Where the children after each box among the table box's children start, and among its
+    /// row groups' children.
+    child_ends: [HashMap<*const BlockBox, usize>; 2],
     /// The rows each row keeps with it at page breaks, at column breaks within a page and at
     /// column breaks that are also page breaks.
     row_keep_ends: [Vec<usize>; 3],
@@ -394,6 +397,18 @@ fn collect_structural_events<'a>(source: &'a BlockBox, events: &mut Vec<&'a Sema
         }
     }
 }
+/// Where the children after each box among the children of `parents` start.
+fn child_ends<'a>(parents: impl Iterator<Item = &'a BlockBox>) -> HashMap<*const BlockBox, usize> {
+    let mut ends = HashMap::new();
+    for parent in parents {
+        for (index, child) in parent.children().iter().enumerate() {
+            if let BlockContent::Block(block) | BlockContent::Positioned(block) = child {
+                ends.entry(std::ptr::from_ref(block)).or_insert(index + 1);
+            }
+        }
+    }
+    ends
+}
 fn table_entry_events(source: &BlockBox) -> Vec<&SemanticEvent> {
     let mut events: Vec<_> = source.leading_events().collect();
     for child in source.children() {
@@ -435,18 +450,36 @@ impl<'a> TablePlan<'a> {
     pub(crate) fn row_exit_events(&self, index: usize) -> Vec<&'a SemanticEvent> {
         let row = self.data.rows[index];
         let group = &self.data.groups[self.data.row_groups[index]];
-        let mut events: Vec<_> = self.source.following_events(row).collect();
+        let mut events: Vec<_> = self.events_after(self.source, row).collect();
         if let Some(source) = group.source {
-            events.extend(source.following_events(row));
+            events.extend(self.events_after(source, row));
             if group
                 .rows
                 .last()
                 .is_some_and(|last| std::ptr::eq(*last, row))
             {
-                events.extend(self.source.following_events(source));
+                events.extend(self.events_after(self.source, source));
             }
         }
         events
+    }
+    /// The semantic events after `child` among the children of `parent`, the table box or one
+    /// of its row groups: those of [`BlockBox::following_events`], found without a search.
+    pub(crate) fn events_after(
+        &self,
+        parent: &'a BlockBox,
+        child: &BlockBox,
+    ) -> impl Iterator<Item = &'a SemanticEvent> {
+        let ends = if std::ptr::eq(parent, self.source) {
+            &self.child_ends[0]
+        } else {
+            &self.child_ends[1]
+        };
+        parent.events_from(
+            ends.get(&std::ptr::from_ref(child))
+                .copied()
+                .unwrap_or(parent.children().len()),
+        )
     }
     pub(crate) fn is_body_group(&self, source: &BlockBox) -> bool {
         let owns = |group: Option<&super::model::Group<'_>>| {
@@ -668,6 +701,10 @@ impl<'a> TablePlan<'a> {
                 .enumerate()
                 .map(|(index, source)| (std::ptr::from_ref(*source), index))
                 .collect(),
+            child_ends: [
+                child_ends(std::iter::once(block.block)),
+                child_ends(data.groups.iter().filter_map(|group| group.source)),
+            ],
             data,
             entry_events,
             row_keep_ends: [Vec::new(), Vec::new(), Vec::new()],
@@ -1816,7 +1853,7 @@ fn assemble_plan<'a>(
             let mut events = Vec::new();
             if area.source.style().display.is_row_group() {
                 collect_structural_events(area.source, &mut events);
-                events.extend(plan.source.following_events(area.source));
+                events.extend(plan.events_after(plan.source, area.source));
             }
             measurer.work.spend(events.len().max(1))?;
             has_forced |= edges.iter().any(|edge| edge.is_forced());

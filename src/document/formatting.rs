@@ -677,6 +677,13 @@ impl BlockBox {
                 _ => false,
             })
             .map_or(self.children.len(), |index| index + 1);
+        self.events_from(boundary)
+    }
+    /// The semantic events among the children from the child at `boundary` to the next box.
+    pub(crate) fn events_from(
+        &self,
+        boundary: usize,
+    ) -> impl Iterator<Item = &crate::document::SemanticEvent> {
         self.children[boundary..]
             .iter()
             .take_while(|child| matches!(child, BlockContent::Events(_)))
