@@ -1949,7 +1949,7 @@ fn assemble_plan<'a>(
                         .all(crate::layout::breaks::indivisible))
                     && ((body_band && !kept && soft_break)
                         || band_height + top + bottom + vertical > available_height)));
-        let mut painted_cells = Vec::new();
+        let mut painted_cells = Vec::with_capacity(range.len());
         let mut collapsed_cells = Vec::new();
         let mut cell_heights = Vec::new();
         let mut visible_cells = Vec::new();

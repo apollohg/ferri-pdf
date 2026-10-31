@@ -295,7 +295,12 @@ pub(crate) fn arrange(
     spacers: Spacers<'_, '_, '_, '_>,
 ) -> Result<Arranged, TextError> {
     let mut arranged = Arranged {
-        runs: Vec::new(),
+        runs: Vec::with_capacity(
+            pieces
+                .iter()
+                .filter(|piece| matches!(piece, Piece::Text(_)))
+                .count(),
+        ),
         atomics: Vec::new(),
         boxes: Vec::new(),
         order: Vec::with_capacity(pieces.len()),

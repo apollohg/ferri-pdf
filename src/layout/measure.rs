@@ -2189,6 +2189,9 @@ impl<'a> Measurer<'a> {
             lines.push(line);
             positions.push(stream.checkpoint());
         }
+        // Measured paragraphs stay alive until their table or page is laid out.
+        lines.shrink_to_fit();
+        positions.shrink_to_fit();
         let broken = count > 0
             && budget.is_some_and(|budget| count == budget.lines && (more || budget.following));
         // An initial letter moves its line down to stay below the content edge (CSS Inline 3
