@@ -251,7 +251,7 @@ impl<'a, 'r, 's> Axes<'a, 'r, 's> {
         Ok(computed)
     }
 
-    fn leaf(&self, axis: usize, specified: &Specified) -> Result<Overflow, StyleError> {
+    fn leaf(&self, axis: usize, specified: &Specified) -> Overflow {
         let mut style = self.style.clone();
         crate::style::properties::apply(
             AXIS_PROPERTIES[axis],
@@ -260,7 +260,7 @@ impl<'a, 'r, 's> Axes<'a, 'r, 's> {
             self.parent,
             self.relative,
         );
-        Ok(style.overflow[axis])
+        style.overflow[axis]
     }
 
     // A constant scrollability result needs no dependency on the other axis's selection.
@@ -270,9 +270,7 @@ impl<'a, 'r, 's> Axes<'a, 'r, 's> {
         specified: &Specified,
     ) -> Result<Option<bool>, StyleError> {
         let Specified::Toggle(values) = specified else {
-            return self
-                .leaf(axis, specified)
-                .map(|value| Some(value.scroll_container()));
+            return Ok(Some(self.leaf(axis, specified).scroll_container()));
         };
         let _work = self.relative.work.enter(self.relative.grammar_only);
         self.relative.work.charge(1)?;
@@ -305,7 +303,7 @@ impl<'a, 'r, 's> Axes<'a, 'r, 's> {
 
     fn value(&mut self, axis: usize, specified: &Specified) -> Result<Overflow, StyleError> {
         let Specified::Toggle(values) = specified else {
-            return self.leaf(axis, specified);
+            return Ok(self.leaf(axis, specified));
         };
         let relative = self.relative;
         let _work = relative.work.enter(relative.grammar_only);

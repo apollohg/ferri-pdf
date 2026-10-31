@@ -210,7 +210,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
         }
         let _ = write!(self.xml, "<{TYPOGRAPHIC_BOX}");
         attribute(&mut self.xml, "", crate::svg::FIRST_LINE_ATTRIBUTE, "");
-        self.presentation(TYPOGRAPHIC_BOX, boxed)?;
+        self.presentation(TYPOGRAPHIC_BOX, boxed);
         self.xml.push('>');
         // Each open element's style, and whether its contents render.
         let mut styles = vec![(root, true)];
@@ -259,7 +259,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
                     letter &= name != TREF_ELEMENT;
                     let rendered = rendered && style.display != crate::style::Display::None;
                     let _ = write!(self.xml, "<{name}");
-                    self.styled_attributes(element, &style, None, true, None)?;
+                    self.styled_attributes(element, &style, None, true, None);
                     self.xml.push('>');
                     styles.push((style, rendered));
                     stack.push(LineStep::Close(name));
@@ -310,7 +310,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
         };
         let boxed = typographic(parent, PseudoElement::FirstLetter)?;
         let _ = write!(self.xml, "<{TYPOGRAPHIC_BOX}");
-        self.presentation(TYPOGRAPHIC_BOX, &boxed)?;
+        self.presentation(TYPOGRAPHIC_BOX, &boxed);
         self.xml.push('>');
         for (range, part) in [
             (prefix, Some(PseudoElement::FirstLetterPrefix)),
@@ -329,7 +329,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
             };
             if let Some(style) = &part {
                 let _ = write!(self.xml, "<{TYPOGRAPHIC_BOX}");
-                self.presentation(TYPOGRAPHIC_BOX, style)?;
+                self.presentation(TYPOGRAPHIC_BOX, style);
                 self.xml.push('>');
             }
             escape(&mut self.xml, &content[range], false);
@@ -465,7 +465,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
             let _ = write!(self.xml, "<{}", element.name());
             match &style {
                 Some(style) => {
-                    self.styled_attributes(element, style, instance.take(), cloned, reference)?;
+                    self.styled_attributes(element, style, instance.take(), cloned, reference);
                 }
                 None => {
                     for (name, value) in &element.value().attrs {
@@ -512,7 +512,7 @@ impl<'a, 'd> Serializer<'a, 'd> {
         instance: Option<String>,
         cloned: bool,
         reference: Option<String>,
-    ) -> Result<(), DocumentError> {
+    ) {
         let tag = element.name();
         for (name, value) in &element.value().attrs {
             let Some(prefix) = prefix(&name.ns, &name.local) else {
@@ -545,12 +545,12 @@ impl<'a, 'd> Serializer<'a, 'd> {
         if let Some(id) = reference {
             attribute(&mut self.xml, "", HREF_ATTRIBUTE, &format!("#{id}"));
         }
-        self.presentation(tag, style)
+        self.presentation(tag, style);
     }
 
     /// The attributes an element `tag` styled `style` takes from its style: its computed
     /// geometry, text style and `style` declarations.
-    fn presentation(&mut self, tag: &str, style: &Style) -> Result<(), DocumentError> {
+    fn presentation(&mut self, tag: &str, style: &Style) {
         // Text shapes, cases and paints with the document's computed values (SVG 2 §11.10).
         if presentation::takes_text_style(tag, style) {
             self.text_styles.push(Arc::new(style.clone()));
@@ -579,7 +579,6 @@ impl<'a, 'd> Serializer<'a, 'd> {
         let (declarations, discarded) = presentation::declarations(tag, style, Some(&mask));
         self.discarded(&discarded);
         attribute(&mut self.xml, "", STYLE_ATTRIBUTE, &declarations);
-        Ok(())
     }
 
     /// Reports the presentation properties the renderer cannot represent, which it computes

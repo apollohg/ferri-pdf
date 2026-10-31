@@ -2417,10 +2417,6 @@ computed!(
         BoxSizing::ContentBox
     }
 );
-#[expect(
-    clippy::unnecessary_wraps,
-    reason = "signature is the fallible Apply handler type"
-)]
 fn display(
     style: &mut Style,
     _parent: &Style,

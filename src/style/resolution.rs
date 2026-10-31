@@ -1904,7 +1904,7 @@ impl Stylesheet {
         resolver: &dyn ResourceResolver,
     ) -> Result<Style, StyleError> {
         let root = self.computed_values(element, &Style::default(), style, winners, resolver)?;
-        self.define_palettes(&root, resolver)?;
+        self.define_palettes(&root, resolver);
         Ok(root)
     }
 

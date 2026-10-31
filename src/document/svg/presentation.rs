@@ -223,14 +223,13 @@ pub(super) fn declarations(
         .iter()
         .flatten()
         .any(|radius| *radius != LengthPercentage::ZERO)
-    {
-        if let Some(value) = representable(
+        && let Some(value) = representable(
             &mut discarded,
             BORDER_RADIUS,
             radii_css(&style.decoration.radii, motion_length),
-        ) {
-            push(BORDER_RADIUS, &value);
-        }
+        )
+    {
+        push(BORDER_RADIUS, &value);
     }
     // The root's transform places its box in the document.
     if !root && css_transform(style) {

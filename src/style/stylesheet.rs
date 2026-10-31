@@ -506,11 +506,11 @@ impl Stylesheet {
         document_base: &ResourceBase,
         settings: &PrintSettings,
     ) -> Result<Self, StyleError> {
-        Self::from_prepared(
+        Ok(Self::from_prepared(
             loader::inline(author, user, document_base, settings)?,
             settings,
             None,
-        )
+        ))
     }
 
     pub(crate) fn prepare(
@@ -521,7 +521,7 @@ impl Stylesheet {
         presentation: crate::style::Presentation,
         decode: crate::style::CssDecoder,
     ) -> Result<Self, StyleError> {
-        Self::from_prepared(
+        Ok(Self::from_prepared(
             loader::prepare_with_limits(
                 tree,
                 sources,
@@ -533,7 +533,7 @@ impl Stylesheet {
             )?,
             settings,
             Some(tree),
-        )
+        ))
     }
 
     pub(crate) fn presentation(&self) -> crate::style::Presentation {
@@ -556,7 +556,7 @@ impl Stylesheet {
         prepared: PreparedStylesheets,
         settings: &PrintSettings,
         tree: Option<&crate::dom::DocumentTree>,
-    ) -> Result<Self, StyleError> {
+    ) -> Self {
         let PreparedStylesheets {
             all,
             mut layers,
@@ -864,7 +864,7 @@ impl Stylesheet {
                 namespace,
             })
             .collect();
-        Ok(sheet)
+        sheet
     }
 
     /// The declarations of a `@position-try` rule (CSS Anchor Positioning 1 §6.4): only
@@ -988,7 +988,7 @@ impl Stylesheet {
         &mut self,
         root: &crate::style::Style,
         resolver: &dyn ResourceResolver,
-    ) -> Result<(), StyleError> {
+    ) {
         let rules = std::mem::take(&mut self.palette_rules);
         let mut definitions = Vec::with_capacity(rules.len());
         {
@@ -1008,7 +1008,6 @@ impl Stylesheet {
             self.fonts
                 .define_palette(namespace, &name, families, base, overrides);
         }
-        Ok(())
     }
 
     pub(crate) fn take_diagnostics(&mut self) -> Vec<StyleDiagnostic> {

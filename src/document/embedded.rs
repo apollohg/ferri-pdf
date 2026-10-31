@@ -87,18 +87,17 @@ pub(crate) fn resolve(
             continue;
         }
         let replaced = match element.name() {
-            "iframe" => Some(resolution.iframe(element)?),
+            "iframe" => Some(resolution.iframe(element)),
             // HTML §15.6: only frames in a frameset render their content navigable.
             "frame" => element
                 .parent(TreeRelation::Formatting)
                 .filter(|parent| {
                     parent.namespace() == HTML_NAMESPACE && parent.name() == "frameset"
                 })
-                .map(|_| resolution.frame(element))
-                .transpose()?,
+                .map(|_| resolution.frame(element)),
             "embed" => Some(resolution.embed(element)?),
             _ => {
-                let represented = resolution.object(element)?;
+                let represented = resolution.object(element);
                 if represented.is_some() {
                     objects.insert(element.id());
                 }
@@ -170,40 +169,40 @@ impl Resolution<'_, '_> {
 
     /// HTML §4.8.5 "process the iframe attributes"; with scripting disabled nothing loads
     /// lazily (HTML §2.5.7).
-    fn iframe(&mut self, element: Element<'_>) -> Result<Embedded, DocumentError> {
+    fn iframe(&mut self, element: Element<'_>) -> Embedded {
         if let Some(srcdoc) = element.attr("srcdoc") {
             let Some(navigable) = self.child() else {
-                return Ok(nothing());
+                return nothing();
             };
-            return Ok(Embedded::Navigable(Frame::html(
+            return Embedded::Navigable(Frame::html(
                 srcdoc.to_owned(),
                 self.embedder.base,
                 navigable,
-            )));
+            ));
         }
         self.frame(element)
     }
 
     /// The `src` attribute navigation shared by iframes and frames (HTML §4.8.5, §16.3.1).
-    fn frame(&mut self, element: Element<'_>) -> Result<Embedded, DocumentError> {
+    fn frame(&mut self, element: Element<'_>) -> Embedded {
         let base = self.embedder.base;
         let Some(navigable) = self.child() else {
-            return Ok(nothing());
+            return nothing();
         };
         let Some(url) = element
             .attr("src")
             .filter(|reference| !reference.is_empty())
             .and_then(|reference| base.resolve(reference).ok())
         else {
-            return Ok(Embedded::Navigable(Frame::blank(base, navigable)));
+            return Embedded::Navigable(Frame::blank(base, navigable));
         };
         if self.embedder.navigable.shows(&url) || frames::is_about_blank(&url) {
-            return Ok(Embedded::Navigable(Frame::blank(base, navigable)));
+            return Embedded::Navigable(Frame::blank(base, navigable));
         }
-        self.navigate(&url, navigable).map(Embedded::Navigable)
+        Embedded::Navigable(self.navigate(&url, navigable))
     }
 
-    fn navigate(&mut self, url: &Url, navigable: Navigable) -> Result<Arc<Frame>, DocumentError> {
+    fn navigate(&mut self, url: &Url, navigable: Navigable) -> Arc<Frame> {
         match self
             .embedder
             .resolver
@@ -214,7 +213,7 @@ impl Resolution<'_, '_> {
             }
             Err(error) => {
                 self.unavailable(url.as_str(), error);
-                Ok(Frame::blank(self.embedder.base, navigable))
+                Frame::blank(self.embedder.base, navigable)
             }
         }
     }
@@ -253,14 +252,13 @@ impl Resolution<'_, '_> {
         let Some(navigable) = self.child() else {
             return Ok(nothing());
         };
-        frames::load_document(
+        Ok(Embedded::Navigable(frames::load_document(
             &url,
             resolved,
             navigable,
             self.cache,
             self.embedder.resolver,
-        )
-        .map(Embedded::Navigable)
+        )))
     }
 
     /// HTML §4.8.6 "display an indication that no plugin could be found", shared by every
@@ -282,21 +280,19 @@ impl Resolution<'_, '_> {
 
     /// HTML §4.8.7: the image or content navigable an `object` represents, or `None` for its
     /// fallback content.
-    fn object(&mut self, element: Element<'_>) -> Result<Option<Embedded>, DocumentError> {
-        let Some(reference) = element.attr("data").filter(|data| !data.is_empty()) else {
-            return Ok(None);
-        };
+    fn object(&mut self, element: Element<'_>) -> Option<Embedded> {
+        let reference = element.attr("data").filter(|data| !data.is_empty())?;
         let declared = element.attr("type").map(essence);
         if declared.as_ref().is_some_and(|declared| {
             declared
                 .as_deref()
                 .is_none_or(|essence| !supported(essence))
         }) {
-            return Ok(None);
+            return None;
         }
         let declared = declared.flatten();
         let Ok(url) = self.embedder.base.resolve(reference) else {
-            return Ok(None);
+            return None;
         };
         let resolved = match self
             .embedder
@@ -306,27 +302,21 @@ impl Resolution<'_, '_> {
             Ok(resolved) => resolved,
             Err(error) => {
                 self.unavailable(reference, error);
-                return Ok(None);
+                return None;
             }
         };
-        let Some(resource_type) = resource_type(&url, &resolved, declared) else {
-            return Ok(None);
-        };
+        let resource_type = resource_type(&url, &resolved, declared)?;
         if sniffing::is_xml(&resource_type) || !resource_type.starts_with(sniffing::IMAGE_PREFIX) {
-            let Some(navigable) = self.child() else {
-                return Ok(None);
-            };
-            return frames::load_document(
+            let navigable = self.child()?;
+            return Some(Embedded::Navigable(frames::load_document(
                 &url,
                 resolved,
                 navigable,
                 self.cache,
                 self.embedder.resolver,
-            )
-            .map(|frame| Some(Embedded::Navigable(frame)));
+            )));
         }
-        Ok(self
-            .cache
+        self.cache
             .decode_optional(
                 reference,
                 self.embedder.base,
@@ -334,7 +324,7 @@ impl Resolution<'_, '_> {
                 self.embedder.resolver,
                 FontNamespace::ROOT,
             )
-            .map(Embedded::Image))
+            .map(Embedded::Image)
     }
 }
 

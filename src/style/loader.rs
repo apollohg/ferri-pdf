@@ -426,7 +426,7 @@ impl<'a> Loader<'a> {
                 if origin != Origin::UserAgent
                     && let Err(error) = self.budget.bytes(text.len(), location(base))
                 {
-                    self.ignored(error, IGNORED_STYLESHEET);
+                    self.ignored(&error, IGNORED_STYLESHEET);
                     return Ok(());
                 }
                 self.sheet(Arc::from(text.as_str()), &context);
@@ -450,16 +450,16 @@ impl<'a> Loader<'a> {
     /// rules before the limit apply.
     fn sheet(&mut self, text: Arc<str>, context: &Context) {
         if let Err(error) = self.sheet_rules(text, context) {
-            self.ignored(error, TRUNCATED_STYLESHEET);
+            self.ignored(&error, TRUNCATED_STYLESHEET);
         }
     }
     /// Reports stylesheet content ignored for `error`, at the limit's location.
-    fn ignored(&self, error: StyleError, consequence: &str) {
-        let location = match &error {
+    fn ignored(&self, error: &StyleError, consequence: &str) {
+        let location = match error {
             StyleError::StylesheetLimit { location, .. } => (**location).clone(),
             _ => location(&self.prepared.document_base),
         };
-        ignored(&self.prepared.diagnostics, location, &error, consequence);
+        ignored(&self.prepared.diagnostics, location, error, consequence);
     }
     fn sheet_rules(&mut self, text: Arc<str>, context: &Context) -> Result<(), StyleError> {
         let budget = if context.origin == Origin::UserAgent {
@@ -848,7 +848,7 @@ impl<'a> Loader<'a> {
     }
     /// A source that cannot be fetched, or that policy denies, is skipped as unavailable
     /// (CSS Cascade 5 §2.1; HTML §4.2.4 "the link is an unavailable source").
-    fn fetch(&mut self, fetch: Fetch) -> Result<(), StyleError> {
+    fn fetch(&mut self, fetch: Fetch) {
         if fetch.context.depth > self.budget.limits.depth {
             self.prepared
                 .diagnostics
@@ -861,19 +861,19 @@ impl<'a> Loader<'a> {
                         fetch.reference, self.budget.limits.depth
                     ),
                 });
-            return Ok(());
+            return;
         }
         let mut requested = match fetch.context.base.resolve(&fetch.reference) {
             Ok(requested) => requested,
             Err(error) => {
                 self.unavailable_source(fetch, error);
-                return Ok(());
+                return;
             }
         };
         requested.set_fragment(None);
         if fetch.context.path.contains(&requested) {
             self.cycle(&fetch, &requested);
-            return Ok(());
+            return;
         }
         let key = (fetch.context.base.clone(), fetch.reference.clone());
         let resource = if let Some(resource) = self.cache.get(&key) {
@@ -886,7 +886,7 @@ impl<'a> Loader<'a> {
                 Ok(resource) => Arc::new(resource),
                 Err(error) => {
                     self.unavailable_source(fetch, error);
-                    return Ok(());
+                    return;
                 }
             }
         };
@@ -901,15 +901,15 @@ impl<'a> Loader<'a> {
         identity.set_fragment(None);
         if fetch.context.path.contains(&identity) {
             self.cycle(&fetch, &identity);
-            return Ok(());
+            return;
         }
         if let Err(error) = self
             .budget
             .bytes(resource.resource.bytes.len(), fetch.location.clone())
         {
             self.unavailable(fetch.slot);
-            self.ignored(error, IGNORED_STYLESHEET);
-            return Ok(());
+            self.ignored(&error, IGNORED_STYLESHEET);
+            return;
         }
         if !self.css_type(resource.metadata.media_type.as_deref(), &identity) {
             self.unavailable(fetch.slot);
@@ -924,7 +924,7 @@ impl<'a> Loader<'a> {
                         fetch.reference, resource.metadata.media_type
                     ),
                 });
-            return Ok(());
+            return;
         }
         self.cache.entry(key).or_insert_with(|| resource.clone());
         let decoded = (self.decode)(
@@ -939,8 +939,8 @@ impl<'a> Loader<'a> {
             )
         {
             self.unavailable(fetch.slot);
-            self.ignored(error, IGNORED_STYLESHEET);
-            return Ok(());
+            self.ignored(&error, IGNORED_STYLESHEET);
+            return;
         }
         if decoded.had_errors {
             self.prepared
@@ -957,7 +957,6 @@ impl<'a> Loader<'a> {
         context.path.push(requested);
         context.path.push(identity);
         self.sheet(Arc::from(decoded.text), &context);
-        Ok(())
     }
     fn unavailable_source(&mut self, fetch: Fetch, error: ResourceError) {
         self.unavailable(fetch.slot);
@@ -977,7 +976,7 @@ impl<'a> Loader<'a> {
                     .as_ref()
                     .is_some_and(|document| document.origin() == response.origin()))
     }
-    fn finish(mut self) -> Result<PreparedStylesheets, StyleError> {
+    fn finish(mut self) -> PreparedStylesheets {
         loop {
             self.refresh();
             let next = self
@@ -997,10 +996,10 @@ impl<'a> Loader<'a> {
                 .fetches
                 .remove(&order)
                 .expect("the selected source is pending");
-            self.fetch(fetch)?;
+            self.fetch(fetch);
         }
         self.prepared.all = self.all.into_values().collect();
-        Ok(self.prepared)
+        self.prepared
     }
 }
 /// Reports stylesheet content at `location` ignored for `error`.
@@ -1076,7 +1075,7 @@ pub(super) fn prepare_with_limits(
     for (index, (input, origin)) in inputs.enumerate() {
         loader.input(input, origin, vec![index + 1])?;
     }
-    loader.finish()
+    Ok(loader.finish())
 }
 #[cfg(test)]
 pub(super) fn inline(

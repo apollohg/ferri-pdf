@@ -1267,7 +1267,7 @@ impl Stylesheet {
             key: crate::style::anchor_values::key(element.id(), pseudo),
             tactic: style.anchor.tactic,
         });
-        Self::display(&mut style, parent, &mut winners, &inherited)?;
+        Self::display(&mut style, parent, &mut winners, &inherited);
         // The page context inherits the root's computed values even without a root box.
         if !without_box
             && style.display == Display::None
@@ -1590,16 +1590,16 @@ impl Stylesheet {
             tactic: crate::style::anchor_values::Tactic::IDENTITY,
         });
         let declared = winners.get(&Property::Content).cloned();
-        let Some(content) = Self::generated(&mut winners, &mut style, parent, &inherited)? else {
+        let Some(content) = Self::generated(&mut winners, &mut style, parent, &inherited) else {
             return Ok(None);
         };
-        Self::display(&mut style, parent, &mut winners, &inherited)?;
+        Self::display(&mut style, parent, &mut winners, &inherited);
         if style.display == Display::None {
             return Ok(None);
         }
         let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
         let mut style = Self::apply_properties(style, parent, winners, &relative)?;
-        let content = Self::content_images(declared, content, &mut style, parent, &relative)?;
+        let content = Self::content_images(declared, content, &mut style, parent, &relative);
         style.anchor.frame = self
             .anchor_frames
             .frame(
@@ -1681,12 +1681,12 @@ impl Stylesheet {
         let mut inherited = self.inherited(parent, self.page_area(), resolver);
         inherited.tree = Tree::Element(element);
         let declared = winners.get(&Property::Content).cloned();
-        let content = Self::generated(&mut winners, &mut style, parent, &inherited)?;
-        Self::display(&mut style, parent, &mut winners, &inherited)?;
+        let content = Self::generated(&mut winners, &mut style, parent, &inherited);
+        Self::display(&mut style, parent, &mut winners, &inherited);
         let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
         let mut style = Self::apply_properties(style, parent, winners, &relative)?;
         if let Some(content) = content {
-            Self::content_images(declared, content, &mut style, parent, &relative)?;
+            Self::content_images(declared, content, &mut style, parent, &relative);
         }
         style.origin = StyleOrigin::of(element, Some(pseudo), parent);
         Ok(style)
@@ -1719,7 +1719,7 @@ impl Stylesheet {
         winners.remove(&Property::Content);
         let mut inherited = self.inherited(parent, self.page_area(), resolver);
         inherited.tree = Tree::Element(element);
-        Self::display(&mut style, parent, &mut winners, &inherited)?;
+        Self::display(&mut style, parent, &mut winners, &inherited);
         let relative = self.text_basis(&mut style, parent, &mut winners, inherited, resolver)?;
         Self::apply_properties(style, parent, winners, &relative)
     }
@@ -1770,19 +1770,19 @@ impl Stylesheet {
         style: &mut Style,
         parent: &Style,
         relative: &Relative<'_>,
-    ) -> Result<Option<crate::style::GeneratedContent>, StyleError> {
+    ) -> Option<crate::style::GeneratedContent> {
         let value = winners
             .remove(&Property::Content)
             .unwrap_or(Specified::Wide(
                 crate::style::wide_keywords::WideKeyword::Initial,
             ));
         properties::apply(Property::Content, &value, style, parent, relative);
-        Ok(match style.computed_content.as_ref() {
+        match style.computed_content.as_ref() {
             crate::style::generated::ComputedContent::Items { content, .. } => {
                 Some(content.clone())
             }
             _ => None,
-        })
+        }
     }
 
     /// A pseudo-element computes `content` before its other properties, against its parent's
@@ -1793,20 +1793,15 @@ impl Stylesheet {
         style: &mut Style,
         parent: &Style,
         relative: &Relative<'_>,
-    ) -> Result<crate::style::GeneratedContent, StyleError> {
+    ) -> crate::style::GeneratedContent {
         let Some(declared) = declared.filter(|_| content.has_images()) else {
-            return Ok(content);
+            return content;
         };
         properties::apply(Property::Content, &declared, style, parent, relative);
-        Ok(style.computed_content.items().cloned().unwrap_or(content))
+        style.computed_content.items().cloned().unwrap_or(content)
     }
 
-    fn display(
-        style: &mut Style,
-        parent: &Style,
-        winners: &mut Winners,
-        relative: &Relative<'_>,
-    ) -> Result<(), StyleError> {
+    fn display(style: &mut Style, parent: &Style, winners: &mut Winners, relative: &Relative<'_>) {
         if let Some(value) = winners.remove(&Property::WritingMode) {
             properties::apply(Property::WritingMode, &value, style, parent, relative);
         }
@@ -1827,7 +1822,6 @@ impl Stylesheet {
         } else {
             style.normalize_display(relative);
         }
-        Ok(())
     }
 
     /// The font measured with the sheet's faces.

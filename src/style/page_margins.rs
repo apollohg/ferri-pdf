@@ -233,7 +233,7 @@ impl Stylesheet {
             },
         )?;
         let inherited = self.inherited(page, viewport, resolver);
-        let content = Self::generated(&mut winners, &mut style, page, &inherited)?;
+        let content = Self::generated(&mut winners, &mut style, page, &inherited);
         let relative = self.text_basis(&mut style, page, &mut winners, inherited, resolver)?;
         winners.remove(&Property::Display);
         Ok((

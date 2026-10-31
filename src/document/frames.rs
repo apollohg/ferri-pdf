@@ -196,7 +196,7 @@ pub(crate) fn load_document(
     navigable: Navigable,
     cache: &mut ImageCache,
     resolver: &dyn ResourceResolver,
-) -> Result<Arc<Frame>, DocumentError> {
+) -> Arc<Frame> {
     let ResolvedResource { resource, metadata } = resolved;
     let computed = sniffing::computed_type(
         sniffing::supplied_type(url, &metadata).as_deref(),
@@ -207,7 +207,7 @@ pub(crate) fn load_document(
     );
     let base = resource.base.clone();
     let charset = metadata.charset.as_deref();
-    let frame = if computed == sniffing::HTML {
+    if computed == sniffing::HTML {
         // HTML §7.5.2.
         let (decoded, _) = crate::document::encoding::decode_document(&resource.bytes, charset);
         let frame = Frame::new(
@@ -269,6 +269,5 @@ pub(crate) fn load_document(
         )
     } else {
         Frame::blank(&base, navigable)
-    };
-    Ok(frame)
+    }
 }
