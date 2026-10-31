@@ -40,3 +40,9 @@ requires no HEIF/AVIF encoder or libheif: production decoding remains native Rus
 The native tests verify PDF DCT samples, quality tables and precision conversion
 against those references across HTML, CSS backgrounds/borders and nested SVG.
 Run the generator with Pillow, `heif-enc` and `heif-convert` installed.
+
+## Damaged AV1 data
+
+`av1-frame-error.avif` is `tests/oracle/assets/image-pattern.avif` with byte 460,
+inside the colour item's AV1 tile data, XORed with `0xff`. Its frame fails to decode;
+`tests/resource_failures.rs` checks that it renders as a broken image.

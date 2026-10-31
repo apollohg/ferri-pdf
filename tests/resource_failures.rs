@@ -5,7 +5,7 @@
 mod common;
 
 use ferri_pdf::{
-    DisplayItem, FileResolver, RenderDiagnostic, RenderOutput, Resource, ResourceBase,
+    DisplayItem, FileResolver, ImageError, RenderDiagnostic, RenderOutput, Resource, ResourceBase,
     ResourceError, ResourceResolver, render_with_resolver,
 };
 use std::collections::HashMap;
@@ -141,9 +141,9 @@ fn huge_dimensions(data: &[u8], marker: &[u8], offset: usize, side: &[u8]) -> Ve
     huge
 }
 
-/// Each image format's intact fixture, whether to garble it, and a variant whose header
-/// claims dimensions past the decoding budget.
-fn image_fixtures() -> Vec<(&'static str, Vec<u8>, bool, Vec<u8>)> {
+/// Each image format's intact fixture and a variant whose header claims dimensions past the
+/// decoding budget.
+fn image_fixtures() -> Vec<(&'static str, Vec<u8>, Vec<u8>)> {
     let jpeg = include_bytes!("oracle/assets/image-pattern.jpg").to_vec();
     let gif = encoded(image::ImageFormat::Gif);
     let avif = include_bytes!("oracle/assets/image-pattern.avif").to_vec();
@@ -163,35 +163,28 @@ fn image_fixtures() -> Vec<(&'static str, Vec<u8>, bool, Vec<u8>)> {
         (
             "png",
             include_bytes!("oracle/assets/image-pattern.png").to_vec(),
-            true,
             huge_png(),
         ),
         (
             "jpg",
             jpeg.clone(),
-            true,
             huge_dimensions(&jpeg, &[0xff, 0xc0], 5, &[0xff, 0xff]),
         ),
-        ("gif", gif, true, huge_gif),
-        ("webp", encoded(image::ImageFormat::WebP), true, huge_webp),
-        // rav1d 1.1.0 aborts the process when AV1 data fails to decode in its single frame
-        // context, which any garbled byte of an AVIF can lead to.
+        ("gif", gif, huge_gif),
+        ("webp", encoded(image::ImageFormat::WebP), huge_webp),
         (
             "avif",
             avif.clone(),
-            false,
             huge_dimensions(&avif, b"ispe", 8, &[0x00, 0xff, 0xff, 0xff]),
         ),
         (
             "heic",
             heic.clone(),
-            true,
             huge_dimensions(&heic, b"ispe", 8, &[0x00, 0xff, 0xff, 0xff]),
         ),
         (
             "svg",
             include_bytes!("oracle/assets/image-pattern.svg").to_vec(),
-            true,
             br#"<svg xmlns="http://www.w3.org/2000/svg" width="1e30" height="1e30"/>"#.to_vec(),
         ),
     ]
@@ -258,7 +251,7 @@ fn image_reported(diagnostic: &RenderDiagnostic, reference: &str) -> bool {
 #[test]
 fn broken_and_damaged_images_of_every_format_render_their_fallbacks() {
     let mut seeded = Seeded(SEED);
-    for (format, intact, garbles, huge) in image_fixtures() {
+    for (format, intact, huge) in image_fixtures() {
         let mut broken = vec![
             ("zero".to_owned(), Vec::new()),
             ("header".to_owned(), intact[..HEADER_BYTES].to_vec()),
@@ -271,7 +264,7 @@ fn broken_and_damaged_images_of_every_format_render_their_fallbacks() {
         } else {
             broken.push(("huge".to_owned(), huge));
         }
-        for variant in (0..GARBLED_VARIANTS).filter(|_| garbles) {
+        for variant in 0..GARBLED_VARIANTS {
             damaged.push((
                 format!("garbled-{variant}"),
                 seeded.garble(&intact, 0..intact.len(), garbled_count(intact.len())),
@@ -323,6 +316,41 @@ fn broken_and_damaged_images_of_every_format_render_their_fallbacks() {
             }
         }
     }
+}
+
+/// `image-pattern.avif` with one byte of its colour item's AV1 tile data flipped. The frame
+/// fails to decode, which made rav1d 1.1.0 abort the process (`vendor/rav1d/PATCHES.md`).
+#[test]
+fn av1_frame_decode_failures_render_the_broken_image() {
+    const REFERENCE: &str = "av1-frame-error.avif";
+    let mut corpus = Corpus::default();
+    corpus.insert(
+        REFERENCE,
+        include_bytes!("fixtures/images/av1-frame-error.avif").to_vec(),
+    );
+    let output = render(
+        REFERENCE,
+        &format!(
+            "<!doctype html><style>{}</style><p>Before</p><img src='{REFERENCE}' alt='{ALT}'><p>After</p>",
+            common::PROFILE
+        ),
+        &corpus,
+    );
+    assert!(
+        matches!(
+            output.diagnostics.as_slice(),
+            [RenderDiagnostic::UnavailableImage(failure)]
+                if failure.reference == REFERENCE
+                    && matches!(failure.error, ImageError::AvifDecode(_))
+        ),
+        "the AV1 decode error is reported once: {:?}",
+        output.diagnostics
+    );
+    assert!(
+        texts(&output).iter().any(|text| text.contains(ALT)),
+        "the broken img represents its alt text (HTML §4.8.4.3.1): {:?}",
+        texts(&output)
+    );
 }
 
 #[test]
