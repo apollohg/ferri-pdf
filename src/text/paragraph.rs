@@ -702,10 +702,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             if candidate.wrap_width > available
                 && let Some(previous) = best
             {
-                return Ok(Some((
-                    self.emit(start, previous, indent, Vec::new())?,
-                    false,
-                )));
+                return Ok(Some((previous, false)));
             }
             if candidate.wrap_width > available {
                 let content_end = if prepared.has_leaders {
@@ -736,10 +733,9 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
             if opportunity == BreakOpportunity::Mandatory {
                 return Ok(Some((candidate, true)));
             }
-            best = Some(end);
+            best = Some(candidate);
         }
-        best.map(|end| Ok((self.emit(start, end, indent, Vec::new())?, true)))
-            .transpose()
+        Ok(best.map(|line| (line, true)))
     }
 }
 
