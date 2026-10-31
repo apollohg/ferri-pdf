@@ -185,6 +185,42 @@ fn text_of_elements_that_render_nothing_is_neither_addressed_nor_collapsed_acros
 }
 
 #[test]
+fn svg_text_spans_share_their_ancestries() {
+    // Each element's ancestry and entry is made once, so spans cost their own elements, not
+    // the depth they sit at.
+    let tree = tree(
+        "<text y='20'><tspan fill='red'>a<tspan fill='blue'>b</tspan>c</tspan><tspan>d</tspan></text>",
+    );
+    let spans: Vec<_> = groups(&tree)
+        .into_iter()
+        .flat_map(crate::svg::usvg::Group::children)
+        .filter_map(|node| match node {
+            crate::svg::usvg::Node::Text(text) => Some(text),
+            _ => None,
+        })
+        .flat_map(|text| text.chunks())
+        .flat_map(|chunk| &chunk.spans)
+        .collect();
+    assert_eq!(spans.len(), 4, "one span per text node");
+    let [a, b, c, d] = [0, 1, 2, 3].map(|index| &spans[index].ancestry);
+    assert!(
+        std::sync::Arc::ptr_eq(a, c),
+        "spans of one element share its ancestry"
+    );
+    assert!(!std::sync::Arc::ptr_eq(a, b) && !std::sync::Arc::ptr_eq(a, d));
+    for (label, other) in [("nested", b), ("sibling", d)] {
+        assert!(
+            std::sync::Arc::ptr_eq(&a[0], &other[0]),
+            "the {label} span shares the text element's entry"
+        );
+    }
+    assert!(
+        std::sync::Arc::ptr_eq(&a[1], &b[1]),
+        "the nested span shares its parent's entry"
+    );
+}
+
+#[test]
 fn contents_on_svg_shapes_images_and_text_roots_hides_their_content() {
     for body in [
         "<rect display='contents' width='100' height='100'/>",

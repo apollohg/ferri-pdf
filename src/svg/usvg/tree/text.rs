@@ -404,7 +404,7 @@ pub struct TextSpan {
     /// The computed style the span's text shapes, cases and paints with (SVG 2 §11.10).
     pub(crate) style: Arc<crate::style::Style>,
     /// The text element and the span's ancestors in it that have boxes, outermost first.
-    pub(crate) ancestry: Arc<[Ancestor]>,
+    pub(crate) ancestry: Arc<[Arc<Ancestor>]>,
     /// The span's text node is a single character, which `text-transform: math-auto`
     /// italicizes (CSS Text 4 §2.1).
     pub(crate) single_character: bool,

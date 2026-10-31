@@ -1,7 +1,7 @@
 // Copyright 2019 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use std::sync::Arc;
+use std::{collections::HashMap, sync::Arc};
 
 use kurbo::{ParamCurve, ParamCurveArclen};
 use svgtypes::{FontFamily, parse_font_families};
@@ -285,6 +285,41 @@ struct IterState {
     line_breaks: usize,
     text_flow: TextFlow,
     chunks: Vec<TextChunk>,
+    /// The ancestries of the elements whose text has spans, and each element's own entry,
+    /// shared so that spans cost their own elements, not their depth.
+    ancestries: HashMap<usize, Arc<[Arc<Ancestor>]>>,
+    ancestors: HashMap<usize, Arc<Ancestor>>,
+}
+
+impl IterState {
+    /// The text element and the ancestors with boxes of `parent`'s spans in it, outermost
+    /// first.
+    fn ancestry(&mut self, parent: SvgNode, state: &converter::State) -> Arc<[Arc<Ancestor>]> {
+        if let Some(ancestry) = self.ancestries.get(&parent.index()) {
+            return ancestry.clone();
+        }
+        let mut ancestry = Vec::new();
+        for node in parent.ancestors() {
+            if !node.is_contents() {
+                let ancestor = self.ancestors.entry(node.index()).or_insert_with(|| {
+                    Arc::new(Ancestor {
+                        element: node.index(),
+                        style: text_style(node, state),
+                        font: convert_font(node, state),
+                        font_size: super::units::resolve_font_size(node, state),
+                    })
+                });
+                ancestry.push(ancestor.clone());
+            }
+            if node.tag_name() == Some(EId::Text) {
+                break;
+            }
+        }
+        ancestry.reverse();
+        let ancestry: Arc<[Arc<Ancestor>]> = ancestry.into();
+        self.ancestries.insert(parent.index(), ancestry.clone());
+        ancestry
+    }
 }
 
 fn collect_text_chunks(
@@ -302,6 +337,8 @@ fn collect_text_chunks(
         line_breaks: 0,
         text_flow: TextFlow::Linear,
         chunks: Vec::new(),
+        ancestries: HashMap::new(),
+        ancestors: HashMap::new(),
     };
 
     collect_text_chunks_impl(text_node, pos_list, state, cache, &mut iter_state);
@@ -446,21 +483,7 @@ fn collect_text_node(
     let visibility: Visibility = parent.find_attribute(AId::Visibility).unwrap_or_default();
     let (alignment_baseline, parent_alignment) = alignment(parent, state, cache);
     let (baseline_shift, line_edge) = convert_baseline_shift(parent, state, cache);
-    let mut ancestry = Vec::new();
-    for node in parent.ancestors() {
-        if !node.is_contents() {
-            ancestry.push(Ancestor {
-                element: node.index(),
-                style: text_style(node, state),
-                font: convert_font(node, state),
-                font_size: super::units::resolve_font_size(node, state),
-            });
-        }
-        if node.tag_name() == Some(EId::Text) {
-            break;
-        }
-    }
-    ancestry.reverse();
+    let ancestry = iter_state.ancestry(parent, state);
 
     let span = TextSpan {
         start: 0,
@@ -471,7 +494,7 @@ fn collect_text_node(
         font,
         font_size,
         style: text_style(parent, state),
-        ancestry: ancestry.into(),
+        ancestry,
         single_character: child.text().chars().nth(1).is_none(),
         linear_light: parent.find_attribute::<&str>(AId::ColorInterpolation)
             == Some(converter::LINEAR_RGB),
