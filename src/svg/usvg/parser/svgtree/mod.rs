@@ -28,11 +28,18 @@ pub(crate) const MAX_SVG_DEPTH: usize = 128;
 /// The most nodes the tree holds; content past them is omitted.
 pub(crate) const MAX_SVG_NODES: usize = 1_000_000;
 
-/// Where an element goes in the tree: its parent, and its depth below the root element.
+/// Where an element goes in the tree: its parent, its depth below the root element, and
+/// whether it can render.
 #[derive(Clone, Copy)]
 pub(super) struct Placement {
     pub(super) parent: NodeId,
     depth: usize,
+    /// The element renders other than through the instances `use` elements clone of it: it
+    /// is not in `defs` or a `symbol` (SVG 2 §5.3, §5.5), unless in a resource whose content
+    /// renders where it is referenced.
+    renders: bool,
+    /// The element is the instance a `use` element clones, which renders even as a `symbol`.
+    instance: bool,
 }
 
 impl Placement {
@@ -41,6 +48,34 @@ impl Placement {
         Self {
             parent: root,
             depth: 0,
+            renders: true,
+            instance: false,
+        }
+    }
+
+    /// Whether the element placed here renders, other than through the instances of it.
+    pub(super) fn renders(self) -> bool {
+        self.renders
+    }
+
+    /// The instance a `use` element placed here clones, placed as its children are.
+    pub(super) fn instance(self, element: NodeId) -> Self {
+        Self {
+            instance: true,
+            ..self.children(element)
+        }
+    }
+
+    /// Where the children of `element`, a `tag` placed here that `renders`, go.
+    pub(super) fn content(self, element: NodeId, tag: EId, renders: bool) -> Self {
+        Self {
+            renders: match tag {
+                EId::ClipPath | EId::Marker | EId::Mask | EId::Pattern => true,
+                EId::Defs => false,
+                EId::Symbol => renders && self.instance,
+                _ => renders,
+            },
+            ..self.children(element)
         }
     }
 
@@ -52,13 +87,16 @@ impl Placement {
     /// Where the children of `element`, placed here, go: in it, or beside it past the depth
     /// limit.
     pub(super) fn children(self, element: NodeId) -> Self {
+        let instance = false;
         if self.depth < MAX_SVG_DEPTH {
             Self {
                 parent: element,
                 depth: self.depth + 1,
+                instance,
+                ..self
             }
         } else {
-            self
+            Self { instance, ..self }
         }
     }
 }

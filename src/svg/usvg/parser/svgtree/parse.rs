@@ -1,7 +1,7 @@
 // Copyright 2021 the Resvg Authors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use super::css::{Declaration, StyleSheet};
 use crate::style::PseudoElement;
@@ -102,10 +102,25 @@ fn parse<'input>(
         kind: NodeKind::Root,
     });
 
+    // Filter Effects 1 §15.13: `feImage` renders the element it references.
+    let rendered: HashSet<_> = xml
+        .descendants()
+        .filter(|node| parse_tag_name(*node) == Some(EId::FeImage))
+        .filter_map(|node| resolve_href(node, &id_map)?.attribute("id"))
+        .collect();
+
     let style_sheet = resolve_css(xml, injected_stylesheet);
     doc.css_limit = style_sheet.limit;
 
-    parse_xml_tree(xml.root(), &style_sheet, &mut doc, &id_map);
+    parse_xml_tree(
+        xml.root(),
+        &style_sheet,
+        &mut doc,
+        References {
+            ids: &id_map,
+            rendered: &rendered,
+        },
+    );
 
     // Check that the root element is `svg`.
     match doc.root().first_element_child() {
@@ -196,21 +211,30 @@ fn children_steps<'a, 'input>(
     }));
 }
 
+/// The elements of the XML tree that references find.
+#[derive(Clone, Copy)]
+struct References<'r, 'a, 'input> {
+    /// The elements by `id`.
+    ids: &'r HashMap<&'a str, roxmltree::Node<'a, 'input>>,
+    /// The `id`s of the elements that render where they are referenced, wherever they are.
+    rendered: &'r HashSet<&'a str>,
+}
+
 /// Parses the XML tree under `root` without recursion, which bounds the stack whatever the
-/// nesting; the instances of `use` elements nest in their elements. Past the node limit the
-/// rest of the content is omitted.
+/// nesting; the instances of `use` elements that can render nest in their elements. Past the
+/// node limit the rest of the content is omitted.
 fn parse_xml_tree<'a, 'input>(
     root: roxmltree::Node<'a, 'input>,
     style_sheet: &StyleSheet,
     doc: &mut Document<'input>,
-    id_map: &HashMap<&str, roxmltree::Node<'a, 'input>>,
+    references: References<'_, 'a, 'input>,
 ) {
     let mut steps = Vec::new();
     let top = Placement::top(doc.root().id);
     children_steps(root, root, top, false, &mut steps);
     // The links whose instances are open, which a circular reference would instantiate again
     // (SVG 2 §5.6.3).
-    let mut open = std::collections::HashSet::new();
+    let mut open = HashSet::new();
     while let Some(step) = steps.pop() {
         let (node, origin, placement, ignore_ids) = match step {
             Step::Node {
@@ -232,7 +256,7 @@ fn parse_xml_tree<'a, 'input>(
             style_sheet,
             ignore_ids,
             doc,
-            id_map,
+            references,
             &mut open,
             &mut steps,
         )
@@ -252,8 +276,8 @@ fn parse_xml_node<'a, 'input>(
     style_sheet: &StyleSheet,
     ignore_ids: bool,
     doc: &mut Document<'input>,
-    id_map: &HashMap<&str, roxmltree::Node<'a, 'input>>,
-    open: &mut std::collections::HashSet<roxmltree::NodeId>,
+    references: References<'_, 'a, 'input>,
+    open: &mut HashSet<roxmltree::NodeId>,
     steps: &mut Vec<Step<'a, 'input>>,
 ) -> Result<(), Error> {
     let mut tag_name = match parse_tag_name(node) {
@@ -271,8 +295,14 @@ fn parse_xml_node<'a, 'input>(
         tag_name = EId::G;
     }
 
-    let referenced = (tag_name == EId::Use)
-        .then(|| resolve_svg_use(node, origin, id_map))
+    // An instance that cannot render is not created: references clone the `use` element
+    // itself, and its instance renders nowhere else.
+    let renders = placement.renders()
+        || node
+            .attribute("id")
+            .is_some_and(|id| references.rendered.contains(id));
+    let referenced = (tag_name == EId::Use && renders)
+        .then(|| resolve_svg_use(node, origin, references.ids))
         .flatten()
         .filter(|link| !open.contains(&link.id()));
     let host_instance = match referenced {
@@ -288,7 +318,7 @@ fn parse_xml_node<'a, 'input>(
         host_instance,
         doc,
     )?;
-    let inner = placement.children(node_id);
+    let inner = placement.content(node_id, tag_name, renders);
     if tag_name == EId::Text {
         super::text::parse_svg_text_element(node, node_id, inner, style_sheet, doc)?;
     } else if tag_name == EId::Use {
@@ -302,7 +332,7 @@ fn parse_xml_node<'a, 'input>(
             steps.push(Step::Node {
                 node: link,
                 origin: node,
-                placement: inner,
+                placement: placement.instance(node_id),
                 ignore_ids: true,
             });
         }

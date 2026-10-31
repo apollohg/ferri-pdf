@@ -225,3 +225,58 @@ fn encapsulation_positions_include_sibling_shadow_and_inert_tree_scopes() {
             .is_none()
     );
 }
+
+/// The `id`s of the elements holding a shadow tree, clones of an element sharing its `id`.
+fn shadow_hosts(tree: &DocumentTree) -> Vec<&str> {
+    tree.shadow_including_elements()
+        .filter(|element| element.shadow_root().is_some())
+        .map(|element| element.attr("id").unwrap_or_default())
+        .collect()
+}
+
+#[test]
+fn use_elements_get_shadow_trees_where_they_render() {
+    let tree = DocumentTree::parse(
+        "<svg><rect id=r width=1 height=1 />\
+         <defs><use id=defined href='#r'/><g><use id=grouped href='#r'/></g>\
+         <clipPath><use id=clipping href='#r'/></clipPath><use id=imaged href='#r'/>\
+         <filter><feImage href='#imaged'/></filter></defs>\
+         <symbol id=s><use id=symbolized href='#r'/></symbol>\
+         <use id=placed href='#s'/><use id=rendered href='#r'/></svg>",
+    );
+    let mut hosts = shadow_hosts(&tree);
+    hosts.sort_unstable();
+    assert_eq!(
+        hosts,
+        ["clipping", "imaged", "placed", "rendered", "symbolized"],
+        "SVG 2 §5.3, §5.5: content of `defs` and `symbol` renders only through clones, which \
+         hold their own shadow trees (the last `symbolized` is the clone in #placed); clip \
+         path content and the element `feImage` references render where they are"
+    );
+}
+
+#[test]
+fn a_chain_of_use_elements_in_definitions_gets_shadow_trees_in_linear_number() {
+    // Each `use` element of the chain holding a shadow tree, with the nested ones in its clone,
+    // makes the shadow trees quadratic in the chain's length.
+    const CHAIN: usize = 50;
+    let uses: String = (1..=CHAIN)
+        .map(|index| format!("<use id=u{index} href='#u{}'/>", index - 1))
+        .collect();
+    let tree = DocumentTree::parse(&format!(
+        "<svg><defs><rect id=u0 width=1 height=1 />{uses}</defs><use id=rendered href='#u{CHAIN}'/></svg>"
+    ));
+    let hosts = shadow_hosts(&tree);
+    assert_eq!(
+        hosts.len(),
+        CHAIN + 1,
+        "shadow trees for a chain of {CHAIN} references"
+    );
+    let expected: Vec<String> = std::iter::once("rendered".to_owned())
+        .chain((1..=CHAIN).rev().map(|index| format!("u{index}")))
+        .collect();
+    assert_eq!(
+        hosts, expected,
+        "the rendered use and the clone of each use it reaches hold one shadow tree each"
+    );
+}

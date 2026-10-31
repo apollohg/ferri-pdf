@@ -1728,6 +1728,25 @@ fn nested_fill_box_transforms_measure_each_element_once() {
 }
 
 #[test]
+fn a_chain_of_use_elements_in_definitions_expands_only_where_it_renders() {
+    // Expanding every `use` element of the chain, with the nested instances, takes nodes
+    // quadratic in its length: past the tree's node budget at this length, which would omit
+    // the rendered `use` after them.
+    const CHAIN: usize = 1450;
+    let uses: String = (1..=CHAIN)
+        .map(|index| format!("<use id='u{index}' href='#u{}'/>", index - 1))
+        .collect();
+    let tree = tree(&format!(
+        "<defs><rect id='u0' width='10' height='10'/>{uses}</defs><use href='#u{CHAIN}'/>"
+    ));
+    assert_eq!(
+        paths(&tree).len(),
+        1,
+        "the rendered use draws the square its {CHAIN} references reach"
+    );
+}
+
+#[test]
 fn svg_text_shapes_each_run_of_spans_once() {
     // Shaping the whole chunk again for each of its spans takes time quadratic in the spans:
     // minutes for this many, against about a second.

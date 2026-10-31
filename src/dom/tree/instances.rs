@@ -1,14 +1,22 @@
 //! SVG 2 §5.5 use-element shadow trees: deep clones of referenced elements, hosted by `use`.
 use super::{DocumentTree, ElementId, TreeScopeId};
-use crate::dom::{DomError, NodeData, SVG_NAMESPACE, XLINK_NAMESPACE, shadow::ShadowRoot};
+use crate::dom::{
+    DomError, NodeData, SVG_NAMESPACE, TreeRelation, XLINK_NAMESPACE, shadow::ShadowRoot,
+};
 use ego_tree::NodeId;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 /// Cloned nodes across all of a document's use-element shadow trees, which bounds the
 /// exponential growth of nested references without a cycle.
 const MAX_INSTANCE_NODES: usize = 1_000_000;
 const INSTANCE_NODES: &str = "SVG use-element instance nodes";
 const USE_ELEMENT: &str = "use";
+const FE_IMAGE_ELEMENT: &str = "feImage";
+const DEFINITIONS_ELEMENT: &str = "defs";
+const SYMBOL_ELEMENT: &str = "symbol";
+/// Elements whose content renders where they are referenced (CSS Masking 1 §6.1, §7.1, SVG 2
+/// §11.6, §14.3).
+const RESOURCE_ELEMENTS: [&str; 4] = ["clipPath", "marker", "mask", "pattern"];
 const HREF_ATTRIBUTE: &str = "href";
 const ID_ATTRIBUTE: &str = "id";
 const FRAGMENT: char = '#';
@@ -93,44 +101,58 @@ impl DocumentTree {
         )))
     }
 
-    /// Gives every SVG `use` element referencing an element of its own node tree a shadow tree
-    /// holding that element's clone (§5.5.1), nested `use` elements in clones included. A
-    /// reference whose instance would contain the referencing element is circular, and gets
-    /// none (§5.5.1); neither does a reference to another document.
+    /// Gives every SVG `use` element that renders and references an element of its own node
+    /// tree a shadow tree holding that element's clone (§5.5.1), nested `use` elements in clones
+    /// included. A reference whose instance would contain the referencing element is circular,
+    /// and gets none (§5.5.1); neither does a reference to another document. Only clones of the
+    /// other `use` elements render, which their own shadow trees hold, so a chain of references
+    /// gets shadow trees in linear rather than quadratic number.
     pub(crate) fn attach_use_instances(&mut self) {
         let mut identified: HashMap<(NodeId, &str), NodeId> = HashMap::new();
         let mut pending = Vec::new();
+        let mut images = Vec::new();
         for element in self.shadow_including_elements() {
             if let Some(id) = element.attr(ID_ATTRIBUTE) {
                 identified
                     .entry((element.tree_scope().root, id))
                     .or_insert(element.raw.id());
             }
-            if element.namespace() == SVG_NAMESPACE && element.name() == USE_ELEMENT {
-                pending.push(Pending {
+            if element.namespace() != SVG_NAMESPACE {
+                continue;
+            }
+            match element.name() {
+                USE_ELEMENT => pending.push(Pending {
                     host: element.raw.id(),
                     original: element.raw.id(),
                     enclosing: Vec::new(),
-                });
+                }),
+                FE_IMAGE_ELEMENT => images.push(element.raw.id()),
+                _ => {}
             }
         }
+        let reference = |node: NodeId| {
+            let element = self.element(ElementId {
+                document: self.identity,
+                node,
+            })?;
+            let scope = element.tree_scope().root;
+            // §16.1.6: `href` without a namespace wins over the deprecated `xlink:href`.
+            let reference = element
+                .attr_in_namespace(None, HREF_ATTRIBUTE)
+                .or_else(|| element.attr_in_namespace(Some(XLINK_NAMESPACE), HREF_ATTRIBUTE))?
+                .strip_prefix(FRAGMENT)?;
+            Some((*identified.get(&(scope, reference))?, scope))
+        };
         let references: HashMap<NodeId, (NodeId, NodeId)> = pending
             .iter()
-            .filter_map(|instance| {
-                let element = self.element(ElementId {
-                    document: self.identity,
-                    node: instance.original,
-                })?;
-                let scope = element.tree_scope().root;
-                // §16.1.6: `href` without a namespace wins over the deprecated `xlink:href`.
-                let reference = element
-                    .attr_in_namespace(None, HREF_ATTRIBUTE)
-                    .or_else(|| element.attr_in_namespace(Some(XLINK_NAMESPACE), HREF_ATTRIBUTE))?
-                    .strip_prefix(FRAGMENT)?;
-                let target = *identified.get(&(scope, reference))?;
-                Some((instance.original, (target, scope)))
-            })
+            .filter_map(|instance| Some((instance.original, reference(instance.original)?)))
             .collect();
+        // Filter Effects 1 §15.13: `feImage` renders the element it references.
+        let rendered: HashSet<NodeId> = images
+            .into_iter()
+            .filter_map(|image| Some(reference(image)?.0))
+            .collect();
+        pending.retain(|instance| self.use_renders(instance.host, &rendered));
         pending.reverse();
         while let Some(instance) = pending.pop() {
             let Some(&(target, scope)) = references.get(&instance.original) else {
@@ -171,7 +193,9 @@ impl DocumentTree {
             enclosing.push(instance.original);
             let mut nested: Vec<_> = clones
                 .into_iter()
-                .filter(|(original, _)| references.contains_key(original))
+                .filter(|(original, host)| {
+                    references.contains_key(original) && self.use_renders(*host, &rendered)
+                })
                 .collect();
             // Tree order keeps the shadow trees' creation, and so their nodes, deterministic.
             nested.sort_unstable();
@@ -181,5 +205,36 @@ impl DocumentTree {
                 enclosing: enclosing.clone(),
             }));
         }
+    }
+
+    /// Whether the `use` element `node` renders other than through the clones of it: no `defs`
+    /// or `symbol` holds it but the `symbol` an instance clones, unless nearer a resource or an
+    /// element in `rendered` does, whose content renders where it is referenced (SVG 2 §5.3,
+    /// §5.5).
+    fn use_renders(&self, node: NodeId, rendered: &HashSet<NodeId>) -> bool {
+        let Some(element) = self.element(ElementId {
+            document: self.identity,
+            node,
+        }) else {
+            return false;
+        };
+        for current in std::iter::once(element).chain(element.ancestors(TreeRelation::Selector)) {
+            if rendered.contains(&current.raw.id()) {
+                return true;
+            }
+            if current.namespace() != SVG_NAMESPACE {
+                continue;
+            }
+            match current.name() {
+                name if RESOURCE_ELEMENTS.contains(&name) => return true,
+                DEFINITIONS_ELEMENT => return false,
+                SYMBOL_ELEMENT => {
+                    return current.parent(TreeRelation::Selector).is_none()
+                        && current.shadow_host().is_some();
+                }
+                _ => {}
+            }
+        }
+        true
     }
 }
