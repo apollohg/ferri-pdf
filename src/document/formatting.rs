@@ -14,12 +14,15 @@ pub(crate) const BOX_DEPTH: usize = 1;
 /// The formatting depth a box adds for each way of laying it out apart from its container's
 /// flow, in proportion to the stack each nesting level of it takes, so that the deepest
 /// nesting of any of them renders on a 2 MiB thread.
-pub(crate) const ATOMIC_INLINE_DEPTH: usize = 13;
-pub(super) const TABLE_DEPTH: usize = 19;
-pub(super) const FLEX_DEPTH: usize = 14;
-pub(super) const GRID_DEPTH: usize = 16;
-pub(super) const FLOAT_DEPTH: usize = 14;
-pub(crate) const POSITIONED_DEPTH: usize = 11;
+pub(crate) const ATOMIC_INLINE_DEPTH: usize = 4;
+pub(super) const TABLE_DEPTH: usize = 1;
+/// The formatting depth of the anonymous table around a table part outside a table (CSS 2.1
+/// §17.2.1), whose boxes nest in layout as an explicit table's table, row group and row do.
+pub(super) const ANONYMOUS_TABLE_DEPTH: usize = 3 * BOX_DEPTH;
+pub(super) const FLEX_DEPTH: usize = 4;
+pub(super) const GRID_DEPTH: usize = 9;
+pub(super) const FLOAT_DEPTH: usize = 4;
+pub(crate) const POSITIONED_DEPTH: usize = 4;
 /// Multi-column containers, filters and orthogonal flows take more for the work their nesting
 /// multiplies: balancing lays columns out again for each level, filters rasterize their
 /// content again, and an orthogonal flow without a definite size is measured again for each
@@ -3195,9 +3198,10 @@ fn formatting_depth(style: &Style, parent: &Style, math: bool) -> usize {
     let display = &style.display;
     [
         (display.is_atomic_inline(), ATOMIC_INLINE_DEPTH),
+        (display.is_table(), TABLE_DEPTH),
         (
-            display.is_table() || generates_anonymous_table(display, &parent.display),
-            TABLE_DEPTH,
+            generates_anonymous_table(display, &parent.display),
+            TABLE_DEPTH + ANONYMOUS_TABLE_DEPTH,
         ),
         (
             style.writing_mode.vertical() != parent.writing_mode.vertical()

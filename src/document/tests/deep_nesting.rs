@@ -1,7 +1,7 @@
 //! Every way of nesting content renders at its nesting limit and past it on a library thread:
 //! the limits flatten deeper content before its nesting can exhaust the stack.
 use crate::document::formatting::{
-    ATOMIC_INLINE_DEPTH, BOX_DEPTH, FILTER_DEPTH, FLEX_DEPTH, FLOAT_DEPTH,
+    ANONYMOUS_TABLE_DEPTH, ATOMIC_INLINE_DEPTH, BOX_DEPTH, FILTER_DEPTH, FLEX_DEPTH, FLOAT_DEPTH,
     FORMATTING_NESTING_RESOURCE, GRID_DEPTH, MATHML_NESTING_RESOURCE, MAX_FORMATTING_DEPTH,
     MULTICOL_DEPTH, ORTHOGONAL_DEPTH, POSITIONED_DEPTH, TABLE_DEPTH,
 };
@@ -280,8 +280,12 @@ const CONSTRUCTS: &[Construct] = &[
     // Each cell outside a table generates an anonymous table around it.
     formatting_construct!(
         "table cells",
-        FormattingNest::level("<div>", "</div>", BOX_DEPTH + TABLE_DEPTH)
-            .styled("div{display:table-cell}")
+        FormattingNest::level(
+            "<div>",
+            "</div>",
+            BOX_DEPTH + TABLE_DEPTH + ANONYMOUS_TABLE_DEPTH
+        )
+        .styled("div{display:table-cell}")
     ),
     formatting_construct!(
         "stacking contexts",
