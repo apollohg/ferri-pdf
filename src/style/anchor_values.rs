@@ -720,6 +720,20 @@ pub(super) fn namespaced(property: Property, value: &crate::style::declaration::
 
 /// Validity the grammar cannot express: each `<try-tactic>` keyword occurs once (§6.1).
 pub(crate) fn valid(property: Property, value: &Component) -> bool {
+    // §5: `anchor-size()` is valid only in the accepted `@position-try` properties, though
+    // grammars such as `flex-basis`'s reach it through `<'width'>`.
+    let allowed = functions(property);
+    if (!allowed.anchor
+        && value
+            .find(Label::Production(Production::AnchorFn))
+            .is_some())
+        || (!allowed.size
+            && value
+                .find(Label::Production(Production::AnchorSizeFn))
+                .is_some())
+    {
+        return false;
+    }
     if !matches!(
         property,
         Property::PositionTryFallbacks | Property::PositionTry

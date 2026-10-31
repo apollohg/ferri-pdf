@@ -538,6 +538,7 @@ fn property_grammars_accept_generated_values_and_reject_mutations() {
                         !crate::style::grid_values::valid(property, &matched)
                             || !crate::style::logical::valid(property, &matched)
                             || !crate::style::inert::valid(property, &matched)
+                            || !crate::style::anchor_values::valid(property, &matched)
                             || !crate::style::counter_style::valid(&matched)
                             || !crate::style::colors::interpolation_spaces_exist(&matched)
                     }))
@@ -750,6 +751,24 @@ fn matching_follows_value_definition_semantics() {
             "margin-box",
             false,
             "mask-origin and mask-clip, which the layer's boxes set, exclude margin-box",
+        ),
+        (
+            P::Width,
+            "anchor-size(width)",
+            true,
+            "anchor-size() in a sizing property",
+        ),
+        (
+            P::FlexBasis,
+            "anchor-size(width)",
+            false,
+            "anchor-size() only in accepted @position-try properties",
+        ),
+        (
+            P::Flex,
+            "1 1 anchor-size(width)",
+            false,
+            "anchor-size() through a shorthand's flex-basis",
         ),
     ];
     let mut failures = Vec::new();
