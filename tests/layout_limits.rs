@@ -213,6 +213,26 @@ fn page_margin_boxes_layout_cannot_form_are_omitted_alone() {
 }
 
 #[test]
+fn boxes_whose_padding_overflows_their_border_box_are_omitted_alone() {
+    for float in ["none", "left"] {
+        let (texts, omitted) = texts_and_omitted_boxes(&format!(
+            "<!doctype html><div style='float:{float};padding:0 calc(1e30% * 1e30)'>huge</div>\
+             <p>after</p>"
+        ));
+        assert_eq!(
+            omitted,
+            ["block geometry is not finite"],
+            "float:{float}: the box whose border box is infinitely wide is reported omitted"
+        );
+        assert_eq!(
+            texts,
+            ["after"],
+            "float:{float}: only the box is lost, not the content after it"
+        );
+    }
+}
+
+#[test]
 fn empty_footnotes_on_pages_without_room_render() {
     // The page area is 0pt tall, so not even the footnote's empty body fits below the line.
     let (texts, omitted) = texts_and_omitted_boxes(

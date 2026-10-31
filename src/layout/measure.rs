@@ -1507,8 +1507,9 @@ impl<'a> Measurer<'a> {
                 .space
                 .enter(block, &geometry, containing_height, used_height);
         }
-        if !geometry.width.is_finite()
-            || !geometry.x.is_finite()
+        let border_box = geometry.border_box(0.0);
+        if !border_box.width.is_finite()
+            || !border_box.x.is_finite()
             || geometry
                 .padding
                 .iter()
