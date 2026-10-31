@@ -276,3 +276,138 @@ pub(crate) fn column_rules(
     collect(&trace.display_lists[page], rgb, &mut found);
     found
 }
+
+/// The largest magnitude a number in the output may have: ISO 32000-1 Annex C.2 Table C.1
+/// limits integers to 2^31 - 1, and readers built on 32-bit numbers represent no larger value.
+#[allow(
+    dead_code,
+    reason = "each test binary uses a subset of the shared helpers"
+)]
+pub(crate) const PDF_NUMBER_LIMIT: f64 = 2_147_483_647.0;
+
+/// Why `pdf` is not a valid PDF whose numbers lie within [`PDF_NUMBER_LIMIT`]: that it does not
+/// parse, or each token of its objects and content streams that is a non-finite or
+/// exponent-form number (which ISO 32000-1 §7.3.3 number syntax lacks) or a number past the
+/// limit. Empty for a valid PDF.
+#[allow(
+    dead_code,
+    reason = "each test binary uses a subset of the shared helpers"
+)]
+pub(crate) fn pdf_number_faults(pdf: &[u8]) -> Vec<String> {
+    use hayro::hayro_syntax::object::{Name, Object};
+    /// Streams holding binary data rather than PDF syntax: images, font programs, ICC
+    /// profiles, sampled functions, cross-reference streams and XML metadata.
+    fn is_binary(stream: &hayro::hayro_syntax::object::Stream<'_>) -> bool {
+        let dict = stream.dict();
+        let named = |key: &[u8], values: &[&[u8]]| {
+            dict.get::<Name<'_>>(key)
+                .is_some_and(|name| values.contains(&name.as_ref()))
+        };
+        named(
+            b"Subtype",
+            &[b"Image", b"Type1C", b"CIDFontType0C", b"OpenType"],
+        ) || named(b"Type", &[b"XRef", b"Metadata"])
+            || [&b"Length1"[..], b"Length2", b"Length3", b"N"]
+                .iter()
+                .any(|key| dict.contains_key(key))
+            || dict.get::<i32>(b"FunctionType") == Some(0)
+    }
+    let parsed = match hayro::hayro_syntax::Pdf::new(pdf.to_vec()) {
+        Ok(parsed) => parsed,
+        Err(error) => return vec![format!("the PDF does not parse: {error:?}")],
+    };
+    let mut faults = Vec::new();
+    scan_pdf_tokens("file", pdf, true, &mut faults);
+    for object in parsed.objects() {
+        if let Object::Stream(stream) = object
+            && !is_binary(&stream)
+        {
+            let id = stream.obj_id();
+            match stream.decoded() {
+                Ok(data) => scan_pdf_tokens(&format!("stream {id:?}"), &data, false, &mut faults),
+                Err(error) => faults.push(format!("stream {id:?} does not decode: {error:?}")),
+            }
+        }
+    }
+    faults
+}
+
+/// Records in `faults` each number token of the PDF syntax in `data` that is not a finite
+/// number within [`PDF_NUMBER_LIMIT`] in PDF number syntax; with `skip_streams`, stream data is
+/// passed over.
+fn scan_pdf_tokens(source: &str, data: &[u8], skip_streams: bool, faults: &mut Vec<String>) {
+    const DELIMITERS: &[u8] = b"()<>[]{}/%";
+    const STREAM_END: &[u8] = b"endstream";
+    let regular =
+        |byte: u8| !byte.is_ascii_whitespace() && byte != 0 && !DELIMITERS.contains(&byte);
+    let mut index = 0;
+    while index < data.len() {
+        let byte = data[index];
+        match byte {
+            b'%' => {
+                while index < data.len() && !matches!(data[index], b'\r' | b'\n') {
+                    index += 1;
+                }
+            }
+            b'(' => {
+                let mut depth = 0;
+                while index < data.len() {
+                    match data[index] {
+                        b'\\' => index += 1,
+                        b'(' => depth += 1,
+                        b')' => depth -= 1,
+                        _ => {}
+                    }
+                    index += 1;
+                    if depth == 0 {
+                        break;
+                    }
+                }
+            }
+            b'<' if data.get(index + 1) != Some(&b'<') => {
+                while index < data.len() && data[index] != b'>' {
+                    index += 1;
+                }
+                index += 1;
+            }
+            b'/' => {
+                index += 1;
+                while index < data.len() && regular(data[index]) {
+                    index += 1;
+                }
+            }
+            _ if regular(byte) => {
+                let start = index;
+                while index < data.len() && regular(data[index]) {
+                    index += 1;
+                }
+                let token = String::from_utf8_lossy(&data[start..index]);
+                if skip_streams && token == "stream" {
+                    index = data[index..]
+                        .windows(STREAM_END.len())
+                        .position(|window| window == STREAM_END)
+                        .map_or(data.len(), |offset| index + offset + STREAM_END.len());
+                    continue;
+                }
+                let Ok(value) = token.parse::<f64>() else {
+                    continue;
+                };
+                let digits = token.trim_start_matches(['+', '-']);
+                let pdf_syntax = digits
+                    .bytes()
+                    .all(|byte| byte.is_ascii_digit() || byte == b'.')
+                    && digits.bytes().filter(|&byte| byte == b'.').count() <= 1;
+                if !pdf_syntax || !value.is_finite() {
+                    faults.push(format!(
+                        "{source} at byte {start}: `{token}` is not a PDF number"
+                    ));
+                } else if value.abs() > PDF_NUMBER_LIMIT {
+                    faults.push(format!(
+                        "{source} at byte {start}: {token} is past the limit {PDF_NUMBER_LIMIT}"
+                    ));
+                }
+            }
+            _ => index += 1,
+        }
+    }
+}
