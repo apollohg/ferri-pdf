@@ -696,7 +696,7 @@ dependencies = [
 
 [[package]]
 name = "ferri-pdf-avif-decode"
-version = "3.0.1"
+version = "3.0.2"
 dependencies = [
  "bytemuck",
  "ferri-pdf-rav1d",
@@ -767,7 +767,7 @@ dependencies = [
 
 [[package]]
 name = "ferri-pdf-rav1d"
-version = "1.1.1"
+version = "1.1.2"
 dependencies = [
  "assert_matches",
  "atomig",
