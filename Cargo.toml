@@ -1,4 +1,5 @@
 [workspace]
+members = ["python"]
 exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/avif-decode", "vendor/rav1d", "vendor/heic-decoder", "vendor/selectors"]
 resolver = "3"
 
@@ -6,6 +7,10 @@ resolver = "3"
 version = "0.1.5"
 edition = "2024"
 rust-version = "1.97"
+# Own code, inlined SVG libraries, CLDR and mdn-data, the DejaVu and Liberation fonts, then
+# the hyphenation patterns embedded through hypher.
+license = "MIT AND (Apache-2.0 OR MIT) AND Unicode-3.0 AND CC0-1.0 AND Bitstream-Vera AND LicenseRef-Arev AND OFL-1.1-RFN AND BSD-3-Clause AND Unlicense AND FSFAP-no-warranty-disclaimer"
+repository = "https://github.com/apollohg/ferri-pdf"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
@@ -111,6 +116,8 @@ write-fonts = "0.48.1"
 # Pure-Rust Brotli for WOFF2; its default features contain no unsafe code.
 brotli-decompressor = "5.0.3"
 thiserror = "2"
+# Python bindings in python/; the stable ABI from 3.10 lets one wheel serve every later CPython.
+pyo3 = { version = "0.30.1", features = ["abi3-py310", "extension-module"] }
 # Only languages whose patterns are MIT, BSD-3-Clause, Unlicense or FSFAP-no-warranty-disclaimer
 # licensed; assets/hyphenation/PATTERNS.txt carries their notices.
 hypher = { version = "=0.1.8", default-features = false, features = [
@@ -152,16 +159,16 @@ name = "ferri-pdf"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
-# Own code, inlined SVG libraries, CLDR and mdn-data, the DejaVu and Liberation fonts, then
-# the hyphenation patterns embedded through hypher.
-license = "MIT AND (Apache-2.0 OR MIT) AND Unicode-3.0 AND CC0-1.0 AND Bitstream-Vera AND LicenseRef-Arev AND OFL-1.1-RFN AND BSD-3-Clause AND Unlicense AND FSFAP-no-warranty-disclaimer"
+license.workspace = true
 description = "HTML and CSS to PDF renderer for print, in pure Rust"
-repository = "https://github.com/apollohg/ferri-pdf"
+repository.workspace = true
 keywords = ["pdf", "html", "css", "print", "renderer"]
 categories = ["rendering", "text-processing", "command-line-utilities"]
 include = [
     "/build.rs",
     "/build/**",
+    "/tests/remote.rs",
+    "/benches/render.rs",
     "/src/**",
     "/spec/css/**",
     "/spec/languages/**",

@@ -1,0 +1,28 @@
+[package]
+name = "ferri-pdf-python"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Python bindings for the ferri-pdf HTML and CSS to PDF renderer"
+repository.workspace = true
+readme = "README.md"
+keywords = ["pdf", "html", "css", "print", "python"]
+categories = ["rendering", "api-bindings"]
+# Released to PyPI as the `ferri-pdf` wheel, never to crates.io.
+publish = false
+
+[lib]
+name = "ferri_pdf_python"
+crate-type = ["cdylib"]
+# The extension links against the interpreter that loads it, so it has no test harness.
+test = false
+doctest = false
+
+[lints]
+workspace = true
+
+[dependencies]
+ferri-pdf = { path = ".." }
+pyo3.workspace = true
+serde_json.workspace = true

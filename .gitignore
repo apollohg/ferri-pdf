@@ -3,3 +3,6 @@ tmp
 .DS_Store
 /.private/
 __pycache__/
+.venv/
+/python/ferri_pdf/*.so
+/python/ferri_pdf/*.pyd

@@ -1,0 +1,45 @@
+[build-system]
+requires = ["maturin>=1.16,<2"]
+build-backend = "maturin"
+
+[project]
+name = "ferri-pdf"
+description = "HTML and CSS to PDF renderer for print, in pure Rust"
+readme = "python/README.md"
+requires-python = ">=3.10"
+keywords = ["pdf", "html", "css", "print", "renderer"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Rust",
+    "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+    "Topic :: Printing",
+    "Topic :: Text Processing :: Markup :: HTML",
+    "Typing :: Typed",
+]
+dynamic = ["version", "license"]
+# Everything the extension statically links or embeds: fonts, patterns, data and forks.
+license-files = [
+    "LICENSE",
+    "assets/fonts/*-LICENSE.txt",
+    "assets/hyphenation/PATTERNS.txt",
+    "spec/*/LICENSE",
+    "spec/css/mdn-data/LICENSE",
+    "src/document/inline/Unicode-LICENSE.txt",
+    "src/svg/*/LICENSE*",
+    "vendor/*/LICENSE*",
+    "vendor/*/COPYING",
+    "vendor/krilla/NOTICE.md",
+]
+
+[project.urls]
+Repository = "https://github.com/apollohg/ferri-pdf"
+
+[dependency-groups]
+test = ["pytest>=8"]
+
+[tool.maturin]
+manifest-path = "python/Cargo.toml"
+python-source = "python"
+module-name = "ferri_pdf.ferri_pdf"

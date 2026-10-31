@@ -48,6 +48,21 @@ Relative URLs resolve against `base`. HTTP(S) fetching is behind the default `ht
 
 Recovered input is reported in `output.diagnostics`. When a resource limit leaves content out, rendering returns `Error::ContentLost` with those diagnostics; set `content_loss: ContentLoss::Render` to get the PDF anyway.
 
+## Python
+
+```sh
+pip install ferri-pdf
+```
+
+```python
+import ferri_pdf
+
+output = ferri_pdf.render("<h1>Hello</h1>", ferri_pdf.RenderOptions(base="assets"))
+open("hello.pdf", "wb").write(output.pdf)
+```
+
+The bindings live in `python/`; see [python/README.md](python/README.md) for options, multipart rendering and the `fetch` callback for loading remote resources yourself.
+
 ## Development
 
 Requires Rust 1.97 or newer.
@@ -57,6 +72,8 @@ cargo test --workspace
 cargo fmt --check
 cargo clippy --workspace --all-targets -- -D warnings
 ```
+
+To build and test the Python bindings: `pip install maturin pytest && maturin develop && pytest python/tests`.
 
 The PDF checks in `tests/*.py` and the standards oracle in `tests/oracle` also need Python with Pillow and fontTools, Poppler and GNU FriBidi. See [tests/oracle/README.md](tests/oracle/README.md).
 

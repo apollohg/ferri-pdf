@@ -24,7 +24,9 @@ class PackageArchives(unittest.TestCase):
         self.environment.setdefault('CARGO_TARGET_DIR', str(ROOT / 'target'))
         metadata = json.loads(self.run_cargo(['metadata', '--offline', '--locked',
                                              '--format-version', '1'], ROOT))
-        packages = [package for package in metadata['packages'] if package['source'] is None]
+        # `publish = false` packages, such as the Python bindings, never reach crates.io.
+        packages = [package for package in metadata['packages']
+                    if package['source'] is None and package['publish'] != []]
         with tempfile.TemporaryDirectory(prefix='ferri-pdf-archives-') as directory:
             temporary = Path(directory)
             sources = temporary / 'sources'
