@@ -970,16 +970,39 @@ struct SplitInline<'a> {
 
 #[derive(Clone)]
 struct FlowFrame<'a> {
-    items: std::iter::Zip<std::vec::IntoIter<FlowItem<'a>>, std::vec::IntoIter<BreakTails>>,
+    items: FrameItems<'a>,
     block: Option<BlockFrame<'a>>,
 }
 impl<'a> FlowFrame<'a> {
     fn new(items: Vec<FlowItem<'a>>, tail: BreakTails, block: Option<BlockFrame<'a>>) -> Self {
         let tails = crate::layout::breaks::tail_heights(&items, tail);
         Self {
-            items: items.into_iter().zip(tails),
+            items: FrameItems {
+                items: Rc::new(items.into_iter().zip(tails).map(Some).collect()),
+                next: 0,
+            },
             block,
         }
+    }
+}
+
+/// The items of a flow frame from `next` on, which copies of the flow's cursor share, so a
+/// copy costs nothing for the content left: a cursor moves each item out while no copy shares
+/// them, and copies the item otherwise.
+#[derive(Clone)]
+struct FrameItems<'a> {
+    items: Rc<Vec<Option<(FlowItem<'a>, BreakTails)>>>,
+    next: usize,
+}
+impl<'a> Iterator for FrameItems<'a> {
+    type Item = (FlowItem<'a>, BreakTails);
+    fn next(&mut self) -> Option<Self::Item> {
+        let item = match Rc::get_mut(&mut self.items) {
+            Some(items) => items.get_mut(self.next)?.take(),
+            None => self.items.get(self.next)?.clone(),
+        };
+        self.next += 1;
+        Some(item.expect("a cursor moves an item out only while no copy shares the items"))
     }
 }
 

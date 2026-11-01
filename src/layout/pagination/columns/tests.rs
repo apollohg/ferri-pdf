@@ -167,7 +167,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             orders: PaintOrders::default(),
             markers: Vec::new(),
         };
-        let expected = ColumnLayout::new(&mut measurer, items, rows.clone(), &start)
+        let expected = ColumnLayout::new(&mut measurer, items.clone(), rows.clone(), &start)
             .unwrap()
             .complete(&mut measurer)
             .unwrap();
@@ -209,7 +209,10 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
         for schedule in [[0, 1], [1, 0]] {
             let mut layouts = (0..2)
                 .map(|_| {
-                    Some(ColumnLayout::new(&mut measurer, items, rows.clone(), &start).unwrap())
+                    Some(
+                        ColumnLayout::new(&mut measurer, items.clone(), rows.clone(), &start)
+                            .unwrap(),
+                    )
                 })
                 .collect::<Vec<_>>();
             let mut outputs = Vec::new();
@@ -273,7 +276,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
                 );
             }
         }
-        let checkpoint = ColumnLayout::new(&mut measurer, items, rows.clone(), &start)
+        let checkpoint = ColumnLayout::new(&mut measurer, items.clone(), rows.clone(), &start)
             .unwrap()
             .advance(&mut measurer)
             .unwrap();
@@ -317,7 +320,7 @@ fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_
             paint_signature(&expected),
             "discarded trials changed committed paint order"
         );
-        let layout = ColumnLayout::new(&mut measurer, items, rows, &start)
+        let layout = ColumnLayout::new(&mut measurer, items.clone(), rows, &start)
             .unwrap()
             .advance(&mut measurer)
             .unwrap();

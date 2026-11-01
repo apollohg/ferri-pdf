@@ -341,7 +341,7 @@ struct ColumnLayout<'a, 't> {
 impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
     fn new(
         measurer: &mut Measurer<'t>,
-        items: &[FlowItem<'a>],
+        items: Vec<FlowItem<'a>>,
         mut rows: ColumnRows,
         start: &FlowStart,
     ) -> Result<Self, LayoutError> {
@@ -349,7 +349,7 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
         rows.offset = start.offset;
         Ok(Self {
             state: Box::new(Paginator::nested(measurer, rows, start).with_measurer(())),
-            cursor: Some(FlowCursor::new(items.to_vec(), BreakTail::default())),
+            cursor: Some(FlowCursor::new(items, BreakTail::default())),
             request: None,
         })
     }
@@ -362,13 +362,8 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
             .chain(&self.state.foreground)
             .map(Vec::len)
             .sum();
-        let items: usize = self
-            .cursor
-            .iter()
-            .flat_map(|cursor| &cursor.frames)
-            .map(|frame| frame.items.len())
-            .sum();
-        work.spend((self.state.pages.len() + paints + items).max(1))?;
+        let frames = self.cursor.as_ref().map_or(0, |cursor| cursor.frames.len());
+        work.spend((self.state.pages.len() + paints + frames).max(1))?;
         let mut snapshot = self.clone();
         let mut orders = OrderSnapshots::default();
         snapshot.detach_orders(&mut orders);
@@ -710,7 +705,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
             if let Some((items, balance)) = cursor.entry.take() {
                 cursor.row = Some(self.start_column_row(
-                    &items,
+                    items,
                     if cursor.segments.len() == 0 {
                         cursor.tail
                     } else {
@@ -786,7 +781,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
 
     fn start_column_row(
         &mut self,
-        items: &[FlowItem<'a>],
+        items: Vec<FlowItem<'a>>,
         tail: BreakTail,
         geometry: ColumnGeometry,
         containing_height: Option<f32>,
@@ -1295,7 +1290,7 @@ pub(crate) fn measure_columns<'a>(
                     let mut rows = ColumnRows::new(columns.geometry, available);
                     rows.containing_height = columns.definite;
                     rows.text_trim = columns.text_trim;
-                    let mut layout = ColumnLayout::new(measurer, items, rows, &start)?;
+                    let mut layout = ColumnLayout::new(measurer, items.clone(), rows, &start)?;
                     let mut wrapped = false;
                     loop {
                         let frame = match columns.wrap {
