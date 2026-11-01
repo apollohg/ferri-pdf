@@ -13,7 +13,7 @@ use std::{
     process::ExitCode,
 };
 
-const USAGE: &str = "usage: ferri-pdf INPUT.html OUTPUT.pdf [--trace] [--headings HEADINGS.json] [--font-serif FAMILY] [--font-sans-serif FAMILY] [--font-monospace FAMILY] [--font-fallback FAMILY] [--jpeg-quality 1..100] [--image-dpi DPI] [--allow-content-loss] [--part INPUT.html ...]";
+const USAGE: &str = "usage: ferri-pdf INPUT.html OUTPUT.pdf [--trace] [--headings HEADINGS.json] [--font-serif FAMILY] [--font-sans-serif FAMILY] [--font-monospace FAMILY] [--font-fallback FAMILY] [--system-fonts] [--font-dir DIR] [--jpeg-quality 1..100] [--image-dpi DPI] [--allow-content-loss] [--part INPUT.html ...]";
 const JPEG_QUALITY_FLAG: &str = "--jpeg-quality";
 const IMAGE_DPI_FLAG: &str = "--image-dpi";
 const PART_FLAG: &str = "--part";
@@ -22,6 +22,8 @@ const FONT_SERIF_FLAG: &str = "--font-serif";
 const FONT_SANS_SERIF_FLAG: &str = "--font-sans-serif";
 const FONT_MONOSPACE_FLAG: &str = "--font-monospace";
 const FONT_FALLBACK_FLAG: &str = "--font-fallback";
+const SYSTEM_FONTS_FLAG: &str = "--system-fonts";
+const FONT_DIR_FLAG: &str = "--font-dir";
 const FIRST_FLAG_ARGUMENT: usize = 3;
 const TRACE_EXTENSION: &str = "trace.json";
 
@@ -129,6 +131,12 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
             trace = true;
         } else if flag == ALLOW_CONTENT_LOSS_FLAG && content_loss == ContentLoss::Fail {
             content_loss = ContentLoss::Render;
+        } else if flag == SYSTEM_FONTS_FLAG && !fonts.system_fonts {
+            fonts.system_fonts = true;
+        } else if flag == FONT_DIR_FLAG {
+            fonts
+                .font_dirs
+                .push(PathBuf::from(flags.next().ok_or(USAGE)?));
         } else if flag == PART_FLAG {
             let path = Path::new(flags.next().ok_or(USAGE)?);
             if path == Path::new("-") {

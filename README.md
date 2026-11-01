@@ -19,6 +19,8 @@ Use `-` for stdin or stdout. Options:
 | `--jpeg-quality 1..100` | Re-encode opaque photos as JPEG at this quality |
 | `--font-serif`, `--font-sans-serif`, `--font-monospace FAMILY` | Choose the family for a generic font |
 | `--font-fallback FAMILY` | Family used for missing glyphs |
+| `--system-fonts` | Let documents and the font options use the fonts installed on the system |
+| `--font-dir DIR` | Also use the fonts in this folder and its subfolders (repeatable) |
 | `--part INPUT.html` | Append another document to the same PDF (repeatable) |
 | `--headings HEADINGS.json` | Write heading page numbers as JSON |
 | `--trace` | Write the measured layout next to the PDF |
@@ -45,6 +47,8 @@ std::fs::write("hello.pdf", output.pdf)?;
 ```
 
 Relative URLs resolve against `base`. HTTP(S) fetching is behind the default `http` feature. To control resource loading, pass your own resolver to `render_with_resolver`.
+
+Besides `@font-face` web fonts, only the bundled Liberation and DejaVu fonts are used unless `options.print.fonts.system_fonts` is set or `font_dirs` lists folders; then `font-family`, `local()` and the generic and fallback preferences can also name the fonts installed there. Installed fonts are read only from the system font folders and the folders you give, never from a path the document chooses.
 
 Recovered input is reported in `output.diagnostics`. When a resource limit leaves content out, rendering returns `Error::ContentLost` with those diagnostics; set `content_loss: ContentLoss::Render` to get the PDF anyway.
 
