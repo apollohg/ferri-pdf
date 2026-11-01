@@ -88,7 +88,9 @@ gif = "0.14.1"
 hayro = { version = "=0.8.0", default-features = false }
 image-webp = "0.2.4"
 zune-jpeg = "0.5.8"
-fontdb = { version = "0.23", default-features = false, features = ["std", "fs", "fontconfig"] }
+fontdb = { version = "0.23", default-features = false, features = ["std"] }
+# Reads fontconfig's configuration for the Linux font folders, as fontdb does.
+fontconfig-parser = { version = "0.5.8", default-features = false }
 skrifa = "0.42"
 smallvec = { version = "1.15.1", features = ["union", "const_new", "write"] }
 tiny-skia = "0.12"
@@ -259,6 +261,9 @@ write-fonts.workspace = true
 xmlwriter.workspace = true
 zenavif-parse.workspace = true
 zune-jpeg.workspace = true
+
+[target.'cfg(all(unix, not(any(target_os = "macos", target_os = "android"))))'.dependencies]
+fontconfig-parser.workspace = true
 
 [dev-dependencies]
 rustls = { version = "=0.23.46", default-features = false, features = ["std", "tls12"] }

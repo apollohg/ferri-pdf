@@ -47,10 +47,12 @@ pub(crate) enum Work {
     ComputedStyle,
     /// A scan of a set of font folders for installed fonts.
     FontScan,
+    /// A byte of a font file that a scan for installed fonts reads.
+    FontScanBytes,
 }
 
 #[cfg(test)]
-const KINDS: usize = 21;
+const KINDS: usize = 22;
 
 #[cfg(test)]
 thread_local! {
