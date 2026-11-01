@@ -947,4 +947,82 @@ mod tests {
             );
         }
     }
+
+    /// The units of `work` that laying out `body` does on small pages, which it must span.
+    fn paged_work(what: &str, body: &str, work: crate::work::Work) -> usize {
+        let resolver = FileResolver::default();
+        let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        let document = StyledDocument::parse(
+            &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}@page{{size:200pt 200pt;margin:10pt}}html,body{{margin:0;font:8pt/10pt Fixed}}</style>{body}"),
+            &base, &[], &resolver,
+        )
+        .unwrap();
+        let (pass, units) = crate::work::measured(work, || {
+            crate::layout::layout_pass(&document, &resolver, Budget::new(MAX_LAYOUT_WORK))
+                .unwrap_or_else(|error| panic!("{what} failed: {error}"))
+        });
+        assert!(
+            pass.trace.pages.len() > 1,
+            "fixture: {what} spans pages, but lays out on {} page",
+            pass.trace.pages.len()
+        );
+        units
+    }
+
+    #[test]
+    fn laying_out_flex_items_takes_work_linear_in_their_count() {
+        const ITEMS: usize = 240;
+        // Searching the container's children for the semantic events after each item it
+        // places, collapsed or not, is quadratic in the items.
+        for (css, collapse) in [
+            ("flex-wrap:wrap", ""),
+            ("flex-direction:column", ""),
+            (
+                "flex-wrap:wrap",
+                ".tags span:nth-child(3n){visibility:collapse}",
+            ),
+            ("flex-direction:column;flex-wrap:wrap;height:400pt", ""),
+        ] {
+            let what = format!("flex items of a container with `{css}` and `{collapse}`");
+            crate::work::assert_linear(&what, ITEMS, |items| {
+                let tags: String = (0..items)
+                    .map(|index| format!("<span>tag {index}</span>"))
+                    .collect();
+                paged_work(
+                    &format!("{what} holding {items} items"),
+                    &format!(
+                        "<style>.tags{{display:flex;gap:2pt;{css}}}.tags span{{border:1pt solid;padding:1pt}}{collapse}</style><div class=tags>{tags}</div>"
+                    ),
+                    crate::work::Work::SiblingStep,
+                )
+            });
+        }
+    }
+
+    #[test]
+    fn laying_out_grid_items_takes_work_linear_in_their_count() {
+        const ITEMS: usize = 240;
+        // Searching the container's children for the semantic events after each item, or
+        // every item for those spanning each auto row, is quadratic in the items.
+        for (steps, work) in [
+            ("sibling", crate::work::Work::SiblingStep),
+            ("single-span", crate::work::Work::SingleSpanStep),
+        ] {
+            let what = format!("{steps} steps for the items of a four-column grid");
+            crate::work::assert_linear(&what, ITEMS, |items| {
+                let cards: String = (0..items)
+                    .map(|index| format!("<div>card {index}</div>"))
+                    .collect();
+                paged_work(
+                    &format!("{what} holding {items} items"),
+                    &format!(
+                        "<style>.grid{{display:grid;grid-template-columns:repeat(4,auto);gap:2pt}}.grid div{{border:1pt solid}}</style><div class=grid>{cards}</div>"
+                    ),
+                    work,
+                )
+            });
+        }
+    }
 }
