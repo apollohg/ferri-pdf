@@ -207,7 +207,7 @@ pub(super) fn shape(
             let (levels, visual) = bidi.visual_runs(info, 0..text.len());
             for range in visual {
                 let rtl = levels[range.start].is_rtl();
-                let mut scripts = super::script_ranges(text, range);
+                let mut scripts = super::Scripts::of(text).ranges(range);
                 if rtl {
                     scripts.reverse();
                 }

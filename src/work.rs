@@ -38,6 +38,8 @@ pub(crate) enum Work {
     ShapePlan,
     /// A font list matched against the faces of a font book.
     FontListMatch,
+    /// A character whose script is looked up to split text into runs of one script.
+    ScriptCharacter,
     /// A blurred shadow mask rasterized.
     ShadowMask,
     /// A style rule whose selectors are tried against an element or one of its
@@ -63,7 +65,7 @@ pub(crate) enum Work {
 }
 
 #[cfg(test)]
-const KINDS: usize = 27;
+const KINDS: usize = 28;
 
 #[cfg(test)]
 thread_local! {

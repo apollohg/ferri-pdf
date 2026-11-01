@@ -2,6 +2,7 @@ mod emphasis;
 mod features;
 mod hyphenation;
 mod pieces;
+mod scripts;
 mod skip_ink;
 mod tailoring;
 

@@ -383,7 +383,6 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
         let visible = whitespace::visible(paragraph, from..to);
         let mut pieces = shape_line(
             prepared.context,
-            text,
             bidi,
             visible.clone(),
             breaking::context_range(&prepared.opportunities, from..to),

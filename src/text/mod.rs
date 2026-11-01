@@ -188,30 +188,51 @@ impl TextStroke {
     }
 }
 
-fn script_ranges(text: &str, range: Range<usize>) -> Vec<Range<usize>> {
-    let mut ranges = Vec::new();
-    let mut start = range.start;
-    let mut current = Script::Common;
-    for (offset, ch) in text[range.clone()].char_indices() {
-        let script = ch.script();
-        if matches!(script, Script::Common | Script::Inherited) {
-            continue;
+/// The stretches of a text from the first to the last of consecutive characters of one
+/// script, Common and Inherited characters aside.
+struct Scripts(Vec<Range<usize>>);
+impl Scripts {
+    fn of(text: &str) -> Self {
+        let mut stretches: Vec<(Range<usize>, Script)> = Vec::new();
+        for (offset, ch) in text.char_indices() {
+            crate::work::count(crate::work::Work::ScriptCharacter, 1);
+            let script = ch.script();
+            if matches!(script, Script::Common | Script::Inherited) {
+                continue;
+            }
+            let end = offset + ch.len_utf8();
+            match stretches.last_mut() {
+                Some((stretch, current)) if *current == script => stretch.end = end,
+                _ => stretches.push((offset..end, script)),
+            }
         }
-        if current != Script::Common && script != current {
-            ranges.push(start..range.start + offset);
-            start = range.start + offset;
-        }
-        current = script;
+        Self(stretches.into_iter().map(|(stretch, _)| stretch).collect())
     }
-    ranges.push(start..range.end);
-    ranges
+    /// The parts of `range` that shape apart: each starts where the characters of one
+    /// script do, and the Common and Inherited characters go with those before them.
+    fn ranges(&self, range: Range<usize>) -> Vec<Range<usize>> {
+        let first = self.0.partition_point(|stretch| stretch.end <= range.start);
+        let mut ranges = Vec::new();
+        let mut start = range.start;
+        for stretch in self.0[first..]
+            .iter()
+            .skip(1)
+            .take_while(|stretch| stretch.start < range.end)
+        {
+            ranges.push(start..stretch.start);
+            start = stretch.start;
+        }
+        ranges.push(start..range.end);
+        ranges
+    }
 }
 
 /// What shaping and fitting each line of a paragraph consult, found once for the paragraph:
-/// whether it holds right-to-left text, its `text-combine-upright` groups and whether it
-/// hangs punctuation.
+/// whether it holds right-to-left text, its scripts, its `text-combine-upright` groups and
+/// whether it hangs punctuation.
 struct LineTraits {
     has_rtl: bool,
+    scripts: Scripts,
     combined: Vec<combine::Group>,
     hangs: bool,
 }
@@ -219,6 +240,7 @@ impl LineTraits {
     fn of(paragraph: &Paragraph, has_rtl: bool) -> Self {
         Self {
             has_rtl,
+            scripts: Scripts::of(paragraph.text()),
             combined: combine::groups(paragraph),
             hangs: hanging::hangs(paragraph),
         }
@@ -227,7 +249,6 @@ impl LineTraits {
 
 fn shape_line(
     context: &TextContext<'_>,
-    text: &str,
     bidi: &bidi::ResolvedParagraph<'_>,
     range: Range<usize>,
     context_range: Range<usize>,
@@ -237,12 +258,9 @@ fn shape_line(
     if range.is_empty() {
         return Ok(Vec::new());
     }
-    let start = range.start;
-    let text = &text[range.clone()];
     let combined = &traits.combined;
     let emitted = RefCell::new(std::collections::HashSet::new());
-    let shape_range = |range: Range<usize>, rtl: bool| -> Result<Vec<Piece>, TextError> {
-        let absolute = (start + range.start)..(start + range.end);
+    let shape_range = |absolute: Range<usize>, rtl: bool| -> Result<Vec<Piece>, TextError> {
         let first = paragraph
             .spans()
             .partition_point(|s| s.range.end <= absolute.start);
@@ -321,14 +339,14 @@ fn shape_line(
     };
     if !traits.has_rtl {
         let mut result = Vec::new();
-        for range in script_ranges(text, 0..text.len()) {
+        for range in traits.scripts.ranges(range) {
             result.extend(shape_range(range, false)?);
         }
         return Ok(result);
     }
     let mut result = Vec::new();
     for (run, rtl) in bidi.visual_runs(range) {
-        let mut scripts = script_ranges(text, run.start - start..run.end - start);
+        let mut scripts = traits.scripts.ranges(run);
         if rtl {
             scripts.reverse();
         }
@@ -988,12 +1006,10 @@ impl<'a> TextContext<'a> {
                 ruby: source.ruby.as_ref(),
             };
             let paragraph = source.paragraph;
-            let text = paragraph.text();
             let context_range = breaking::context_range(&source.opportunities, range.clone());
             let visible = whitespace::visible(paragraph, range.clone());
             let mut pieces = shape_line(
                 self,
-                text,
                 &source.bidi,
                 visible.clone(),
                 context_range,
