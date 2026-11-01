@@ -135,21 +135,7 @@ pub(crate) fn measure<'a>(
         )?;
         item.inline_definite = plan.definite_columns(index, geometry.width, measurer);
         item.inherit(plan.child_context(index), [None, Some(columns.clone())]);
-        let mut space = measurer.space;
-        space.indefinite_inline &= !item.inline_definite;
-        let measured = measurer.with_space(space, |measurer| {
-            measurer.with_grid_parent(item.parent.clone(), |measurer| {
-                measurer.with_sized_item(source, |measurer| {
-                    measurer.item_metrics(
-                        source,
-                        &item.geometry,
-                        None,
-                        fixed_heights[index],
-                        |measurer| item.measure(measurer, fixed_heights[index], None),
-                    )
-                })
-            })
-        })?;
+        let measured = item.metrics(measurer, fixed_heights[index])?;
         baselines.push(
             &area[ROWS],
             [

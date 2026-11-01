@@ -3,7 +3,31 @@ use crate::document::BlockBox;
 use crate::layout::measure::Failure;
 use crate::layout::{breaks::Fragmentainer, geometry::HorizontalBox};
 
-const MAX_ITEM_METRICS: usize = 4096;
+/// Items kept at most; they are all forgotten when there would be more.
+const MAX_KEPT_ITEMS: usize = 1 << 16;
+/// The work the layouts of the items kept took at most, which bounds the memory they hold;
+/// they are all forgotten when it would be more.
+const MAX_KEPT_LAYOUT_WORK: usize = 1 << 22;
+
+/// The flex and grid items measured, by the context they were measured in: their metrics and,
+/// once laid out to be placed, their layouts. Each level of a container's sizing measures the
+/// items nested in it again; keeping them makes that work linear in the nesting.
+#[derive(Default)]
+pub(crate) struct KeptItems<'a> {
+    kept: std::collections::HashMap<MetricsKey, KeptItem<'a>>,
+    /// The work the layouts kept took.
+    held: usize,
+    /// The work of the layouts copied from those kept, which the measurements copying them
+    /// took in place of laying them out.
+    copied: usize,
+}
+
+struct KeptItem<'a> {
+    metrics: ItemMetrics,
+    layout: Option<MeasuredBlock<'a>>,
+    /// The work the measurement took, the layouts it copied included.
+    work: usize,
+}
 
 #[derive(Clone)]
 pub(crate) struct ItemMetrics {
@@ -100,6 +124,8 @@ pub(crate) struct MetricsKey {
     sized: bool,
     unbroken: bool,
     named_pages: bool,
+    raw_pagination: bool,
+    column_measurement: bool,
     orthogonal_columns: Option<OrthogonalColumnKey>,
     space: super::space::SpaceKey,
 }
@@ -148,6 +174,8 @@ impl MetricsKey {
             sized: measurer.sized_by_container(block),
             unbroken: measurer.unbroken,
             named_pages: measurer.named_pages,
+            raw_pagination: measurer.raw_pagination,
+            column_measurement: measurer.column_measurement,
             orthogonal_columns: measurer
                 .orthogonal_columns
                 .filter(|columns| columns.matches(block))
@@ -170,8 +198,10 @@ impl MetricsKey {
     }
 }
 
-impl Measurer<'_> {
-    pub(crate) fn item_metrics<'a>(
+impl<'a> Measurer<'a> {
+    /// The metrics of the item `block` that `measure` measures in the context `geometry`,
+    /// `height` and `containing_height` give it, as measured before in the same context.
+    pub(crate) fn item_metrics(
         &mut self,
         block: &'a BlockBox,
         geometry: &HorizontalBox,
@@ -179,56 +209,151 @@ impl Measurer<'_> {
         containing_height: Option<f32>,
         measure: impl FnOnce(&mut Self) -> Result<MeasuredBlock<'a>, Failure>,
     ) -> Result<ItemMetrics, Failure> {
-        let key = match self.cached_metrics(block, geometry, height, containing_height) {
-            CachedMetrics::Hit(metrics) => return Ok(metrics),
-            CachedMetrics::Miss(key) => key,
+        let key = match self.kept_metrics(block, geometry, height, containing_height) {
+            Kept::Hit(metrics) => return Ok(*metrics),
+            Kept::Miss(key) => key,
         };
-        let measured = measure(self);
-        self.store_metrics(key, measured)
+        let start = self.item_work();
+        let measured = measure(self)?;
+        let metrics = ItemMetrics::of(&measured);
+        self.keep_item(key, metrics.clone(), None, start);
+        Ok(metrics)
     }
 
-    /// The metrics measured before for `block` in the same context, or the key to keep
-    /// them by, unless they are not kept. Kept off the frames that nested items' measurements
-    /// stack.
-    #[inline(never)]
-    fn cached_metrics(
+    /// The layout of the item `block` that `measure` lays out in the context `geometry`,
+    /// `height` and `containing_height` give it, as laid out before in the same context.
+    pub(crate) fn item_layout(
+        &mut self,
+        block: &'a BlockBox,
+        geometry: &HorizontalBox,
+        height: Option<f32>,
+        containing_height: Option<f32>,
+        measure: impl FnOnce(&mut Self) -> Result<MeasuredBlock<'a>, Failure>,
+    ) -> Result<MeasuredBlock<'a>, Failure> {
+        let key = match self.kept_layout(block, geometry, height, containing_height) {
+            Kept::Hit(measured) => return Ok(*measured),
+            Kept::Miss(key) => key,
+        };
+        let start = self.item_work();
+        let measured = measure(self)?;
+        self.keep_item(key, ItemMetrics::of(&measured), Some(&measured), start);
+        Ok(measured)
+    }
+
+    /// The work done and copied so far, from which an item's measurement takes its own.
+    fn item_work(&self) -> usize {
+        self.work
+            .spent()
+            .saturating_add(self.item_metrics.borrow().copied)
+    }
+
+    /// The key to keep the item by, unless it is not kept.
+    fn item_key(
         &self,
         block: &BlockBox,
         geometry: &HorizontalBox,
         height: Option<f32>,
         containing_height: Option<f32>,
-    ) -> CachedMetrics {
+    ) -> Option<MetricsKey> {
         // Clearance probes carry transient source-specific placement constraints.
-        if !self.clearance_targets.is_empty() {
-            return CachedMetrics::Miss(None);
-        }
-        let key = MetricsKey::new(self, block, geometry, height, containing_height);
-        match self.item_metrics.get(&key) {
-            Some(metrics) => CachedMetrics::Hit(metrics.clone()),
-            None => CachedMetrics::Miss(Some(Box::new(key))),
-        }
+        self.clearance_targets
+            .is_empty()
+            .then(|| MetricsKey::new(self, block, geometry, height, containing_height))
     }
 
-    /// The metrics of the item `measured`, kept by `key` when there is one.
+    /// The metrics measured before for `block` in the same context, or the key to keep them
+    /// by. Kept off the frames that nested items' measurements stack.
     #[inline(never)]
-    fn store_metrics(
-        &mut self,
-        key: Option<Box<MetricsKey>>,
-        measured: Result<MeasuredBlock<'_>, Failure>,
-    ) -> Result<ItemMetrics, Failure> {
-        let metrics = ItemMetrics::of(&measured?);
-        if let Some(key) = key {
-            if self.item_metrics.len() >= MAX_ITEM_METRICS {
-                self.item_metrics.clear();
-            }
-            self.item_metrics.insert(*key, metrics.clone());
+    fn kept_metrics(
+        &self,
+        block: &BlockBox,
+        geometry: &HorizontalBox,
+        height: Option<f32>,
+        containing_height: Option<f32>,
+    ) -> Kept<ItemMetrics> {
+        let key = self.item_key(block, geometry, height, containing_height);
+        if let Some(item) = key.as_ref().and_then(|key| {
+            self.item_metrics
+                .borrow()
+                .kept
+                .get(key)
+                .map(|item| item.metrics.clone())
+        }) {
+            self.work.start(block);
+            return Kept::Hit(Box::new(item));
         }
-        Ok(metrics)
+        crate::work::count(crate::work::Work::ItemMeasurement, 1);
+        Kept::Miss(key.map(Box::new))
+    }
+
+    /// A copy of the layout laid out before for `block` in the same context, or the key to
+    /// keep it by. Kept off the frames that nested items' measurements stack.
+    #[inline(never)]
+    fn kept_layout(
+        &self,
+        block: &BlockBox,
+        geometry: &HorizontalBox,
+        height: Option<f32>,
+        containing_height: Option<f32>,
+    ) -> Kept<MeasuredBlock<'a>> {
+        let key = self.item_key(block, geometry, height, containing_height);
+        if let Some(key) = &key {
+            let mut items = self.item_metrics.borrow_mut();
+            if let Some((layout, work)) = items
+                .kept
+                .get(key)
+                .and_then(|item| Some((item.layout.clone()?, item.work)))
+            {
+                items.copied = items.copied.saturating_add(work);
+                self.work.start(block);
+                return Kept::Hit(Box::new(layout));
+            }
+        }
+        crate::work::count(crate::work::Work::ItemMeasurement, 1);
+        Kept::Miss(key.map(Box::new))
+    }
+
+    /// Keeps the item's `metrics`, and its `layout` when it was laid out to be placed, by
+    /// `key` when there is one; its measurement started when the work done and copied was
+    /// `start`.
+    #[inline(never)]
+    fn keep_item(
+        &self,
+        key: Option<Box<MetricsKey>>,
+        metrics: ItemMetrics,
+        layout: Option<&MeasuredBlock<'a>>,
+        start: usize,
+    ) {
+        let Some(key) = key else {
+            return;
+        };
+        let work = self.item_work().saturating_sub(start);
+        let held = if layout.is_some() { work } else { 0 };
+        if held > MAX_KEPT_LAYOUT_WORK {
+            return;
+        }
+        let mut items = self.item_metrics.borrow_mut();
+        if items.kept.len() >= MAX_KEPT_ITEMS || items.held + held > MAX_KEPT_LAYOUT_WORK {
+            items.kept.clear();
+            items.held = 0;
+        }
+        let replaced = items.kept.insert(
+            *key,
+            KeptItem {
+                metrics,
+                layout: layout.cloned(),
+                work,
+            },
+        );
+        items.held += held;
+        if let Some(replaced) = replaced.filter(|item| item.layout.is_some()) {
+            items.held -= replaced.work;
+        }
     }
 }
 
-/// Item metrics measured before, or the key to keep them by once measured.
-enum CachedMetrics {
-    Hit(ItemMetrics),
+/// What was kept for an item, or the key to keep it by once measured, unless it is not kept.
+enum Kept<T> {
+    Hit(Box<T>),
     Miss(Option<Box<MetricsKey>>),
 }

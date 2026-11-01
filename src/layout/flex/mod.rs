@@ -108,37 +108,25 @@ fn trim_margins(
     }
 }
 
+/// The metrics of `item` laid out `left` from its container `parent`'s content edge.
 fn item_metrics<'a>(
     measurer: &mut Measurer<'a>,
     item: &FlexItem<'a>,
     parent: &HorizontalBox,
+    left: f32,
     width: f32,
     height: Option<f32>,
     containing_height: Option<f32>,
 ) -> Result<Metrics, Failure> {
-    let geometry = item_geometry(item, parent, 0.0, width);
-    let mut space = measurer.space;
-    space.indefinite_inline &= !item.inline_definite;
-    measurer.with_space(space, |measurer| {
-        measurer.with_sized_item(item.source, |measurer| {
-            measurer.item_metrics(
-                item.source,
-                &geometry,
-                height,
-                containing_height,
-                |measurer| {
-                    measure_item(
-                        measurer,
-                        item,
-                        parent,
-                        0.0,
-                        width,
-                        height,
-                        containing_height,
-                    )
-                },
-            )
-        })
+    let geometry = item_geometry(item, parent, left, width);
+    in_item_context(measurer, item, |measurer| {
+        measurer.item_metrics(
+            item.source,
+            &geometry,
+            height,
+            containing_height,
+            |measurer| lay_out_item(measurer, item, &geometry, height, containing_height),
+        )
     })
 }
 
@@ -208,6 +196,7 @@ fn item_geometry(
         beside_floats: None,
     }
 }
+/// The layout of `item` `left` from its container `parent`'s content edge.
 fn measure_item<'a>(
     measurer: &mut Measurer<'a>,
     item: &FlexItem<'a>,
@@ -217,20 +206,47 @@ fn measure_item<'a>(
     height: Option<f32>,
     containing_height: Option<f32>,
 ) -> Result<MeasuredBlock<'a>, Failure> {
+    let geometry = item_geometry(item, parent, left, width);
+    in_item_context(measurer, item, |measurer| {
+        measurer.item_layout(
+            item.source,
+            &geometry,
+            height,
+            containing_height,
+            |measurer| lay_out_item(measurer, item, &geometry, height, containing_height),
+        )
+    })
+}
+
+/// Runs `compute` in the available space and container sizing of `item`.
+fn in_item_context<'a, T>(
+    measurer: &mut Measurer<'a>,
+    item: &FlexItem<'a>,
+    compute: impl FnOnce(&mut Measurer<'a>) -> T,
+) -> T {
     let mut space = measurer.space;
     space.indefinite_inline &= !item.inline_definite;
+    measurer.with_space(space, |measurer| {
+        measurer.with_sized_item(item.source, compute)
+    })
+}
+
+/// Lays `item` out at `geometry`.
+fn lay_out_item<'a>(
+    measurer: &mut Measurer<'a>,
+    item: &FlexItem<'a>,
+    geometry: &HorizontalBox,
+    height: Option<f32>,
+    containing_height: Option<f32>,
+) -> Result<MeasuredBlock<'a>, Failure> {
     let measure = |measurer: &mut Measurer<'a>, height| {
-        measurer.with_space(space, |measurer| {
-            measurer.with_sized_item(item.source, |measurer| {
-                measurer.measure_format(
-                    item.source,
-                    item_geometry(item, parent, left, width),
-                    true,
-                    containing_height,
-                    height,
-                )
-            })
-        })
+        measurer.measure_format(
+            item.source,
+            geometry.clone(),
+            true,
+            containing_height,
+            height,
+        )
     };
     if item.source.style().display.is_table() {
         crate::layout::tables::measure_wrapper(measurer, height, measure)
@@ -277,13 +293,12 @@ struct FlexContext<'a> {
 struct FlexLine {
     range: std::ops::Range<usize>,
     resolved: crate::flex::Line,
+    /// A row's items measured at their main sizes; a column's are measured once placed.
     measured: Vec<Metrics>,
     cross: f32,
     baseline: f32,
     /// The extent below the last-baseline group's baseline, to the line's cross end.
     last_descent: f32,
-    /// The line's main size.
-    main: f32,
 }
 
 /// The lines of a flex container's items, with the main and cross sizes they give it.
@@ -530,6 +545,7 @@ fn flex_item<'a>(
             measurer,
             &item,
             geometry,
+            0.0,
             preliminary_width,
             None,
             content_height,
@@ -668,19 +684,29 @@ fn flex_lines<'a>(
     loop {
         let ranges =
             break_flex_lines(measurer, context, data, &mut numeric, (&untrimmed, trimmed))?;
-        let mut lines = Vec::new();
+        let mut lines = Vec::with_capacity(ranges.len());
         let mut used_main = context.main_size.unwrap_or(0.0);
         for range in ranges {
-            let line = flex_line(
+            let (main, resolved) = resolve_flex_line(measurer, context, (data, &numeric), &range)?;
+            used_main = used_main.max(main);
+            lines.push(FlexLine {
+                range,
+                resolved,
+                measured: Vec::new(),
+                cross: 0.0,
+                baseline: 0.0,
+                last_descent: 0.0,
+            });
+        }
+        for line in &mut lines {
+            measure_flex_line(
                 measurer,
                 context,
-                geometry,
+                (geometry, used_main),
                 (data, &numeric),
-                range,
+                line,
                 struts.as_deref(),
             )?;
-            used_main = used_main.max(line.main);
-            lines.push(line);
         }
         if let Some(used_cross) = settle_flex_lines(
             context,
@@ -734,61 +760,71 @@ fn break_flex_lines<'a>(
     Ok(ranges)
 }
 
-/// The flex line of the items `range`, its items measured at their resolved main sizes.
-fn flex_line<'a>(
+/// Sizes the cross axis of `line`, a line of a container whose main size is `used_main`: a
+/// row's items measured at their resolved main sizes and where they lie, or a column's
+/// items' cross sizes.
+fn measure_flex_line<'a>(
     measurer: &mut Measurer<'a>,
     context: &FlexContext<'a>,
-    geometry: &HorizontalBox,
+    (geometry, used_main): (&HorizontalBox, f32),
     (data, numeric): (&[FlexItem<'a>], &[Item]),
-    range: std::ops::Range<usize>,
+    line: &mut FlexLine,
     struts: Option<&[f32]>,
-) -> Result<FlexLine, Failure> {
-    let (main, resolved) = resolve_flex_line(measurer, context, (data, numeric), &range)?;
-    let mut line = FlexLine {
-        range,
-        resolved,
-        measured: Vec::new(),
-        cross: 0.0,
-        baseline: 0.0,
-        last_descent: 0.0,
-        main,
-    };
+) -> Result<(), Failure> {
     let mut extents = LineExtents::default();
     for (local, index) in line.range.clone().enumerate() {
         let item = &data[index];
         if numeric[index].collapsed {
             line.cross = line.cross.max(struts.expect("second-pass struts")[index]);
-            line.measured.push(Metrics {
-                grid_rows: None,
-                grid_baselines: None,
-                height: 0.0,
-                baseline: None,
-                last_baseline: None,
-            });
+            if !context.column {
+                line.measured.push(Metrics {
+                    grid_rows: None,
+                    grid_baselines: None,
+                    height: 0.0,
+                    baseline: None,
+                    last_baseline: None,
+                });
+            }
             continue;
         }
-        let size = line.resolved.sizes[local];
-        let (width, height) = if context.column {
-            (item.natural_cross, Some(size))
-        } else {
-            (size, None)
-        };
+        if context.column {
+            extents.add(context, item, None, line);
+            continue;
+        }
         let child = item_metrics(
             measurer,
             item,
             geometry,
-            width,
-            height,
+            main_start(context, used_main, line, local, item),
+            line.resolved.sizes[local],
+            None,
             context.content_height,
         )?;
-        extents.add(context, item, width, &child, &mut line);
+        extents.add(context, item, Some(&child), line);
         line.measured.push(child);
     }
     line.cross = line
         .cross
         .max(extents.baseline + extents.descent)
         .max(extents.last_ascent + line.last_descent);
-    Ok(line)
+    Ok(())
+}
+
+/// Where the item `item`, at `local` in `line`, starts on the main axis of a container whose
+/// main size is `used_main`.
+fn main_start(
+    context: &FlexContext<'_>,
+    used_main: f32,
+    line: &FlexLine,
+    local: usize,
+    item: &FlexItem<'_>,
+) -> f32 {
+    let start = line.resolved.starts[local];
+    if context.main_reverse {
+        used_main - start - line.resolved.sizes[local] - item.edges(context.column)
+    } else {
+        start
+    }
 }
 
 /// The main size of the flex line of the items `range`, and their resolved flexible lengths
@@ -842,31 +878,30 @@ struct LineExtents {
 }
 
 impl LineExtents {
-    /// Adds the item `item`, of inline size `width` and measured as `child`, to `line`.
+    /// Adds the item `item` to `line`: a row's item measured as `child`, or a column's item,
+    /// whose cross size is its inline size.
     #[inline(never)]
     fn add(
         &mut self,
         context: &FlexContext<'_>,
         item: &FlexItem<'_>,
-        width: f32,
-        child: &Metrics,
+        child: Option<&Metrics>,
         line: &mut FlexLine,
     ) {
         let FlexContext {
-            column,
             cross_reverse,
             cross_sides,
             ..
         } = *context;
-        let outer_cross = if column {
-            width + item.edges(false)
-        } else {
-            child.height
-        };
         let margins = cross_sides.map(|side| item.margins[side].unwrap_or(0.0));
-        line.cross = line.cross.max(outer_cross + margins[0] + margins[1]);
-        if !column
-            && item.align == Alignment::Baseline
+        let Some(child) = child else {
+            line.cross = line
+                .cross
+                .max(item.natural_cross + item.edges(false) + margins[0] + margins[1]);
+            return;
+        };
+        line.cross = line.cross.max(child.height + margins[0] + margins[1]);
+        if item.align == Alignment::Baseline
             && cross_sides.iter().all(|&side| item.margins[side].is_some())
         {
             let first = child.baseline_from_start(cross_reverse);
@@ -877,8 +912,7 @@ impl LineExtents {
         }
         // CSS Box Alignment 3 §9.3: last-baseline items align their last baselines as a group
         // at the line's cross end, their fallback alignment.
-        if !column
-            && item.align == Alignment::LastBaseline
+        if item.align == Alignment::LastBaseline
             && cross_sides.iter().all(|&side| item.margins[side].is_some())
         {
             let last = child.last_baseline_from_start(cross_reverse);
@@ -1051,13 +1085,12 @@ impl<'a> FlexPlacement<'a> {
             }
             return None;
         }
-        let preliminary = &line.measured[local];
+        // A row's items were measured at their main sizes; a column's are measured once placed.
+        let preliminary = (!column).then(|| &line.measured[local]);
         let main = line.resolved.sizes[local];
-        let mut cross = if column {
-            item.natural_cross
-        } else {
+        let mut cross = preliminary.map_or(item.natural_cross, |preliminary| {
             (preliminary.height - item.edges(true)).max(0.0)
-        };
+        });
         let margins = cross_sides.map(|side| item.margins[side]);
         let auto = margins.iter().filter(|m| m.is_none()).count();
         let edges = item.edges(!column);
@@ -1082,9 +1115,12 @@ impl<'a> FlexPlacement<'a> {
             } else {
                 margin_start
             }
-        } else if item.align == Alignment::Baseline && !column {
+        } else if let Some(preliminary) = preliminary.filter(|_| item.align == Alignment::Baseline)
+        {
             line.baseline - preliminary.baseline_from_start(cross_reverse)
-        } else if item.align == Alignment::LastBaseline && !column {
+        } else if let Some(preliminary) =
+            preliminary.filter(|_| item.align == Alignment::LastBaseline)
+        {
             line.cross - line.last_descent - preliminary.last_baseline_from_start(cross_reverse)
         } else {
             margin_start
@@ -1102,11 +1138,7 @@ impl<'a> FlexPlacement<'a> {
             } else {
                 offset
             };
-        let main_start = if main_reverse {
-            used_main - line.resolved.starts[local] - main - item.edges(column)
-        } else {
-            line.resolved.starts[local]
-        };
+        let main_start = main_start(context, used_main, line, local, item);
         let (left, y, width, height) = if column {
             (cross_start, main_start, cross, Some(main))
         } else {

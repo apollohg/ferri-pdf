@@ -521,6 +521,8 @@ fn paginate<'t>(
         paginations += 1;
         std::rc::Rc::make_mut(&mut measurer.footnote_deferrals)
             .append(&mut paginated.footnote_deferrals);
+        // The items laid out so far left no pages for the deferred footnotes.
+        measurer.item_metrics.take();
         let root = retained
             .as_deref()
             .expect("only footnotes kept with their calls defer them")

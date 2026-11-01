@@ -12,16 +12,37 @@ pub(super) fn content<'a>(
 ) -> Result<IntrinsicWidths, Failure> {
     let block = block.into();
     measurer.work.spend(1)?;
+    if let Some(widths) = measurer.kept_content_widths(block) {
+        return Ok(widths);
+    }
+    let outer = measurer.start_content_widths();
+    let widths = computed_content(block, measurer, available);
+    measurer.keep_content_widths(block, outer, &widths);
+    widths
+}
+
+/// The content widths of `block`, computed rather than kept; those that depend on `available`
+/// or on the measurer's context say so.
+fn computed_content<'a>(
+    block: BlockSource<'a>,
+    measurer: &Measurer<'a>,
+    available: f32,
+) -> Result<IntrinsicWidths, Failure> {
     if let Some(inner) = block.collapsed_table()
         && block.layout_flow().writing_mode.vertical()
             == inner.style().used_writing_mode().vertical()
     {
+        measurer.contextual_widths();
         return crate::layout::tables::intrinsic_content(inner, measurer, available);
     }
     if block.flow().is_some() {
+        measurer.contextual_widths();
         return orthogonal_flow(block, measurer, available);
     }
-    if block.image().is_some() {
+    if let Some(image) = block.image() {
+        if image.natural_size().ratio_only() {
+            measurer.contextual_widths();
+        }
         return Ok(crate::layout::images::intrinsic(block, available));
     }
     if block.math_content().is_some()
@@ -30,10 +51,12 @@ pub(super) fn content<'a>(
             crate::style::Display::BlockMath | crate::style::Display::InlineMath
         )
     {
+        measurer.contextual_widths();
         return math(block, measurer, available);
     }
     let style = block.style();
     if style.display.is_table() {
+        measurer.contextual_widths();
         return crate::layout::tables::intrinsic_content(block, measurer, available);
     }
     // CSS Containment 2 §3.1 and CSS Containment 3 §3.1: inline-size containment sizes the
@@ -169,6 +192,7 @@ pub(super) fn measure<'a>(
 ) -> Result<IntrinsicWidths, Failure> {
     let block = block.into();
     if block.style().display.is_table() {
+        measurer.contextual_widths();
         return crate::layout::tables::intrinsic(block, measurer, available);
     }
     Ok(outer_widths(

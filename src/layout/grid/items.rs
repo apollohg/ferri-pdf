@@ -351,19 +351,48 @@ impl<'a> Item<'a> {
         self.parent = parent.map(|parent| parent.with_geometry(tracks, [vertical, [left, right]]));
     }
 
+    /// The item laid out in a grid area `height` tall, `used_height` tall itself.
     pub(crate) fn measure(
         &self,
         measurer: &mut Measurer<'a>,
         height: Option<f32>,
         used_height: Option<f32>,
     ) -> Result<MeasuredBlock<'a>, Failure> {
+        self.in_context(measurer, |measurer| {
+            measurer.item_layout(
+                self.source,
+                &self.geometry,
+                used_height,
+                height,
+                |measurer| self.measure_contents(measurer, height, used_height),
+            )
+        })
+    }
+
+    /// The metrics of the item at its automatic height in a grid area `height` tall.
+    pub(crate) fn metrics(
+        &self,
+        measurer: &mut Measurer<'a>,
+        height: Option<f32>,
+    ) -> Result<ItemMetrics, Failure> {
+        self.in_context(measurer, |measurer| {
+            measurer.item_metrics(self.source, &self.geometry, None, height, |measurer| {
+                self.measure_contents(measurer, height, None)
+            })
+        })
+    }
+
+    /// Runs `compute` in the available space, parent grid and container sizing of the item.
+    fn in_context<T>(
+        &self,
+        measurer: &mut Measurer<'a>,
+        compute: impl FnOnce(&mut Measurer<'a>) -> Result<T, Failure>,
+    ) -> Result<T, Failure> {
         let mut space = measurer.space;
         space.indefinite_inline &= !self.inline_definite;
         measurer.with_space(space, |measurer| {
             measurer.with_grid_parent(self.parent.clone(), |measurer| {
-                measurer.with_sized_item(self.source, |measurer| {
-                    self.measure_contents(measurer, height, used_height)
-                })
+                measurer.with_sized_item(self.source, compute)
             })
         })
     }

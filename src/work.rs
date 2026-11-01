@@ -63,10 +63,15 @@ pub(crate) enum Work {
     /// A fragmentainer that walks from a position in a row to offsets below it, such as its
     /// rows and its collapsed cells or items, visit.
     BandPage,
+    /// A flex or grid item measured or laid out rather than taken from those kept.
+    ItemMeasurement,
+    /// A box whose min- and max-content widths are computed rather than taken from those
+    /// kept.
+    ContentSizes,
 }
 
 #[cfg(test)]
-const KINDS: usize = 28;
+const KINDS: usize = 30;
 
 #[cfg(test)]
 thread_local! {

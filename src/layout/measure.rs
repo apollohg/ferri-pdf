@@ -12,17 +12,10 @@ use crate::text::{Line, TextContext};
 pub(super) mod frames;
 mod metrics;
 mod space;
+mod widths;
 pub(super) use frames::{Failure, FrameKey};
 pub(super) use metrics::{ItemMetrics, MetricsKey};
 pub(super) use space::FlowSpace;
-
-/// Cached paragraph intrinsic widths at most; the cache empties when full.
-const MAX_PARAGRAPH_WIDTHS: usize = 4096;
-/// Paragraph intrinsic widths by the paragraph's address and the widths of its atomic inlines
-/// and of their `::first-line` boxes.
-pub(super) type ParagraphWidths = std::rc::Rc<
-    std::cell::RefCell<std::collections::HashMap<(usize, Vec<u32>), crate::text::IntrinsicWidths>>,
->;
 
 #[derive(Clone, Copy)]
 pub(super) struct BlockSizing {
@@ -747,10 +740,12 @@ pub(super) struct Measurer<'a> {
     pub sources: crate::layout::source::SourceIds,
     pub clearance_targets: std::collections::HashMap<*const BlockBox, usize>,
     pub grid_parent: Option<crate::layout::grid::ParentContext>,
-    pub item_metrics: std::collections::HashMap<MetricsKey, ItemMetrics>,
-    /// Paragraphs' intrinsic widths, shared by every probe, as nested shrink-to-fit boxes
-    /// measure their contents again at each level.
-    pub(super) paragraph_widths: ParagraphWidths,
+    /// Flex and grid items measured, shared by every probe, as each level of nested
+    /// containers measures them again.
+    pub(super) item_metrics: std::rc::Rc<std::cell::RefCell<metrics::KeptItems<'a>>>,
+    /// Intrinsic widths measured, shared by every probe, as nested shrink-to-fit boxes and
+    /// flex and grid items measure their contents again at each level.
+    pub(super) kept_widths: std::rc::Rc<std::cell::RefCell<widths::KeptWidths>>,
     /// The fragmentainer of the flow being measured.
     pub fragmentainer: Fragmentainer,
     /// The multi-column container whose formatting context the flow belongs to.
@@ -804,7 +799,7 @@ impl<'a> Measurer<'a> {
             page_height: size[1],
             sources: crate::layout::source::SourceIds::new(root),
             item_metrics: Default::default(),
-            paragraph_widths: Default::default(),
+            kept_widths: Default::default(),
             grid_parent: None,
             clearance_targets: Default::default(),
             fragmentainer: Fragmentainer::Page,
@@ -873,36 +868,6 @@ impl<'a> Measurer<'a> {
     pub(super) fn sized_by_container(&self, block: &BlockBox) -> bool {
         self.sized_item
             .is_some_and(|item| std::ptr::eq(item, block))
-    }
-
-    pub(crate) fn intrinsic_widths(
-        &self,
-        paragraph: &crate::document::Paragraph,
-        atomics: &[crate::text::IntrinsicWidths],
-        first_line_atomics: &[crate::text::IntrinsicWidths],
-    ) -> Result<crate::text::IntrinsicWidths, LayoutError> {
-        let key = (
-            std::ptr::from_ref(paragraph) as usize,
-            atomics
-                .iter()
-                .chain(first_line_atomics)
-                .flat_map(|widths| [widths.min.to_bits(), widths.max.to_bits()])
-                .collect(),
-        );
-        if let Some(widths) = self.paragraph_widths.borrow().get(&key) {
-            self.work.spend(1)?;
-            return Ok(*widths);
-        }
-        self.work.spend(paragraph.text().len().max(1))?;
-        let widths = self
-            .text
-            .intrinsic_widths(paragraph, atomics, first_line_atomics)?;
-        let mut cache = self.paragraph_widths.borrow_mut();
-        if cache.len() >= MAX_PARAGRAPH_WIDTHS {
-            cache.clear();
-        }
-        cache.insert(key, widths);
-        Ok(widths)
     }
 
     pub(crate) fn text_lines(

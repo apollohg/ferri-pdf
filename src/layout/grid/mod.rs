@@ -302,6 +302,7 @@ impl<'a> Plan<'a> {
                 continue;
             }
             let (mut outer, content_minimum) = if style.display.is_table() {
+                measurer.contextual_widths();
                 let outer = crate::layout::tables::intrinsic(*child, measurer, available)?;
                 (outer, (outer.min - edges - margins - discarded).max(0.0))
             } else {
@@ -358,6 +359,9 @@ pub(super) fn intrinsic<'a>(
         .as_ref()
         .filter(|parent| parent.matches(block.block))
         .cloned();
+    if parent.is_some() {
+        measurer.contextual_widths();
+    }
     let plan = Plan::with_parent(block, measurer, [None; 2], bounds, parent, contained)?;
     let contributions = plan.column_contributions(measurer, available, plan.gap(COLUMNS, None))?;
     let sizes = [AvailableSpace::MinContent, AvailableSpace::MaxContent].map(|space| {
@@ -758,7 +762,7 @@ mod tests {
             sources: crate::layout::source::SourceIds::new(document.root()),
             clearance_targets: Default::default(),
             item_metrics: Default::default(),
-            paragraph_widths: Default::default(),
+            kept_widths: Default::default(),
             grid_parent: None,
             fragmentainer: crate::layout::breaks::Fragmentainer::Page,
             column_flow: None,
