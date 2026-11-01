@@ -724,3 +724,31 @@ fn relaying_a_paragraph_reshapes_only_the_pieces_line_ends_clip() {
          shaped {first}; at most {clipped} candidate ends clip a piece"
     );
 }
+
+#[test]
+fn runs_with_the_same_settings_share_their_shape_plan() {
+    // Making a plan costs more than shaping a word with it, so the plans a paragraph makes
+    // follow its faces and settings, not its runs.
+    let shaped = |words| {
+        let document = alternating_spans(words);
+        let resolver = FileResolver::default();
+        let context = TextContext::new(&document.styles().fonts, &resolver);
+        let prepared = context.prepare_paragraph(paragraphs(&document)[0]);
+        let ((runs, lines), plans) = crate::work::measured(crate::work::Work::ShapePlan, || {
+            shaped_runs(&prepared, 60.0)
+        });
+        assert!(lines > words / 4, "{words} words take {lines} lines");
+        (runs, plans)
+    };
+    let (few_runs, few_plans) = shaped(32);
+    let (many_runs, many_plans) = shaped(128);
+    assert!(
+        many_runs > 2 * few_runs,
+        "128 words shaped {many_runs} runs, 32 words {few_runs}"
+    );
+    assert!(
+        few_plans > 0 && many_plans == few_plans,
+        "32 words in {few_runs} runs made {few_plans} plans; 128 words in {many_runs} runs \
+         made {many_plans}"
+    );
+}

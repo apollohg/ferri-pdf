@@ -37,6 +37,7 @@ use std::ops::Range;
 use std::{
     cell::{Cell, RefCell},
     collections::HashMap,
+    rc::Rc,
     sync::Arc,
 };
 
@@ -814,6 +815,7 @@ pub(crate) fn implies_presentation(style: &Style, text: &str) -> bool {
 /// Borrows font data and lazily parses only the faces used by a rendering job.
 struct ShapingInstance<'a> {
     face: Face<'a>,
+    plans: shaping::ShapePlans,
     variations: Arc<[FontVariation]>,
     synthesis: FontSynthesis,
     oblique_skew: f32,
@@ -836,7 +838,7 @@ type FaceKey = (
     crate::fonts::FontAdjustments,
     Option<u32>,
 );
-type FaceCache<'a> = HashMap<FaceKey, Option<Arc<ShapingInstance<'a>>>>;
+type FaceCache<'a> = HashMap<FaceKey, Option<Rc<ShapingInstance<'a>>>>;
 
 pub(crate) struct TextContext<'a> {
     fonts: &'a FontBook,
@@ -1049,7 +1051,7 @@ impl<'a> TextContext<'a> {
         &self,
         id: FontId,
         style: &Style,
-    ) -> Result<Option<Arc<ShapingInstance<'a>>>, TextError> {
+    ) -> Result<Option<Rc<ShapingInstance<'a>>>, TextError> {
         let selection = style.font_selection();
         let adjustments = &style.font_adjustments;
         let sized = adjustments.size_adjust.is_some()
@@ -1069,10 +1071,11 @@ impl<'a> TextContext<'a> {
             .map(|(instance, used)| {
                 let (synthesis, oblique_skew) = instance.synthesis(selection);
                 let face = Face::from_face(instance.face);
-                Arc::new(ShapingInstance {
+                Rc::new(ShapingInstance {
                     metrics: crate::fonts::FaceMetrics::of(&face)
                         .overridden(instance.metric_overrides),
                     face,
+                    plans: shaping::ShapePlans::default(),
                     variations: instance.variations,
                     synthesis,
                     oblique_skew,
@@ -1175,6 +1178,7 @@ impl<'a> TextContext<'a> {
         shaping::shape_runs(
             shaping::ShapingFont {
                 face,
+                plans: &instance.plans,
                 font_id: id,
                 synthesis: instance.synthesis,
                 oblique_skew: instance.oblique_skew,

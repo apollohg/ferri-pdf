@@ -9,9 +9,11 @@ use icu_properties::{
     props::{DefaultIgnorableCodePoint, EmojiPresentation, GeneralCategory, VariationSelector},
 };
 use rustybuzz::{
-    BufferFlags, Direction, Face, Feature, GlyphBuffer, Language, UnicodeBuffer, ttf_parser::Tag,
+    BufferFlags, Direction, Face, Feature, GlyphBuffer, Language, ShapePlan, UnicodeBuffer,
+    ttf_parser::Tag,
 };
-use std::collections::BTreeMap;
+use std::cell::RefCell;
+use std::collections::{BTreeMap, HashMap};
 use std::ops::Range;
 use std::sync::Arc;
 use unicode_script::{Script, UnicodeScript};
@@ -122,6 +124,7 @@ pub(super) fn has_language_system(face: &Face<'_>, tag: [u8; 4]) -> bool {
 #[derive(Clone, Copy)]
 pub(super) struct ShapingFont<'f, 'data> {
     pub face: &'f Face<'data>,
+    pub plans: &'f ShapePlans,
     pub font_id: FontId,
     pub synthesis: FontSynthesis,
     pub oblique_skew: f32,
@@ -189,6 +192,55 @@ pub(crate) fn shape_buffer(
 ) -> GlyphBuffer {
     work::count(Work::ShapedRun, 1);
     rustybuzz::shape(face, features, buffer)
+}
+
+/// What a shape plan is made of besides its face.
+#[derive(PartialEq, Hash)]
+struct PlanKey {
+    direction: Direction,
+    script: Option<rustybuzz::Script>,
+    language: Option<Language>,
+    features: Vec<Feature>,
+}
+// `Feature` compares its tag and integers, so equality is total.
+impl Eq for PlanKey {}
+
+/// The shape plans of one face, which runs with the same direction, script, language and
+/// features share: making a plan costs more than shaping a word with it.
+#[derive(Default)]
+pub(super) struct ShapePlans(RefCell<HashMap<PlanKey, ShapePlan>>);
+impl ShapePlans {
+    /// The glyphs `face`, whose plans these are, shapes `buffer` into with `features`, as
+    /// `shape_buffer` shapes them.
+    fn shape(
+        &self,
+        face: &Face<'_>,
+        features: Vec<Feature>,
+        mut buffer: UnicodeBuffer,
+    ) -> GlyphBuffer {
+        work::count(Work::ShapedRun, 1);
+        buffer.guess_segment_properties();
+        // Guessing leaves the script unset where no character has one, which the getter
+        // reports as unknown.
+        let key = PlanKey {
+            direction: buffer.direction(),
+            script: Some(buffer.script()).filter(|&script| script != rustybuzz::script::UNKNOWN),
+            language: buffer.language(),
+            features,
+        };
+        let mut plans = self.0.borrow_mut();
+        let plan = plans.entry(key).or_insert_with_key(|key| {
+            work::count(Work::ShapePlan, 1);
+            ShapePlan::new(
+                face,
+                key.direction,
+                key.script,
+                key.language.as_ref(),
+                &key.features,
+            )
+        });
+        rustybuzz::shape_with_plan(face, plan, buffer)
+    }
 }
 
 /// Whether `letter_spacing` tracks text of `size` so far apart that common ligatures do not
@@ -355,6 +407,7 @@ fn shape_run(
 ) -> Result<GlyphRun, TextError> {
     let ShapingFont {
         face,
+        plans,
         font_id,
         mut synthesis,
         oblique_skew,
@@ -465,7 +518,7 @@ fn shape_run(
         },
         tracked(style.letter_spacing, size),
     )));
-    let shaped = shape_buffer(face, &shaper, buffer);
+    let shaped = plans.shape(face, shaper, buffer);
     let boundaries = crate::fonts::cluster_boundaries(
         shaped
             .glyph_infos()
