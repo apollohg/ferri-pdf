@@ -52,10 +52,12 @@ pub(crate) enum Work {
     /// A child of a box that a walk over its children, for the semantic events after one of
     /// them, steps over.
     SiblingStep,
+    /// A track or item that sizing a grid's tracks to the items spanning one track steps over.
+    SingleSpanStep,
 }
 
 #[cfg(test)]
-const KINDS: usize = 23;
+const KINDS: usize = 24;
 
 #[cfg(test)]
 thread_local! {

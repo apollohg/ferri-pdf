@@ -343,16 +343,21 @@ impl<'a> Sizer<'a> {
 
     /// Step 2: tracks sized by the items spanning only them.
     fn size_single_span(&mut self) {
-        for index in 0..self.tracks.len() {
+        crate::work::count(
+            crate::work::Work::SingleSpanStep,
+            self.tracks.len() + self.items.len(),
+        );
+        let mut spanning: Vec<Vec<&Prepared<'_>>> = vec![Vec::new(); self.tracks.len()];
+        for item in &self.items {
+            if item.item.tracks.len() == 1 {
+                spanning[item.item.tracks.start].push(item);
+            }
+        }
+        for (index, items) in spanning.into_iter().enumerate() {
             let track = self.tracks[index];
             if track.max.flex().is_some() || !(track.min.intrinsic() || track.max.intrinsic()) {
                 continue;
             }
-            let items: Vec<&Prepared<'_>> = self
-                .items
-                .iter()
-                .filter(|item| item.item.tracks == (index..index + 1))
-                .collect();
             if items.is_empty() {
                 continue;
             }
@@ -650,26 +655,25 @@ impl<'a> Sizer<'a> {
     /// CSS Grid 1 §11.7.1: the size of `1fr` filling `space` with the tracks in `range`.
     fn fr_size(&self, range: Range<usize>, space: f64) -> f64 {
         let gaps = self.gap * range.len().saturating_sub(1) as f64;
-        let mut inflexible = vec![false; self.tracks.len()];
+        let tracks = &self.tracks[range];
+        let mut inflexible = vec![false; tracks.len()];
         loop {
             let mut leftover = space - gaps;
             let mut factors = 0.0;
-            for index in range.clone() {
-                let track = &self.tracks[index];
+            for (track, inflexible) in tracks.iter().zip(&inflexible) {
                 match track.max.flex() {
-                    Some(factor) if !inflexible[index] => factors += factor,
+                    Some(factor) if !inflexible => factors += factor,
                     _ => leftover -= track.base,
                 }
             }
             let fraction = leftover / factors.max(1.0);
             let mut changed = false;
-            for index in range.clone() {
-                let track = &self.tracks[index];
+            for (track, inflexible) in tracks.iter().zip(&mut inflexible) {
                 if let Some(factor) = track.max.flex()
-                    && !inflexible[index]
+                    && !*inflexible
                     && fraction * factor < track.base
                 {
-                    inflexible[index] = true;
+                    *inflexible = true;
                     changed = true;
                 }
             }

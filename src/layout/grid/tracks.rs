@@ -377,7 +377,12 @@ impl Axis {
     }
 
     pub(super) fn sizing(&self, basis: Option<f32>) -> Vec<TrackSizing> {
-        self.tracks
+        self.area_sizing(0..self.tracks.len(), basis)
+    }
+
+    /// The sizing functions of the tracks of `area`.
+    pub(super) fn area_sizing(&self, area: Range<usize>, basis: Option<f32>) -> Vec<TrackSizing> {
+        self.tracks[area]
             .iter()
             .map(|track| {
                 let minimum = |value: &TrackBreadth| match value {

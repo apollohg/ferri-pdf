@@ -31,6 +31,8 @@ struct Plan<'a> {
     bounds: [SizeBounds; 2],
     alignment: [(crate::style::Alignment, crate::style::OverflowPosition); 2],
     rtl: bool,
+    /// The start of the first and the end of the last track that is not collapsed, by axis.
+    uncollapsed_ends: [[Option<usize>; 2]; 2],
 }
 
 impl<'a> Plan<'a> {
@@ -40,14 +42,9 @@ impl<'a> Plan<'a> {
     fn trimmed_sides(&self, index: usize) -> [bool; 4] {
         let trim = self.source.style().margin_trim;
         let adjoins = |axis: usize| {
-            let collapsed = &self.topology.axes[axis].collapsed;
-            let first = collapsed.iter().position(|collapsed| !collapsed);
-            let last = collapsed.iter().rposition(|collapsed| !collapsed);
+            let [first, end] = self.uncollapsed_ends[axis];
             let area = &self.topology.placement.areas[index][axis];
-            [
-                first == Some(area.start),
-                last.map(|last| last + 1) == Some(area.end),
-            ]
+            [first == Some(area.start), end == Some(area.end)]
         };
         let [block_start, block_end] = adjoins(ROWS);
         let [inline_start, inline_end] = adjoins(COLUMNS);
@@ -64,9 +61,8 @@ impl<'a> Plan<'a> {
             return true;
         }
         let area = self.topology.placement.areas[index][COLUMNS].clone();
-        let tracks = self.topology.axes[COLUMNS].sizing(Some(width));
         tracks::fixed_extent(
-            &tracks[area.clone()],
+            &self.topology.axes[COLUMNS].area_sizing(area.clone(), Some(width)),
             &self.topology.axes[COLUMNS].collapsed[area],
             self.gap(COLUMNS, Some(width)),
         )
@@ -125,7 +121,6 @@ impl<'a> Plan<'a> {
         });
         Ok(Self {
             source: block.block,
-            topology,
             inherited,
             children,
             source_order,
@@ -135,6 +130,17 @@ impl<'a> Plan<'a> {
                 (style.flex.justify, style.flex.justify_overflow),
             ],
             rtl: style.used_rtl(),
+            uncollapsed_ends: std::array::from_fn(|axis| {
+                let collapsed = &topology.axes[axis].collapsed;
+                [
+                    collapsed.iter().position(|collapsed| !collapsed),
+                    collapsed
+                        .iter()
+                        .rposition(|collapsed| !collapsed)
+                        .map(|last| last + 1),
+                ]
+            }),
+            topology,
         })
     }
 
