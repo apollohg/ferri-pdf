@@ -142,7 +142,10 @@ impl Topology {
             )
         });
         work.spend(placements.len().max(1))?;
-        let placement = crate::grid::place(&lines, placements, style.grid.auto_flow)?;
+        let placement =
+            crate::grid::place(&lines, placements, style.grid.auto_flow, &mut |units| {
+                work.spend(units).map_err(Failure::from)
+            })?;
         for axis in [ROWS, COLUMNS] {
             if lines[axis].subgridded {
                 continue;

@@ -1,7 +1,7 @@
 //! Line-based placement and the auto-placement algorithm (CSS Grid 1 §8).
 use crate::grid::GridError;
 use crate::style::{AutoFlow, COLUMNS, GridLine, MAX_GRID_LINE, ROWS};
-use std::{ops::Range, sync::Arc};
+use std::{collections::HashMap, ops::Range, sync::Arc};
 
 /// Start and end lines of an item, indexed by [`ROWS`] and [`COLUMNS`].
 pub(crate) type ItemPlacement = [[GridLine; 2]; 2];
@@ -120,28 +120,122 @@ fn clamp(start: i64, end: i64, bounds: &Range<i64>) -> (i64, i64) {
     }
 }
 
-/// Occupied cells: per row of the flow (grow) axis, the occupied ranges across it.
+/// Occupied cells: per row of the flow (grow) axis, the occupied ranges across it, merged and
+/// in order. The searches skip each occupied range whole, rather than track by track, and
+/// spend a unit of work for each row they check at a position.
 #[derive(Default)]
 struct Occupancy {
     rows: Vec<Vec<Range<usize>>>,
 }
 impl Occupancy {
-    fn overlaps(&self, grow: &Range<usize>, across: &Range<usize>) -> bool {
-        grow.clone().any(|row| {
-            self.rows.get(row).is_some_and(|occupied| {
-                occupied
-                    .iter()
-                    .any(|range| range.start < across.end && across.start < range.end)
-            })
-        })
+    /// Where the occupied range of `row` that `across` overlaps ends, if it overlaps one.
+    fn occupied_until(&self, row: usize, across: &Range<usize>) -> Option<usize> {
+        let occupied = self.rows.get(row)?;
+        let before = occupied.partition_point(|range| range.start < across.end);
+        let end = occupied[..before].last()?.end;
+        (end > across.start).then_some(end)
     }
-    fn occupy(&mut self, grow: &Range<usize>, across: &Range<usize>) {
+    /// Where the occupied ranges of the rows `grow` that `across` overlaps last end, if it
+    /// overlaps any.
+    fn occupied_across<E>(
+        &self,
+        grow: &Range<usize>,
+        across: &Range<usize>,
+        spend: &mut impl FnMut(usize) -> Result<(), E>,
+    ) -> Result<Option<usize>, E> {
+        spend(grow.len().max(1))?;
+        Ok(grow
+            .clone()
+            .filter_map(|row| self.occupied_until(row, across))
+            .max())
+    }
+    fn occupy<E>(
+        &mut self,
+        grow: &Range<usize>,
+        across: &Range<usize>,
+        spend: &mut impl FnMut(usize) -> Result<(), E>,
+    ) -> Result<(), E> {
         if self.rows.len() < grow.end {
             self.rows.resize_with(grow.end, Vec::new);
         }
-        for row in grow.clone() {
-            self.rows[row].push(across.clone());
+        for occupied in &mut self.rows[grow.clone()] {
+            // The ranges `across` overlaps or adjoins merge with it; those after it move.
+            let first = occupied.partition_point(|range| range.end < across.start);
+            let last = occupied.partition_point(|range| range.start <= across.end);
+            let merged = occupied[first..last]
+                .iter()
+                .fold(across.clone(), |merged, range| {
+                    merged.start.min(range.start)..merged.end.max(range.end)
+                });
+            spend(1 + occupied.len() - last)?;
+            occupied.splice(first..last, [merged]);
         }
+        Ok(())
+    }
+    /// The first line from `start` where `span` tracks across are free in the rows `grow`, or
+    /// `limit` where none before it is; `start` itself from `limit` on.
+    fn free_across<E>(
+        &self,
+        grow: &Range<usize>,
+        mut start: usize,
+        span: usize,
+        limit: usize,
+        spend: &mut impl FnMut(usize) -> Result<(), E>,
+    ) -> Result<usize, E> {
+        while start < limit {
+            match self.occupied_across(grow, &(start..start + span), spend)? {
+                Some(end) => start = end.min(limit),
+                None => break,
+            }
+        }
+        Ok(start)
+    }
+    /// The first row from `start` where `span` rows are free across `across`, or `limit` where
+    /// none before it is; `start` itself from `limit` on.
+    fn free_along<E>(
+        &self,
+        across: &Range<usize>,
+        mut start: usize,
+        span: usize,
+        limit: usize,
+        spend: &mut impl FnMut(usize) -> Result<(), E>,
+    ) -> Result<usize, E> {
+        while start < limit {
+            spend(span.max(1))?;
+            match (start..start + span)
+                .rev()
+                .find(|&row| self.occupied_until(row, across).is_some())
+            {
+                Some(row) => start = (row + 1).min(limit),
+                None => break,
+            }
+        }
+        Ok(start)
+    }
+    /// The first cell from `start` in row order where `[rows, columns]` tracks fit `width`
+    /// tracks across and are free, or the first cell reached in a row from `limit` on.
+    fn free_cell<E>(
+        &self,
+        [rows, columns]: [usize; 2],
+        (mut row, mut column): (usize, usize),
+        [width, limit]: [usize; 2],
+        spend: &mut impl FnMut(usize) -> Result<(), E>,
+    ) -> Result<(usize, usize), E> {
+        loop {
+            if column + columns > width {
+                row += 1;
+                column = 0;
+                continue;
+            }
+            if row >= limit {
+                break;
+            }
+            match self.occupied_across(&(row..row + rows), &(column..column + columns), spend)? {
+                Some(end) => column = end,
+                None => break,
+            }
+        }
+        Ok((row, column))
     }
 }
 
@@ -154,12 +248,15 @@ pub(crate) struct Placement {
     pub leading: [usize; 2],
 }
 
-/// The grid area of every item in order-modified document order, and the implicit grid.
-pub(crate) fn place(
+/// The grid area of every item in order-modified document order, and the implicit grid;
+/// `spend` charges the work of finding and occupying the areas. A dense search starts where
+/// the last item of the same shape went, as every cell before that one stays occupied.
+pub(crate) fn place<E: From<GridError>>(
     lines: &[AxisLines; 2],
     items: &[ItemPlacement],
     flow: AutoFlow,
-) -> Result<Placement, GridError> {
+    spend: &mut impl FnMut(usize) -> Result<(), E>,
+) -> Result<Placement, E> {
     let bounds = lines.each_ref().map(|axis| {
         if axis.subgridded {
             0..axis.tracks().min(LIMIT)
@@ -168,7 +265,7 @@ pub(crate) fn place(
         }
     });
     if bounds.iter().any(Range::is_empty) {
-        return Err(GridError::InvalidGeometry);
+        return Err(GridError::InvalidGeometry.into());
     }
     let (grow, across) = if flow.column {
         (COLUMNS, ROWS)
@@ -208,7 +305,7 @@ pub(crate) fn place(
     for (index, item) in resolved.iter().enumerate() {
         if let [Resolved::Definite(rs, re), Resolved::Definite(cs, ce)] = *item {
             let area = [normalized(ROWS, rs, re), normalized(COLUMNS, cs, ce)];
-            occupancy.occupy(&area[grow], &area[across]);
+            occupancy.occupy(&area[grow], &area[across], spend)?;
             areas[index] = area.map(Some);
         }
     }
@@ -225,31 +322,28 @@ pub(crate) fn place(
         Resolved::Definite(..) => 0,
     };
     // Step 2: items locked to a track of the flow (grow) axis.
-    let mut row_cursors: Vec<(usize, usize)> = Vec::new();
+    let mut row_cursors: HashMap<usize, usize> = HashMap::new();
+    let mut dense_columns: HashMap<(usize, usize, usize), usize> = HashMap::new();
     for (index, item) in resolved.iter().enumerate() {
         let (Resolved::Definite(start, end), Resolved::Auto(_)) = (item[grow], item[across]) else {
             continue;
         };
         let rows = normalized(grow, start, end);
         let span = auto_span(item, across);
-        let mut column = if flow.dense {
-            0
+        let shape = (rows.start, rows.end, span);
+        let start = if flow.dense {
+            dense_columns.get(&shape).copied().unwrap_or(0)
         } else {
-            row_cursors
-                .iter()
-                .find(|(row, _)| *row == rows.start)
-                .map_or(0, |(_, column)| *column)
+            row_cursors.get(&rows.start).copied().unwrap_or(0)
         };
-        while occupancy.overlaps(&rows, &(column..column + span)) && column < max_line(across) {
-            column += 1;
+        let column = occupancy.free_across(&rows, start, span, max_line(across), spend)?;
+        if flow.dense {
+            dense_columns.insert(shape, column);
         }
         let columns = bounded(across, column..column + span);
         width = width.max(columns.end);
-        match row_cursors.iter_mut().find(|(row, _)| *row == rows.start) {
-            Some(cursor) => cursor.1 = columns.end,
-            None => row_cursors.push((rows.start, columns.end)),
-        }
-        occupancy.occupy(&rows, &columns);
+        row_cursors.insert(rows.start, columns.end);
+        occupancy.occupy(&rows, &columns, spend)?;
         let mut area = [None, None];
         area[grow] = Some(rows);
         area[across] = Some(columns);
@@ -264,6 +358,8 @@ pub(crate) fn place(
     width = width.min(max_line(across));
     // Step 4: the remaining items, with the auto-placement cursor.
     let mut cursor = (0usize, 0usize);
+    let mut dense_rows: HashMap<(usize, usize, usize), usize> = HashMap::new();
+    let mut dense_cells: HashMap<[usize; 2], (usize, usize)> = HashMap::new();
     for (index, item) in resolved.iter().enumerate() {
         if areas[index][grow].is_some() {
             continue;
@@ -272,37 +368,36 @@ pub(crate) fn place(
         let (rows, columns) = match item[across] {
             Resolved::Definite(start, end) => {
                 let columns = normalized(across, start, end);
-                let mut row = if flow.dense {
-                    0
+                let shape = (columns.start, columns.end, rows_span);
+                let start = if flow.dense {
+                    dense_rows.get(&shape).copied().unwrap_or(0)
                 } else {
                     if columns.start < cursor.1 {
                         cursor.0 += 1;
                     }
                     cursor.0
                 };
-                while occupancy.overlaps(&(row..row + rows_span), &columns) && row < max_line(grow)
-                {
-                    row += 1;
+                let row =
+                    occupancy.free_along(&columns, start, rows_span, max_line(grow), spend)?;
+                if flow.dense {
+                    dense_rows.insert(shape, row);
                 }
                 cursor = (row, columns.start);
                 (bounded(grow, row..row + rows_span), columns)
             }
             Resolved::Auto(_) => {
-                let span = auto_span(item, across);
-                let (mut row, mut column) = if flow.dense { (0, 0) } else { cursor };
-                loop {
-                    if column + span > width {
-                        row += 1;
-                        column = 0;
-                        continue;
-                    }
-                    if !occupancy.overlaps(&(row..row + rows_span), &(column..column + span))
-                        || row >= max_line(grow)
-                    {
-                        break;
-                    }
-                    column += 1;
+                let shape = [rows_span, auto_span(item, across)];
+                let start = if flow.dense {
+                    dense_cells.get(&shape).copied().unwrap_or((0, 0))
+                } else {
+                    cursor
+                };
+                let (row, column) =
+                    occupancy.free_cell(shape, start, [width, max_line(grow)], spend)?;
+                if flow.dense {
+                    dense_cells.insert(shape, (row, column));
                 }
+                let span = shape[1];
                 cursor = (row, column);
                 (
                     bounded(grow, row..row + rows_span),
@@ -310,7 +405,7 @@ pub(crate) fn place(
                 )
             }
         };
-        occupancy.occupy(&rows, &columns);
+        occupancy.occupy(&rows, &columns, spend)?;
         let mut area = [None, None];
         area[grow] = Some(rows);
         area[across] = Some(columns);
@@ -334,7 +429,7 @@ pub(crate) fn place(
         .iter()
         .any(|area| area[ROWS].is_empty() || area[COLUMNS].is_empty())
     {
-        return Err(GridError::InvalidGeometry);
+        return Err(GridError::InvalidGeometry.into());
     }
     Ok(Placement {
         areas,
@@ -395,6 +490,9 @@ mod tests {
     fn auto() -> ItemPlacement {
         Default::default()
     }
+    fn unlimited() -> impl FnMut(usize) -> Result<(), GridError> {
+        |_| Ok(())
+    }
 
     #[test]
     fn subgrid_placement_clamps_definite_lines_and_auto_spans_without_implicit_tracks() {
@@ -413,7 +511,8 @@ mod tests {
                     [oversized.clone(), oversized],
                     auto(),
                 ];
-                let placed = place(&lines, &items, AutoFlow { column, dense }).unwrap();
+                let placed =
+                    place(&lines, &items, AutoFlow { column, dense }, &mut unlimited()).unwrap();
                 assert_eq!(
                     placed.tracks,
                     [2, 2],
@@ -440,7 +539,13 @@ mod tests {
             let mut lines = [axis(2), axis(2)];
             lines[shared].subgridded = true;
             for dense in [false, true] {
-                let placed = place(&lines, &vec![auto(); 7], AutoFlow { column, dense }).unwrap();
+                let placed = place(
+                    &lines,
+                    &vec![auto(); 7],
+                    AutoFlow { column, dense },
+                    &mut unlimited(),
+                )
+                .unwrap();
                 assert_eq!(placed.tracks[shared], 2);
                 assert_eq!(placed.tracks[grow], 4);
                 for (index, area) in placed.areas.iter().enumerate() {
@@ -461,7 +566,7 @@ mod tests {
             columns(GridLine::Line(-3, Some(name.clone())), GridLine::Auto),
             columns(GridLine::Line(1, None), GridLine::Span(4, Some(name))),
         ];
-        let placed = place(&lines, &items, AutoFlow::default()).unwrap();
+        let placed = place(&lines, &items, AutoFlow::default(), &mut unlimited()).unwrap();
         assert_eq!(placed.tracks, [3, 1]);
         assert_eq!(placed.leading, [0, 0]);
         for (row, area) in placed.areas.iter().enumerate() {
@@ -475,7 +580,7 @@ mod tests {
             let mut lines = [axis(0), axis(0)];
             lines[shared].subgridded = true;
             assert!(matches!(
-                place(&lines, &[], AutoFlow::default()),
+                place(&lines, &[], AutoFlow::default(), &mut unlimited()),
                 Err(GridError::InvalidGeometry)
             ));
         }
@@ -495,6 +600,7 @@ mod tests {
                     &lines,
                     &[item.clone(), item.clone(), item],
                     AutoFlow { column, dense },
+                    &mut unlimited(),
                 )
                 .unwrap();
                 assert_eq!(placed.tracks, [2, 2]);
@@ -511,11 +617,91 @@ mod tests {
     }
 
     #[test]
+    fn dense_packing_takes_work_linear_in_its_items() {
+        const ITEMS: usize = 1200;
+        const WIDTH: usize = 4;
+        const SPANS: [u32; 3] = [3, 2, 1];
+        // Searching for each item's area from the grid's first cell, track by track, is
+        // quadratic in the items. Spans of 3, 2 and 1 leave holes that the next items of span 1
+        // fill, so that the six cells of each run of the three leave no hole.
+        // What each case places, its items and the tracks that a count of them fills.
+        type Case = (
+            &'static str,
+            fn(usize) -> ItemPlacement,
+            fn(usize) -> [usize; 2],
+        );
+        let cases: [Case; 3] = [
+            (
+                "auto-placed items spanning 3, 2 and 1 columns",
+                |index| {
+                    columns(
+                        GridLine::Span(SPANS[index % SPANS.len()], None),
+                        GridLine::Auto,
+                    )
+                },
+                |items| [items * 2 / WIDTH, WIDTH],
+            ),
+            (
+                "items locked to the first row",
+                |_| {
+                    [
+                        [GridLine::Line(1, None), GridLine::Auto],
+                        [GridLine::Auto, GridLine::Auto],
+                    ]
+                },
+                |items| [1, items],
+            ),
+            (
+                "items locked to the first column",
+                |_| columns(GridLine::Line(1, None), GridLine::Auto),
+                |items| [items, WIDTH],
+            ),
+        ];
+        for (what, item, tracks) in cases {
+            crate::work::assert_linear(&format!("dense placement of {what}"), ITEMS, |count| {
+                let items: Vec<_> = (0..count).map(item).collect();
+                let mut units = 0;
+                let placement = place(
+                    &[axis(0), axis(WIDTH)],
+                    &items,
+                    AutoFlow {
+                        column: false,
+                        dense: true,
+                    },
+                    &mut |spent| {
+                        units += spent;
+                        Ok::<(), GridError>(())
+                    },
+                )
+                .unwrap();
+                assert_eq!(
+                    placement.tracks,
+                    tracks(count),
+                    "{count} {what} pack densely into the tracks they fill"
+                );
+                let mut cells = std::collections::HashSet::new();
+                for (index, [rows, columns]) in placement.areas.iter().enumerate() {
+                    for cell in rows
+                        .clone()
+                        .flat_map(|row| columns.clone().map(move |column| (row, column)))
+                    {
+                        assert!(
+                            cells.insert(cell),
+                            "item {index} of {count} {what} overlaps another at {cell:?}"
+                        );
+                    }
+                }
+                units
+            });
+        }
+    }
+
+    #[test]
     fn dense_packing_backfills_holes_that_sparse_packing_leaves() {
         let wide = columns(GridLine::Span(2, None), GridLine::Auto);
         let items = [wide.clone(), wide, auto(), auto()];
         let lines = [axis(0), axis(3)];
-        let sparse = place(&lines, &items, AutoFlow::default()).unwrap();
+        let sparse = place(&lines, &items, AutoFlow::default(), &mut unlimited()).unwrap();
         let dense = place(
             &lines,
             &items,
@@ -523,6 +709,7 @@ mod tests {
                 column: false,
                 dense: true,
             },
+            &mut unlimited(),
         )
         .unwrap();
         assert_eq!(
@@ -562,7 +749,8 @@ mod tests {
                 GridLine::Line(4, None),
             ),
         ];
-        let placement = place(&[rows, cols], &items, AutoFlow::default()).unwrap();
+        let placement =
+            place(&[rows, cols], &items, AutoFlow::default(), &mut unlimited()).unwrap();
         assert_eq!(
             placement.leading,
             [0, 1],
@@ -612,6 +800,7 @@ mod tests {
                 column: true,
                 dense: false,
             },
+            &mut unlimited(),
         )
         .unwrap();
         assert_eq!(
@@ -643,6 +832,7 @@ mod tests {
                     &[axis(0), axis(0)],
                     &[item.clone(), item],
                     AutoFlow { column, dense },
+                    &mut unlimited(),
                 )
                 .unwrap();
                 let limit = MAX_GRID_LINE as usize;
@@ -674,6 +864,7 @@ mod tests {
                     &[axis(0), axis(0)],
                     &[item.clone(), item],
                     AutoFlow { column, dense },
+                    &mut unlimited(),
                 )
                 .unwrap();
                 let limit = MAX_GRID_LINE as usize;
@@ -719,6 +910,7 @@ mod tests {
                     &[axis(0), axis(0)],
                     &[prefix, item],
                     AutoFlow { column, dense },
+                    &mut unlimited(),
                 )
                 .unwrap();
                 assert_eq!(
@@ -743,6 +935,7 @@ mod tests {
             &[axis(limit + 1), axis(limit + 1)],
             &[auto()],
             AutoFlow::default(),
+            &mut unlimited(),
         )
         .unwrap();
         assert_eq!(
@@ -759,7 +952,7 @@ mod tests {
         for axis in &mut lines {
             axis.names[1].push("middle".into());
         }
-        let placement = place(&lines, &[], AutoFlow::default()).unwrap();
+        let placement = place(&lines, &[], AutoFlow::default(), &mut unlimited()).unwrap();
         for pair in [
             [GridLine::Line(2, None), GridLine::Line(2, None)],
             [GridLine::Line(2, None), GridLine::Line(-2, None)],
@@ -774,7 +967,7 @@ mod tests {
                 [[Some(1), None]; 2],
                 "equal resolved lines {pair:?}: end must use the padding edge"
             );
-            let in_flow = place(&lines, &[item], AutoFlow::default()).unwrap();
+            let in_flow = place(&lines, &[item], AutoFlow::default(), &mut unlimited()).unwrap();
             assert_eq!(
                 in_flow.areas,
                 [[1..2, 1..2]],
@@ -791,7 +984,7 @@ mod tests {
     #[test]
     fn absolute_spans_cannot_resolve_from_nonexistent_anchor_lines() {
         let lines = [axis(2), axis(2)];
-        let placement = place(&lines, &[], AutoFlow::default()).unwrap();
+        let placement = place(&lines, &[], AutoFlow::default(), &mut unlimited()).unwrap();
         for pair in [
             [GridLine::Line(-4, None), GridLine::Span(2, None)],
             [GridLine::Span(2, None), GridLine::Line(4, None)],
@@ -809,6 +1002,7 @@ mod tests {
                 [GridLine::Line(-4, None), GridLine::Line(4, None)]
             })],
             AutoFlow::default(),
+            &mut unlimited(),
         )
         .unwrap();
         assert_eq!(
@@ -823,7 +1017,13 @@ mod tests {
 
     #[test]
     fn absolute_lines_use_padding_edges_outside_the_implicit_grid() {
-        let placement = place(&[axis(2), axis(2)], &[auto()], AutoFlow::default()).unwrap();
+        let placement = place(
+            &[axis(2), axis(2)],
+            &[auto()],
+            AutoFlow::default(),
+            &mut unlimited(),
+        )
+        .unwrap();
         let item = [
             [GridLine::Line(2, None), GridLine::Auto],
             [GridLine::Line(5, None), GridLine::Span(1, None)],
