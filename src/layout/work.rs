@@ -948,26 +948,42 @@ mod tests {
         }
     }
 
-    /// The units of `work` that laying out `body` does on small pages, which it must span.
-    fn paged_work(what: &str, body: &str, work: crate::work::Work) -> usize {
-        let resolver = FileResolver::default();
+    /// `body` on small pages, which it must span.
+    fn paged_document(body: &str, resolver: &FileResolver) -> StyledDocument {
         let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
-        let document = StyledDocument::parse(
+        StyledDocument::parse(
             &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}@page{{size:200pt 200pt;margin:10pt}}html,body{{margin:0;font:8pt/10pt Fixed}}</style>{body}"),
-            &base, &[], &resolver,
+            &base, &[], resolver,
         )
-        .unwrap();
-        let (pass, units) = crate::work::measured(work, || {
-            crate::layout::layout_pass(&document, &resolver, Budget::new(MAX_LAYOUT_WORK))
-                .unwrap_or_else(|error| panic!("{what} failed: {error}"))
-        });
+        .unwrap()
+    }
+
+    /// Lays out `document`, made by [`paged_document`], under `budget`; `what` names it.
+    fn paged_pass(
+        what: &str,
+        document: &StyledDocument,
+        resolver: &FileResolver,
+        budget: Budget,
+    ) -> crate::layout::LayoutPass {
+        let pass = crate::layout::layout_pass(document, resolver, budget)
+            .unwrap_or_else(|error| panic!("{what} failed: {error}"));
         assert!(
             pass.trace.pages.len() > 1,
             "fixture: {what} spans pages, but lays out on {} page",
             pass.trace.pages.len()
         );
+        pass
+    }
+
+    /// The units of `work` that laying out `body` does on small pages, which it must span.
+    fn paged_work(what: &str, body: &str, work: crate::work::Work) -> usize {
+        let resolver = FileResolver::default();
+        let document = paged_document(body, &resolver);
+        let (_, units) = crate::work::measured(work, || {
+            paged_pass(what, &document, &resolver, Budget::new(MAX_LAYOUT_WORK))
+        });
         units
     }
 
@@ -1049,6 +1065,45 @@ mod tests {
                     ),
                     work,
                 )
+            });
+        }
+    }
+
+    #[test]
+    fn paginating_a_shrink_to_fit_grid_takes_work_linear_in_its_items() {
+        const ITEMS: usize = 240;
+        // Measuring every item for the grid's width again for each item placed, or charging
+        // every row for every item when sizing the rows, is quadratic in the items.
+        for css in ["width:fit-content", "width:max-content", "float:left"] {
+            let what = format!("layout budget for the items of a four-column grid with `{css}`");
+            crate::work::assert_linear(&what, ITEMS, |items| {
+                let cards: String = (0..items)
+                    .map(|index| format!("<div>card {index}</div>"))
+                    .collect();
+                let resolver = FileResolver::default();
+                let document = paged_document(
+                    &format!(
+                        "<style>.grid{{display:grid;grid-template-columns:repeat(4,1fr);gap:2pt;{css}}}.grid div{{border:1pt solid}}</style><div class=grid>{cards}</div>"
+                    ),
+                    &resolver,
+                );
+                let budget = Budget::new(MAX_LAYOUT_WORK);
+                let pass = paged_pass(
+                    &format!("{what} holding {items} items"),
+                    &document,
+                    &resolver,
+                    budget.clone(),
+                );
+                let last = (items - 1).to_string();
+                let pages = page_text(&pass.trace);
+                assert!(
+                    pages
+                        .last()
+                        .is_some_and(|lines| lines.iter().any(|line| line.ends_with(&last))),
+                    "{what}: the last page of {items} items shows card {last}: {:?}",
+                    pages.last()
+                );
+                budget.spent()
             });
         }
     }
