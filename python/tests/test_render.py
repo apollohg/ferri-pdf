@@ -1,5 +1,6 @@
 """Behaviour of the ferri_pdf extension through its public Python API."""
 from pathlib import Path
+import shutil
 
 import pytest
 
@@ -169,3 +170,41 @@ def test_html_must_be_text_or_bytes():
         ferri_pdf.render(42)  # type: ignore[arg-type]
     with pytest.raises(TypeError, match="str or bytes, not list"):
         ferri_pdf.render_parts([["<p>x</p>"]])  # type: ignore[list-item]
+
+
+FONT_FIXTURES = Path(__file__).resolve().parents[2] / "tests/fixtures/fonts"
+INSTALLED_FAMILY = "System Test"
+INSTALLED_FAMILY_HTML = f"<!doctype html><p style=\"font-family:'{INSTALLED_FAMILY}',serif\">x</p>"
+
+
+def first_run_family(output):
+    layout = output.layout
+    run = layout["pages"][0][0]["runs"][0]
+    return layout["fonts"][run["font_id"]]["family"]
+
+
+def test_font_dirs_add_installed_families(tmp_path: Path):
+    shutil.copy(FONT_FIXTURES / "SystemTest-Regular.ttf", tmp_path)
+    output = ferri_pdf.render(
+        INSTALLED_FAMILY_HTML, ferri_pdf.RenderOptions(font_dirs=[tmp_path], include_layout=True)
+    )
+    assert output.diagnostics == (), messages(output.diagnostics)
+    assert first_run_family(output) == INSTALLED_FAMILY
+    without = ferri_pdf.render(INSTALLED_FAMILY_HTML, ferri_pdf.RenderOptions(include_layout=True))
+    assert first_run_family(without) == "Liberation Serif"
+    found = messages(without.diagnostics)
+    assert any(INSTALLED_FAMILY in m for m in found), found
+
+
+def test_unreadable_font_dirs_warn(tmp_path: Path):
+    missing = tmp_path / "absent"
+    output = ferri_pdf.render(TWO_PARAGRAPHS, ferri_pdf.RenderOptions(font_dirs=[missing]))
+    assert output.pdf.startswith(PDF_SIGNATURE)
+    found = messages(output.diagnostics)
+    assert any(str(missing) in m for m in found), found
+    assert not any(d.loses_content for d in output.diagnostics), found
+
+
+def test_system_fonts_render():
+    output = ferri_pdf.render(TWO_PARAGRAPHS, ferri_pdf.RenderOptions(system_fonts=True))
+    assert output.pdf.startswith(PDF_SIGNATURE)
