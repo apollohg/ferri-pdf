@@ -24,16 +24,14 @@ impl Style {
         self.canonical.as_deref().unwrap_or(self)
     }
 
-    pub(crate) fn used(&self) -> Self {
-        if self.canonical.is_some() {
-            return self.clone();
-        }
+    pub(crate) fn used(self) -> Self {
         let factor = self.effective_zoom;
-        if factor == INITIAL_ZOOM {
-            return self.clone();
+        if self.canonical.is_some() || factor == INITIAL_ZOOM {
+            return self;
         }
-        let mut style = self.clone();
-        style.canonical = Some(Arc::new(self.clone()));
+        let canonical = Arc::new(self.clone());
+        let mut style = self;
+        style.canonical = Some(canonical);
         style.size *= factor;
         if let LineHeight::Length(height) = &mut style.line_height {
             *height *= factor;
@@ -205,10 +203,10 @@ impl Style {
             }
         }
         for option in Arc::make_mut(&mut style.anchor.options) {
-            *option = option.used();
+            *option = option.clone().used();
         }
         for (_, page) in Arc::make_mut(&mut style.anchor.pages) {
-            *page = page.used();
+            *page = page.clone().used();
         }
         style
     }

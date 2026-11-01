@@ -14,7 +14,7 @@ fn styles(child: &str) -> (Style, Style) {
         .computed_with_resolver(select("#parent"), &Style::default(), &resolver)
         .unwrap();
     let child = sheet
-        .computed_with_resolver(select("#child"), &parent.used(), &resolver)
+        .computed_with_resolver(select("#child"), &parent.clone().used(), &resolver)
         .unwrap();
     (parent, child)
 }
@@ -32,10 +32,10 @@ fn zoom_keeps_computed_lengths_and_root_bases_unscaled() {
     }
     assert_eq!((parent.zoom, parent.effective_zoom), (2.0, 2.0));
     assert_eq!((child.zoom, child.effective_zoom), (0.5, 1.0));
-    let used = parent.used();
+    let used = parent.clone().used();
     assert_eq!(used.size, 20.0, "used font size");
     assert_eq!(used.width.resolve(200.0), Some(80.0), "used width");
-    assert_eq!(used.used(), used, "projection is applied once");
+    assert_eq!(used.clone().used(), used, "projection is applied once");
     assert_eq!(
         used.canonical(),
         &parent,
@@ -47,7 +47,7 @@ fn zoom_keeps_computed_lengths_and_root_bases_unscaled() {
 fn anonymous_boxes_keep_used_adjustments_and_unscaled_inheritance_separate() {
     use crate::style::{Display, logical::WritingMode};
     let (parent, _) = styles("");
-    let mut adjusted = parent.used();
+    let mut adjusted = parent.clone().used();
     adjusted.writing_mode = WritingMode::VerticalRl;
     adjusted.size *= 3.0;
     let anonymous = adjusted.anonymous(Display::InlineBlock);
@@ -72,7 +72,7 @@ fn anonymous_boxes_keep_used_adjustments_and_unscaled_inheritance_separate() {
             "a layout-only vertical annotation cannot change computed inheritance"
         );
         assert_eq!(
-            style.used(),
+            style.clone().used(),
             *style,
             "anonymous styles are already projected"
         );

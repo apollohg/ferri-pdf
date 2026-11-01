@@ -270,7 +270,7 @@ impl Restyle<'_> {
         };
         for node in unstyled.into_iter().rev() {
             style = match style {
-                Some(parent) => self.node_style(node, &parent)?.map(|style| style.used()),
+                Some(parent) => self.node_style(node, &parent)?.map(Style::used),
                 None => None,
             };
             self.styles
