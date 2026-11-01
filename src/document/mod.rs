@@ -39,7 +39,7 @@ pub(crate) use formatting::{
     ATOMIC_INLINE_DEPTH, BOX_DEPTH, MAX_FORMATTING_DEPTH, POSITIONED_DEPTH,
 };
 pub(crate) use formatting::{
-    BlockBox, BlockContent, Footnotes, InitialLetterBox, MAX_FORMATTING_WORK, PageBox,
+    BlockBox, BlockContent, ChildEnds, Footnotes, InitialLetterBox, MAX_FORMATTING_WORK, PageBox,
     PageFootnoteArea, PageMarginBox,
 };
 pub(crate) use frames::{Frame, FrameDocument};

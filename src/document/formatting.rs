@@ -682,29 +682,39 @@ impl BlockBox {
                 _ => &[],
             })
     }
+    /// The semantic events after `preceding` among the children, found by searching them;
+    /// [`ChildEnds`] finds those of many children without the search.
     pub(crate) fn following_events<'a>(
         &'a self,
         preceding: &BlockBox,
     ) -> impl Iterator<Item = &'a crate::document::SemanticEvent> {
         let boundary = self
-            .children
-            .iter()
-            .position(|child| match child {
-                BlockContent::Block(block) | BlockContent::Positioned(block) => {
-                    std::ptr::eq(block, preceding)
-                }
-                _ => false,
-            })
-            .map_or(self.children.len(), |index| index + 1);
+            .child_ends()
+            .find(|(child, _)| std::ptr::eq(*child, preceding))
+            .map_or(self.children.len(), |(_, end)| end);
         self.events_from(boundary)
     }
+    /// Each box among the children, with where the children after it start.
+    fn child_ends(&self) -> impl Iterator<Item = (*const BlockBox, usize)> {
+        self.children
+            .iter()
+            .enumerate()
+            .inspect(|_| crate::work::count(crate::work::Work::SiblingStep, 1))
+            .filter_map(|(index, child)| match child {
+                BlockContent::Block(block) | BlockContent::Positioned(block) => {
+                    Some((std::ptr::from_ref(block), index + 1))
+                }
+                _ => None,
+            })
+    }
     /// The semantic events among the children from the child at `boundary` to the next box.
-    pub(crate) fn events_from(
+    fn events_from(
         &self,
         boundary: usize,
     ) -> impl Iterator<Item = &crate::document::SemanticEvent> {
         self.children[boundary..]
             .iter()
+            .inspect(|_| crate::work::count(crate::work::Work::SiblingStep, 1))
             .take_while(|child| matches!(child, BlockContent::Events(_)))
             .flat_map(|child| match child {
                 BlockContent::Events(events) => events.as_slice(),
@@ -939,6 +949,30 @@ impl BlockBox {
     }
     pub(crate) fn query_container(&self) -> Option<ElementId> {
         self.query_container
+    }
+}
+
+/// Where the children after each box among the children of some boxes start, which gives
+/// [`BlockBox::following_events`] for all of them without searching the children again.
+pub(crate) struct ChildEnds(std::collections::HashMap<*const BlockBox, usize>);
+
+impl ChildEnds {
+    pub(crate) fn new<'a>(parents: impl IntoIterator<Item = &'a BlockBox>) -> Self {
+        Self(parents.into_iter().flat_map(BlockBox::child_ends).collect())
+    }
+    /// The semantic events after `child` among the children of `parent`, one of the boxes
+    /// these are the ends of.
+    pub(crate) fn events_after<'a>(
+        &self,
+        parent: &'a BlockBox,
+        child: &BlockBox,
+    ) -> impl Iterator<Item = &'a crate::document::SemanticEvent> {
+        parent.events_from(
+            self.0
+                .get(&std::ptr::from_ref(child))
+                .copied()
+                .unwrap_or(parent.children.len()),
+        )
     }
 }
 

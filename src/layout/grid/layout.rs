@@ -2,7 +2,7 @@ use super::{
     Plan,
     items::{Baselines, Item},
 };
-use crate::document::{BlockBox, BlockContent};
+use crate::document::{BlockBox, BlockContent, ChildEnds};
 use crate::grid::{AvailableSpace, MaxSizing, MinSizing, SizeBounds, SizingItem};
 use crate::layout::measure::{BlockSource, Failure};
 use crate::layout::{
@@ -309,6 +309,7 @@ pub(crate) fn measure<'a>(
     let rows = std::rc::Rc::new(rows);
     let constrained = definite.is_some() || rows.extent() > content;
     let mut cells = Vec::with_capacity(prepared.len());
+    let child_ends = ChildEnds::new([block.block]);
     let mut final_baselines = Baselines::new(plan.topology.placement.tracks[ROWS]);
     final_baselines.groups.clone_from(&baselines.groups);
     final_baselines
@@ -352,7 +353,7 @@ pub(crate) fn measure<'a>(
         let offset = range.start + item.top(available, measured.height);
         cells.push(MeasuredCell {
             clipped_height: None,
-            after_events: block.block.following_events(item.source).collect(),
+            after_events: child_ends.events_after(block.block, item.source).collect(),
             grid_cell: None,
             backgrounds: Vec::new(),
             block: measured,

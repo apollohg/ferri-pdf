@@ -49,10 +49,13 @@ pub(crate) enum Work {
     FontScan,
     /// A byte of a font file that a scan for installed fonts reads.
     FontScanBytes,
+    /// A child of a box that a walk over its children, for the semantic events after one of
+    /// them, steps over.
+    SiblingStep,
 }
 
 #[cfg(test)]
-const KINDS: usize = 22;
+const KINDS: usize = 23;
 
 #[cfg(test)]
 thread_local! {

@@ -1,6 +1,6 @@
 use crate::layout::measure::{BlockSource, Failure};
 pub(super) mod intrinsic;
-use crate::document::{BlockBox, BlockContent};
+use crate::document::{BlockBox, BlockContent, ChildEnds};
 use crate::flex::{Item, spacing};
 use crate::layout::{
     LayoutError,
@@ -260,6 +260,7 @@ fn avoided_break(
 /// What measuring the items of a flex container takes of the container (CSS Flexbox 1 §9).
 struct FlexContext<'a> {
     block: BlockSource<'a>,
+    child_ends: ChildEnds,
     column: bool,
     main_reverse: bool,
     cross_reverse: bool,
@@ -384,6 +385,7 @@ fn flex_context<'a>(
     };
     FlexContext {
         block,
+        child_ends: ChildEnds::new([block.block]),
         column,
         main_reverse,
         cross_reverse,
@@ -1034,7 +1036,10 @@ impl<'a> FlexPlacement<'a> {
             let mut event = CollapsedItem {
                 source: item.source,
                 offset: if column { y } else { 0.0 },
-                after_events: block.block.following_events(item.source).collect(),
+                after_events: context
+                    .child_ends
+                    .events_after(block.block, item.source)
+                    .collect(),
             };
             if column && flex.wrap == FlexWrap::NoWrap {
                 event.offset = 0.0;
@@ -1171,7 +1176,10 @@ impl<'a> FlexPlacement<'a> {
         }
         let cell = MeasuredCell {
             clipped_height: None,
-            after_events: block.block.following_events(item.source).collect(),
+            after_events: context
+                .child_ends
+                .events_after(block.block, item.source)
+                .collect(),
             grid_cell: None,
             backgrounds: Vec::new(),
             paint_offset: None,

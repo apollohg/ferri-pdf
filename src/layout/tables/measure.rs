@@ -4,7 +4,7 @@ use super::{
     model::Data,
     paint::{Areas, Columns, FragmentBackground, Layers},
 };
-use crate::document::{BlockBox, BlockContent, SemanticEvent};
+use crate::document::{BlockBox, BlockContent, ChildEnds, SemanticEvent};
 use crate::graphics::{Border, BorderStyle, BoxDecoration, Color, Rect};
 use crate::layout::measure::{
     BlockEdge, FlowItem, MeasuredBlock, MeasuredCell, MeasuredRow, Measurer, RowTarget, TableFlow,
@@ -310,7 +310,7 @@ pub(crate) struct TablePlan<'a> {
     cell_indices: HashMap<*const BlockBox, usize>,
     /// Where the children after each box among the table box's children start, and among its
     /// row groups' children.
-    child_ends: [HashMap<*const BlockBox, usize>; 2],
+    child_ends: [ChildEnds; 2],
     /// The rows each row keeps with it at page breaks, at column breaks within a page and at
     /// column breaks that are also page breaks.
     row_keep_ends: [Vec<usize>; 3],
@@ -397,18 +397,6 @@ fn collect_structural_events<'a>(source: &'a BlockBox, events: &mut Vec<&'a Sema
         }
     }
 }
-/// Where the children after each box among the children of `parents` start.
-fn child_ends<'a>(parents: impl Iterator<Item = &'a BlockBox>) -> HashMap<*const BlockBox, usize> {
-    let mut ends = HashMap::new();
-    for parent in parents {
-        for (index, child) in parent.children().iter().enumerate() {
-            if let BlockContent::Block(block) | BlockContent::Positioned(block) = child {
-                ends.entry(std::ptr::from_ref(block)).or_insert(index + 1);
-            }
-        }
-    }
-    ends
-}
 fn table_entry_events(source: &BlockBox) -> Vec<&SemanticEvent> {
     let mut events: Vec<_> = source.leading_events().collect();
     for child in source.children() {
@@ -475,11 +463,7 @@ impl<'a> TablePlan<'a> {
         } else {
             &self.child_ends[1]
         };
-        parent.events_from(
-            ends.get(&std::ptr::from_ref(child))
-                .copied()
-                .unwrap_or(parent.children().len()),
-        )
+        ends.events_after(parent, child)
     }
     pub(crate) fn is_body_group(&self, source: &BlockBox) -> bool {
         let owns = |group: Option<&super::model::Group<'_>>| {
@@ -702,8 +686,8 @@ impl<'a> TablePlan<'a> {
                 .map(|(index, source)| (std::ptr::from_ref(*source), index))
                 .collect(),
             child_ends: [
-                child_ends(std::iter::once(block.block)),
-                child_ends(data.groups.iter().filter_map(|group| group.source)),
+                ChildEnds::new([block.block]),
+                ChildEnds::new(data.groups.iter().filter_map(|group| group.source)),
             ],
             data,
             entry_events,
