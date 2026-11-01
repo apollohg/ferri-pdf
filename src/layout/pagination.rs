@@ -4984,13 +4984,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
         }
     }
-    fn record_collapsed(&mut self, source: &'a BlockBox) -> Result<(), LayoutError> {
+    fn record_collapsed(&mut self, page: usize, source: &'a BlockBox) -> Result<(), LayoutError> {
         let (events, visited) = source.subtree_events();
         self.measurer.work.spend(visited)?;
         for event in events {
             let mut event = event.clone();
             event.visible = false;
-            self.string_locations.record(self.page, &event);
+            self.string_locations.record(page, &event);
         }
 
         Ok(())

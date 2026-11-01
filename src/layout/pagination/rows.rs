@@ -1057,6 +1057,32 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
     }
 
+    /// The fragmentainer each of `items` lies on, at its offset from `start` on `start_page`,
+    /// found by one walk through their offsets in increasing order.
+    fn collapsed_pages(
+        &mut self,
+        start_page: usize,
+        start: f32,
+        items: &[crate::layout::measure::CollapsedItem<'a>],
+    ) -> Result<Vec<usize>, LayoutError> {
+        let mut order: Vec<usize> = (0..items.len()).collect();
+        order.sort_by(|&a, &b| items[a].offset.total_cmp(&items[b].offset));
+        let mut pages = vec![start_page; items.len()];
+        self.select_page(start_page, start);
+        let mut offset = 0.0;
+        for index in order {
+            let page = self.page;
+            self.finish_height(page, self.y, items[index].offset - offset)?;
+            crate::work::count(
+                crate::work::Work::CollapsedPage,
+                self.page.saturating_sub(page) + 1,
+            );
+            offset = items[index].offset;
+            pages[index] = self.page;
+        }
+        Ok(pages)
+    }
+
     pub(super) fn finish_row(&mut self, cursor: RowCursor<'a, 'a>) -> Result<(), LayoutError> {
         let RowCursor {
             mut row,
@@ -1095,12 +1121,11 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
         if !row.collapsed.is_empty() {
             let position = self.flow_position();
-            for item in &row.collapsed {
-                self.select_page(start_page, start);
-                self.finish_height(start_page, start, item.offset)?;
-                self.record_collapsed(item.source)?;
+            let pages = self.collapsed_pages(start_page, start, &row.collapsed)?;
+            for (item, page) in row.collapsed.iter().zip(pages) {
+                self.record_collapsed(page, item.source)?;
                 for event in &item.after_events {
-                    self.string_locations.record(self.page, event);
+                    self.string_locations.record(page, event);
                 }
             }
             self.restore_flow_position(position)?;

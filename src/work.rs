@@ -54,10 +54,12 @@ pub(crate) enum Work {
     SiblingStep,
     /// A track or item that sizing a grid's tracks to the items spanning one track steps over.
     SingleSpanStep,
+    /// A fragmentainer that a walk to the offsets of a row's collapsed cells or items visits.
+    CollapsedPage,
 }
 
 #[cfg(test)]
-const KINDS: usize = 24;
+const KINDS: usize = 25;
 
 #[cfg(test)]
 thread_local! {
