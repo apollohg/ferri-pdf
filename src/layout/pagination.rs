@@ -748,15 +748,17 @@ struct ActiveGeometry<'a> {
     /// The horizontal geometry the box last resolved, which fragmentainers with the same
     /// inputs reuse rather than measuring the box's content again.
     resolved: Option<Rc<ResolvedHorizontal>>,
+    /// The available space of the flow the box is in, which its geometry resolves in, as
+    /// measuring it did, rather than in that of the flow inside it being laid out.
+    space: crate::layout::measure::FlowSpace,
 }
 /// What a box's horizontal geometry resolves from: its containing block's left edge, width,
-/// direction and height, and the measurer's fragmentainer height, available space, space
-/// beside floats and container-sized item.
+/// direction and height, and the measurer's fragmentainer height, space beside floats and
+/// container-sized item.
 #[derive(PartialEq)]
 struct HorizontalInputs {
     containing: (f32, f32, bool, Option<f32>),
     page_height: f32,
-    space: crate::layout::measure::FlowSpace,
     float_space: Option<(*const BlockBox, [f32; 2])>,
     sized_item: Option<*const BlockBox>,
 }
@@ -781,7 +783,6 @@ impl ActiveGeometry<'_> {
         let inputs = HorizontalInputs {
             containing,
             page_height: measurer.page_height,
-            space: measurer.space,
             float_space: measurer.float_space,
             sized_item: measurer.sized_item,
         };
@@ -792,7 +793,7 @@ impl ActiveGeometry<'_> {
         {
             return Ok(resolved.geometry.clone());
         }
-        let geometry = measurer.run(resolve)?;
+        let geometry = measurer.with_space(self.space, |measurer| measurer.run(resolve))?;
         self.resolved = Some(Rc::new(ResolvedHorizontal {
             inputs,
             geometry: geometry.clone(),
@@ -2065,6 +2066,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             );
             result.push(Some(flow));
         }
+        // Keep what each open box resolved, so that the next path reuses it instead of
+        // measuring a shrink-to-fit box's content again.
+        for (active, flow) in self.boxes.iter_mut().zip(&result) {
+            if let (Some(geometry), Some(flow)) = (active.geometry.as_mut(), flow) {
+                geometry.resolved.clone_from(&flow.resolved);
+            }
+        }
         Ok(result)
     }
     fn paragraph_geometry(&self) -> Option<(f32, f32, Option<f32>)> {
@@ -3034,6 +3042,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 spanner_fragment: block.spanner_fragment,
                 content_top: (start_page, start_y + block.start_space),
                 resolved: None,
+                space: previous_space,
             }),
             page_scope: crate::document::PageBoundary::applies(&block.style.display)
                 .then(|| block.source.page_boundary().used.clone()),
