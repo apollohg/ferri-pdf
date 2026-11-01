@@ -1118,6 +1118,76 @@ mod tests {
     }
 
     #[test]
+    fn measuring_nested_flex_and_grid_items_takes_work_linear_in_their_nesting_and_count() {
+        const DEPTH: usize = 8;
+        const ITEMS: usize = 4;
+        const LEVELS: [&str; 3] = [
+            "display:flex;gap:2pt",
+            "display:grid;grid-template-columns:auto 1fr",
+            "display:flex;flex-direction:column",
+        ];
+        // Each container measures its items for their sizes and again to place them, at the
+        // sizes its own measurements give it, and needs the content widths of their contents
+        // for both. Measuring them anew at each level is exponential in the nesting, and
+        // measuring their contents' widths anew is quadratic in it.
+        let work = |depth: usize, items: usize, kind: crate::work::Work| {
+            let mut nested = "<span>innermost</span>".to_owned();
+            for level in 0..depth {
+                let siblings = |side: &str| -> String {
+                    (0..items / 2)
+                        .map(|item| format!("<span>{side}{level}.{item}</span>"))
+                        .collect()
+                };
+                nested = format!(
+                    "<div style='{}'>{}{nested}{}</div>",
+                    LEVELS[level % LEVELS.len()],
+                    siblings("before"),
+                    siblings("after")
+                );
+            }
+            let resolver = FileResolver::default();
+            let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+                .join("tests/oracle/fixtures")
+                .into();
+            let document = StyledDocument::parse(
+                &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}body{{font:8pt Fixed}}</style>{nested}"),
+                &base, &[], &resolver,
+            )
+            .unwrap();
+            let (pass, units) = crate::work::measured(kind, || {
+                crate::layout::layout_pass(&document, &resolver, Budget::new(MAX_LAYOUT_WORK))
+                    .unwrap_or_else(|error| {
+                        panic!("{depth} levels of {items} items failed: {error}")
+                    })
+            });
+            let text = page_text(&pass.trace).concat().concat();
+            assert!(
+                text.contains("innermost") && text.contains(&format!("after{}.0", depth - 1)),
+                "fixture: {depth} levels of {items} items lay out every level: {text}"
+            );
+            units
+        };
+        for (what, kind) in [
+            ("item measurements", crate::work::Work::ItemMeasurement),
+            (
+                "content width computations",
+                crate::work::Work::ContentSizes,
+            ),
+        ] {
+            crate::work::assert_linear(
+                &format!("{what} for flex and grid containers nested in each other"),
+                DEPTH,
+                |depth| work(depth, ITEMS, kind),
+            );
+            crate::work::assert_linear(
+                &format!("{what} for {DEPTH} levels of flex and grid containers"),
+                ITEMS,
+                |items| work(DEPTH, items, kind),
+            );
+        }
+    }
+
+    #[test]
     fn multicolumn_layout_takes_work_linear_in_its_content() {
         // Multiples of the one-line paragraphs a page of two (8) or three (12) columns holds,
         // so that the last row, which balancing lays out repeatedly, is alike at both sizes.
