@@ -31,6 +31,43 @@ type Lane<'a, 't> = (
     Option<usize>,
 );
 
+/// A fragmentainer that walks from one position of a row entered.
+#[derive(Clone, Copy)]
+struct WalkedPage {
+    page: usize,
+    /// Where the walks' extents continue on the fragmentainer.
+    origin: f32,
+    /// Where the fragmentainer's content starts.
+    start: f32,
+    /// Where extents on the fragmentainer end.
+    end: f32,
+    /// The extent that the earlier fragmentainers took.
+    before: f64,
+}
+
+impl WalkedPage {
+    /// Where an extent of `height` from the walks' position ends on the fragmentainer.
+    fn end_y(&self, height: f32) -> f32 {
+        // Earlier fragmentainers take nothing from an extent that is not positive.
+        let rest = if height > 0.0 {
+            (f64::from(height) - self.before).max(0.0)
+        } else {
+            f64::from(height)
+        };
+        self.origin + rest as f32
+    }
+}
+
+/// The fragmentainers that walks from one position of a row to offsets below it entered, so
+/// each walk continues from the fragmentainer the one before it ended on.
+#[derive(Clone, Default)]
+struct RowWalk {
+    origin: Option<(usize, u32)>,
+    pages: Vec<WalkedPage>,
+    /// The index in `pages` of the fragmentainer the last walk ended on.
+    last: usize,
+}
+
 #[derive(Clone)]
 struct GridTrace {
     starts: Vec<usize>,
@@ -70,6 +107,7 @@ pub(super) struct RowCursor<'a, 't> {
     fragment_ends: BTreeMap<usize, f32>,
     previous_unbroken: usize,
     body_end: Option<usize>,
+    walk: RowWalk,
 }
 
 impl<'a, 't> RowCursor<'a, 't>
@@ -346,7 +384,86 @@ impl<'a> Paginator<'a, '_, 'a> {
             fragment_ends: BTreeMap::new(),
             previous_unbroken,
             body_end,
+            walk: RowWalk::default(),
         }
+    }
+    /// Moves to `height` below `start_y` on `start_page` as `finish_height` does, entering each
+    /// fragmentainer once for all the walks that `walk` remembers from that position.
+    fn finish_row_height(
+        &mut self,
+        walk: &mut RowWalk,
+        start_page: usize,
+        start_y: f32,
+        height: f32,
+    ) -> Result<(), LayoutError> {
+        if self.unbroken > 0 {
+            return self.finish_height(start_page, start_y, height);
+        }
+        let origin = Some((start_page, start_y.to_bits()));
+        if walk.origin != origin {
+            self.measurer.work.spend(1)?;
+            let space = self.extent_space(start_page)?;
+            *walk = RowWalk {
+                origin,
+                pages: vec![WalkedPage {
+                    page: start_page,
+                    origin: start_y,
+                    start: space.start,
+                    end: self.extent_end(start_page, &space, space.cloned_end),
+                    before: 0.0,
+                }],
+                last: 0,
+            };
+        }
+        let holds = |page: &WalkedPage| !overflows(page.end_y(height), page.end);
+        let mut index = walk.last;
+        while index > 0 && holds(&walk.pages[index - 1]) {
+            crate::work::count(crate::work::Work::BandPage, 1);
+            index -= 1;
+        }
+        while !holds(&walk.pages[index]) {
+            crate::work::count(crate::work::Work::BandPage, 1);
+            if index + 1 == walk.pages.len() {
+                let next = self.walk_past(walk.pages[index])?;
+                walk.pages.push(next);
+            }
+            index += 1;
+        }
+        walk.last = index;
+        let page = walk.pages[index];
+        let end_y = page.end_y(height);
+        if self.page < page.page {
+            // A break into the fragmentainer enters it with no flow yet.
+            self.select_page(page.page, end_y);
+            self.has_flow = false;
+            self.at_page_start = true;
+        }
+        self.end_extent(page.page, end_y, page.start);
+        Ok(())
+    }
+    /// The fragmentainer that a walk crossing the end of `page` enters.
+    fn walk_past(&mut self, page: WalkedPage) -> Result<WalkedPage, LayoutError> {
+        let overflow = (page.origin - page.end).max(0.0);
+        let next = if page.page >= self.page {
+            if self.page < page.page {
+                self.select_page(page.page, page.end);
+            }
+            self.y = page.end;
+            self.new_page(None, true)?;
+            self.page
+        } else {
+            page.page + 1
+        };
+        self.ensure_band_pages(next)?;
+        self.measurer.work.spend(1)?;
+        let space = self.extent_space(next)?;
+        Ok(WalkedPage {
+            page: next,
+            origin: space.start + overflow,
+            start: space.start,
+            end: self.extent_end(next, &space, space.cloned_end),
+            before: page.before + f64::from((page.end - page.origin).max(0.0)),
+        })
     }
     fn enter_row(
         &mut self,
@@ -373,6 +490,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             transition,
             repeating,
             fragment_ends,
+            walk,
             ..
         } = cursor;
         let source_index = source_rows.start;
@@ -481,7 +599,8 @@ impl<'a> Paginator<'a, '_, 'a> {
                     ));
                 }
                 let geometry = &source_row_geometry.as_ref().unwrap().1;
-                self.finish_height(
+                self.finish_row_height(
+                    walk,
                     origin.1,
                     origin.2,
                     geometry.starts[source_row] - geometry.starts[origin.0],
@@ -583,7 +702,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             }
             self.select_page(origin.1, origin.2);
             let paint_start = if let Some(offset) = cell.paint_offset {
-                self.finish_height(origin.1, origin.2, offset)?;
+                self.finish_row_height(walk, origin.1, origin.2, offset)?;
                 Some((self.page, self.y))
             } else {
                 None
@@ -635,7 +754,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     ))
                 })?;
             } else {
-                self.finish_height(origin.1, origin.2, cell.offset)?;
+                self.finish_row_height(walk, origin.1, origin.2, cell.offset)?;
             }
             if let Some(index) = cell.grid_cell
                 && cell.stretch
@@ -973,6 +1092,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             source_rows,
             grid_ends,
             entered,
+            walk,
             ..
         } = cursor;
         let source_index = source_rows.start;
@@ -995,7 +1115,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                 let height = geometry.starts[source_row + 1]
                     - geometry.starts[origin.0]
                     - table.flow.spacing;
-                self.finish_height(origin.1, origin.2, height)?;
+                self.finish_row_height(walk, origin.1, origin.2, height)?;
                 for event in events {
                     self.string_locations.record(self.page, event);
                 }
@@ -1057,32 +1177,6 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
     }
 
-    /// The fragmentainer each of `items` lies on, at its offset from `start` on `start_page`,
-    /// found by one walk through their offsets in increasing order.
-    fn collapsed_pages(
-        &mut self,
-        start_page: usize,
-        start: f32,
-        items: &[crate::layout::measure::CollapsedItem<'a>],
-    ) -> Result<Vec<usize>, LayoutError> {
-        let mut order: Vec<usize> = (0..items.len()).collect();
-        order.sort_by(|&a, &b| items[a].offset.total_cmp(&items[b].offset));
-        let mut pages = vec![start_page; items.len()];
-        self.select_page(start_page, start);
-        let mut offset = 0.0;
-        for index in order {
-            let page = self.page;
-            self.finish_height(page, self.y, items[index].offset - offset)?;
-            crate::work::count(
-                crate::work::Work::CollapsedPage,
-                self.page.saturating_sub(page) + 1,
-            );
-            offset = items[index].offset;
-            pages[index] = self.page;
-        }
-        Ok(pages)
-    }
-
     pub(super) fn finish_row(&mut self, cursor: RowCursor<'a, 'a>) -> Result<(), LayoutError> {
         let RowCursor {
             mut row,
@@ -1099,6 +1193,7 @@ impl<'a> Paginator<'a, '_, 'a> {
             body_end,
             trace,
             grid_ends,
+            mut walk,
             ..
         } = cursor;
         let end = grid_ends.last().copied().unwrap_or(end);
@@ -1121,8 +1216,9 @@ impl<'a> Paginator<'a, '_, 'a> {
         }
         if !row.collapsed.is_empty() {
             let position = self.flow_position();
-            let pages = self.collapsed_pages(start_page, start, &row.collapsed)?;
-            for (item, page) in row.collapsed.iter().zip(pages) {
+            for item in &row.collapsed {
+                self.finish_row_height(&mut walk, start_page, start, item.offset)?;
+                let page = self.page;
                 self.record_collapsed(page, item.source)?;
                 for event in &item.after_events {
                     self.string_locations.record(page, event);
@@ -1155,7 +1251,7 @@ impl<'a> Paginator<'a, '_, 'a> {
                     self.select_page(page, y);
                 } else {
                     self.select_page(start_page, start);
-                    self.finish_height(start_page, start, height)?;
+                    self.finish_row_height(&mut walk, start_page, start, height)?;
                 }
                 if self.page > row_end.0 || (self.page == row_end.0 && self.y > row_end.1) {
                     row_end = (self.page, self.y);

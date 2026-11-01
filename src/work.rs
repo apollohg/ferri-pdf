@@ -60,8 +60,9 @@ pub(crate) enum Work {
     SiblingStep,
     /// A track or item that sizing a grid's tracks to the items spanning one track steps over.
     SingleSpanStep,
-    /// A fragmentainer that a walk to the offsets of a row's collapsed cells or items visits.
-    CollapsedPage,
+    /// A fragmentainer that walks from a position in a row to offsets below it, such as its
+    /// rows and its collapsed cells or items, visit.
+    BandPage,
 }
 
 #[cfg(test)]

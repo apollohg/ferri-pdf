@@ -5073,6 +5073,34 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         Ok(space)
     }
 
+    /// Where an extent from `space` on `page` ends, keeping `reserve` free at the end.
+    fn extent_end(&self, page: usize, space: &ExtentSpace, reserve: f32) -> f32 {
+        // CSS Break 3 §4.4: each fragmentainer takes some content to guarantee progress, so
+        // repeated edges that fill it leave the content its 1px minimum past them, unless a
+        // later row of columns has room.
+        let progress_end = if matches!(&self.fragmentainers, Fragmentainers::Columns(rows) if rows.has_next_row(page))
+        {
+            f32::NEG_INFINITY
+        } else {
+            space.start + crate::graphics::POINTS_PER_PIXEL
+        };
+        (self.fragmentainers.height(page) - reserve - self.band_footer_height(page))
+            .max(progress_end)
+    }
+    /// Moves to `end_y` on `page`, where an extent whose fragmentainer's content starts at
+    /// `start` ends.
+    fn end_extent(&mut self, page: usize, end_y: f32, start: f32) {
+        if self.page > page {
+            self.select_page(page, end_y);
+        } else {
+            self.y = end_y;
+            self.pending.clear();
+            if end_y > start {
+                self.has_flow = true;
+                self.at_page_start = false;
+            }
+        }
+    }
     fn resume_extent(
         &mut self,
         cursor: &mut ExtentCursor,
@@ -5100,38 +5128,14 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
             let extent = resolve(self, cursor.page, &space)?;
             let end_y = cursor.origin + (f64::from(extent) * cursor.remaining) as f32;
-            // CSS Break 3 §4.4: each fragmentainer takes some content to guarantee progress, so
-            // repeated edges that fill it leave the content its 1px minimum past them, unless a
-            // later row of columns has room.
-            let progress_end = if matches!(&self.fragmentainers, Fragmentainers::Columns(rows) if rows.has_next_row(cursor.page))
-            {
-                f32::NEG_INFINITY
-            } else {
-                space.start + crate::graphics::POINTS_PER_PIXEL
-            };
             if !overflows(
                 end_y,
-                (self.fragmentainers.height(cursor.page)
-                    - space.bottom_reserve
-                    - self.band_footer_height(cursor.page))
-                .max(progress_end),
+                self.extent_end(cursor.page, &space, space.bottom_reserve),
             ) {
-                if self.page > cursor.page {
-                    self.select_page(cursor.page, end_y);
-                } else {
-                    self.y = end_y;
-                    self.pending.clear();
-                    if end_y > space.start {
-                        self.has_flow = true;
-                        self.at_page_start = false;
-                    }
-                }
+                self.end_extent(cursor.page, end_y, space.start);
                 return Ok(None);
             }
-            let end = (self.fragmentainers.height(cursor.page)
-                - space.cloned_end
-                - self.band_footer_height(cursor.page))
-            .max(progress_end);
+            let end = self.extent_end(cursor.page, &space, space.cloned_end);
             if extent > 0.0 {
                 cursor.remaining = (cursor.remaining
                     - f64::from((end - cursor.origin).max(0.0)) / f64::from(extent))

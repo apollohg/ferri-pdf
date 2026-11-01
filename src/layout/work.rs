@@ -988,30 +988,39 @@ mod tests {
     }
 
     #[test]
-    fn collapsed_rows_of_a_row_spanning_band_take_work_linear_in_its_rows() {
+    fn rows_of_a_row_spanning_band_take_work_linear_in_its_rows() {
         const ROWS: usize = 240;
-        // One cell spans every row, joining them into one band across pages, and two of every
-        // three rows collapse. Walking from the band's start to each collapsed cell is
-        // quadratic in the band's rows.
-        crate::work::assert_linear(
-            "fragmentainers visited to place the collapsed rows of a row-spanning band",
-            ROWS,
-            |rows| {
-                let body: String = (1..rows)
-                    .map(|row| {
-                        let class = if row % 3 == 0 { "" } else { " class=gone" };
-                        format!("<tr{class}><td>r{row}</td></tr>")
-                    })
-                    .collect();
-                paged_work(
-                    &format!("a band of {rows} rows, two of every three collapsed"),
-                    &format!(
-                        "<style>td{{border:1pt solid}}.gone{{visibility:collapse}}</style><table><tr><td rowspan={rows}>span</td><td>r0</td></tr>{body}</table>"
-                    ),
-                    crate::work::Work::CollapsedPage,
-                )
-            },
-        );
+        // One cell spans every row, joining them into one band across pages. Walking from the
+        // band's start to each row, each cell's end or each collapsed cell is quadratic in the
+        // band's rows.
+        type Collapsed = fn(usize) -> bool;
+        let cases: [(&str, Collapsed); 2] = [
+            ("every row kept", |_| false),
+            ("two of every three rows collapsed", |row| row % 3 != 0),
+        ];
+        for (rows_kept, gone) in cases {
+            crate::work::assert_linear(
+                &format!(
+                    "fragmentainers visited to place the rows of a row-spanning band, {rows_kept}"
+                ),
+                ROWS,
+                |rows| {
+                    let body: String = (1..rows)
+                        .map(|row| {
+                            let class = if gone(row) { " class=gone" } else { "" };
+                            format!("<tr{class}><td>r{row}</td></tr>")
+                        })
+                        .collect();
+                    paged_work(
+                        &format!("a band of {rows} rows, {rows_kept}"),
+                        &format!(
+                            "<style>td{{border:1pt solid}}.gone{{visibility:collapse}}</style><table><tr><td rowspan={rows}>span</td><td>r0</td></tr>{body}</table>"
+                        ),
+                        crate::work::Work::BandPage,
+                    )
+                },
+            );
+        }
     }
 
     #[test]
