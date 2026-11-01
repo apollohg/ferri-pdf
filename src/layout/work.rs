@@ -1025,4 +1025,120 @@ mod tests {
             });
         }
     }
+
+    #[test]
+    fn multicolumn_layout_takes_work_linear_in_its_content() {
+        // Multiples of the one-line paragraphs a page of two (8) or three (12) columns holds,
+        // so that the last row, which balancing lays out repeatedly, is alike at both sizes.
+        const TWO_COLUMN_PARAGRAPHS: usize = 144;
+        const THREE_COLUMN_PARAGRAPHS: usize = 96;
+        const BANNER_AFTER: usize = 8;
+        let resolver = FileResolver::default();
+        let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/oracle/fixtures")
+            .into();
+        // Each row of columns is laid out from a copy of the layout before it, which balancing
+        // keeps should the content end in the row. Copying the flow left, or the rows already
+        // laid out, for every row is quadratic in the content.
+        let work = |css: &str, banner: bool, wrapper: bool, paragraphs: usize| {
+            let mut content = (0..paragraphs)
+                .map(|index| format!("<p>p{index:04} words</p>"))
+                .collect::<Vec<_>>();
+            if banner {
+                content.insert(BANNER_AFTER, "<h2>Banner</h2>".to_owned());
+            }
+            let content = content.concat();
+            let content = if wrapper {
+                format!("<div>{content}</div>")
+            } else {
+                content
+            };
+            let document = StyledDocument::parse(
+                &format!("<!doctype html><style>@font-face{{font-family:Fixed;src:url('../assets/DejaVuSans.ttf')}}@page{{size:200pt 40pt;margin:0}}html,body{{margin:0;font:10pt/10pt Fixed}}p{{margin:0}}h2{{column-span:all;margin:0;font-size:10pt}}{css}</style><section>{content}</section>"),
+                &base, &[], &resolver,
+            )
+            .unwrap();
+            let budget = Budget::new(MAX_LAYOUT_WORK);
+            let trace = crate::layout::layout_pass(&document, &resolver, budget.clone())
+                .unwrap_or_else(|error| {
+                    panic!("{paragraphs} paragraphs in `{css}` failed: {error}")
+                })
+                .trace;
+            let labels: Vec<_> = trace
+                .pages
+                .iter()
+                .flatten()
+                .flat_map(|line| line.text.split_whitespace())
+                .filter(|word| word.starts_with('p') && word.len() == 5)
+                .collect();
+            let expected: Vec<_> = (0..paragraphs)
+                .map(|index| format!("p{index:04}"))
+                .collect();
+            assert_eq!(
+                labels, expected,
+                "fixture: every paragraph in `{css}` is placed once, in order"
+            );
+            let offsets = trace
+                .pages
+                .last()
+                .into_iter()
+                .flatten()
+                .map(|line| line.x.to_bits())
+                .collect::<std::collections::BTreeSet<_>>()
+                .len();
+            assert!(
+                trace.pages.len() > 2 && offsets > 1,
+                "fixture: {paragraphs} paragraphs in `{css}` fill pages of columns, but they \
+                 take {} pages and the last holds lines at {offsets} offsets",
+                trace.pages.len()
+            );
+            budget.spent()
+        };
+        for (css, banner, wrapper, paragraphs) in [
+            (
+                "section{columns:2;column-gap:10pt}",
+                false,
+                false,
+                TWO_COLUMN_PARAGRAPHS,
+            ),
+            (
+                "section{columns:2;column-gap:10pt}",
+                false,
+                true,
+                TWO_COLUMN_PARAGRAPHS,
+            ),
+            (
+                "section{columns:3;column-gap:6pt}",
+                false,
+                false,
+                THREE_COLUMN_PARAGRAPHS,
+            ),
+            (
+                "section{columns:2;column-gap:10pt}",
+                true,
+                false,
+                TWO_COLUMN_PARAGRAPHS,
+            ),
+            (
+                "section{columns:2;column-gap:10pt;column-fill:auto;padding-bottom:20pt;border-bottom:1pt solid}",
+                false,
+                false,
+                TWO_COLUMN_PARAGRAPHS,
+            ),
+        ] {
+            crate::work::assert_linear(
+                &format!(
+                    "columns `{css}`{}{}",
+                    if banner {
+                        " after a spanning banner"
+                    } else {
+                        ""
+                    },
+                    if wrapper { " in one wrapper" } else { "" }
+                ),
+                paragraphs,
+                |paragraphs| work(css, banner, wrapper, paragraphs),
+            );
+        }
+    }
 }
