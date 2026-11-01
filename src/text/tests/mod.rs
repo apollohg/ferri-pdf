@@ -1,11 +1,33 @@
 mod emphasis;
 mod features;
 mod hyphenation;
+mod pieces;
 mod skip_ink;
 mod tailoring;
 
-use crate::document::Paragraph;
+use crate::document::{BlockBox, BlockContent, Paragraph, StyledDocument};
+use crate::resources::{FileResolver, ResourceBase};
 use crate::style::Style;
+
+/// `body` styled as a document.
+fn document(body: &str) -> StyledDocument {
+    StyledDocument::parse(
+        body,
+        &ResourceBase::default(),
+        &[],
+        &FileResolver::default(),
+    )
+    .expect("parse document")
+}
+
+/// The first paragraph of `block` in tree order.
+fn first_paragraph(block: &BlockBox) -> Option<&Paragraph> {
+    block.children().iter().find_map(|child| match child {
+        BlockContent::Inline(paragraph) => Some(paragraph),
+        BlockContent::Block(block) => first_paragraph(block),
+        _ => None,
+    })
+}
 
 /// A generated paragraph of `text` in `style`.
 fn paragraph(text: &str, style: &Style) -> Paragraph {

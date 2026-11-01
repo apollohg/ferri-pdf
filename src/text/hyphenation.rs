@@ -4,7 +4,7 @@
 use crate::document::Paragraph;
 use crate::style::{Hyphens, LineBreak, Style, WordBreak};
 use crate::text::shaping::MissingGlyphs;
-use crate::text::{GlyphRun, Piece, ShapedPieces, TextContext, TextError, line_boxes};
+use crate::text::{GlyphRun, Piece, TextContext, TextError, line_boxes};
 use icu_properties::{
     CodePointMapData,
     props::{GeneralCategory, GeneralCategoryGroup},
@@ -182,7 +182,7 @@ pub(super) struct ShapedHyphen {
 }
 
 /// The runs `style` shapes its hyphenation string `preferred` into, in direction `rtl`.
-fn shape(
+pub(super) fn shape(
     context: &TextContext<'_>,
     style: &Style,
     preferred: &str,
@@ -219,8 +219,7 @@ fn shape(
 
 /// Inserts the hyphenation string of a hyphenating break at `end`. A conditional hyphen's
 /// string belongs to its own span, including its bidi level; an automatic one belongs to
-/// the character before the break. `shaped` holds the strings the paragraph's other lines
-/// shaped.
+/// the character before the break.
 pub(super) fn decorate<'p>(
     context: &TextContext<'_>,
     paragraph: &'p Paragraph,
@@ -228,7 +227,6 @@ pub(super) fn decorate<'p>(
     bidi: &crate::text::bidi::ResolvedParagraph<'_>,
     end: usize,
     pieces: &mut Vec<Piece>,
-    shaped: Option<&ShapedPieces>,
 ) -> Result<Option<&'p str>, TextError> {
     let Some((offset, source)) = hyphenating(paragraph, automatic, end) else {
         return Ok(None);
@@ -242,20 +240,7 @@ pub(super) fn decorate<'p>(
     if preferred.is_empty() {
         return Ok(Some(preferred));
     }
-    let memoized =
-        shaped.and_then(|shaped| shaped.hyphens.borrow().get(&(span_index, rtl)).cloned());
-    let ShapedHyphen { mut runs, fallback } = if let Some(hyphen) = memoized {
-        hyphen
-    } else {
-        let hyphen = shape(context, style, preferred, rtl)?;
-        if let Some(shaped) = shaped {
-            shaped
-                .hyphens
-                .borrow_mut()
-                .insert((span_index, rtl), hyphen.clone());
-        }
-        hyphen
-    };
+    let ShapedHyphen { mut runs, fallback } = context.shape_hyphen(style, preferred, rtl)?;
     let text = if fallback { HYPHEN_FALLBACK } else { preferred };
     for run in &mut runs {
         run.source_range = source.clone();

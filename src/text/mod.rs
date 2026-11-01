@@ -37,6 +37,7 @@ use std::ops::Range;
 use std::{
     cell::{Cell, RefCell},
     collections::HashMap,
+    hash::BuildHasher,
     rc::Rc,
     sync::Arc,
 };
@@ -54,6 +55,9 @@ pub(crate) use line_boxes::{AtomicFragment, AtomicMetrics, BoxFragment, BoxMetri
 pub(crate) const SYNTHETIC_BOLD_OFFSET_EM: f32 = 0.02;
 /// Maximum conservative cluster-shaping and fallback-probe work in one text context.
 pub(crate) const MAX_GLYPH_MATCH_WORK: usize = 100_000_000;
+/// The glyphs of the shaped pieces a text context keeps, and the pieces it remembers shaping.
+const MAX_SHAPED_PIECE_GLYPHS: usize = 1 << 16;
+const MAX_SEEN_PIECES: usize = 1 << 16;
 use line_boxes::{Piece, Slot};
 pub(crate) use paragraph::{
     BreakOpportunities, ParagraphClamp, PreparedParagraph, TextPosition, trim_line,
@@ -221,24 +225,6 @@ impl LineTraits {
     }
 }
 
-/// A span, the range of the paragraph that shapes a piece of it, the piece's range and
-/// whether it is right-to-left.
-type PieceKey = (usize, Range<usize>, Range<usize>, bool);
-
-/// The runs of the pieces of a paragraph's spans that end before the line end. Every candidate
-/// line from one start that holds such a piece shapes it alike, as do layouts of the paragraph
-/// at other widths. Each candidate line ending in a hyphenating break shows the hyphenation
-/// string of a span, shaped alike in each direction.
-#[derive(Default)]
-struct ShapedPieces {
-    pieces: RefCell<HashMap<PieceKey, Vec<GlyphRun>>>,
-    hyphens: RefCell<HashMap<(usize, bool), hyphenation::ShapedHyphen>>,
-}
-
-#[expect(
-    clippy::too_many_arguments,
-    reason = "a line's text, bidi and break context, and the pieces shaped for its paragraph"
-)]
 fn shape_line(
     context: &TextContext<'_>,
     text: &str,
@@ -247,7 +233,6 @@ fn shape_line(
     context_range: Range<usize>,
     paragraph: &Paragraph,
     traits: &LineTraits,
-    shaped: Option<&ShapedPieces>,
 ) -> Result<Vec<Piece>, TextError> {
     if range.is_empty() {
         return Ok(Vec::new());
@@ -315,32 +300,20 @@ fn shape_line(
                 let (style, source) = (&piece.style, piece.range.clone());
                 let shaping_context =
                     source.start.max(context_range.start)..source.end.min(context_range.end);
-                let key = (span, shaping_context.clone(), r.clone(), rtl);
-                let memoized = shaped.and_then(|shaped| shaped.pieces.borrow().get(&key).cloned());
-                let runs = if let Some(runs) = memoized {
-                    runs
-                } else {
-                    let mut runs = tabs::shape(
-                        context,
-                        &paragraph.text()[shaping_context.clone()],
-                        (r.start - shaping_context.start)..(r.end - shaping_context.start),
-                        rtl,
-                        style,
-                    )?;
-                    for run in &mut runs {
-                        run.bidi_scoped = bidi.has_controls();
-                        run.source_range.start += shaping_context.start;
-                        run.source_range.end += shaping_context.start;
-                        run.source_span = span;
-                        run.leader = piece.leader;
-                    }
-                    if let Some(shaped) = shaped
-                        && source.end < context_range.end
-                    {
-                        shaped.pieces.borrow_mut().insert(key, runs.clone());
-                    }
-                    runs
-                };
+                let mut runs = context.shape_piece(
+                    style,
+                    &paragraph.text()[shaping_context.clone()],
+                    (r.start - shaping_context.start)..(r.end - shaping_context.start),
+                    rtl,
+                    source.end < context_range.end,
+                )?;
+                for run in &mut runs {
+                    run.bidi_scoped = bidi.has_controls();
+                    run.source_range.start += shaping_context.start;
+                    run.source_range.end += shaping_context.start;
+                    run.source_span = span;
+                    run.leader = piece.leader;
+                }
                 result.extend(runs.into_iter().map(|run| Piece::Text(Box::new(run))));
             }
         }
@@ -844,11 +817,84 @@ type FaceKey = (
 );
 type FaceCache<'a> = HashMap<FaceKey, Option<Rc<ShapingInstance<'a>>>>;
 
+/// A style by identity, which holding it keeps.
+#[derive(Clone)]
+struct StyleKey(Arc<Style>);
+impl PartialEq for StyleKey {
+    fn eq(&self, other: &Self) -> bool {
+        Arc::ptr_eq(&self.0, &other.0)
+    }
+}
+impl Eq for StyleKey {}
+impl std::hash::Hash for StyleKey {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        Arc::as_ptr(&self.0).hash(state);
+    }
+}
+
+/// A piece of a span as shaping takes it: the span's style, the text that shapes it, its
+/// range there and whether it is right-to-left.
+#[derive(PartialEq, Eq, Hash)]
+struct PieceInput {
+    style: StyleKey,
+    text: Box<str>,
+    range: Range<usize>,
+    rtl: bool,
+}
+
+/// The runs a piece shaped into and the glyph matching work shaping it spent.
+type ShapedPiece = (Vec<GlyphRun>, usize);
+
+/// The pieces of spans a text context shaped. A piece that ends before its line's end shapes
+/// alike in every later candidate line from its line's start, and in layouts at other widths;
+/// one that ends a candidate line shapes alike where the paragraph is measured or laid out
+/// again at the same width, as flex and grid items are. So the former are kept at once and
+/// the latter once they shape a second time, and all are forgotten past a bound.
+#[derive(Default)]
+struct ShapedPieces {
+    /// Fingerprints of the pieces shaped, from the identities of their style and text.
+    seen: std::collections::HashSet<u64>,
+    fingerprints: std::hash::RandomState,
+    runs: HashMap<PieceInput, ShapedPiece>,
+    /// The glyphs `runs` holds.
+    glyphs: usize,
+}
+impl ShapedPieces {
+    /// Whether the piece of `text` styled `style` at `range` in direction `rtl` was shaped
+    /// before, which it is from now on.
+    fn seen(&mut self, style: &Arc<Style>, text: &str, range: &Range<usize>, rtl: bool) -> bool {
+        if self.seen.len() == MAX_SEEN_PIECES {
+            self.forget();
+        }
+        let fingerprint =
+            self.fingerprints
+                .hash_one((Arc::as_ptr(style), text.as_ptr(), text.len(), range, rtl));
+        !self.seen.insert(fingerprint)
+    }
+    fn keep(&mut self, input: PieceInput, runs: Vec<GlyphRun>, work: usize) {
+        let glyphs: usize = runs.iter().map(|run| run.glyphs.len()).sum();
+        if self.glyphs + glyphs > MAX_SHAPED_PIECE_GLYPHS {
+            self.forget();
+        }
+        self.glyphs += glyphs;
+        self.runs.insert(input, (runs, work));
+    }
+    fn forget(&mut self) {
+        self.seen.clear();
+        self.runs.clear();
+        self.glyphs = 0;
+    }
+}
+
 pub(crate) struct TextContext<'a> {
     fonts: &'a FontBook,
     resolver: &'a dyn ResourceResolver,
     faces: RefCell<FaceCache<'a>>,
     optical_axes: RefCell<HashMap<FontId, bool>>,
+    pieces: RefCell<ShapedPieces>,
+    /// The runs of each hyphenation string, by style and direction, and the glyph matching
+    /// work shaping them spent.
+    hyphens: RefCell<HashMap<(StyleKey, bool), (hyphenation::ShapedHyphen, usize)>>,
     matching_work: Cell<Option<usize>>,
     bidi_work: Cell<Option<usize>>,
 }
@@ -953,7 +999,6 @@ impl<'a> TextContext<'a> {
                 context_range,
                 paragraph,
                 &source.traits,
-                None,
             )?;
             if visible.end == range.end {
                 hyphenation::decorate(
@@ -963,7 +1008,6 @@ impl<'a> TextContext<'a> {
                     &source.bidi,
                     range.end,
                     &mut pieces,
-                    None,
                 )?;
             }
             let indent = paragraph::indent_at(base.paragraph, opportunities, range.start, 0.0);
@@ -1048,6 +1092,8 @@ impl<'a> TextContext<'a> {
             resolver,
             faces: RefCell::new(HashMap::new()),
             optical_axes: RefCell::new(HashMap::new()),
+            pieces: RefCell::default(),
+            hyphens: RefCell::default(),
             matching_work: Cell::new(Some(MAX_GLYPH_MATCH_WORK)),
             bidi_work: Cell::new(Some(crate::document::MAX_INLINE_TEXT_BYTES)),
         }
@@ -1206,11 +1252,79 @@ impl<'a> TextContext<'a> {
             style,
         )
     }
+    /// The runs a piece of a span styled `style` shapes into: `range` of `text`, the text
+    /// that shapes it; `complete` where the piece ends before its line's end. A piece shaped
+    /// before spends the glyph matching work it spent again.
+    fn shape_piece(
+        &self,
+        style: &Arc<Style>,
+        text: &str,
+        range: Range<usize>,
+        rtl: bool,
+        complete: bool,
+    ) -> Result<Vec<GlyphRun>, TextError> {
+        let mut pieces = self.pieces.borrow_mut();
+        if !pieces.seen(style, text, &range, rtl) && !complete {
+            drop(pieces);
+            return tabs::shape(self, text, range, rtl, style);
+        }
+        let input = PieceInput {
+            style: StyleKey(Arc::clone(style)),
+            text: text.into(),
+            range,
+            rtl,
+        };
+        if let Some((runs, work)) = pieces.runs.get(&input) {
+            self.charge_matching_work(*work)?;
+            return Ok(runs.clone());
+        }
+        drop(pieces);
+        let (runs, work) = self
+            .measure_matching_work(|| tabs::shape(self, text, input.range.clone(), rtl, style))?;
+        self.pieces.borrow_mut().keep(input, runs.clone(), work);
+        Ok(runs)
+    }
+    /// The runs of the hyphenation string `preferred` that `style` shows in direction `rtl`,
+    /// which every line of its paragraphs ending in a hyphen shapes alike. A string shaped
+    /// before spends the glyph matching work it spent again.
+    fn shape_hyphen(
+        &self,
+        style: &Arc<Style>,
+        preferred: &str,
+        rtl: bool,
+    ) -> Result<hyphenation::ShapedHyphen, TextError> {
+        let key = (StyleKey(Arc::clone(style)), rtl);
+        if let Some((hyphen, work)) = self.hyphens.borrow().get(&key) {
+            self.charge_matching_work(*work)?;
+            return Ok(hyphen.clone());
+        }
+        let (hyphen, work) =
+            self.measure_matching_work(|| hyphenation::shape(self, style, preferred, rtl))?;
+        self.hyphens
+            .borrow_mut()
+            .insert(key, (hyphen.clone(), work));
+        Ok(hyphen)
+    }
+    /// What `shape` returns and the glyph matching work it spent.
+    fn measure_matching_work<T>(
+        &self,
+        shape: impl FnOnce() -> Result<T, TextError>,
+    ) -> Result<(T, usize), TextError> {
+        let before = self.matching_work.get();
+        let shaped = shape()?;
+        let work = before
+            .zip(self.matching_work.get())
+            .map_or(0, |(before, after)| before - after);
+        Ok((shaped, work))
+    }
     fn spend_matching_work(&self, units: usize) -> Result<(), TextError> {
+        self.charge_matching_work(units.max(1))
+    }
+    fn charge_matching_work(&self, units: usize) -> Result<(), TextError> {
         let remaining = self
             .matching_work
             .get()
-            .and_then(|work| work.checked_sub(units.max(1)));
+            .and_then(|work| work.checked_sub(units));
         self.matching_work.set(remaining);
         if remaining.is_none() {
             return Err(TextError::GlyphMatchingLimit {
