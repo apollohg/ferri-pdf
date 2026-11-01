@@ -354,16 +354,11 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
         })
     }
 
+    /// A copy of the layout, which shares the flow left and each column's lines and paints
+    /// with this one.
     fn snapshot(&self, work: &crate::layout::work::Budget) -> Result<Self, LayoutError> {
-        let paints: usize = self
-            .state
-            .display_lists
-            .iter()
-            .chain(&self.state.foreground)
-            .map(Vec::len)
-            .sum();
         let frames = self.cursor.as_ref().map_or(0, |cursor| cursor.frames.len());
-        work.spend((self.state.pages.len() + paints + frames).max(1))?;
+        work.spend((self.state.pages.len() + frames).max(1))?;
         let mut snapshot = self.clone();
         let mut orders = OrderSnapshots::default();
         snapshot.detach_orders(&mut orders);
@@ -524,7 +519,8 @@ impl<'a: 't, 't: 'a> ColumnLayout<'a, 't> {
 
 /// A row segment laid out in column boxes.
 struct ColumnOutput<'a> {
-    anchors: crate::layout::anchors::Measurements,
+    /// What each column measured.
+    anchors: Vec<crate::layout::anchors::Measurements>,
     overflow: Option<std::collections::BTreeMap<usize, Rect>>,
     string_locations: crate::layout::strings::StringLocations,
     pages: Vec<Vec<TextLine>>,
@@ -631,13 +627,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             unreachable!("nested paginators lay out columns");
         };
         Ok(ColumnOutput {
-            anchors: self.anchors,
+            anchors: self.anchors.into_pages(self.pages.len()),
             overflow: self.root_overflow,
             string_locations: self.string_locations,
-            pages: self.pages,
+            pages: self.pages.into_lists(),
             geometric_baselines: self.geometric_baselines,
-            display_lists: self.display_lists,
-            foreground: self.foreground,
+            display_lists: self.display_lists.into_lists(),
+            foreground: self.foreground.into_lists(),
             underlays: self.underlays,
             flow_content: self.flow_content,
             content,
@@ -1090,8 +1086,8 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
             let mut anchors = std::mem::take(&mut self.anchors);
             anchors.adopt(
-                &mut output.anchors,
-                (column, page, slots),
+                std::mem::take(&mut output.anchors[column]),
+                (page, slots),
                 |rect| Rect {
                     x: rect.x + shift[0],
                     y: rect.y + shift[1],

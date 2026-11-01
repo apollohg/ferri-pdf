@@ -1,5 +1,6 @@
 //! Anchor lookup and physical box measurements (CSS Anchor Positioning 1 §2, §9).
 use super::pagination::Region;
+use super::shared::SharedLog;
 use crate::graphics::Rect;
 use crate::style::anchor_values::{
     AnchorBox, AnchorFrame, AnchorFrameMap, AnchorKey, AnchorName, AnchorNode, AnchorReference,
@@ -34,6 +35,14 @@ pub(super) struct Measurements {
     effects: HashMap<(usize, Option<usize>), EffectChain>,
     placements: HashMap<AnchorKey, Placement>,
     ink: Vec<Ink>,
+}
+/// The measurements pagination records as it lays boxes out, in that order, which copies of
+/// the pagination share.
+#[derive(Clone, Default)]
+pub(super) struct Recorder {
+    boxes: SharedLog<(PageStyleTarget, Fragment)>,
+    ink: SharedLog<Ink>,
+    placements: HashMap<AnchorKey, Placement>,
 }
 #[derive(Clone)]
 struct Fragment {
@@ -109,7 +118,7 @@ pub(super) fn ink_key(style: &Style) -> Option<PageStyleTarget> {
     ))
 }
 
-impl Measurements {
+impl Recorder {
     /// Records a fragment `rect` of the box styled `style`, which unfragmented is `source`
     /// with the border and padding widths `insets`.
     pub(super) fn record(
@@ -125,48 +134,24 @@ impl Measurements {
             let source = source.unwrap_or(rect);
             let [border, padding] = insets;
             let padding_box = source.inset(border);
-            self.boxes.entry(key).or_default().push(Fragment {
-                visible,
-                page,
-                rect,
-                ink: rect,
-                filters: style.filter.clone(),
-                source,
-                slot,
-                clip,
-                columns,
-                fragmentainer: page,
-                padding: padding_box,
-                content: padding_box.inset(padding),
-            });
+            self.boxes.push((
+                key,
+                Fragment {
+                    visible,
+                    page,
+                    rect,
+                    ink: rect,
+                    filters: style.filter.clone(),
+                    source,
+                    slot,
+                    clip,
+                    columns,
+                    fragmentainer: page,
+                    padding: padding_box,
+                    content: padding_box.inset(padding),
+                },
+            ));
         }
-    }
-
-    /// The fragments of each box: its page and, as if unfragmented, its border, padding and
-    /// content boxes.
-    pub(super) fn placed_boxes(
-        &self,
-    ) -> HashMap<PageStyleTarget, Vec<super::scroll_markers::PlacedBox>> {
-        self.boxes
-            .iter()
-            .map(|(&target, fragments)| {
-                let placed = fragments
-                    .iter()
-                    .map(|fragment| super::scroll_markers::PlacedBox {
-                        page: fragment.page,
-                        border: fragment.source,
-                        padding: fragment.padding,
-                        content: fragment.content,
-                    })
-                    .collect();
-                (target, placed)
-            })
-            .collect()
-    }
-
-    /// The ink of the text and decorations each box holds.
-    pub(super) fn ink_areas(&self) -> impl Iterator<Item = (PageStyleTarget, usize, Rect)> + '_ {
-        self.ink.iter().map(|ink| (ink.target, ink.page, ink.rect))
     }
 
     pub(super) fn ink(
@@ -228,40 +213,6 @@ impl Measurements {
         }
     }
 
-    pub(super) fn assemble(
-        &mut self,
-        mut source: impl FnMut(usize, usize) -> Option<(Option<Rect>, Rect)>,
-    ) {
-        for fragment in self.boxes.values_mut().flatten() {
-            if let Some((source, ink)) = fragment.slot.and_then(|slot| source(fragment.page, slot))
-            {
-                if let Some(rect) = source {
-                    fragment.source = rect;
-                }
-                fragment.ink = ink;
-            }
-        }
-    }
-
-    pub(super) fn effects(&mut self, mut resolve: impl FnMut(usize, Option<usize>) -> EffectChain) {
-        for (page, clip) in self
-            .boxes
-            .values()
-            .flatten()
-            .map(|fragment| (fragment.page, fragment.clip))
-            .chain(self.ink.iter().map(|ink| (ink.page, ink.clip)))
-            .chain(
-                self.placements
-                    .values()
-                    .map(|placement| (placement.page, placement.clip)),
-            )
-        {
-            self.effects
-                .entry((page, clip))
-                .or_insert_with(|| resolve(page, clip));
-        }
-    }
-
     pub(super) fn place(
         &mut self,
         style: &Style,
@@ -294,56 +245,45 @@ impl Measurements {
             });
     }
 
+    /// Adopts what was measured on one page of a nested pagination, which lies on `page`
+    /// past its paints' `slots` here.
     pub(super) fn adopt(
         &mut self,
-        other: &mut Self,
-        at: (usize, usize, usize),
+        other: Measurements,
+        (page, slots): (usize, usize),
         map: impl Fn(Rect) -> Rect,
         mut clip: impl FnMut(Option<usize>) -> Option<usize>,
     ) {
-        let (column, page, slots) = at;
-        let (adopted, remaining): (Vec<_>, Vec<_>) = std::mem::take(&mut other.ink)
-            .into_iter()
-            .partition(|ink| ink.page == column);
-        other.ink = remaining;
-        self.ink.extend(adopted.into_iter().map(|ink| Ink {
-            page,
-            rect: map(ink.rect),
-            clip: clip(ink.clip),
-            ..ink
-        }));
-        for (&key, fragments) in &mut other.boxes {
-            let (adopted, remaining): (Vec<_>, Vec<_>) = std::mem::take(fragments)
-                .into_iter()
-                .partition(|fragment| fragment.page == column);
-            *fragments = remaining;
-            for fragment in adopted {
-                self.boxes.entry(key).or_default().push(Fragment {
-                    visible: fragment.visible,
-                    page,
-                    source: map(fragment.source),
-                    slot: fragment.slot.map(|slot| slots + slot),
-                    columns: fragment.columns,
-                    fragmentainer: fragment.fragmentainer,
-                    filters: fragment.filters,
-                    ink: map(fragment.ink),
-                    rect: map(fragment.rect),
-                    clip: clip(fragment.clip),
-                    padding: map(fragment.padding),
-                    content: map(fragment.content),
-                });
+        for ink in other.ink {
+            self.ink.push(Ink {
+                page,
+                rect: map(ink.rect),
+                clip: clip(ink.clip),
+                ..ink
+            });
+        }
+        for (key, fragments) in other.boxes {
+            for fragment in fragments {
+                self.boxes.push((
+                    key,
+                    Fragment {
+                        visible: fragment.visible,
+                        page,
+                        source: map(fragment.source),
+                        slot: fragment.slot.map(|slot| slots + slot),
+                        columns: fragment.columns,
+                        fragmentainer: fragment.fragmentainer,
+                        filters: fragment.filters,
+                        ink: map(fragment.ink),
+                        rect: map(fragment.rect),
+                        clip: clip(fragment.clip),
+                        padding: map(fragment.padding),
+                        content: map(fragment.content),
+                    },
+                ));
             }
         }
-        let keys: Vec<_> = other
-            .placements
-            .iter()
-            .filter_map(|(&key, placement)| (placement.page == column).then_some(key))
-            .collect();
-        for key in keys {
-            let mut placement = other
-                .placements
-                .remove(&key)
-                .expect("the selected column has a placement");
+        for (key, mut placement) in other.placements {
             placement.page = page;
             placement.containing = map(placement.containing);
             placement.clip = clip(placement.clip);
@@ -353,6 +293,118 @@ impl Measurements {
                     page,
                 })
                 .or_insert(placement);
+        }
+    }
+
+    /// What was measured on each of the first `page_count` pages, so that adopting a page's
+    /// measurements visits only them; what lies on later pages is dropped.
+    pub(super) fn into_pages(self, page_count: usize) -> Vec<Measurements> {
+        let mut pages: Vec<Measurements> = std::iter::repeat_with(Measurements::default)
+            .take(page_count)
+            .collect();
+        for (key, fragment) in self.boxes.into_vec() {
+            if let Some(page) = pages.get_mut(fragment.page) {
+                page.boxes.entry(key).or_default().push(fragment);
+            }
+        }
+        for ink in self.ink.into_vec() {
+            if let Some(page) = pages.get_mut(ink.page) {
+                page.ink.push(ink);
+            }
+        }
+        for (key, placement) in self.placements {
+            if let Some(page) = pages.get_mut(placement.page) {
+                page.placements.insert(key, placement);
+            }
+        }
+        pages
+    }
+
+    /// The measurements, each box's fragments in the order they were recorded.
+    pub(super) fn into_measurements(self) -> Measurements {
+        let mut boxes: HashMap<PageStyleTarget, Vec<Fragment>> = HashMap::new();
+        for (key, fragment) in self.boxes.into_vec() {
+            boxes.entry(key).or_default().push(fragment);
+        }
+        Measurements {
+            boxes,
+            effects: HashMap::new(),
+            placements: self.placements,
+            ink: self.ink.into_vec(),
+        }
+    }
+
+    pub(super) fn payload_work(&self) -> usize {
+        [self.boxes.len(), self.ink.len()]
+            .into_iter()
+            .chain(
+                self.placements
+                    .values()
+                    .map(|placement| placement.references.len().saturating_add(1)),
+            )
+            .fold(1, usize::saturating_add)
+    }
+}
+
+impl Measurements {
+    /// The fragments of each box: its page and, as if unfragmented, its border, padding and
+    /// content boxes.
+    pub(super) fn placed_boxes(
+        &self,
+    ) -> HashMap<PageStyleTarget, Vec<super::scroll_markers::PlacedBox>> {
+        self.boxes
+            .iter()
+            .map(|(&target, fragments)| {
+                let placed = fragments
+                    .iter()
+                    .map(|fragment| super::scroll_markers::PlacedBox {
+                        page: fragment.page,
+                        border: fragment.source,
+                        padding: fragment.padding,
+                        content: fragment.content,
+                    })
+                    .collect();
+                (target, placed)
+            })
+            .collect()
+    }
+
+    /// The ink of the text and decorations each box holds.
+    pub(super) fn ink_areas(&self) -> impl Iterator<Item = (PageStyleTarget, usize, Rect)> + '_ {
+        self.ink.iter().map(|ink| (ink.target, ink.page, ink.rect))
+    }
+
+    pub(super) fn assemble(
+        &mut self,
+        mut source: impl FnMut(usize, usize) -> Option<(Option<Rect>, Rect)>,
+    ) {
+        for fragment in self.boxes.values_mut().flatten() {
+            if let Some((source, ink)) = fragment.slot.and_then(|slot| source(fragment.page, slot))
+            {
+                if let Some(rect) = source {
+                    fragment.source = rect;
+                }
+                fragment.ink = ink;
+            }
+        }
+    }
+
+    pub(super) fn effects(&mut self, mut resolve: impl FnMut(usize, Option<usize>) -> EffectChain) {
+        for (page, clip) in self
+            .boxes
+            .values()
+            .flatten()
+            .map(|fragment| (fragment.page, fragment.clip))
+            .chain(self.ink.iter().map(|ink| (ink.page, ink.clip)))
+            .chain(
+                self.placements
+                    .values()
+                    .map(|placement| (placement.page, placement.clip)),
+            )
+        {
+            self.effects
+                .entry((page, clip))
+                .or_insert_with(|| resolve(page, clip));
         }
     }
 
@@ -407,19 +459,6 @@ impl Measurements {
                 }
             }
         }
-    }
-
-    pub(super) fn payload_work(&self) -> usize {
-        self.boxes
-            .values()
-            .map(Vec::len)
-            .chain([self.ink.len()])
-            .chain(
-                self.placements
-                    .values()
-                    .map(|placement| placement.references.len().saturating_add(1)),
-            )
-            .fold(1, usize::saturating_add)
     }
 
     pub(super) fn frames(

@@ -1,6 +1,7 @@
 use crate::document::{RunningStringAssignment, SemanticEvent};
 use crate::dom::ElementId;
 use crate::layout::page_counters::PageCounters;
+use crate::layout::shared::{PageLists, SharedMap};
 use crate::style::{NamedStringMode, NamedStringRequest, PageStyleTarget, StyleError};
 use std::{collections::HashMap, ops::Range};
 
@@ -19,11 +20,12 @@ enum SemanticAction {
     Element(SemanticEvent),
     Text,
 }
+/// Copies share the locations of each element and assignment, and the events of each page.
 #[derive(Clone, Default)]
 pub(super) struct StringLocations {
-    trace: Option<Vec<Vec<SemanticAction>>>,
-    locations: HashMap<PageStyleTarget, usize>,
-    assignments: HashMap<usize, Location>,
+    trace: Option<PageLists<SemanticAction>>,
+    locations: SharedMap<PageStyleTarget, usize>,
+    assignments: SharedMap<usize, Location>,
     starts: HashMap<usize, PageStart>,
     /// Footnote calls in recording order with their pages (CSS GCPM 3 §2.2).
     footnotes: Vec<(usize, usize)>,
@@ -34,7 +36,8 @@ pub(super) struct StringLocations {
 impl StringLocations {
     pub(crate) fn last_page(&self) -> usize {
         self.locations
-            .values()
+            .iter()
+            .map(|(_, page)| page)
             .chain(self.starts.keys())
             .copied()
             .max()
@@ -42,25 +45,21 @@ impl StringLocations {
     }
 
     pub(crate) fn retain_column_events(&mut self) {
-        self.trace = Some(Vec::new());
+        self.trace = Some(PageLists::default());
     }
     fn trace(&mut self, page: usize, action: SemanticAction) {
         if let Some(trace) = &mut self.trace {
-            if trace.len() <= page {
-                trace.resize_with(page + 1, Vec::new);
+            while trace.len() <= page {
+                trace.push(Vec::new());
             }
             trace[page].push(action);
         }
     }
     pub(crate) fn adopt_column(&mut self, source: &mut Self, column: usize, page: usize) {
-        let Some(events) = source
-            .trace
-            .as_mut()
-            .and_then(|trace| trace.get_mut(column))
-        else {
+        let Some(trace) = source.trace.as_mut().filter(|trace| column < trace.len()) else {
             return;
         };
-        for event in std::mem::take(events) {
+        for event in std::mem::take(&mut trace[column]) {
             match event {
                 SemanticAction::Element(event) => self.record(page, &event),
                 SemanticAction::Text => self.text(page),
@@ -69,10 +68,9 @@ impl StringLocations {
     }
 
     pub(crate) fn record(&mut self, page: usize, event: &SemanticEvent) {
-        if self.locations.contains_key(&event.context) {
+        if !self.locations.insert_new(event.context, page) {
             return;
         }
-        self.locations.insert(event.context, page);
         self.footnotes
             .extend(event.footnote.map(|footnote| (footnote, page)));
         self.trace(page, SemanticAction::Element(event.clone()));
@@ -102,8 +100,7 @@ impl StringLocations {
         }
         if let Some(assignment) = event.assignment {
             self.assignments
-                .entry(assignment)
-                .or_insert(Location { page, start });
+                .insert_new(assignment, Location { page, start });
         }
     }
     /// The footnote calls recorded after the first `start`, with their pages.
@@ -128,10 +125,14 @@ impl StringLocations {
         let mut output = PageStrings {
             names: HashMap::new(),
             elements: HashMap::new(),
-            locations: self.locations,
+            locations: self
+                .locations
+                .iter()
+                .map(|(&context, &page)| (context, page))
+                .collect(),
             bounds: self.bounds,
         };
-        for (index, location) in self.assignments {
+        for (&index, location) in self.assignments.iter() {
             if location.page >= pages {
                 return Err(StyleError::Invalid(
                     "running string assignment is outside the page sequence".into(),

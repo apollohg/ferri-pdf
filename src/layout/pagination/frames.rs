@@ -270,7 +270,7 @@ pub(super) fn rebase(
     for paint in output
         .display_lists
         .iter_mut()
-        .chain(&mut output.foreground)
+        .chain(output.foreground.iter_mut())
         .chain(output.underlays.values_mut())
         .flatten()
     {
@@ -291,7 +291,7 @@ pub(super) fn rebase(
     for paint in output
         .display_lists
         .iter_mut()
-        .chain(&mut output.foreground)
+        .chain(output.foreground.iter_mut())
         .chain(output.underlays.values_mut())
         .flatten()
     {

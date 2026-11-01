@@ -22,6 +22,7 @@ use crate::layout::breaks::{BreakTail, BreakTails, Forced, Fragmentainer, fragme
 use crate::layout::margin::MarginStrut;
 use crate::layout::navigation::{Destination, LinkArea};
 use crate::layout::positioned::StaticPosition;
+use crate::layout::shared::PageLists;
 use crate::layout::{
     LayoutError, MAX_LAYOUT_PAGES, TextLine,
     measure::{
@@ -1236,7 +1237,7 @@ pagination_state! {
     frame_requests: Vec<Rc<MeasuredBlock<'a>>>,
     frame_reads: Vec<frames::Key>,
     string_locations: crate::layout::strings::StringLocations,
-    pages: Vec<Vec<TextLine>>,
+    pages: PageLists<TextLine>,
     /// How far the flow reached on each page that a forced break or the flow's end ended;
     /// `None` where content continued past the page's end.
     page_extents: Vec<Option<f32>>,
@@ -1261,9 +1262,9 @@ pagination_state! {
     trailing_line: Option<(f32, f32)>,
     floats: Vec<crate::layout::floats::FloatContext>,
     fragmentainers: Fragmentainers<'a, 't>,
-    anchors: crate::layout::anchors::Measurements,
-    display_lists: Vec<Vec<ScopedPaint>>,
-    foreground: Vec<Vec<ScopedPaint>>,
+    anchors: crate::layout::anchors::Recorder,
+    display_lists: PageLists<ScopedPaint>,
+    foreground: PageLists<ScopedPaint>,
     underlays: BTreeMap<(usize, usize), Vec<ScopedPaint>>,
     flow_content: Vec<bool>,
     offset: [f32; 2],
@@ -1437,7 +1438,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             frame_requests: Vec::new(),
             frame_reads: Vec::new(),
             string_locations: Default::default(),
-            pages: vec![Vec::new()],
+            pages: PageLists::first_page(),
             page_extents: vec![None],
             geometric_baselines: vec![[None; 2]],
             page: 0,
@@ -1458,9 +1459,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             floats: vec![crate::layout::floats::FloatContext::default()],
             fragmentainers,
             anchors: Default::default(),
-            display_lists: vec![Vec::new()],
+            display_lists: PageLists::first_page(),
             underlays: BTreeMap::new(),
-            foreground: vec![Vec::new()],
+            foreground: PageLists::first_page(),
             flow_content: vec![false],
             offset: [0.0; 2],
             context: Rc::from([]),
@@ -4918,17 +4919,13 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         self.reserved_order = at.reserved_order;
         let result = emit(self);
         if self.force_hidden {
-            for (page, (boxes, inline)) in self
-                .display_lists
-                .iter_mut()
-                .zip(&mut self.foreground)
-                .enumerate()
-            {
+            for page in 0..self.display_lists.len().min(self.foreground.len()) {
                 let (boxes_before, inline_before) = before.get(page).copied().unwrap_or_default();
-                for paint in boxes
+                for paint in self
+                    .display_lists
+                    .items_from(page, boxes_before)
                     .iter_mut()
-                    .skip(boxes_before)
-                    .chain(inline.iter_mut().skip(inline_before))
+                    .chain(self.foreground.items_from(page, inline_before))
                 {
                     paint.visible = false;
                 }
@@ -7035,7 +7032,11 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
                 std::sync::Arc::make_mut(geometry).origins = Some(origins);
             }
         }
-        for page in self.display_lists.iter_mut().chain(&mut self.foreground) {
+        for page in self
+            .display_lists
+            .iter_mut()
+            .chain(self.foreground.iter_mut())
+        {
             for item in page {
                 if let DisplayItem::Box(paint) = &mut item.item
                     && !paint.draw_background
@@ -7732,27 +7733,27 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             Fragmentainers::Columns(_) => crate::style::logical::Flow::default(),
         };
         let lists = &self.display_lists;
-        self.anchors
-            .assemble(|page, slot| match &lists[page][slot].item {
-                DisplayItem::Box(paint) => {
-                    let native = lists[page][slot].native;
-                    Some((
-                        paint
-                            .background_box
-                            .map(|rect| native.map_or(rect, |space| space.rect(rect))),
-                        native.map_or_else(
-                            || {
-                                super::anchors::box_ink_in_frame(
-                                    paint,
-                                    super::writing::Frame::physical(flow, [0.0; 2]),
-                                )
-                            },
-                            |space| space.box_ink(paint),
-                        ),
-                    ))
-                }
-                _ => None,
-            });
+        let mut anchors = std::mem::take(&mut self.anchors).into_measurements();
+        anchors.assemble(|page, slot| match &lists[page][slot].item {
+            DisplayItem::Box(paint) => {
+                let native = lists[page][slot].native;
+                Some((
+                    paint
+                        .background_box
+                        .map(|rect| native.map_or(rect, |space| space.rect(rect))),
+                    native.map_or_else(
+                        || {
+                            super::anchors::box_ink_in_frame(
+                                paint,
+                                super::writing::Frame::physical(flow, [0.0; 2]),
+                            )
+                        },
+                        |space| space.box_ink(paint),
+                    ),
+                ))
+            }
+            _ => None,
+        });
         self.position_canvas_backgrounds();
         let regions = self.effect_regions()?;
         // CSS Conditional 5 §6.3.2: a sticky query container's first fragment reports whether
@@ -7831,7 +7832,7 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             paths.push(pages);
         }
         let nodes = &self.clips;
-        self.anchors.effects(|page, clip| {
+        anchors.effects(|page, clip| {
             let mut chain = Vec::new();
             let mut next = clip;
             while let Some(index) = next {
@@ -7897,8 +7898,9 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
         };
         for (page, (foreground, mut items)) in self
             .foreground
+            .into_lists()
             .into_iter()
-            .zip(self.display_lists)
+            .zip(self.display_lists.into_lists())
             .take(page_count)
             .enumerate()
         {
@@ -7952,16 +7954,17 @@ impl<'a: 't, 'm, 't: 'a> Paginator<'a, 'm, 't> {
             }
             Fragmentainers::Columns(_) => (Vec::new(), Vec::new()),
         };
-        self.pages.truncate(page_count);
-        self.anchors.truncate(page_count);
+        let mut pages = self.pages.into_lists();
+        pages.truncate(page_count);
+        anchors.truncate(page_count);
         for (page, navigation) in footnote_navigation {
             navigation.locate(page, &mut located);
         }
         Ok(Paginated {
-            anchors: self.anchors,
+            anchors,
             page_boxes,
             page_records,
-            pages: self.pages,
+            pages,
             display_lists,
             links: located.links,
             destinations: located.destinations,
@@ -8550,14 +8553,14 @@ impl Assembly<'_, '_> {
 
 fn assemble_background(
     fragments: &[(usize, usize)],
-    lists: &mut [Vec<ScopedPaint>],
+    lists: &mut PageLists<ScopedPaint>,
     horizontal: bool,
     rtl: bool,
 ) {
     if fragments.len() < 2 {
         return;
     }
-    let extent = |&(page, slot): &(usize, usize), lists: &[Vec<ScopedPaint>]| match &lists[page]
+    let extent = |&(page, slot): &(usize, usize), lists: &PageLists<ScopedPaint>| match &lists[page]
         [slot]
         .item
     {

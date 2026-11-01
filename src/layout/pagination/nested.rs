@@ -189,17 +189,19 @@ impl<'a> Paginator<'a, '_, 'a> {
             self.foreground[self.page].push(paint);
         }
         let mut anchors = std::mem::take(&mut self.anchors);
-        anchors.adopt(
-            &mut output.anchors,
-            (0, self.page, place.slots),
-            |rect| space.rect(rect),
-            |clip| {
-                clip.map(|clip| {
-                    self.effect(&output.clips, &output.sticky, clip, &place, &mut effects)
-                })
-                .or(self.clip)
-            },
-        );
+        for measured in std::mem::take(&mut output.anchors).into_pages(1) {
+            anchors.adopt(
+                measured,
+                (self.page, place.slots),
+                |rect| space.rect(rect),
+                |clip| {
+                    clip.map(|clip| {
+                        self.effect(&output.clips, &output.sticky, clip, &place, &mut effects)
+                    })
+                    .or(self.clip)
+                },
+            );
+        }
         self.anchors = anchors;
         self.adopt_underlays(
             &mut output.underlays,

@@ -293,7 +293,7 @@ pub(super) fn box_bounds(
 
 fn before_start(
     parent: &ActiveBox<'_>,
-    lists: &[Vec<super::ScopedPaint>],
+    lists: &super::PageLists<super::ScopedPaint>,
     page: usize,
     area: Rect,
 ) -> bool {

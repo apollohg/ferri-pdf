@@ -26,6 +26,7 @@ mod physical_pages;
 mod positioned;
 mod ratio;
 mod scroll_markers;
+mod shared;
 mod source;
 mod sticky;
 mod strings;

@@ -1022,11 +1022,12 @@ impl<'a> Paginator<'a, '_, 'a> {
         Ok(())
     }
     fn order_grid_text(&mut self, trace: &GridTrace) {
-        for (page, lines) in self.pages.iter_mut().enumerate() {
+        for page in 0..self.pages.len() {
             let start = trace.starts.get(page).copied().unwrap_or(0);
-            if lines.len() <= start + 1 {
+            if self.pages[page].len() <= start + 1 {
                 continue;
             }
+            let lines = &mut self.pages[page];
             let mut keys = vec![None; lines.len() - start];
             for paint in &self.foreground[page] {
                 if let DisplayItem::Text { line } = paint.item
