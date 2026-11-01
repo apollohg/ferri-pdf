@@ -4,7 +4,7 @@
 use crate::document::Paragraph;
 use crate::style::{Hyphens, LineBreak, Style, WordBreak};
 use crate::text::shaping::MissingGlyphs;
-use crate::text::{GlyphRun, Piece, TextContext, TextError, line_boxes};
+use crate::text::{GlyphRun, Piece, ShapedPieces, TextContext, TextError, line_boxes};
 use icu_properties::{
     CodePointMapData,
     props::{GeneralCategory, GeneralCategoryGroup},
@@ -173,9 +173,54 @@ pub(crate) fn string<'p>(
     Some(character(paragraph.style_at(offset)))
 }
 
+/// The runs of a hyphenation string, and whether they show the fallback hyphen because the
+/// font lacks the preferred one.
+#[derive(Clone)]
+pub(super) struct ShapedHyphen {
+    runs: Vec<GlyphRun>,
+    fallback: bool,
+}
+
+/// The runs `style` shapes its hyphenation string `preferred` into, in direction `rtl`.
+fn shape(
+    context: &TextContext<'_>,
+    style: &Style,
+    preferred: &str,
+    rtl: bool,
+) -> Result<ShapedHyphen, TextError> {
+    let custom = style.line_breaking.hyphenate_character.is_some();
+    match context.shape(
+        preferred,
+        0..preferred.len(),
+        rtl,
+        style,
+        if custom {
+            MissingGlyphs::Substitute
+        } else {
+            MissingGlyphs::Reject
+        },
+    ) {
+        Err(TextError::MissingGlyph { .. }) => Ok(ShapedHyphen {
+            runs: context.shape(
+                HYPHEN_FALLBACK,
+                0..HYPHEN_FALLBACK.len(),
+                rtl,
+                style,
+                MissingGlyphs::Substitute,
+            )?,
+            fallback: true,
+        }),
+        result => Ok(ShapedHyphen {
+            runs: result?,
+            fallback: false,
+        }),
+    }
+}
+
 /// Inserts the hyphenation string of a hyphenating break at `end`. A conditional hyphen's
 /// string belongs to its own span, including its bidi level; an automatic one belongs to
-/// the character before the break.
+/// the character before the break. `shaped` holds the strings the paragraph's other lines
+/// shaped.
 pub(super) fn decorate<'p>(
     context: &TextContext<'_>,
     paragraph: &'p Paragraph,
@@ -183,6 +228,7 @@ pub(super) fn decorate<'p>(
     bidi: &crate::text::bidi::ResolvedParagraph<'_>,
     end: usize,
     pieces: &mut Vec<Piece>,
+    shaped: Option<&ShapedPieces>,
 ) -> Result<Option<&'p str>, TextError> {
     let Some((offset, source)) = hyphenating(paragraph, automatic, end) else {
         return Ok(None);
@@ -196,30 +242,21 @@ pub(super) fn decorate<'p>(
     if preferred.is_empty() {
         return Ok(Some(preferred));
     }
-    let custom = style.line_breaking.hyphenate_character.is_some();
-    let (mut runs, text): (Vec<GlyphRun>, _) = match context.shape(
-        preferred,
-        0..preferred.len(),
-        rtl,
-        style,
-        if custom {
-            MissingGlyphs::Substitute
-        } else {
-            MissingGlyphs::Reject
-        },
-    ) {
-        Err(TextError::MissingGlyph { .. }) => (
-            context.shape(
-                HYPHEN_FALLBACK,
-                0..HYPHEN_FALLBACK.len(),
-                rtl,
-                style,
-                MissingGlyphs::Substitute,
-            )?,
-            HYPHEN_FALLBACK,
-        ),
-        result => (result?, preferred),
+    let memoized =
+        shaped.and_then(|shaped| shaped.hyphens.borrow().get(&(span_index, rtl)).cloned());
+    let ShapedHyphen { mut runs, fallback } = if let Some(hyphen) = memoized {
+        hyphen
+    } else {
+        let hyphen = shape(context, style, preferred, rtl)?;
+        if let Some(shaped) = shaped {
+            shaped
+                .hyphens
+                .borrow_mut()
+                .insert((span_index, rtl), hyphen.clone());
+        }
+        hyphen
     };
+    let text = if fallback { HYPHEN_FALLBACK } else { preferred };
     for run in &mut runs {
         run.source_range = source.clone();
         run.source_span = span_index;

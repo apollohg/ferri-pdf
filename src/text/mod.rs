@@ -227,9 +227,13 @@ type PieceKey = (usize, Range<usize>, Range<usize>, bool);
 
 /// The runs of the pieces of a paragraph's spans that end before the line end. Every candidate
 /// line from one start that holds such a piece shapes it alike, as do layouts of the paragraph
-/// at other widths.
+/// at other widths. Each candidate line ending in a hyphenating break shows the hyphenation
+/// string of a span, shaped alike in each direction.
 #[derive(Default)]
-struct ShapedPieces(RefCell<HashMap<PieceKey, Vec<GlyphRun>>>);
+struct ShapedPieces {
+    pieces: RefCell<HashMap<PieceKey, Vec<GlyphRun>>>,
+    hyphens: RefCell<HashMap<(usize, bool), hyphenation::ShapedHyphen>>,
+}
 
 #[expect(
     clippy::too_many_arguments,
@@ -312,7 +316,7 @@ fn shape_line(
                 let shaping_context =
                     source.start.max(context_range.start)..source.end.min(context_range.end);
                 let key = (span, shaping_context.clone(), r.clone(), rtl);
-                let memoized = shaped.and_then(|shaped| shaped.0.borrow().get(&key).cloned());
+                let memoized = shaped.and_then(|shaped| shaped.pieces.borrow().get(&key).cloned());
                 let runs = if let Some(runs) = memoized {
                     runs
                 } else {
@@ -333,7 +337,7 @@ fn shape_line(
                     if let Some(shaped) = shaped
                         && source.end < context_range.end
                     {
-                        shaped.0.borrow_mut().insert(key, runs.clone());
+                        shaped.pieces.borrow_mut().insert(key, runs.clone());
                     }
                     runs
                 };
@@ -959,6 +963,7 @@ impl<'a> TextContext<'a> {
                     &source.bidi,
                     range.end,
                     &mut pieces,
+                    None,
                 )?;
             }
             let indent = paragraph::indent_at(base.paragraph, opportunities, range.start, 0.0);

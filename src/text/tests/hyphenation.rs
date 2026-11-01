@@ -1,7 +1,8 @@
 //! CSS Text 4 §6.3 automatic hyphenation opportunities.
 use super::{paragraph, segments};
 use crate::style::{HyphenateLimitChars, Hyphens, Style, WordBreak};
-use crate::text::hyphenation::{SOFT_HYPHEN, automatic};
+use crate::text::hyphenation::{SOFT_HYPHEN, automatic, decorate};
+use crate::text::{ShapedPieces, TextContext};
 use crate::work::{self, Work};
 use unicode_linebreak::BreakOpportunity;
 
@@ -143,5 +144,69 @@ fn conditional_hyphens_find_their_spans_by_search() {
         breaks(SPANS).0,
         expected,
         "CSS Text 4 §6.1: only the conditional hyphens of `hyphens: manual` spans break"
+    );
+}
+
+#[test]
+fn candidate_lines_of_a_paragraph_shape_each_hyphen_once() {
+    // Every candidate line that ends at a hyphenating break shows its span's hyphen; the
+    // paragraph's prepared layout keeps the runs so each span shapes it once.
+    let resolver = crate::resources::FileResolver::default();
+    let document = crate::document::StyledDocument::parse(
+        "<p lang=en style='hyphens:auto'>representatives extraordinarily</p>",
+        &crate::resources::ResourceBase::default(),
+        &[],
+        &resolver,
+    )
+    .unwrap();
+    let mut boxes = vec![document.root()];
+    let paragraph = std::iter::from_fn(|| {
+        let block = boxes.pop()?;
+        Some(block.children().iter().find_map(|child| match child {
+            crate::document::BlockContent::Inline(paragraph) => Some(paragraph),
+            crate::document::BlockContent::Block(block) => {
+                boxes.push(block);
+                None
+            }
+            _ => None,
+        }))
+    })
+    .flatten()
+    .next()
+    .expect("the document holds a paragraph");
+    let points = automatic(paragraph);
+    let context = TextContext::new(&document.styles().fonts, &resolver);
+    let bidi = crate::text::bidi::resolve(paragraph, &context.bidi_work).unwrap();
+    let shapes = |ends: &[usize], shaped: Option<&ShapedPieces>| {
+        work::measured(Work::ShapedRun, || {
+            for &end in ends {
+                let mut pieces = Vec::new();
+                let hyphen = decorate(
+                    &context,
+                    paragraph,
+                    &points,
+                    &bidi,
+                    end,
+                    &mut pieces,
+                    shaped,
+                )
+                .unwrap();
+                assert_eq!(hyphen, Some("\u{2010}"), "the break at {end} hyphenates");
+                assert_eq!(pieces.len(), 1, "the break at {end} adds the hyphen's run");
+            }
+        })
+        .1
+    };
+    let single = shapes(&points[..1], None);
+    assert!(single > 0, "a hyphen shapes");
+    assert_eq!(
+        shapes(&points, None),
+        single * points.len(),
+        "unshared, each of the breaks at {points:?} shapes its hyphen"
+    );
+    assert_eq!(
+        shapes(&points, Some(&ShapedPieces::default())),
+        single,
+        "shared, the breaks at {points:?} shape the one hyphen once"
     );
 }

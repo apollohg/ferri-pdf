@@ -401,6 +401,7 @@ impl<'s, 'p, 'context, 'font> ParagraphLines<'s, 'p, 'context, 'font> {
                 bidi,
                 to,
                 &mut pieces,
+                Some(&prepared.shaped),
             )?
         } else {
             None
