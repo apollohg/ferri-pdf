@@ -1,15 +1,35 @@
 import json
 import os
 from pathlib import Path
+import select
 import signal
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import unittest
 from unittest.mock import patch
 
 from test_support import write_probe_pdf
+
+FIFO_FAILURE_BOUND_S = 60
+FIFO_CHUNK_BYTES = 4096
+
+
+def read_fifo(fd, complete):
+    """Bytes read from `fd` until `complete(data)` holds, None at end of file, or what arrived
+    before nothing more did for FIFO_FAILURE_BOUND_S, which bounds only a failing run."""
+    data = b''
+    while not complete(data):
+        readable, _, _ = select.select([fd], [], [], FIFO_FAILURE_BOUND_S)
+        if not readable:
+            return data
+        chunk = os.read(fd, FIFO_CHUNK_BYTES)
+        if not chunk:
+            return None
+        data += chunk
+    return data
 
 
 class ExecutionTests(unittest.TestCase):
@@ -67,23 +87,34 @@ class ExecutionTests(unittest.TestCase):
             os.kill(record['pid'], 0)
 
     def test_timeout_stops_a_grandchild_that_ignores_termination(self):
-        pid_file = self.root/'grandchild.pid'
-        heartbeat = self.root/'heartbeat'
-        child = f'import os,signal,time; from pathlib import Path; signal.signal(signal.SIGTERM,signal.SIG_IGN); Path({str(pid_file)!r}).write_text(str(os.getpid())); p=Path({str(heartbeat)!r}); exec("while True:\\n p.write_text(str(time.time_ns()))\\n time.sleep(0.01)")'
-        code = f'import subprocess,sys,time; subprocess.Popen([sys.executable,"-c",{child!r}]); time.sleep(30)'
-        record = self.run_child(code,timeout=0.3)
-        self.assertEqual(record['status'],'timeout')
-        self.assertTrue(pid_file.exists())
-        pid = int(pid_file.read_text())
-        def cleanup_child():
-            try:
-                os.kill(pid,signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-        self.addCleanup(cleanup_child)
-        before = heartbeat.read_text()
-        time.sleep(0.08)
-        self.assertEqual(heartbeat.read_text(),before,'grandchild survived timeout cleanup')
+        import execution
+        fifo = self.root/'grandchild.fifo'
+        os.mkfifo(fifo)
+        reader = os.open(fifo, os.O_RDONLY | os.O_NONBLOCK)
+        self.addCleanup(os.close, reader)
+        # A writer of our own keeps the reader from seeing end of file before the grandchild opens one.
+        keeper = os.open(fifo, os.O_WRONLY)
+        grandchild = f'import os,signal; signal.signal(signal.SIGTERM,signal.SIG_IGN); fd=os.open({str(fifo)!r},os.O_WRONLY); os.write(fd,b"%d\\n"%os.getpid()); signal.pause()'
+        code = f'import signal,subprocess,sys; subprocess.Popen([sys.executable,"-c",{grandchild!r}]); signal.pause()'
+        ready = []
+        class ReadyTimer(threading.Timer):
+            """Fires the deadline once the grandchild ignores SIGTERM, whatever the interval."""
+            def run(self):
+                ready.append(read_fifo(reader, lambda data: data.endswith(b'\n')))
+                if not self.finished.is_set():
+                    self.function(*self.args, **self.kwargs)
+                self.finished.set()
+        with patch.object(execution.threading, 'Timer', ReadyTimer):
+            record = self.run_child(code)
+        os.close(keeper)
+        self.assertEqual(record['status'], 'timeout')
+        self.assertRegex(ready[0], rb'^\d+\n$', f'grandchild never reported ready within {FIFO_FAILURE_BOUND_S} s')
+        pid = int(ready[0])
+        # The FIFO reaches end of file only once the grandchild's process exits and closes its writer.
+        rest = read_fifo(reader, lambda data: False)
+        if rest is not None:
+            os.kill(pid, signal.SIGKILL)
+        self.assertIsNone(rest, f'grandchild {pid} survived timeout cleanup with its FIFO writer open')
 
     def test_timed_interval_uses_blocking_wait_not_timeout_polling(self):
         original = subprocess.Popen.wait
