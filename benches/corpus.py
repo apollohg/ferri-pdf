@@ -48,6 +48,8 @@ PROSE_CHAPTERS = 6
 PROSE_PARAGRAPHS = 22
 PROSE_FOOTNOTE_EVERY = 3
 INVOICE_LINES = 12
+CATALOGUE_CARDS = 2000
+TAG_COUNT = 4000
 
 
 class Words:
@@ -295,12 +297,53 @@ tfoot td{font-weight:bold;border-top:1pt solid #1f4e79;border-bottom:none}
     return document("Invoice", css, body)
 
 
+def catalogue(words, assets):
+    css = """
+@page{size:A4;margin:14mm;@bottom-right{content:'Catalogue page ' counter(page);font:8pt sans-serif}}
+body{font:8.5pt/1.35 sans-serif;color:#263238;margin:0}
+h1{font-size:18pt;margin:0 0 8pt;color:#1f4e79}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6pt}
+.card{border:0.75pt solid #cfd8dc;border-radius:4pt;padding:5pt;display:flex;flex-direction:column;
+ gap:3pt;break-inside:avoid}
+.card img{width:100%;height:36pt;object-fit:cover;border-radius:3pt}
+.card h3{font-size:9pt;margin:0}
+.card p{margin:0;color:#546e7a}
+.price{display:flex;justify-content:space-between;align-items:baseline;font-weight:bold}
+.sku{font:7pt monospace;color:#90a4ae}
+"""
+    images = (assets["png"], assets["jpeg"], assets["svg"])
+    cards = []
+    for index in range(CATALOGUE_CARDS):
+        cards.append(
+            f'<div class="card"><img src="{images[index % len(images)]}" alt="Product">'
+            f"<h3>{words.sentence(2, 4)[:-1]}</h3><p>{words.sentence(6, 12)}</p>"
+            f'<div class="price"><span>{amount(1000 + words.index(500_000))}</span>'
+            f'<span class="sku">SKU-{index + 1:05d}</span></div></div>')
+    return document("Product catalogue", css,
+                    '<h1>Product catalogue</h1><div class="grid">' + "".join(cards) + "</div>")
+
+
+def tag_list(words, assets):
+    css = """
+@page{size:A4;margin:16mm;@bottom-center{content:counter(page);font:8pt sans-serif}}
+body{font:8pt/1.3 sans-serif;margin:0}
+h1{font-size:16pt;margin:0 0 8pt}
+.tags{display:flex;flex-wrap:wrap;gap:3pt 4pt}
+.tags span{border:0.5pt solid #90a4ae;border-radius:6pt;padding:1pt 5pt;background:#eceff1}
+"""
+    tags = "".join(f"<span>{WORDS[words.index(len(WORDS))]}-{index + 1}</span>"
+                   for index in range(TAG_COUNT))
+    return document("Tag index", css, f'<h1>Tag index</h1><div class="tags">{tags}</div>')
+
+
 DOCUMENTS = {
     "report": report,
     "wide-table": wide_table,
     "event-plan": event_plan,
     "prose": prose,
     "invoice": invoice,
+    "catalogue": catalogue,
+    "tag-list": tag_list,
 }
 
 

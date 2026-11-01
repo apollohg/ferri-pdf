@@ -13,7 +13,8 @@ from pathlib import Path
 import corpus
 
 ROOT = corpus.ROOT
-RUNS = {"report": 5, "wide-table": 3, "event-plan": 5, "prose": 5, "invoice": 100}
+RUNS = {"report": 5, "wide-table": 3, "event-plan": 5, "prose": 5, "invoice": 100,
+        "catalogue": 3, "tag-list": 3}
 TIME = "/usr/bin/time"
 # BSD time reports bytes; GNU time reports kilobytes.
 RSS_PATTERNS = {
