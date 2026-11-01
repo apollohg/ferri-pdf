@@ -148,6 +148,32 @@ struct Sizer<'a> {
     items: Vec<Prepared<'a>>,
 }
 
+/// The units of work [`size_tracks`] does at most: a pass over the tracks, the items and the
+/// tracks they span for each group of items of one span, for the items crossing flexible
+/// tracks and for the remaining steps, and one for each flexible track the size of `1fr`
+/// excludes.
+pub(crate) fn sizing_work(sizing: &[TrackSizing], items: &[SizingItem]) -> usize {
+    let mut spans = vec![false; sizing.len() + 1];
+    let mut spanned = 0usize;
+    for item in items {
+        if let Some(seen) = spans.get_mut(item.tracks.len()) {
+            *seen = true;
+        }
+        spanned = spanned.saturating_add(item.tracks.len());
+    }
+    let groups = spans.into_iter().filter(|seen| *seen).count();
+    let flexible = sizing
+        .iter()
+        .filter(|track| track.max.flex().is_some())
+        .count();
+    (groups + flexible + 2).saturating_mul(
+        sizing
+            .len()
+            .saturating_add(items.len())
+            .saturating_add(spanned),
+    )
+}
+
 /// Base sizes of the tracks, which are their used sizes.
 pub(crate) fn size_tracks(
     sizing: &[TrackSizing],

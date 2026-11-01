@@ -202,7 +202,7 @@ impl<'a> Plan<'a> {
             .collect();
         measurer
             .work
-            .spend(sizing.len().saturating_mul(contributions.len().max(1)))?;
+            .spend(crate::grid::sizing_work(&sizing, &contributions))?;
         let sized = size_tracks(
             &sizing,
             gap,

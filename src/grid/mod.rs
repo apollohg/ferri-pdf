@@ -9,6 +9,7 @@ pub(crate) use subgrid_sizing::subgrid_contributions;
 pub(crate) use placement::{AxisLines, ItemPlacement, Placement, place};
 pub(crate) use sizing::{
     AvailableSpace, MaxSizing, MinSizing, SizeBounds, SizingItem, TrackSizing, size_tracks,
+    sizing_work,
 };
 
 #[derive(Debug, thiserror::Error)]
