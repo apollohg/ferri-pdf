@@ -1168,14 +1168,9 @@ impl<'a> TextContext<'a> {
                 self.fonts
                     .feature_value(style.font_namespace(), family, kind, name)
             });
-        let palette = entry.data().and_then(|data| {
-            self.fonts.palette(
-                style.font_namespace(),
-                &style.font_features.palette,
-                family,
-                data,
-            )
-        });
+        let palette =
+            self.fonts
+                .palette(style.font_namespace(), &style.font_features.palette, entry);
         let language = shaping_language(face, style);
         shaping::shape_runs(
             shaping::ShapingFont {

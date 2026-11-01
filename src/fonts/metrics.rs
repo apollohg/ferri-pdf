@@ -6,7 +6,7 @@ use crate::fonts::{
 };
 use crate::resources::ResourceResolver;
 use serde::Serialize;
-use std::sync::OnceLock;
+use std::sync::{Arc, OnceLock};
 use ttf_parser::Face;
 
 /// CSS Values 4 §6.1.1: an x-height that cannot be determined is 0.5em.
@@ -293,40 +293,65 @@ fn scale(used: f32, size: f32) -> f32 {
     if size == 0.0 { 1.0 } else { used / size }
 }
 
-/// The bundled faces the initial family resolves to. Where no element supplies a font,
-/// relative lengths use initial values (Media Queries 4 §1.3).
+/// The bundled and installed faces the initial family resolves to. Where no element supplies
+/// a font, relative lengths use initial values (Media Queries 4 §1.3).
 pub(crate) struct InitialFont {
-    faces: Vec<Face<'static>>,
+    metrics: FaceMetrics,
+    faces: Vec<InitialFace>,
+}
+/// A face of the initial family: bundled data is parsed once, installed data when measured.
+enum InitialFace {
+    Bundled(Box<Face<'static>>),
+    Installed { data: Arc<Vec<u8>>, index: u32 },
 }
 impl InitialFont {
-    /// Initial metrics use installed bundled faces, independent of document webfonts.
+    /// Initial metrics use bundled and installed faces, independent of document webfonts.
     pub(crate) fn from_preferences(preferences: &FontPreferences) -> Self {
         let book = FontBook::with_preferences(preferences.clone());
         let candidates = book.candidates(
             &[FontFamily::Generic(DEFAULT_FAMILY)],
             FontSelection::default(),
         );
-        Self {
-            faces: candidates
-                .iter()
-                .filter_map(|id| match book.face(*id)?.data {
-                    FontData::Bundled(data) => Some(data),
-                    #[cfg(test)]
-                    FontData::Loaded(_) => None,
-                    FontData::Lazy { .. } => None,
-                })
-                .map(|data| parse(data).expect("bundled fonts are valid"))
-                .collect(),
-        }
+        let faces: Vec<_> = candidates
+            .iter()
+            .filter_map(|id| match &book.face(*id)?.data {
+                FontData::Bundled(data) => Some(InitialFace::Bundled(Box::new(
+                    parse(data, 0).expect("bundled fonts are valid"),
+                ))),
+                FontData::Installed(source) => {
+                    book.resolve_cached(*id).ok()??;
+                    Some(InitialFace::Installed {
+                        data: source.file.get()?.clone()?,
+                        index: source.index,
+                    })
+                }
+                #[cfg(test)]
+                FontData::Loaded(_) => None,
+                FontData::Lazy { .. } => None,
+            })
+            .collect();
+        let metrics = faces
+            .iter()
+            .find_map(|face| match face {
+                InitialFace::Bundled(face) => Some(FaceMetrics::of(face)),
+                InitialFace::Installed { data, index } => {
+                    parse(data, *index).ok().map(|face| FaceMetrics::of(&face))
+                }
+            })
+            .expect("the initial family ends with bundled faces");
+        Self { metrics, faces }
     }
     pub(crate) fn metrics(&self) -> FaceMetrics {
-        FaceMetrics::of(&self.faces[0])
+        self.metrics
     }
     /// The advance of `ch` in em in the first initial face that has it.
     pub(crate) fn advance(&self, (ch, vertical): (char, bool)) -> Option<f32> {
-        self.faces
-            .iter()
-            .find_map(|face| advance_in_axis(face, ch, vertical))
+        self.faces.iter().find_map(|face| match face {
+            InitialFace::Bundled(face) => advance_in_axis(face, ch, vertical),
+            InitialFace::Installed { data, index } => {
+                advance_in_axis(&parse(data, *index).ok()?, ch, vertical)
+            }
+        })
     }
 }
 
@@ -335,6 +360,6 @@ pub(crate) fn initial_font() -> &'static InitialFont {
     INITIAL.get_or_init(|| InitialFont::from_preferences(&FontPreferences::default()))
 }
 
-fn parse(data: &[u8]) -> Result<Face<'_>, FontError> {
-    Face::parse(data, 0).map_err(FontError::InvalidFont)
+fn parse(data: &[u8], index: u32) -> Result<Face<'_>, FontError> {
+    Face::parse(data, index).map_err(FontError::InvalidFont)
 }

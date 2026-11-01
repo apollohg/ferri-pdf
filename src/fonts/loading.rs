@@ -1,14 +1,17 @@
+use crate::fonts::installed::InstalledSource;
 use crate::fonts::{
-    FontAdjustments, FontBook, FontData, FontError, FontFaceStyle, FontId, FontInstance, FontRange,
-    FontSelection, FontSlant, FontSource, FontSources, FontStyle, FontVariation, FontWeight,
-    LoadedFont, matching, sfnt, validate,
+    FontAdjustments, FontBook, FontData, FontError, FontFace, FontFaceStyle, FontFailure, FontId,
+    FontInstance, FontRange, FontSelection, FontSlant, FontSource, FontSources, FontStyle,
+    FontVariation, FontWeight, LoadedFont, embed_all_glyphs, matching, sfnt, validate,
 };
-use crate::resources::ResourceResolver;
+use crate::resources::{ResourceBase, ResourceError, ResourceResolver};
+use std::path::Path;
+use std::sync::{Arc, PoisonError};
 
-const WEIGHT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wght");
-const WIDTH_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wdth");
-const SLANT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"slnt");
-const ITALIC_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"ital");
+pub(super) const WEIGHT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wght");
+pub(super) const WIDTH_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wdth");
+pub(super) const SLANT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"slnt");
+pub(super) const ITALIC_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"ital");
 pub(crate) const OPTICAL_SIZE_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"opsz");
 
 impl FontBook {
@@ -60,7 +63,8 @@ impl FontBook {
         };
         let face_entry = self.face(id).ok_or(FontError::UnknownFont(id))?;
         let descriptor = &face_entry.descriptor;
-        let mut face = ttf_parser::Face::parse(data, 0).map_err(FontError::InvalidFont)?;
+        let index = face_entry.index();
+        let mut face = ttf_parser::Face::parse(data, index).map_err(FontError::InvalidFont)?;
         let italic_axis = face
             .variation_axes()
             .into_iter()
@@ -155,7 +159,7 @@ impl FontBook {
                 .is_some()
         });
         if !variations.is_empty() && !self.embeds_instance(id, data, &face, &variations) {
-            face = ttf_parser::Face::parse(data, 0).map_err(FontError::InvalidFont)?;
+            face = ttf_parser::Face::parse(data, index).map_err(FontError::InvalidFont)?;
             variations.clear();
             (weight, style) = (default_weight, default_style);
         }
@@ -177,7 +181,8 @@ impl FontBook {
         let Some(data) = self.resolve(id, resolver)? else {
             return Ok(false);
         };
-        Ok(ttf_parser::Face::parse(data, 0)
+        let index = self.face(id).map_or(0, FontFace::index);
+        Ok(ttf_parser::Face::parse(data, index)
             .map_err(FontError::InvalidFont)?
             .variation_axes()
             .into_iter()
@@ -190,16 +195,59 @@ impl FontBook {
         resolver: &dyn ResourceResolver,
     ) -> Result<Option<&[u8]>, FontError> {
         let face = self.face(id).ok_or(FontError::UnknownFont(id))?;
-        if let FontData::Lazy { sources, data } = &face.data
-            && data.get().is_none()
-        {
-            let _ = data.set(self.load_sources(sources, resolver));
+        match &face.data {
+            FontData::Lazy { sources, data } if data.get().is_none() => {
+                let _ = data.set(self.load_sources(sources, resolver));
+            }
+            FontData::Installed(source) => self.load_installed(source),
+            _ => {}
         }
         Ok(face.data())
     }
 
-    /// Whether the author face `id`, whose `data` is `face`, embeds at `variations`; checked
-    /// once per instance, recording why not. Bundled faces always embed.
+    /// Reads an installed face's file and checks the face when it is first used; a file that
+    /// cannot be read or a face that is not a usable font is recorded, and the face is
+    /// unavailable, so matching moves on to the next candidate.
+    fn load_installed(&self, source: &InstalledSource) {
+        source.usable.get_or_init(|| {
+            let file = source
+                .file
+                .get_or_init(|| match std::fs::read(&source.path) {
+                    Ok(data) => Some(Arc::new(data)),
+                    Err(error) => {
+                        self.record_failure(
+                            installed_reference(&source.path),
+                            ResourceError::Read {
+                                path: source.path.to_path_buf(),
+                                source: error,
+                            }
+                            .into(),
+                        );
+                        None
+                    }
+                });
+            let Some(data) = file else {
+                return false;
+            };
+            validate(data, source.index)
+                .map_err(|error| self.record_failure(installed_reference(&source.path), error))
+                .is_ok()
+        });
+    }
+
+    fn record_failure(&self, (base, reference): (ResourceBase, String), error: FontError) {
+        self.failures
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .push(FontFailure {
+                base,
+                reference,
+                error,
+            });
+    }
+
+    /// Whether the author or installed face `id`, whose `data` is `face`, embeds at
+    /// `variations`; checked once per instance, recording why not. Bundled faces always embed.
     fn embeds_instance(
         &self,
         id: FontId,
@@ -207,18 +255,10 @@ impl FontBook {
         face: &ttf_parser::Face<'_>,
         variations: &[FontVariation],
     ) -> bool {
-        let Some(FontData::Lazy {
-            sources,
-            data: loaded,
-        }) = self.face(id).map(|face| &face.data)
-        else {
+        let Some(entry) = self.face(id) else {
             return true;
         };
-        let Some(url) = loaded
-            .get()
-            .and_then(Option::as_ref)
-            .and_then(|loaded| loaded.url.clone())
-        else {
+        let Some(reference) = data_reference(entry) else {
             return true;
         };
         let key = (
@@ -231,40 +271,39 @@ impl FontBook {
         if let Some(embeds) = self
             .instances
             .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner)
+            .unwrap_or_else(PoisonError::into_inner)
             .get(&key)
         {
             return *embeds;
         }
-        let embedded = crate::fonts::embed_all_glyphs(data, face, variations);
+        let embedded = embed_all_glyphs(data, entry.index(), face, variations);
         let embeds = embedded.is_ok();
         if let Err(error) = embedded {
-            self.failures
-                .lock()
-                .unwrap_or_else(std::sync::PoisonError::into_inner)
-                .push(crate::fonts::FontFailure {
-                    base: sources.base.clone(),
-                    reference: url,
-                    error: FontError::UnembeddableInstance {
-                        variations: variations.to_vec(),
-                        error,
-                    },
-                });
+            self.record_failure(
+                reference,
+                FontError::UnembeddableInstance {
+                    variations: variations.to_vec(),
+                    error,
+                },
+            );
         }
         self.instances
             .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner)
+            .unwrap_or_else(PoisonError::into_inner)
             .insert(key, embeds);
         embeds
     }
 
-    /// Reads an already attempted face without acquiring additional resources.
+    /// Reads an already attempted author face without acquiring additional resources; an
+    /// installed face, which needs no resolver, is read when first used.
     pub(crate) fn resolve_cached(&self, id: FontId) -> Result<Option<&[u8]>, FontError> {
         let face = self.face(id).ok_or(FontError::UnknownFont(id))?;
-        if let FontData::Lazy { data, .. } = &face.data
-            && data.get().is_none()
-        {
-            return Err(FontError::UnresolvedFont(id));
+        match &face.data {
+            FontData::Lazy { data, .. } if data.get().is_none() => {
+                return Err(FontError::UnresolvedFont(id));
+            }
+            FontData::Installed(source) => self.load_installed(source),
+            _ => {}
         }
         Ok(face.data())
     }
@@ -280,13 +319,8 @@ impl FontBook {
     ) -> Option<LoadedFont> {
         for source in &sources.sources {
             let reference = match source {
-                FontSource::Local(name) => match self.local_data(name) {
-                    Some(data) => {
-                        return Some(LoadedFont {
-                            data: data.to_vec(),
-                            url: None,
-                        });
-                    }
+                FontSource::Local(name) => match self.local_font(name) {
+                    Some(loaded) => return Some(loaded),
                     None => continue,
                 },
                 FontSource::Url(reference) => reference,
@@ -296,30 +330,53 @@ impl FontBook {
                 .and_then(|fragment| {
                     let resource = resolver.resolve(reference, &sources.base)?;
                     let data = sfnt::decode(resource.bytes, fragment.as_deref())?;
-                    validate(&data).map(|()| data)
+                    validate(&data, 0).map(|()| data)
                 });
             match loaded {
                 Ok(data) => {
                     return Some(LoadedFont {
                         data,
-                        url: Some(reference.clone()),
+                        reference: Some(reference.clone()),
                     });
                 }
-                Err(error) => self
-                    .failures
-                    .lock()
-                    .unwrap_or_else(std::sync::PoisonError::into_inner)
-                    .push(crate::fonts::FontFailure {
-                        base: sources.base.clone(),
-                        reference: reference.clone(),
-                        error,
-                    }),
+                Err(error) => self.record_failure((sources.base.clone(), reference.clone()), error),
             }
         }
         None
     }
 
-    fn local_data(&self, name: &str) -> Option<&[u8]> {
+    /// The bundled, else installed, face whose full or PostScript name is `name` (CSS Fonts 4
+    /// §4.3.1), as a single font; a face of a collection is taken out of it.
+    fn local_font(&self, name: &str) -> Option<LoadedFont> {
+        if let Some(data) = self.bundled_local(name) {
+            return Some(LoadedFont {
+                data: data.to_vec(),
+                reference: None,
+            });
+        }
+        let position = self.installed.as_ref()?.named(name)?;
+        let face = self.faces.get(self.installed_faces.start + position)?;
+        let FontData::Installed(source) = &face.data else {
+            return None;
+        };
+        self.load_installed(source);
+        let reference = installed_reference(&source.path);
+        let single = sfnt::single_face(source.data()?, source.index)
+            .map_err(FontError::from)
+            .and_then(|data| validate(&data, 0).map(|()| data));
+        match single {
+            Ok(data) => Some(LoadedFont {
+                data,
+                reference: Some(reference.1),
+            }),
+            Err(error) => {
+                self.record_failure(reference, error);
+                None
+            }
+        }
+    }
+
+    fn bundled_local(&self, name: &str) -> Option<&'static [u8]> {
         self.faces.iter().find_map(|face| {
             let FontData::Bundled(data) = &face.data else {
                 return None;
@@ -335,5 +392,28 @@ impl FontBook {
             });
             matched.then_some(*data)
         })
+    }
+}
+
+/// The base and reference a failure of the installed font file `path` names.
+fn installed_reference(path: &Path) -> (ResourceBase, String) {
+    (
+        ResourceBase::Directory(path.parent().unwrap_or(path).to_path_buf()),
+        path.display().to_string(),
+    )
+}
+
+/// Where an author or installed face's data came from, which its failures name; `None` for
+/// bundled data, which always embeds.
+fn data_reference(face: &FontFace) -> Option<(ResourceBase, String)> {
+    match &face.data {
+        FontData::Lazy { sources, data } => Some((
+            sources.base.clone(),
+            data.get()?.as_ref()?.reference.clone()?,
+        )),
+        FontData::Installed(source) => Some(installed_reference(&source.path)),
+        FontData::Bundled(_) => None,
+        #[cfg(test)]
+        FontData::Loaded(_) => None,
     }
 }

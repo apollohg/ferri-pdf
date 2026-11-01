@@ -160,21 +160,36 @@ fn is_named(record: &ttf_parser::name::Name<'_>, name: &str) -> bool {
 fn collection_face(data: &[u8], fragment: Option<&str>) -> Result<Vec<u8>, FontFileError> {
     let count = ttf_parser::fonts_in_collection(data)
         .ok_or(FontFileError::Truncated("collection header"))?;
-    let faces = (0..count).map(|index| {
-        let face = ttf_parser::RawFace::parse(data, index)
-            .map_err(|_| FontFileError::Collection("a face's table directory is unreadable"))?;
-        face.table_records
-            .into_iter()
-            .map(|record| {
-                let start = record.offset as usize;
-                data.get(start..start.saturating_add(record.length as usize))
-                    .map(|table| (record.tag.to_bytes(), table))
-                    .ok_or(FontFileError::Truncated("collection face's tables"))
-            })
-            .collect()
-    });
+    let faces = (0..count).map(|index| collection_tables(data, index));
     Ok(build(
         select_face(faces, fragment)?
+            .into_iter()
+            .map(|(tag, table)| (tag, Cow::Borrowed(table))),
+    ))
+}
+
+/// The tables of face `index` of the collection `data`.
+fn collection_tables(data: &[u8], index: u32) -> Result<FaceTables<'_>, FontFileError> {
+    let face = ttf_parser::RawFace::parse(data, index)
+        .map_err(|_| FontFileError::Collection("a face's table directory is unreadable"))?;
+    face.table_records
+        .into_iter()
+        .map(|record| {
+            let start = record.offset as usize;
+            data.get(start..start.saturating_add(record.length as usize))
+                .map(|table| (record.tag.to_bytes(), table))
+                .ok_or(FontFileError::Truncated("collection face's tables"))
+        })
+        .collect()
+}
+
+/// Face `index` of the sfnt font or collection `data` as a font of its own.
+pub(super) fn single_face(data: &[u8], index: u32) -> Result<Vec<u8>, FontFileError> {
+    if data.first_chunk() != Some(&COLLECTION_TAG) {
+        return Ok(data.to_vec());
+    }
+    Ok(build(
+        collection_tables(data, index)?
             .into_iter()
             .map(|(tag, table)| (tag, Cow::Borrowed(table))),
     ))

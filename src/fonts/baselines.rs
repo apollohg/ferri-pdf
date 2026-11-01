@@ -1,7 +1,8 @@
 //! Horizontal and vertical baseline sets (CSS Inline 3 §3.3 and Writing Modes 4 §4).
-use skrifa::raw::{FontRef, TableProvider, types::Tag};
+use skrifa::raw::{FontData, FontRead, tables::base::Base, types::Tag};
 use ttf_parser::Face;
 
+const BASE_TABLE: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"BASE");
 const ROMAN: Tag = Tag::new(b"romn");
 const IDEOGRAPHIC_UNDER: Tag = Tag::new(b"ideo");
 const IDEOGRAPHIC_OVER: Tag = Tag::new(b"idtp");
@@ -38,8 +39,9 @@ pub(crate) struct BaselineTable {
 /// font units above its roman baseline.
 fn recorded(face: &Face<'_>, vertical: bool) -> Vec<(Tag, f32)> {
     let read = || -> Option<Vec<(Tag, f32)>> {
-        let font = FontRef::new(face.raw_face().data).ok()?;
-        let base = font.base().ok()?;
+        // The table, not the font: `face` may be one face of a collection.
+        let table = face.raw_face().table(BASE_TABLE)?;
+        let base = Base::read(FontData::new(table)).ok()?;
         let axis = if vertical {
             base.vert_axis()?
         } else {

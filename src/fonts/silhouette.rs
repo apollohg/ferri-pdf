@@ -38,10 +38,11 @@ pub(crate) struct Silhouettes<'a> {
     face: ttf_parser::Face<'a>,
 }
 impl<'a> Silhouettes<'a> {
-    pub(crate) fn new(data: &'a [u8], variations: &[FontVariation]) -> Option<Self> {
+    /// The outlines of face `index` of `data` at `variations`.
+    pub(crate) fn new(data: &'a [u8], index: u32, variations: &[FontVariation]) -> Option<Self> {
         Self::at(
             data,
-            0,
+            index,
             variations
                 .iter()
                 .map(|variation| (variation.tag, variation.value)),

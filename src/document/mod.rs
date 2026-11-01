@@ -105,6 +105,12 @@ pub enum DocumentDiagnostic {
     },
     #[error("{0}")]
     UnavailableFont(#[from] crate::fonts::FontFailure),
+    #[error("font folder {} cannot be read: {error}", path.display())]
+    UnreadableFontDirectory {
+        path: std::path::PathBuf,
+        #[source]
+        error: std::io::Error,
+    },
     #[error("stylesheet {reference} is unavailable: {error}")]
     UnavailableSource {
         base: crate::resources::ResourceBase,
@@ -140,6 +146,7 @@ impl DocumentDiagnostic {
             | Self::UnavailableEmbedded { .. }
             | Self::UnrenderedDocument { .. }
             | Self::UnavailableFont(_)
+            | Self::UnreadableFontDirectory { .. }
             | Self::UnavailableSource { .. }
             | Self::SkippedFormattingWork { .. } => false,
         }
@@ -903,6 +910,15 @@ impl StyledDocument {
                 .into_iter()
                 .map(DocumentDiagnostic::UnavailableFont),
         );
+        // Nested documents report from their own font books; each folder once.
+        for (path, error) in self.styles.fonts.take_unreadable_directories() {
+            if !self.diagnostics.iter().any(|known| {
+                matches!(known, DocumentDiagnostic::UnreadableFontDirectory { path: other, .. } if *other == path)
+            }) {
+                self.diagnostics
+                    .push(DocumentDiagnostic::UnreadableFontDirectory { path, error });
+            }
+        }
         let limited = self.pages.images().borrow_mut().take_limited();
         for diagnostic in limited {
             self.diagnose(diagnostic);

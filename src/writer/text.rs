@@ -103,7 +103,8 @@ impl<'a> TextWriter<'a> {
                 .face(run.font_id)
                 .ok_or(PdfError::InvalidFontId(run.font_id))?;
             let data = face.data().ok_or(PdfError::InvalidFont)?;
-            let parsed = ttf_parser::RawFace::parse(data, 0).map_err(|_| PdfError::InvalidFont)?;
+            let parsed = ttf_parser::RawFace::parse(data, face.index())
+                .map_err(|_| PdfError::InvalidFont)?;
             if FIXED_COLOR_TABLES
                 .iter()
                 .any(|tag| parsed.table(ttf_parser::Tag::from_bytes(tag)).is_some())
@@ -169,8 +170,8 @@ impl<'a> TextWriter<'a> {
             .face(run.font_id)
             .ok_or(PdfError::InvalidFontId(run.font_id))?;
         let data = face.data().ok_or(PdfError::InvalidFont)?;
-        let outlines =
-            crate::fonts::Silhouettes::new(data, &run.variations).ok_or(PdfError::InvalidFont)?;
+        let outlines = crate::fonts::Silhouettes::new(data, face.index(), &run.variations)
+            .ok_or(PdfError::InvalidFont)?;
         Ok(run.clusters(origin, pen, |glyph| outlines.outline_box(glyph)))
     }
     fn font(&mut self, run: &GlyphRun) -> Result<Font, PdfError> {
@@ -194,11 +195,11 @@ impl<'a> TextWriter<'a> {
             .data
             .get_mut(run.font_id.index())
             .ok_or(PdfError::InvalidFontId(run.font_id))?;
+        let face = self
+            .fonts
+            .face(run.font_id)
+            .ok_or(PdfError::InvalidFontId(run.font_id))?;
         if data.is_none() {
-            let face = self
-                .fonts
-                .face(run.font_id)
-                .ok_or(PdfError::InvalidFontId(run.font_id))?;
             *data = Some(face.data().ok_or(PdfError::InvalidFont)?.to_vec().into());
         }
         let coordinates: Vec<_> = run
@@ -208,7 +209,7 @@ impl<'a> TextWriter<'a> {
             .collect();
         let font = Font::new_variable_with_palette(
             data.as_ref().unwrap().clone(),
-            0,
+            face.index(),
             &coordinates,
             key.2.clone(),
         )

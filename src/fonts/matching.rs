@@ -1,6 +1,6 @@
 use crate::fonts::{
-    FontData, FontFace, FontFaceStyle, FontId, FontNamespace, FontSelection, FontSlant, FontStyle,
-    FontWeight, FontWidth,
+    FontData, FontFace, FontFaceStyle, FontId, FontSelection, FontSlant, FontStyle, FontWeight,
+    FontWidth,
 };
 use std::cmp::Ordering;
 
@@ -10,6 +10,17 @@ pub(super) fn names_match(left: &str, right: &str) -> bool {
     } else {
         let mapper = icu_casemap::CaseMapper::new();
         mapper.fold_string(left) == mapper.fold_string(right)
+    }
+}
+
+/// `name` case-folded, so that two names match exactly when their folded forms are equal.
+pub(super) fn folded(name: &str) -> String {
+    if name.is_ascii() {
+        name.to_ascii_lowercase()
+    } else {
+        icu_casemap::CaseMapper::new()
+            .fold_string(name)
+            .into_owned()
     }
 }
 
@@ -27,24 +38,23 @@ impl PartialOrd for Rank {
     }
 }
 
+/// The best matches for `requested` among `family`, the ascending IDs of `faces` named by
+/// one family name. Author faces hide bundled and installed ones of the name, and bundled
+/// faces hide installed ones (CSS Fonts 4 §4.2).
 pub(super) fn candidates(
     faces: &[FontFace],
-    namespace: FontNamespace,
-    family: &str,
+    family: &[FontId],
     requested: FontSelection,
     installed_only: bool,
 ) -> Vec<FontId> {
-    let family_match = |face: &FontFace| {
-        face.namespace == namespace
-            && names_match(&face.descriptor.family, family)
-            && (!installed_only || !matches!(face.data, FontData::Lazy { .. }))
+    let family = || {
+        family.iter().filter_map(|&id| {
+            let face = faces.get(id.0)?;
+            (!installed_only || !matches!(face.data, FontData::Lazy { .. })).then_some((id, face))
+        })
     };
-    let override_bundled = faces
-        .iter()
-        .any(|face| family_match(face) && !matches!(face.data, FontData::Bundled(_)));
-    let eligible = |face: &FontFace| {
-        family_match(face) && (!override_bundled || !matches!(face.data, FontData::Bundled(_)))
-    };
+    let origin = family().map(|(_, face)| face.origin()).min();
+    let eligible = |face: &FontFace| Some(face.origin()) == origin;
     let rank = |face: &FontFace| {
         let descriptor = &face.descriptor;
         let (min, max) = descriptor.width.bounds(FontWidth::NORMAL);
@@ -64,14 +74,16 @@ pub(super) fn candidates(
             weight_rank(point, requested.weight.value()),
         )
     };
-    let best = faces.iter().filter(|face| eligible(face)).map(rank).min();
-    faces
-        .iter()
-        .enumerate()
-        .rev()
+    let best = family()
+        .filter(|(_, face)| eligible(face))
+        .map(|(_, face)| rank(face))
+        .min();
+    let mut found: Vec<FontId> = family()
         .filter(|(_, face)| eligible(face) && Some(rank(face)) == best)
-        .map(|(index, _)| FontId(index))
-        .collect()
+        .map(|(id, _)| id)
+        .collect();
+    found.reverse();
+    found
 }
 
 pub(super) fn style_match(face: FontFaceStyle, requested: FontSelection) -> (Rank, FontSlant) {

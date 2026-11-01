@@ -828,13 +828,9 @@ impl<'a> Builder<'_, 'a> {
         };
         if let [run] = line.runs.as_slice()
             && let [glyph] = run.glyphs()
-            && let Some(font) = self
-                .measurer
-                .text
-                .fonts()
-                .face(run.font_id)
-                .and_then(|font| font.data())
-            && let Ok(face) = ttf_parser::Face::parse(font, 0)
+            && let Some(font) = self.measurer.text.fonts().face(run.font_id)
+            && let Some(data) = font.data()
+            && let Ok(face) = ttf_parser::Face::parse(data, font.index())
         {
             result.italic = face
                 .tables()

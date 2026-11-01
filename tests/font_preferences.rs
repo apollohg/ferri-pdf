@@ -14,6 +14,7 @@ fn preferences() -> FontPreferences {
         sans_serif: vec!["DejaVu Sans".into()],
         monospace: vec!["DejaVu Sans Mono".into()],
         fallback: vec!["DejaVu Sans Mono".into()],
+        ..Default::default()
     }
 }
 fn options() -> RenderOptions {

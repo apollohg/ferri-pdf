@@ -2,6 +2,7 @@
 mod baselines;
 mod bundled;
 mod feature_values;
+mod installed;
 mod loading;
 mod matching;
 mod metrics;
@@ -28,6 +29,8 @@ pub(crate) use silhouette::Silhouettes;
 
 use serde::Serialize;
 use std::collections::HashMap;
+use std::ops::Range;
+use std::path::PathBuf;
 use std::sync::{Arc, Mutex, OnceLock, PoisonError};
 
 /// The initial `font-family`, resolved to `serif`.
@@ -155,7 +158,8 @@ impl GenericFamily {
     }
 }
 
-/// Ordered installed-family preferences. Empty lists retain the bundled defaults.
+/// Ordered installed-family preferences, and the font folders installed families come from.
+/// Empty lists retain the bundled defaults.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 pub struct FontPreferences {
     pub sans_serif: Vec<String>,
@@ -163,8 +167,13 @@ pub struct FontPreferences {
     pub monospace: Vec<String>,
     /// Installed families tried after the complete CSS font-family list.
     pub fallback: Vec<String>,
+    /// Whether the fonts in the operating system's font folders are installed families.
+    pub system_fonts: bool,
+    /// Further folders, searched with their subfolders, whose fonts are installed families.
+    pub font_dirs: Vec<PathBuf>,
 }
 impl FontPreferences {
+    /// Whether no family preference is set.
     pub fn is_empty(&self) -> bool {
         self.sans_serif.is_empty()
             && self.serif.is_empty()
@@ -220,13 +229,22 @@ enum FontData {
         sources: Arc<FontSources>,
         data: Arc<OnceLock<Option<LoadedFont>>>,
     },
+    Installed(Arc<installed::InstalledSource>),
+}
+
+/// Where a face comes from, in the order in which faces of one family name hide later ones.
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
+enum FaceOrigin {
+    Author,
+    Bundled,
+    Installed,
 }
 
 /// The data of the first `@font-face` source that loaded.
 struct LoadedFont {
     data: Vec<u8>,
-    /// The `url()` it came from; `None` for a `local()` face, which is bundled.
-    url: Option<String>,
+    /// The `url()` or installed file it came from; `None` for a bundled `local()` face.
+    reference: Option<String>,
 }
 
 pub(crate) enum FontSource {
@@ -262,6 +280,23 @@ impl FontFace {
                 .get()
                 .and_then(Option::as_ref)
                 .map(|loaded| loaded.data.as_slice()),
+            FontData::Installed(source) => source.data(),
+        }
+    }
+    /// The index of the face in its data, which is a collection only for installed faces.
+    pub(crate) fn index(&self) -> u32 {
+        match &self.data {
+            FontData::Installed(source) => source.index,
+            _ => 0,
+        }
+    }
+    fn origin(&self) -> FaceOrigin {
+        match self.data {
+            FontData::Bundled(_) => FaceOrigin::Bundled,
+            FontData::Installed(_) => FaceOrigin::Installed,
+            #[cfg(test)]
+            FontData::Loaded(_) => FaceOrigin::Author,
+            FontData::Lazy { .. } => FaceOrigin::Author,
         }
     }
 }
@@ -269,6 +304,9 @@ impl FontFace {
 #[derive(Clone)]
 pub(crate) struct FontBook {
     faces: Vec<FontFace>,
+    /// The installed fonts, which `faces` holds at `installed_faces`, after the bundled ones.
+    installed: Option<Arc<installed::InstalledFonts>>,
+    installed_faces: Range<usize>,
     namespaces: Vec<Option<FontNamespace>>,
     preferences: FontPreferences,
     feature_values: Vec<feature_values::FeatureValue>,
@@ -277,6 +315,8 @@ pub(crate) struct FontBook {
     failures: Arc<Mutex<Vec<FontFailure>>>,
     /// Whether each loaded face embeds at the variation values it was instanced at.
     instances: Arc<Mutex<HashMap<InstanceKey, bool>>>,
+    /// Configured font folders that cannot be read, not yet reported.
+    unreadable_directories: Arc<Mutex<Vec<(PathBuf, std::io::Error)>>>,
 }
 
 /// A face and the bits of its variation values.
@@ -288,19 +328,46 @@ impl Default for FontBook {
 }
 impl FontBook {
     pub(crate) fn with_preferences(preferences: FontPreferences) -> Self {
+        let mut faces = bundled::faces();
+        let installed = installed::installed(&preferences);
+        let start = faces.len();
+        if let Some(installed) = &installed {
+            faces.extend(installed.book_faces());
+        }
+        let unreadable_directories = preferences
+            .font_dirs
+            .iter()
+            .filter_map(|directory| {
+                std::fs::read_dir(directory)
+                    .err()
+                    .map(|error| (directory.clone(), error))
+            })
+            .collect();
         Self {
-            faces: bundled::faces(),
+            installed_faces: start..faces.len(),
+            faces,
+            installed,
             namespaces: vec![None],
             preferences,
             feature_values: Vec::new(),
             palettes: Vec::new(),
             failures: Arc::default(),
             instances: Arc::default(),
+            unreadable_directories: Arc::new(Mutex::new(unreadable_directories)),
         }
     }
-    /// The `@font-face` sources loading has skipped since the last call.
+    /// The `@font-face` sources and installed files loading has skipped since the last call.
     pub(crate) fn take_failures(&self) -> Vec<FontFailure> {
         std::mem::take(&mut self.failures.lock().unwrap_or_else(PoisonError::into_inner))
+    }
+    /// The configured font folders that could not be read, since the last call.
+    pub(crate) fn take_unreadable_directories(&self) -> Vec<(PathBuf, std::io::Error)> {
+        std::mem::take(
+            &mut self
+                .unreadable_directories
+                .lock()
+                .unwrap_or_else(PoisonError::into_inner),
+        )
     }
     fn generic_names(&self, generic: GenericFamily) -> impl Iterator<Item = &str> {
         self.preferences
@@ -369,7 +436,7 @@ impl FontBook {
         descriptor: FontDescriptor,
         data: Vec<u8>,
     ) -> Result<FontId, FontError> {
-        validate(&data)?;
+        validate(&data, 0)?;
         let id = FontId(self.faces.len());
         self.faces.push(FontFace {
             descriptor,
@@ -457,6 +524,28 @@ impl FontBook {
         })
     }
 
+    /// The ascending IDs of the faces in `namespace` named `name`.
+    fn named_faces(&self, namespace: FontNamespace, name: &str) -> Vec<FontId> {
+        let named = |(index, face): (usize, &FontFace)| {
+            (face.namespace == namespace && matching::names_match(&face.descriptor.family, name))
+                .then_some(FontId(index))
+        };
+        let Range { start, end } = self.installed_faces;
+        let installed = self
+            .installed
+            .as_ref()
+            .filter(|_| namespace == FontNamespace::ROOT)
+            .map_or(&[][..], |installed| installed.family(name));
+        self.faces
+            .iter()
+            .enumerate()
+            .take(start)
+            .filter_map(named)
+            .chain(installed.iter().map(|position| FontId(start + position)))
+            .chain(self.faces.iter().enumerate().skip(end).filter_map(named))
+            .collect()
+    }
+
     fn matching_candidates(
         &self,
         namespace: FontNamespace,
@@ -467,13 +556,13 @@ impl FontBook {
         let mut result = Vec::new();
         let mut append = |name: &str, namespace, installed_only| {
             let namespace = self.family_namespace(name, namespace);
+            let named = self.named_faces(namespace, name);
             let mut candidates =
-                matching::candidates(&self.faces, namespace, name, selection, installed_only);
+                matching::candidates(&self.faces, &named, selection, installed_only);
             if selection.style != FontStyle::Normal {
                 candidates.extend(matching::candidates(
                     &self.faces,
-                    namespace,
-                    name,
+                    &named,
                     FontSelection {
                         style: FontStyle::Normal,
                         slant: FontSlant::NORMAL,
@@ -534,18 +623,19 @@ impl FontBook {
     }
 }
 
-/// Rejects data the renderer cannot both shape and embed, as user agents sanitize fonts
-/// before use (CSS Fonts 4 §4.3): a font that fails is invalid, so loading moves on to the
-/// face's next source.
-fn validate(data: &[u8]) -> Result<(), FontError> {
-    let face = ttf_parser::Face::parse(data, 0).map_err(FontError::InvalidFont)?;
-    embed_all_glyphs(data, &face, &[]).map_err(FontError::Unembeddable)
+/// Rejects face `index` of `data` if the renderer cannot both shape and embed it, as user
+/// agents sanitize fonts before use (CSS Fonts 4 §4.3): a font that fails is invalid, so
+/// loading moves on to the face's next source.
+fn validate(data: &[u8], index: u32) -> Result<(), FontError> {
+    let face = ttf_parser::Face::parse(data, index).map_err(FontError::InvalidFont)?;
+    embed_all_glyphs(data, index, &face, &[]).map_err(FontError::Unembeddable)
 }
 
-/// Embeds a subset of every glyph of `face` at `variations`, as the PDF writer embeds the
-/// glyphs it uses, so that success covers each subset the PDF needs.
+/// Embeds a subset of every glyph of `face`, face `index` of `data`, at `variations`, as the
+/// PDF writer embeds the glyphs it uses, so that success covers each subset the PDF needs.
 fn embed_all_glyphs(
     data: &[u8],
+    index: u32,
     face: &ttf_parser::Face<'_>,
     variations: &[FontVariation],
 ) -> Result<(), subsetter::Error> {
@@ -556,7 +646,7 @@ fn embed_all_glyphs(
         .collect();
     subsetter::subset_with_variations(
         data,
-        0,
+        index,
         &coordinates,
         &subsetter::GlyphRemapper::new_from_glyphs_sorted(&glyphs),
     )

@@ -43,7 +43,6 @@ impl SvgFonts {
     }
     fn registry(&self) -> &Registry {
         self.registry.get_or_init(|| {
-            const FACE_INDEX: u32 = 0;
             let mut database = fontdb::Database::new();
             let ids = self
                 .book
@@ -57,7 +56,7 @@ impl SvgFonts {
                             book: self.book.clone(),
                             id,
                         })),
-                        index: FACE_INDEX,
+                        index: face.index(),
                         families: vec![(
                             descriptor.family.clone(),
                             fontdb::Language::English_UnitedStates,
@@ -357,14 +356,7 @@ impl FontProvider for Provider<'_> {
                 |kind, name| book.feature_value(self.fonts.namespace, family, kind, name),
             ),
             paint: Arc::new(crate::svg::usvg::GlyphPaint {
-                palette: face.data().and_then(|data| {
-                    book.palette(
-                        self.fonts.namespace,
-                        &style.font_features.palette,
-                        family,
-                        data,
-                    )
-                }),
+                palette: book.palette(self.fonts.namespace, &style.font_features.palette, face),
                 bold: synthesis.bold,
                 oblique_skew,
             }),

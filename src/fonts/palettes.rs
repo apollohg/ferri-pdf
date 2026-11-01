@@ -1,6 +1,6 @@
 //! COLR palette selection from the font's CPAL table, `font-palette` and
 //! `@font-palette-values` (CSS Fonts 4 §9).
-use crate::fonts::{FontBook, FontNamespace, matching};
+use crate::fonts::{FontBook, FontFace, FontNamespace, matching};
 use crate::paint::{AbsoluteColor, Color, Interpolation, MixItem};
 use serde::Serialize;
 use skrifa::raw::{FontRef, TableProvider, tables::cpal::PaletteType};
@@ -185,22 +185,22 @@ impl FontBook {
         }
     }
 
-    /// The colours a COLR face of `family` renders with under `palette`, or `None` for the
+    /// The colours the loaded COLR `face` renders with under `palette`, or `None` for the
     /// font's default palette or a face without CPAL palettes.
     pub(crate) fn palette(
         &self,
         namespace: FontNamespace,
         palette: &FontPalette,
-        family: &str,
-        data: &[u8],
+        face: &FontFace,
     ) -> Option<Arc<[Color]>> {
+        let family = face.descriptor().family.as_str();
         let undefined = |name: &str| self.palette_values(namespace, name, family).is_none();
         match palette {
             FontPalette::Normal => return None,
             FontPalette::Named(name) if undefined(name) => return None,
             _ => {}
         }
-        let font = FontRef::new(data).ok()?;
+        let font = FontRef::from_index(face.data()?, face.index()).ok()?;
         let palettes = Palettes::of(&font)?;
         let colors = self.palette_colors(namespace, palette, family, &palettes)?;
         Some(colors.iter().map(AbsoluteColor::used).collect())

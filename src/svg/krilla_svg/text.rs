@@ -396,7 +396,9 @@ impl<'a> Fonts<'a> {
                 .entry((glyph.font, variations))
                 .or_insert_with_key(|(id, variations)| {
                     let face = db.face(*id)?;
-                    let fontdb::Source::Binary(data) = &face.source;
+                    let fontdb::Source::Binary(data) = &face.source else {
+                        return None;
+                    };
                     crate::fonts::Silhouettes::at(
                         data.as_ref().as_ref(),
                         face.index,
@@ -447,7 +449,9 @@ impl<'a> Fonts<'a> {
             Entry::Vacant(entry) => {
                 // Every face is registered from memory, so its shared bytes are borrowed directly.
                 let font = self.db.face(id).and_then(|face| {
-                    let fontdb::Source::Binary(font_data) = &face.source;
+                    let fontdb::Source::Binary(font_data) = &face.source else {
+                        return None;
+                    };
                     let (_, variations, palette) = entry.key();
                     let coords: SmallVec<[_; 2]> = variations
                         .iter()

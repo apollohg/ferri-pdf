@@ -88,7 +88,7 @@ gif = "0.14.1"
 hayro = { version = "=0.8.0", default-features = false }
 image-webp = "0.2.4"
 zune-jpeg = "0.5.8"
-fontdb = { version = "0.23", default-features = false, features = ["std"] }
+fontdb = { version = "0.23", default-features = false, features = ["std", "fs", "fontconfig"] }
 skrifa = "0.42"
 smallvec = { version = "1.15.1", features = ["union", "const_new", "write"] }
 tiny-skia = "0.12"

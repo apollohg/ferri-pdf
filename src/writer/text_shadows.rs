@@ -138,12 +138,13 @@ fn draw_blurred(
     let runs: Vec<_> = shadow.runs.iter().flat_map(GlyphRun::with_marks).collect();
     let mut faces = Vec::with_capacity(runs.len());
     for run in &runs {
-        let data = fonts
+        let face = fonts
             .face(run.font_id)
-            .ok_or(PdfError::InvalidFontId(run.font_id))?
-            .data()
-            .ok_or(PdfError::InvalidFont)?;
-        faces.push(Silhouettes::new(data, &run.variations).ok_or(PdfError::InvalidFont)?);
+            .ok_or(PdfError::InvalidFontId(run.font_id))?;
+        let data = face.data().ok_or(PdfError::InvalidFont)?;
+        faces.push(
+            Silhouettes::new(data, face.index(), &run.variations).ok_or(PdfError::InvalidFont)?,
+        );
     }
     let mask = crate::paint::blurred_shadow(region, cast.sigma(), |size, pitch| {
         let Some(mut pixmap) = tiny_skia::Pixmap::new(size[0] as u32, size[1] as u32) else {

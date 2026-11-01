@@ -45,10 +45,12 @@ pub(crate) enum Work {
     UserAgentSheet,
     /// A style the cascade computes for an element or pseudo-element.
     ComputedStyle,
+    /// A scan of a set of font folders for installed fonts.
+    FontScan,
 }
 
 #[cfg(test)]
-const KINDS: usize = 20;
+const KINDS: usize = 21;
 
 #[cfg(test)]
 thread_local! {
