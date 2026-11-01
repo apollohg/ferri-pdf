@@ -5,6 +5,7 @@ mod navigation;
 mod ruby;
 mod scroll_markers;
 mod shadow_fonts;
+mod shared_styles;
 mod styled_paragraphs;
 mod text_transform;
 
