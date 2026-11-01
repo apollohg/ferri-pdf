@@ -105,6 +105,10 @@ pub enum DocumentDiagnostic {
     },
     #[error("{0}")]
     UnavailableFont(#[from] crate::fonts::FontFailure),
+    /// A family a font list names that no bundled, `@font-face` or installed face has,
+    /// where no family before it in the list matched either.
+    #[error("font family {family:?} is not available, so the next family in its list is used")]
+    MissingFontFamily { family: String },
     #[error("font folder {} cannot be read: {error}", path.display())]
     UnreadableFontDirectory {
         path: std::path::PathBuf,
@@ -146,6 +150,7 @@ impl DocumentDiagnostic {
             | Self::UnavailableEmbedded { .. }
             | Self::UnrenderedDocument { .. }
             | Self::UnavailableFont(_)
+            | Self::MissingFontFamily { .. }
             | Self::UnreadableFontDirectory { .. }
             | Self::UnavailableSource { .. }
             | Self::SkippedFormattingWork { .. } => false,
@@ -910,7 +915,15 @@ impl StyledDocument {
                 .into_iter()
                 .map(DocumentDiagnostic::UnavailableFont),
         );
-        // Nested documents report from their own font books; each folder once.
+        // Nested documents report from their own font books; each name or folder once.
+        for family in self.styles.fonts.take_missing_families() {
+            if !self.diagnostics.iter().any(|known| {
+                matches!(known, DocumentDiagnostic::MissingFontFamily { family: other } if *other == family)
+            }) {
+                self.diagnostics
+                    .push(DocumentDiagnostic::MissingFontFamily { family });
+            }
+        }
         for (path, error) in self.styles.fonts.take_unreadable_directories() {
             if !self.diagnostics.iter().any(|known| {
                 matches!(known, DocumentDiagnostic::UnreadableFontDirectory { path: other, .. } if *other == path)

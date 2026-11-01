@@ -315,6 +315,9 @@ pub(crate) struct FontBook {
     failures: Arc<Mutex<Vec<FontFailure>>>,
     /// Whether each loaded face embeds at the variation values it was instanced at.
     instances: Arc<Mutex<HashMap<InstanceKey, bool>>>,
+    /// Families that a used font list names, with no family before them usable, that no face
+    /// has; not yet reported.
+    missing_families: Arc<Mutex<Vec<String>>>,
     /// Configured font folders that cannot be read, not yet reported.
     unreadable_directories: Arc<Mutex<Vec<(PathBuf, std::io::Error)>>>,
 }
@@ -353,12 +356,22 @@ impl FontBook {
             palettes: Vec::new(),
             failures: Arc::default(),
             instances: Arc::default(),
+            missing_families: Arc::default(),
             unreadable_directories: Arc::new(Mutex::new(unreadable_directories)),
         }
     }
     /// The `@font-face` sources and installed files loading has skipped since the last call.
     pub(crate) fn take_failures(&self) -> Vec<FontFailure> {
         std::mem::take(&mut self.failures.lock().unwrap_or_else(PoisonError::into_inner))
+    }
+    /// The missing families font lists have named since the last call.
+    pub(crate) fn take_missing_families(&self) -> Vec<String> {
+        std::mem::take(
+            &mut self
+                .missing_families
+                .lock()
+                .unwrap_or_else(PoisonError::into_inner),
+        )
     }
     /// The configured font folders that could not be read, since the last call.
     pub(crate) fn take_unreadable_directories(&self) -> Vec<(PathBuf, std::io::Error)> {
@@ -571,16 +584,28 @@ impl FontBook {
                     installed_only,
                 ));
             }
+            let found = !candidates.is_empty();
             for id in candidates {
                 if !result.contains(&id) {
                     result.push(id);
                 }
             }
+            found
         };
+        // A named family no face has is reported only while no earlier family matched.
+        let mut matched = false;
+        let mut missing = Vec::new();
         for family in families {
             match family {
-                FontFamily::Named(name) => append(name, namespace, false),
+                FontFamily::Named(name) => {
+                    let found = append(name, namespace, false);
+                    if !found && !matched {
+                        missing.push(name);
+                    }
+                    matched |= found;
+                }
                 FontFamily::Generic(generic) if fallback => {
+                    matched = true;
                     for name in self.generic_names(*generic) {
                         append(name, FontNamespace::ROOT, true);
                     }
@@ -590,6 +615,20 @@ impl FontBook {
         }
         if !fallback {
             return result.into();
+        }
+        if !missing.is_empty() {
+            let mut reported = self
+                .missing_families
+                .lock()
+                .unwrap_or_else(PoisonError::into_inner);
+            for name in missing {
+                if !reported
+                    .iter()
+                    .any(|known| matching::names_match(known, name))
+                {
+                    reported.push(name.clone());
+                }
+            }
         }
         for name in &self.preferences.fallback {
             append(name, FontNamespace::ROOT, true);
