@@ -14,7 +14,7 @@ import corpus
 
 ROOT = corpus.ROOT
 RUNS = {"report": 5, "wide-table": 3, "event-plan": 5, "prose": 5, "invoice": 100,
-        "catalogue": 3, "tag-list": 3,
+        "catalogue": 3, "catalogue-fit": 3, "tag-list": 3,
         "newsletter": 3, "newsletter-long": 3}
 TIME = "/usr/bin/time"
 # BSD time reports bytes; GNU time reports kilobytes.

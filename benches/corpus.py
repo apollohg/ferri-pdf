@@ -49,6 +49,7 @@ PROSE_PARAGRAPHS = 22
 PROSE_FOOTNOTE_EVERY = 3
 INVOICE_LINES = 12
 CATALOGUE_CARDS = 2000
+CATALOGUE_FIT_CSS = ".grid{width:fit-content}"
 TAG_COUNT = 4000
 NEWSLETTER_SECTIONS = 8
 NEWSLETTER_PARAGRAPHS = 32
@@ -302,8 +303,8 @@ tfoot td{font-weight:bold;border-top:1pt solid #1f4e79;border-bottom:none}
     return document("Invoice", css, body)
 
 
-def catalogue(words, assets):
-    css = """
+def catalogue(words, assets, extra_css=""):
+    css = extra_css + """
 @page{size:A4;margin:14mm;@bottom-right{content:'Catalogue page ' counter(page);font:8pt sans-serif}}
 body{font:8.5pt/1.35 sans-serif;color:#263238;margin:0}
 h1{font-size:18pt;margin:0 0 8pt;color:#1f4e79}
@@ -326,6 +327,10 @@ h1{font-size:18pt;margin:0 0 8pt;color:#1f4e79}
             f'<span class="sku">SKU-{index + 1:05d}</span></div></div>')
     return document("Product catalogue", css,
                     '<h1>Product catalogue</h1><div class="grid">' + "".join(cards) + "</div>")
+
+
+def catalogue_fit(words, assets):
+    return catalogue(words, assets, CATALOGUE_FIT_CSS)
 
 
 def tag_list(words, assets):
@@ -384,6 +389,7 @@ DOCUMENTS = {
     "prose": prose,
     "invoice": invoice,
     "catalogue": catalogue,
+    "catalogue-fit": catalogue_fit,
     "tag-list": tag_list,
     "newsletter": newsletter,
     "newsletter-long": newsletter_long,
