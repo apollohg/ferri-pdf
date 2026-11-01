@@ -658,6 +658,84 @@ fn collapsed_columns_recompute_projected_width_on_alternating_pages() {
 }
 
 #[test]
+fn collapsed_rows_leave_a_spanning_cell_only_the_remaining_rows() {
+    // A cell spanning collapsed rows aligns in, and ends with, the rows that remain, so the
+    // table lays out as if the collapsed rows were absent (CSS 2.1 §17.5.5).
+    type Collapsed = fn(usize) -> bool;
+    let cases: [(usize, Collapsed); 2] = [
+        (10, |row| [2, 3, 5, 7, 8, 9].contains(&row)),
+        (300, |row| row % 10 != 0),
+    ];
+    for align in ["middle", "bottom", "top", "baseline"] {
+        let css = format!(
+            "@page{{size:200pt 200pt;margin:10pt}}td{{border:1pt solid;font-size:10pt;line-height:14pt;vertical-align:{align}}}.gone{{visibility:collapse}}"
+        );
+        for (rows, gone) in cases {
+            let table = |present: &[usize], class: &dyn Fn(usize) -> &'static str| {
+                let body: String = present
+                    .iter()
+                    .enumerate()
+                    .map(|(index, &row)| {
+                        let span = if index == 0 {
+                            format!("<td rowspan={}>Span</td>", present.len())
+                        } else {
+                            String::new()
+                        };
+                        format!("<tr{}>{span}<td>Row{row}</td></tr>", class(row))
+                    })
+                    .collect();
+                format!("<table>{body}</table><p>After</p>")
+            };
+            let all: Vec<usize> = (0..rows).collect();
+            let kept: Vec<usize> = all.iter().copied().filter(|&row| !gone(row)).collect();
+            let collapsed = trace(
+                &css,
+                &table(&all, &|row| if gone(row) { " class=gone" } else { "" }),
+            );
+            let control = trace(&css, &table(&kept, &|_| ""));
+            let what = format!(
+                "{align}-aligned cell spanning {rows} rows, {} kept",
+                kept.len()
+            );
+            let lines = |output: &LayoutTrace| {
+                output
+                    .pages
+                    .iter()
+                    .enumerate()
+                    .flat_map(|(page, lines)| {
+                        lines
+                            .iter()
+                            .map(move |line| (page, line.text.clone(), line.x, line.baseline))
+                    })
+                    .collect::<Vec<_>>()
+            };
+            let span = |output: &LayoutTrace| {
+                lines(output)
+                    .into_iter()
+                    .find(|line| line.1 == "Span")
+                    .unwrap_or_else(|| panic!("{what}: the spanning cell's text is missing"))
+            };
+            assert_eq!(
+                collapsed.pages.len(),
+                control.pages.len(),
+                "{what}: collapsed rows added pages; control spans {} pages",
+                control.pages.len()
+            );
+            assert_eq!(
+                span(&collapsed),
+                span(&control),
+                "{what}: spanning cell (page, text, x, baseline)"
+            );
+            assert_eq!(
+                lines(&collapsed),
+                lines(&control),
+                "{what}: lines (page, text, x, baseline)"
+            );
+        }
+    }
+}
+
+#[test]
 fn collapsed_rows_preserve_repeated_groups_and_visible_row_positions() {
     for borders in ["separate", "collapse"] {
         let css = format!(

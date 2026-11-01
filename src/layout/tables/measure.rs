@@ -236,7 +236,14 @@ impl RowGeometry {
         let starts = self.original_starts.as_ref().unwrap_or(&self.starts);
         (starts[rows.end] - starts[rows.start] - spacing).max(0.0)
     }
-    fn project(mut self, collapsed: &[bool]) -> Self {
+    /// Removes the `collapsed` rows, which leave the cells of `grid`, measured as `cells`,
+    /// only the remaining rows to align their content in.
+    fn project(
+        mut self,
+        collapsed: &[bool],
+        grid: &crate::table::Grid,
+        cells: &[CellHeight],
+    ) -> Self {
         if !collapsed.iter().any(|&value| value) {
             return self;
         }
@@ -247,6 +254,24 @@ impl RowGeometry {
                 removed += original[index + 1] - original[index];
             }
             self.starts[index + 1] -= removed;
+        }
+        for ((offset, cell), measure) in self.offsets.iter_mut().zip(&grid.cells).zip(cells) {
+            let end = cell.row + cell.rows;
+            if !collapsed[cell.row..end].contains(&true) {
+                continue;
+            }
+            let removed =
+                (original[end] - original[cell.row]) - (self.starts[end] - self.starts[cell.row]);
+            let shift = match measure.align {
+                crate::style::CellAlignment::Middle => removed / 2.0,
+                crate::style::CellAlignment::Bottom | crate::style::CellAlignment::LastBaseline => {
+                    removed
+                }
+                crate::style::CellAlignment::Top | crate::style::CellAlignment::Baseline => 0.0,
+            };
+            // Content too tall for the remaining rows keeps its top left in view (CSS Tables 3
+            // §5.4.1).
+            *offset = (*offset - shift).max(offset.min(0.0));
         }
         self.height = (self.height - removed).max(0.0);
         self.original_starts = Some(original);
@@ -1470,7 +1495,7 @@ impl<'a> TablePlan<'a> {
                 spacing,
                 &self.data.hidden_rows,
             )
-            .project(&self.data.collapsed_rows));
+            .project(&self.data.collapsed_rows, &self.data.grid, cells));
         }
         let style = self.style;
         let rows = self
@@ -1523,8 +1548,13 @@ impl<'a> TablePlan<'a> {
                 )
             }),
         })?;
-        Ok(RowGeometry::new(rows, spacing, &self.data.hidden_rows)
-            .project(&self.data.collapsed_rows))
+        Ok(
+            RowGeometry::new(rows, spacing, &self.data.hidden_rows).project(
+                &self.data.collapsed_rows,
+                &self.data.grid,
+                cells,
+            ),
+        )
     }
     pub(crate) fn used_row_starts(
         &self,
@@ -1566,7 +1596,7 @@ impl<'a> TablePlan<'a> {
             spacing,
             &self.data.hidden_rows,
         )
-        .project(&self.data.collapsed_rows)
+        .project(&self.data.collapsed_rows, &self.data.grid, &cells)
         .starts)
     }
     pub(crate) fn cell_span(&self, index: usize, resolved: &TableGeometry) -> (f32, f32) {
