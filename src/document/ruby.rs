@@ -170,7 +170,7 @@ struct OpenRuby {
     segments: Vec<Segment>,
     /// Intra-ruby white space whose next sibling is still to come, and the kind of box before
     /// it in the same container, if any.
-    whitespace: Option<(String, Style)>,
+    whitespace: Option<(String, Arc<Style>)>,
     previous: Option<Kind>,
 }
 
@@ -238,7 +238,7 @@ impl RubyStack {
         &mut self,
         inline: &mut InlineCollector,
         text: &str,
-        style: &Style,
+        style: &Arc<Style>,
     ) -> Result<bool, DocumentError> {
         if let Some(ruby) = self.open.last_mut()
             && ruby.nesting == 0
@@ -249,7 +249,7 @@ impl RubyStack {
         {
             match &mut ruby.whitespace {
                 Some((pending, _)) => pending.push_str(text),
-                None => ruby.whitespace = Some((text.to_owned(), style.clone())),
+                None => ruby.whitespace = Some((text.to_owned(), Arc::clone(style))),
             }
             return Ok(true);
         }
@@ -530,7 +530,6 @@ impl OpenRuby {
         match (self.previous, next) {
             (None, _) | (_, Kind::Level) => {}
             (Some(Kind::Annotation), Kind::Annotation) => {
-                let style = Arc::new(style);
                 if let Some(level) = self.levels.last_mut() {
                     level.annotations.push(PendingAnnotation {
                         block: None,
@@ -661,7 +660,11 @@ impl OpenRuby {
                 }
                 let inter_character = style.ruby.position == RubyPosition::InterCharacter
                     && !self.style.used_writing_mode().vertical();
-                let wrapper = annotation_wrapper(&self.level_style(), &style, inter_character);
+                let wrapper = Arc::new(annotation_wrapper(
+                    &self.level_style(),
+                    &style,
+                    inter_character,
+                ));
                 let contents = std::mem::replace(inline, outer);
                 // The first formatted line holding the annotation restyles its contents
                 // before `text-transform` (CSS Pseudo-Elements 4 §2.1.3).

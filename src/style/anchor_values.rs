@@ -1067,6 +1067,13 @@ pub(crate) struct AnchorStyle {
     pub(crate) tactic: Tactic,
 }
 impl AnchorStyle {
+    /// Whether `physical_areas` has flow-relative values to map.
+    pub(crate) fn has_flow_relative_areas(&self) -> bool {
+        self.area.is_some()
+            || self.order.is_some()
+            || !self.pages.is_empty()
+            || !self.options.is_empty()
+    }
     pub(crate) fn physical_areas(&mut self, own: Flow, containing: Flow) {
         self.area = self.area.map(|area| area.physical(own, containing));
         self.order = self.order.map(|axis| {

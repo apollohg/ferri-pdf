@@ -173,13 +173,14 @@ pub(super) fn is_rendered_legend(element: Element<'_>, style: &Style) -> bool {
 /// gives the content box the same inline extent.
 pub(super) fn fieldset(
     element: Element<'_>,
-    mut style: Style,
+    mut shared: Arc<Style>,
     children: Vec<BlockContent>,
     page_scope: Option<&Arc<str>>,
-) -> (Style, Vec<BlockContent>) {
-    if !html(element, "fieldset") || style.display == Display::Contents {
-        return (style, children);
+) -> (Arc<Style>, Vec<BlockContent>) {
+    if !html(element, "fieldset") || shared.display == Display::Contents {
+        return (shared, children);
     }
+    let style = Arc::make_mut(&mut shared);
     let mut content = style.anonymous(match style.display {
         Display::Grid | Display::InlineGrid => Display::Grid,
         Display::Flex | Display::InlineFlex => Display::Flex,
@@ -218,7 +219,7 @@ pub(super) fn fieldset(
         }
     }
     let content = BlockContent::Block(BlockBox::anonymous(content, rest, page_scope.cloned()));
-    (style, legend.into_iter().chain([content]).collect())
+    (shared, legend.into_iter().chain([content]).collect())
 }
 
 struct Builder<'b, 'a> {
@@ -585,9 +586,12 @@ impl<'b> Builder<'b, '_> {
         let mut inline = crate::document::inline::InlineCollector::default();
         let decoration = self.resources.backgrounds(text_style);
         inline.open_box(text_style, decoration, Default::default(), false);
-        inline.append(if text.is_empty() { EMPTY_LINE } else { text }, text_style);
+        inline.append(
+            if text.is_empty() { EMPTY_LINE } else { text },
+            &Arc::new(text_style.clone()),
+        );
         inline.close_box();
-        let children = match inline.finish(line)? {
+        let children = match inline.finish(&Arc::new(line.clone()))? {
             Ok(mut paragraph) => {
                 paragraph.set_formatted_lines(true, false);
                 vec![BlockContent::Inline(paragraph)]
@@ -861,10 +865,11 @@ impl<'b> Builder<'b, '_> {
             self.page_scope.cloned(),
         );
         let mut inline = crate::document::inline::InlineCollector::default();
+        let parent = Arc::new(self.style.clone());
         if style.position.is_out_of_flow() || style.floating().is_some() {
             inline.anchor(button);
         } else if style.display.is_inline_level() {
-            inline.atomic(button, self.style);
+            inline.atomic(button, &parent);
         } else {
             return Ok(ControlContent {
                 image: None,
@@ -873,7 +878,7 @@ impl<'b> Builder<'b, '_> {
         }
         Ok(ControlContent {
             image: None,
-            children: match inline.finish(self.style)? {
+            children: match inline.finish(&parent)? {
                 Ok(mut paragraph) => {
                     paragraph.set_formatted_lines(true, false);
                     vec![BlockContent::Inline(paragraph)]

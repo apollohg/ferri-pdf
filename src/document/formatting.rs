@@ -193,7 +193,7 @@ pub(crate) struct FootnoteBody {
 /// Consecutive inline footnotes collected into an anonymous block while the next may join
 /// its inline formatting context.
 struct InlineFootnotes {
-    style: Box<Style>,
+    style: std::sync::Arc<Style>,
     children: Vec<BlockContent>,
     inline: InlineCollector,
     members: Vec<usize>,
@@ -204,7 +204,7 @@ impl InlineFootnotes {
         push_inline(&mut self.children, self.inline.finish(&self.style)?);
         mark_last_formatted_line(&mut self.children);
         Ok(FootnoteBody {
-            block: BlockBox::anonymous(*self.style, self.children, None),
+            block: BlockBox::anonymous(self.style, self.children, None),
             members: self.members,
             inline: true,
         })
@@ -238,7 +238,7 @@ fn mark_last_formatted_line(children: &mut [BlockContent]) {
 }
 
 pub(crate) struct BlockBox {
-    style: Box<Style>,
+    style: std::sync::Arc<Style>,
     flow: Option<Box<BlockBox>>,
     math: Option<Box<crate::document::mathml::Element>>,
     math_content: Option<Box<BlockBox>>,
@@ -399,15 +399,16 @@ impl BlockBox {
                 _ => parent,
             };
             let computed = Flow::of(&block.style);
-            if (block.style.display.is_table_internal()
+            if ((block.style.display.is_table_internal()
                 && block.style.display != Display::TableCell)
                 || matches!(
                     block.style.display,
                     Display::RubyBaseContainer | Display::RubyTextContainer
-                )
+                ))
+                && block.style.principal_flow != Some(parent)
             {
                 // Writing Modes 4 §3.1 excludes these structural boxes; descendants still inherit their computed value.
-                block.style.principal_flow = Some(parent);
+                std::sync::Arc::make_mut(&mut block.style).principal_flow = Some(parent);
             }
             let own = Flow::used(&block.style);
             if block.style.contains_absolute() {
@@ -417,7 +418,12 @@ impl BlockBox {
                 containers[1] = own;
             }
             block.layout_flow = parent;
-            block.style.anchor.physical_areas(own, parent);
+            // Styles stay shared with the paragraphs inheriting them where nothing changes.
+            if block.style.anchor.has_flow_relative_areas() {
+                std::sync::Arc::make_mut(&mut block.style)
+                    .anchor
+                    .physical_areas(own, parent);
+            }
             if own.writing_mode != parent.writing_mode && block.image.is_none() {
                 let mut style = block.style.anonymous(block.style.display.clone());
                 style.flex = block.style.flex.clone();
@@ -431,14 +437,16 @@ impl BlockBox {
                 if block.style.display.is_table()
                     && block.style.table.collapse == crate::style::BorderCollapse::Collapse
                 {
-                    inner.style.decoration.borders = block.style.decoration.borders;
+                    std::sync::Arc::make_mut(&mut inner.style)
+                        .decoration
+                        .borders = block.style.decoration.borders;
                     inner.decoration = block.decoration.clone();
                 }
                 inner.children = std::mem::take(&mut block.children);
                 inner.marker = block.marker.take();
                 block.flow = Some(Box::new(inner));
                 // Cells and captions keep their table roles around their orthogonal flows.
-                block.style.display = if matches!(
+                std::sync::Arc::make_mut(&mut block.style).display = if matches!(
                     block.style.display,
                     Display::TableCell | Display::TableCaption
                 ) {
@@ -459,11 +467,20 @@ impl BlockBox {
                 physical.rtl = parent.rtl;
                 block.decoration =
                     logical::decoration(&block.decoration, parent, parent.horizontal());
-                *block.style = logical::reflowed(&physical, parent.horizontal());
+                block.style =
+                    std::sync::Arc::new(logical::reflowed(&physical, parent.horizontal()));
             }
-            block.style.writing_mode = computed.writing_mode;
-            block.style.rtl = computed.rtl;
-            block.style.layout_writing_mode = parent.writing_mode;
+            if (
+                block.style.writing_mode,
+                block.style.rtl,
+                block.style.layout_writing_mode,
+            ) != (computed.writing_mode, computed.rtl, parent.writing_mode)
+            {
+                let style = std::sync::Arc::make_mut(&mut block.style);
+                style.writing_mode = computed.writing_mode;
+                style.rtl = computed.rtl;
+                style.layout_writing_mode = parent.writing_mode;
+            }
             if let Some(inner) = &mut block.flow {
                 pending.push(Entry::Block(inner, own, containers));
             }
@@ -488,10 +505,11 @@ impl BlockBox {
     }
 
     pub(super) fn anonymous(
-        style: Style,
+        style: impl Into<std::sync::Arc<Style>>,
         children: Vec<BlockContent>,
         page_scope: Option<std::sync::Arc<str>>,
     ) -> Self {
+        let style = style.into();
         let decoration = style.decoration.with_image_type();
         Self {
             anonymous: true,
@@ -530,11 +548,12 @@ impl BlockBox {
         *self = Self::anonymous((*self.style).clone(), parts, page_scope);
     }
     pub(super) fn with_decoration(
-        style: Style,
+        style: impl Into<std::sync::Arc<Style>>,
         children: Vec<BlockContent>,
         decoration: BoxDecoration,
         page_scope: Option<std::sync::Arc<str>>,
     ) -> Self {
+        let style = style.into();
         let children = if style.display.is_item_container() {
             let mut items = Vec::with_capacity(children.len());
             for child in children {
@@ -568,7 +587,7 @@ impl BlockBox {
         if style.flex.legacy_box {
             for child in &mut children {
                 if let BlockContent::Block(block) = child {
-                    block.style.clamp = crate::style::LineClamp {
+                    std::sync::Arc::make_mut(&mut block.style).clamp = crate::style::LineClamp {
                         continuation: match style.clamp.continuation {
                             crate::style::Continue::WebkitDiscard
                                 if style.flex.direction.column() =>
@@ -586,7 +605,7 @@ impl BlockBox {
         let page = crate::document::PageBoundary::new(page_scope, &style, &children);
         Self {
             layout_flow: crate::style::logical::Flow::of(&style),
-            style: Box::new(style),
+            style,
             flow: None,
             math: None,
             math_content: None,
@@ -791,7 +810,7 @@ impl BlockBox {
     /// Gives the box the initial sizes, margins, padding, borders and offsets.
     fn reset_geometry(&mut self) {
         let initial = Style::default();
-        let style = &mut *self.style;
+        let style = std::sync::Arc::make_mut(&mut self.style);
         style.margin = initial.margin;
         style.padding = initial.padding;
         style.inset = initial.inset;
@@ -1359,7 +1378,7 @@ struct BlockBuilder<'a, 's, 'c> {
     sheet: &'a Stylesheet,
     /// The block's element, which `style` styles.
     element: ElementId,
-    style: &'s Style,
+    style: &'s std::sync::Arc<Style>,
     /// Whether an initial letter is sized by the block's inline size, which layout measures.
     sized: &'s mut bool,
     element_page_scope: &'s Option<std::sync::Arc<str>>,
@@ -1442,7 +1461,7 @@ struct RunInSequence {
     open: bool,
     /// Collapsible white space after the last run-in box: between run-ins it separates
     /// them, and before a block it stays behind.
-    whitespace: Vec<(String, Style)>,
+    whitespace: Vec<(String, std::sync::Arc<Style>)>,
 }
 
 /// What a block's next child is to a run-in sequence before it.
@@ -1799,7 +1818,7 @@ fn letter_atomic(
     letter: &mut BlockBox,
 ) -> Result<bool, DocumentError> {
     let context = crate::text::TextContext::new(&sheet.fonts, resolver);
-    let style = &mut letter.style;
+    let style = std::sync::Arc::make_mut(&mut letter.style);
     let initial = style
         .initial_letter
         .expect("an initial letter has a size and sink");
@@ -1844,7 +1863,11 @@ pub(super) fn inline_pseudo_style(mut style: Style) -> Style {
 impl<'a> BlockBuilder<'a, '_, '_> {
     /// Appends inline text, wrapping the first-letter text it begins with in its
     /// `::first-letter` boxes.
-    fn append_text(&mut self, text: &str, style: &Style) -> Result<(), DocumentError> {
+    fn append_text(
+        &mut self,
+        text: &str,
+        style: &std::sync::Arc<Style>,
+    ) -> Result<(), DocumentError> {
         if self.ruby.text(self.inline, text, style)? {
             return Ok(());
         }
@@ -1853,9 +1876,9 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             .annotation_mode()
             .filter(|mode| self.inline.open_style().is_none() && *mode != style.used_writing_mode())
             .map(|mode| {
-                let mut style = style.clone();
+                let mut style = Style::clone(style);
                 style.writing_mode = mode;
-                style
+                std::sync::Arc::new(style)
             });
         let style = overridden.as_ref().unwrap_or(style);
         if self.ruby.in_annotation() && style.white_space.preserves_breaks() {
@@ -1873,11 +1896,12 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     }
     /// A forced line break, which inside a ruby annotation is a collapsible segment break,
     /// whatever its `white-space` (CSS Ruby 1 §2.2).
-    fn line_break(&mut self, style: &Style) {
+    fn line_break(&mut self, style: &std::sync::Arc<Style>) {
         if self.ruby.in_annotation() {
-            let mut collapsing = style.clone();
+            let mut collapsing = Style::clone(style);
             collapsing.white_space.collapse = crate::style::WhiteSpaceCollapse::Collapse;
-            self.inline.append(SEGMENT_BREAK, &collapsing);
+            self.inline
+                .append(SEGMENT_BREAK, &std::sync::Arc::new(collapsing));
         } else {
             self.inline.line_break(style);
         }
@@ -1887,7 +1911,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         &mut self,
         output: &crate::style::GeneratedOutput,
         images: &[crate::document::inline::GeneratedImage],
-        style: &Style,
+        style: &std::sync::Arc<Style>,
     ) -> Result<(), DocumentError> {
         if !output.text().is_empty() || !images.is_empty() {
             self.ruby.content(self.inline)?;
@@ -1908,7 +1932,11 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     }
     /// Appends the first-letter text that `text`, the next inline content, begins with in its
     /// `::first-letter` boxes, returning the bytes consumed (CSS Pseudo-Elements 4 §2.2).
-    fn first_letter(&mut self, text: &str, style: &Style) -> Result<usize, DocumentError> {
+    fn first_letter(
+        &mut self,
+        text: &str,
+        style: &std::sync::Arc<Style>,
+    ) -> Result<usize, DocumentError> {
         if !self.first_line.letter {
             return Ok(0);
         }
@@ -1933,7 +1961,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         };
         self.first_line.letter = false;
         self.inline.append(&text[..prefix.start], style);
-        let mut parent = style.clone();
+        let mut parent = Style::clone(style);
         let mut opened = 0;
         let mut floated = None;
         let mut initial = None;
@@ -1986,7 +2014,8 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             &parent,
             &text[prefix],
         )?;
-        self.inline.append(&text[letter], &parent);
+        self.inline
+            .append(&text[letter], &std::sync::Arc::new(parent.clone()));
         self.first_letter_part(
             &origins,
             PseudoElement::FirstLetterSuffix,
@@ -1998,6 +2027,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         }
         if let Some((style, decoration, outer, outer_opened)) = floated {
             let contents = std::mem::replace(self.inline, outer);
+            let style = std::sync::Arc::new(style);
             let children = match contents.finish(&style)? {
                 Ok(paragraph) => vec![BlockContent::Inline(paragraph)],
                 Err(stray) => stray,
@@ -2076,7 +2106,11 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     }
     /// Places an atomic inline styled by its parent `parent`, as an initial letter where its
     /// style makes it one.
-    fn atomic(&mut self, mut block: BlockBox, parent: &Style) -> Result<(), DocumentError> {
+    fn atomic(
+        &mut self,
+        mut block: BlockBox,
+        parent: &std::sync::Arc<Style>,
+    ) -> Result<(), DocumentError> {
         self.ruby.content(self.inline)?;
         if block.style.display.is_table_part() {
             self.table_part(block, parent);
@@ -2103,7 +2137,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     }
     /// Places table part `part`, whose parent is an inline box, in the anonymous inline table
     /// of the parts just before it, or in a new one (CSS 2.1 §17.2.1).
-    fn table_part(&mut self, part: BlockBox, parent: &Style) {
+    fn table_part(&mut self, part: BlockBox, parent: &std::sync::Arc<Style>) {
         let page_scope = self.element_page_scope.clone();
         if let Some(table) = self
             .inline
@@ -2163,10 +2197,11 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             style.align = crate::style::TextAlign::Start;
             style.align_last = None;
         }
-        match contents.finish(&style)? {
+        match contents.finish(&std::sync::Arc::new(style.clone()))? {
             Ok(paragraph) => {
                 let block = self.inline_letter_box(style, decoration, navigation, paragraph)?;
-                self.inline.initial_letter(block, &parent, marker);
+                self.inline
+                    .initial_letter(block, &std::sync::Arc::new(parent), marker);
                 Ok(())
             }
             Err(stray) => {
@@ -2214,7 +2249,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             (style.initial_letter.is_some() && self.initial_letter_allowed()).then(|| OpenLetter {
                 parent: self.inline.open_style().unwrap_or(self.style).clone(),
                 outer: std::mem::take(self.inline),
-                style: style.clone(),
+                style: Style::clone(style),
                 decoration: BoxDecoration::default(),
                 navigation,
                 depth: 0,
@@ -2314,7 +2349,8 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             return Ok(());
         }
         if !self.sheet.has_pseudo_rules(pseudo) {
-            self.inline.append(text, parent);
+            self.inline
+                .append(text, &std::sync::Arc::new(parent.clone()));
             return Ok(());
         }
         let mut parent = parent.clone();
@@ -2338,7 +2374,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 false,
             );
         }
-        self.inline.append(text, &parent);
+        self.inline.append(text, &std::sync::Arc::new(parent));
         for _ in origins {
             self.inline.close_box();
         }
@@ -2355,7 +2391,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     fn finish_inline(
         &mut self,
         collected: InlineCollector,
-        style: &Style,
+        style: &std::sync::Arc<Style>,
         origins: Option<&[ElementId]>,
     ) -> Result<Result<Paragraph, Vec<BlockContent>>, DocumentError> {
         let (sheet, document) = (self.sheet, self.traversal.document);
@@ -2418,12 +2454,14 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         }
     }
     /// Holds collapsible white space after a run-in box until the sequence's end is known.
-    fn defer_run_in_whitespace(&mut self, text: &str, style: &Style) -> bool {
+    fn defer_run_in_whitespace(&mut self, text: &str, style: &std::sync::Arc<Style>) -> bool {
         self.close_run_in();
         let Some(sequence) = self.run_in.as_mut() else {
             return false;
         };
-        sequence.whitespace.push((text.to_owned(), style.clone()));
+        sequence
+            .whitespace
+            .push((text.to_owned(), std::sync::Arc::clone(style)));
         true
     }
     fn close_run_in(&mut self) {
@@ -2481,7 +2519,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// footnote (CSS GCPM 3 §2.2).
     fn footnote(&mut self, element: Element<'_>, block: BlockBox) -> Result<(), DocumentError> {
         let index = self.traversal.add_footnote(element.id(), block.style());
-        self.footnote_call(element, block.style(), block.subtree_events().0, index)?;
+        self.footnote_call(element, &block.style, block.subtree_events().0, index)?;
         self.traversal.footnotes.bodies.push(FootnoteBody {
             block,
             members: vec![index],
@@ -2495,7 +2533,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     fn footnote_call(
         &mut self,
         element: Element<'_>,
-        style: &Style,
+        style: &std::sync::Arc<Style>,
         events: Vec<&crate::document::SemanticEvent>,
         index: usize,
     ) -> Result<(), DocumentError> {
@@ -2520,7 +2558,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     fn generated(
         &mut self,
         element: Element<'_>,
-        parent: &Style,
+        parent: &std::sync::Arc<Style>,
         pseudo: GeneratedPseudoElement,
     ) -> Result<(), DocumentError> {
         let Some((style, content)) = self.sheet.pseudo_with_resolver(
@@ -2540,7 +2578,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     fn place_generated(
         &mut self,
         element: Element<'_>,
-        parent: &Style,
+        parent: &std::sync::Arc<Style>,
         pseudo: GeneratedPseudoElement,
         style: Style,
         content: &crate::style::GeneratedContent,
@@ -2698,11 +2736,11 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// descendants lie inside the content around them.
     fn place_generated_box(
         &mut self,
-        parent: &Style,
+        parent: &std::sync::Arc<Style>,
         generated: GeneratedBox,
     ) -> Result<(), DocumentError> {
         let GeneratedBox {
-            mut style,
+            style,
             decoration,
             contents,
             replacement,
@@ -2711,7 +2749,8 @@ impl<'a> BlockBuilder<'a, '_, '_> {
             element_page_scope,
             run_in,
         } = generated;
-        let block_child = std::ptr::eq(parent, self.style);
+        let mut style = std::sync::Arc::new(style);
+        let block_child = std::sync::Arc::ptr_eq(parent, self.style);
         if run_in {
             if block_child {
                 self.begin_run_in();
@@ -2755,7 +2794,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                     declaration: DISPLAY.to_owned(),
                     reason: GENERATED_LIST_ITEM.to_owned(),
                 });
-            style.display = Display::Inline;
+            std::sync::Arc::make_mut(&mut style).display = Display::Inline;
         }
         match &style.display {
             Display::Contents => {
@@ -2803,7 +2842,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 self.flush()?;
                 // A block-level ruby container's text is its sole ruby base, unannotated.
                 if style.display == Display::BlockRuby {
-                    style.display = Display::Block;
+                    std::sync::Arc::make_mut(&mut style).display = Display::Block;
                 }
                 // The pseudo-element's box comes first in flow, taking the first formatted line.
                 let first_line = std::mem::take(self.first_line);
@@ -2825,7 +2864,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// Appends `contents` of a box styled `style` to the inline content.
     fn append_contents(
         &mut self,
-        style: &Style,
+        style: &std::sync::Arc<Style>,
         contents: GeneratedContents,
     ) -> Result<(), DocumentError> {
         match contents {
@@ -2845,7 +2884,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// holds the first formatted line `first_line` passes to it.
     fn generated_children(
         &mut self,
-        style: &Style,
+        style: &std::sync::Arc<Style>,
         contents: GeneratedContents,
         first_line: FirstLine,
     ) -> Result<Vec<BlockContent>, DocumentError> {
@@ -2868,7 +2907,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     /// its own block container lays out (CSS Overflow 5 §3.1.5).
     fn marker_children(
         &mut self,
-        style: &Style,
+        style: &std::sync::Arc<Style>,
         markers: Vec<GeneratedBox>,
         mut first_line: FirstLine,
     ) -> Result<Vec<BlockContent>, DocumentError> {
@@ -2909,7 +2948,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     fn place_marker_group(
         &mut self,
         element: Element<'_>,
-        parent: &Style,
+        parent: &std::sync::Arc<Style>,
         mut style: Style,
         markers: Vec<GeneratedBox>,
     ) -> Result<(), DocumentError> {
@@ -2932,6 +2971,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
                 .running
                 .clone()
                 .expect("running() names the running element");
+            let style = std::sync::Arc::new(style);
             let children = self.marker_children(&style, markers, FirstLine::default())?;
             let block = Self::generated_block(
                 style,
@@ -2972,7 +3012,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         first_line: FirstLine,
         output: &crate::style::GeneratedOutput,
         images: &[crate::document::inline::GeneratedImage],
-        style: &Style,
+        style: &std::sync::Arc<Style>,
     ) -> Result<Vec<BlockContent>, DocumentError> {
         let outer = std::mem::take(self.inline);
         let origins = first_line.origins.clone();
@@ -2995,7 +3035,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         &mut self,
         mut block: BlockBox,
         image: std::sync::Arc<crate::images::Image>,
-        parent: &Style,
+        parent: &std::sync::Arc<Style>,
     ) -> Result<(), DocumentError> {
         block.image = Some(image);
         if block.style.position.is_out_of_flow() || block.style.floating().is_some() {
@@ -3014,7 +3054,7 @@ impl<'a> BlockBuilder<'a, '_, '_> {
     fn element_content(
         &mut self,
         element: Element<'_>,
-        style: &Style,
+        style: &std::sync::Arc<Style>,
         content: &crate::style::GeneratedContent,
     ) -> Result<(), DocumentError> {
         let bound = self.traversal.bind(
@@ -3096,12 +3136,13 @@ impl<'a> BlockBuilder<'a, '_, '_> {
         ))
     }
     fn generated_block(
-        style: Style,
+        style: impl Into<std::sync::Arc<Style>>,
         children: Vec<BlockContent>,
         decoration: BoxDecoration,
         element_page_scope: Option<&std::sync::Arc<str>>,
         (event, navigation): (Option<crate::document::SemanticEvent>, BoxNavigation),
     ) -> BlockBox {
+        let style = style.into();
         let page_scope = crate::document::page::used_name(&style.page, element_page_scope);
         BlockBox {
             navigation,
@@ -3351,7 +3392,7 @@ fn computed_style(
 ) -> Result<Box<Style>, DocumentError> {
     sheet
         .computed_with_resolver(element, parent, resolver)
-        .map(|style| style.used())
+        .map(Style::used)
         .map(Box::new)
         .map_err(Into::into)
 }
@@ -3414,7 +3455,7 @@ struct InlineFootnoteMember {
 
 struct Frame<'d> {
     element: Element<'d>,
-    style: Box<Style>,
+    style: std::sync::Arc<Style>,
     page_scope: Option<std::sync::Arc<str>>,
     depth: usize,
     math_depth: Option<usize>,
@@ -3474,12 +3515,13 @@ fn push_frame<'d>(frames: &mut Vec<Frame<'d>>, mut frame: Frame<'d>) {
 impl<'d> Frame<'d> {
     fn new(
         element: Element<'d>,
-        style: Box<Style>,
+        style: impl Into<std::sync::Arc<Style>>,
         depth: usize,
         ordinal: i128,
         placement: Option<Placement>,
         ancestor_page: Option<&std::sync::Arc<str>>,
     ) -> Self {
+        let style = style.into();
         let page_scope = crate::document::page::used_name(&style.page, ancestor_page);
         Self {
             element,
@@ -3521,7 +3563,7 @@ impl<'d> Frame<'d> {
     }
     /// The root of a copy of this frame's subtree, styled `style`. Its used page name is its
     /// own, or the one it inherits.
-    fn copy_root(&self, style: Box<Style>) -> Self {
+    fn copy_root(&self, style: std::sync::Arc<Style>) -> Self {
         Self {
             scroll_container: self.scroll_container,
             marker_group: self.marker_group.clone(),
@@ -3575,11 +3617,11 @@ fn active_builder<'a, 's, 'c>(
     sheet: &'a Stylesheet,
     traversal: &'c mut Traversal<'a>,
     resources: &'c mut ImageResources<'a>,
-) -> (BlockBuilder<'a, 's, 'c>, &'s Style) {
+) -> (BlockBuilder<'a, 's, 'c>, &'s std::sync::Arc<Style>) {
     let (frame, descendants) = frames[index..].split_first_mut().unwrap();
     let style = descendants
         .last()
-        .map_or(&*frame.style, |frame| &frame.style);
+        .map_or(&frame.style, |frame| &frame.style);
     let element_page_scope = descendants
         .last()
         .map_or(&frame.page_scope, |frame| &frame.page_scope);
@@ -3628,7 +3670,11 @@ fn open_inline_footnote<'d>(
             (style, children, inline, members)
         }
         None => (
-            Box::new(traversal.inline_footnotes_style(element.id(), sheet, resources)?),
+            std::sync::Arc::new(traversal.inline_footnotes_style(
+                element.id(),
+                sheet,
+                resources,
+            )?),
             Vec::new(),
             InlineCollector::default(),
             Vec::new(),
@@ -3696,7 +3742,12 @@ fn end_inline_footnote<'a>(
     events.sort_by_key(|event| event.order.start);
     let events: Vec<_> = events.into_iter().cloned().collect();
     let (mut builder, _) = active_builder(frames, parent, sheet, traversal, resources);
-    builder.footnote_call(element, &member.style, events.iter().collect(), index)?;
+    builder.footnote_call(
+        element,
+        &std::sync::Arc::new(member.style),
+        events.iter().collect(),
+        index,
+    )?;
     // Inline footnotes inside this one end apart from it.
     traversal.finish_inline_footnotes()?;
     let mut members = member.members;
@@ -3936,7 +3987,7 @@ fn block<'a>(
                     &mut block.navigation,
                 );
                 if frame.style.display == Display::BlockRuby {
-                    frame.style.display = Display::Block;
+                    std::sync::Arc::make_mut(&mut frame.style).display = Display::Block;
                     block.ruby_container = true;
                 }
                 let inside_marker = frame
@@ -4373,6 +4424,7 @@ fn block<'a>(
                     }
                     Display::Inline => {
                         if child.name() == "br" {
+                            let child_style = std::sync::Arc::<Style>::from(child_style);
                             builder
                                 .traversal
                                 .generated
@@ -4536,7 +4588,7 @@ fn block<'a>(
         let rendered_legend = crate::document::controls::is_rendered_legend(element, &frame.style);
         let (style, children) = crate::document::controls::fieldset(
             element,
-            *frame.style,
+            frame.style,
             state.children,
             frame.page_scope.as_ref(),
         );
@@ -4984,7 +5036,8 @@ fn format_root(
     // Writing Modes 4 §8: HTML's first body supplies the root's used flow after style computation.
     if let Some(body) = html.body_element() {
         let principal = sheet.computed_with_resolver(body, root.style(), resolver)?;
-        root.style.principal_flow = Some(crate::style::logical::Flow::of(&principal));
+        std::sync::Arc::make_mut(&mut root.style).principal_flow =
+            Some(crate::style::logical::Flow::of(&principal));
     }
     root.reflow(crate::style::logical::Flow::used(root.style()));
     // Running elements and footnotes lay out in page areas, which take the page's flow.

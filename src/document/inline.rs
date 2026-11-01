@@ -82,7 +82,7 @@ pub(crate) struct Paragraph {
     /// formatted lines that it trims with `text-box-trim` (CSS Inline 3 §6.2).
     pub(crate) text_box_trim: [bool; 2],
     text: String,
-    style: Box<Style>,
+    style: Arc<Style>,
     spans: Vec<TextSpan>,
     anchors: Vec<Anchor>,
     boxes: Vec<InlineBox>,
@@ -134,7 +134,7 @@ impl Paragraph {
         let mut blocks = Vec::new();
         while let Some(paragraph) = paragraphs.pop() {
             if paragraph.style.used_writing_mode().vertical() {
-                *paragraph.style = reflow(&paragraph.style);
+                paragraph.style = Arc::new(reflow(&paragraph.style));
             }
             for span in &mut paragraph.spans {
                 if span.style.used_writing_mode().vertical() {
@@ -181,8 +181,9 @@ impl Paragraph {
     /// box's text box edges the `edges` that hold the letter's alignment points, which its
     /// trimmed line box takes.
     pub(crate) fn size_initial_letter(&mut self, ratio: f32, edges: [crate::style::TextEdge; 2]) {
-        self.style.size *= ratio;
-        self.style.text_box.edges = edges;
+        let style = Arc::make_mut(&mut self.style);
+        style.size *= ratio;
+        style.text_box.edges = edges;
         for span in &mut self.spans {
             Arc::make_mut(&mut span.style).size *= ratio;
         }
@@ -255,7 +256,7 @@ impl Paragraph {
             last_formatted_line: self.last_formatted_line,
             text_box_trim: self.text_box_trim,
             text: self.text.clone(),
-            style: Box::new(root),
+            style: Arc::new(root),
             spans: self
                 .spans
                 .iter()
@@ -314,9 +315,10 @@ impl Paragraph {
         math_children(&self.boxes, &self.atomics, &self.spans, None)
     }
     pub(crate) fn generated(text: &str, style: &Style) -> Result<Option<Self>, DocumentError> {
+        let style = Arc::new(style.clone());
         let mut collector = InlineCollector::default();
-        collector.append(text, style);
-        Ok(collector.finish(style)?.ok())
+        collector.append(text, &style);
+        Ok(collector.finish(&style)?.ok())
     }
 
     /// A paragraph of `text`, whose white space is already processed, in which each of
@@ -360,7 +362,7 @@ impl Paragraph {
             last_formatted_line: true,
             text_box_trim: [false; 2],
             text,
-            style: Box::new(style.clone()),
+            style: Arc::new(style.clone()),
             spans: spans
                 .into_iter()
                 .enumerate()
@@ -394,9 +396,10 @@ impl Paragraph {
         images: &[GeneratedImage],
         style: &Style,
     ) -> Result<Option<Self>, DocumentError> {
+        let style = Arc::new(style.clone());
         let mut collector = InlineCollector::default();
-        collector.append_generated(output, images, style);
-        Ok(collector.finish(style)?.ok())
+        collector.append_generated(output, images, &style);
+        Ok(collector.finish(&style)?.ok())
     }
 
     /// The marker box holding its marker string or the `content` of its `::marker` (CSS
@@ -413,9 +416,9 @@ impl Paragraph {
     }
     fn marker_with(
         style: &Style,
-        fill: impl FnOnce(&mut InlineCollector, &Style) -> Result<(), DocumentError>,
+        fill: impl FnOnce(&mut InlineCollector, &Arc<Style>) -> Result<(), DocumentError>,
     ) -> Result<Option<Self>, DocumentError> {
-        let style = Self::marker_style(style);
+        let style = Arc::new(Self::marker_style(style));
         let mut collector = InlineCollector::default();
         fill(&mut collector, &style)?;
         Ok(collector.finish(&style)?.ok().map(|mut paragraph| {
@@ -426,11 +429,11 @@ impl Paragraph {
     }
     /// An image marker: the image followed by a space, which never starts its line.
     pub(crate) fn image_marker(image: crate::graphics::BackgroundImage, style: &Style) -> Self {
-        let style = Self::marker_style(style);
+        let style = Arc::new(Self::marker_style(style));
         let text = String::from(' ');
         let span = TextSpan {
             range: 0..text.len(),
-            style: Arc::new(style.clone()),
+            style: Arc::clone(&style),
             inline_box: None,
             atomic: None,
             leader: false,
@@ -444,7 +447,7 @@ impl Paragraph {
             last_formatted_line: false,
             text_box_trim: [false; 2],
             text,
-            style: Box::new(style),
+            style,
             spans: vec![span],
             anchors: Vec::new(),
             boxes: Vec::new(),
@@ -496,7 +499,7 @@ impl Paragraph {
     pub(crate) fn text(&self) -> &str {
         &self.text
     }
-    pub(crate) fn style(&self) -> &Style {
+    pub(crate) fn style(&self) -> &Arc<Style> {
         &self.style
     }
     pub(crate) fn spans(&self) -> &[TextSpan] {
@@ -901,13 +904,13 @@ impl InlineCollector {
         }
     }
 
-    fn style_index(&mut self, style: &Style) -> usize {
+    fn style_index(&mut self, style: &Arc<Style>) -> usize {
         if self
             .styles
             .last()
             .is_none_or(|last| !last.same_text_style(style) || !last.origin.same(&style.origin))
         {
-            self.styles.push(Arc::new(style.clone()));
+            self.styles.push(Arc::clone(style));
         }
         self.styles.len() - 1
     }
@@ -919,7 +922,7 @@ impl InlineCollector {
         &mut self,
         output: &crate::style::GeneratedOutput,
         images: &[GeneratedImage],
-        style: &Style,
+        style: &Arc<Style>,
     ) {
         self.append_generated_from(output, images, 0, style);
     }
@@ -931,7 +934,7 @@ impl InlineCollector {
         output: &crate::style::GeneratedOutput,
         images: &[GeneratedImage],
         start: usize,
-        style: &Style,
+        style: &Arc<Style>,
     ) {
         let text = output.text();
         let mut from = start;
@@ -1015,7 +1018,7 @@ impl InlineCollector {
     pub(crate) fn initial_letter(
         &mut self,
         block: crate::document::BlockBox,
-        style: &Style,
+        style: &Arc<Style>,
         marker: bool,
     ) {
         let sunken = block
@@ -1058,10 +1061,10 @@ impl InlineCollector {
         }
         Ok(())
     }
-    pub(crate) fn append(&mut self, text: &str, style: &Style) {
+    pub(crate) fn append(&mut self, text: &str, style: &Arc<Style>) {
         self.append_inner(text, style, false);
     }
-    fn append_inner(&mut self, text: &str, style: &Style, leader: bool) {
+    fn append_inner(&mut self, text: &str, style: &Arc<Style>, leader: bool) {
         if leader {
             self.emit_pending_space();
         }
@@ -1420,7 +1423,7 @@ impl InlineCollector {
         self.open_continued(Arc::new(style.clone()), decoration, navigation, true, false);
     }
     /// Places an atomic inline in the line, as a placeholder styled by its parent `style`.
-    pub(crate) fn atomic(&mut self, block: crate::document::BlockBox, style: &Style) {
+    pub(crate) fn atomic(&mut self, block: crate::document::BlockBox, style: &Arc<Style>) {
         let collapses_spaces = block.is_unadorned_image_fallback()
             && block.children().is_empty()
             && [&block.style().min_width, &block.style().min_height]
@@ -1483,7 +1486,7 @@ impl InlineCollector {
     pub(crate) fn is_between_blocks(&self) -> bool {
         self.text.is_empty() && self.open_box.is_none()
     }
-    pub(crate) fn line_break(&mut self, style: &Style) {
+    pub(crate) fn line_break(&mut self, style: &Arc<Style>) {
         self.drop_pending_space();
         let index = self.style_index(style);
         let source = self.next_source();
@@ -1539,7 +1542,7 @@ impl InlineCollector {
     /// Returns the paragraph, or the anchors of an empty run as block-level boxes.
     pub(crate) fn finish(
         self,
-        style: &Style,
+        style: &Arc<Style>,
     ) -> Result<Result<Paragraph, Vec<crate::document::BlockContent>>, DocumentError> {
         self.finish_with_first_line(style, |_| Ok(None))
     }
@@ -1548,7 +1551,7 @@ impl InlineCollector {
     /// it may give first-line boxes (CSS Pseudo-Elements 4 §2.1).
     pub(crate) fn finish_with_first_line(
         self,
-        style: &Style,
+        style: &Arc<Style>,
         first_line: impl FnOnce(&mut Paragraph) -> Result<Option<Paragraph>, DocumentError>,
     ) -> Result<Result<Paragraph, Vec<crate::document::BlockContent>>, DocumentError> {
         if ((self.text.is_empty() && self.annotations.is_empty())
@@ -1572,7 +1575,7 @@ impl InlineCollector {
             last_formatted_line: true,
             text_box_trim: [false; 2],
             text: self.text,
-            style: Box::new(style.clone()),
+            style: Arc::clone(style),
             spans: self.spans,
             anchors: self.anchors,
             boxes: self.boxes,

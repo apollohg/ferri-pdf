@@ -640,7 +640,7 @@ fn intrinsic_indentation_uses_zero_percentage_and_the_selected_line() {
             -10.0,
         ),
     ] {
-        let mut style = source.style().clone();
+        let mut style = crate::style::Style::clone(source.style());
         style.text_indent = crate::style::TextIndent {
             amount,
             hanging,

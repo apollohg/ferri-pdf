@@ -231,7 +231,7 @@ pub(super) fn atomic_first_line<'a>(
         builder.ruby.content(builder.inline)?;
         builder.initial_letter_allowed().then(|| LetterBlock {
             element: builder.element,
-            style: builder.style.clone(),
+            style: Style::clone(builder.style),
         })
     } else {
         None
@@ -293,7 +293,7 @@ fn first_line_box<'a>(
     state.marker_scroller = scroller;
     let request = CopyRequest {
         copy: Rc::default(),
-        root: frame.copy_root(Box::new(key.style.clone())),
+        root: frame.copy_root(std::sync::Arc::new(key.style.clone())),
         traversal: state,
         letter: key.letter.clone(),
     };
