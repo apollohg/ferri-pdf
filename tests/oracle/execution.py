@@ -59,6 +59,10 @@ def _signal_group(process, *, force):
             process.terminate()
     except ProcessLookupError:
         pass
+    except PermissionError:
+        # Darwin's killpg reports EPERM, not ESRCH, while the group's last members are exiting.
+        if platform.system() != 'Darwin':
+            raise
 
 
 def _stop_group(process):
