@@ -2,6 +2,7 @@ use crate::fonts::{
     FontBook, FontDescriptor, FontFaceStyle, FontFamily, FontRange, FontSelection, FontSlant,
     FontStyle, FontWeight, FontWidth, GenericFamily,
 };
+use crate::work::{self, Work};
 
 const FONT: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSans.ttf");
 const VARIABLE_FONT: &[u8] = include_bytes!("../../../tests/fixtures/fonts/RobotoFlex.ttf");
@@ -538,4 +539,58 @@ fn bundled_italic_labels_follow_the_post_table_slant_direction() {
             face.descriptor.family, face.descriptor.weight
         );
     }
+}
+
+#[test]
+fn a_font_list_matches_once_until_its_book_gains_faces() {
+    // Every element's style matches its font list, and lists repeat, so each list matches
+    // the faces once while the book holds the same faces.
+    let weighted = |weight| FontDescriptor {
+        family: "Weighted".into(),
+        weight: FontRange::single(FontWeight::new(weight).unwrap()),
+        width: FontRange::single(FontWidth::NORMAL),
+        style: FontFaceStyle::Normal,
+    };
+    let mut book = FontBook::default();
+    let light = book.register(weighted(300.0), FONT.to_vec()).unwrap();
+    let families = [
+        FontFamily::Named("Absent".into()),
+        FontFamily::Named("Weighted".into()),
+        FontFamily::Generic(GenericFamily::SansSerif),
+    ];
+    let matched = |book: &FontBook| {
+        work::measured(Work::FontListMatch, || {
+            book.candidates(&families, FontSelection::default())
+        })
+    };
+    let (first, matches) = matched(&book);
+    assert_eq!(
+        (first[0], matches),
+        (light, 1),
+        "the first lookup matches the faces"
+    );
+    let (again, matches) = matched(&book);
+    assert_eq!(matches, 0, "a repeated list reuses its candidates");
+    assert_eq!(again, first, "reused candidates are the matched ones");
+    assert_eq!(book.take_missing_families(), ["Absent"]);
+    matched(&book);
+    assert_eq!(
+        book.take_missing_families(),
+        ["Absent"],
+        "a reused list reports the family no face has again once the report is taken"
+    );
+    let copy = book.clone();
+    let normal = book.register(weighted(400.0), FONT.to_vec()).unwrap();
+    let (gained, matches) = matched(&book);
+    assert_eq!(
+        (gained[0], matches),
+        (normal, 1),
+        "a book that gains a face matches again and finds it"
+    );
+    let (copied, matches) = matched(&copy);
+    assert_eq!(
+        (copied, matches),
+        (first, 0),
+        "a copy without the new face keeps the candidates it shared"
+    );
 }

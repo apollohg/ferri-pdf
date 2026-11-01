@@ -134,7 +134,7 @@ impl FontWeight {
     }
 }
 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum GenericFamily {
     Math,
@@ -190,7 +190,7 @@ impl FontPreferences {
     }
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize)]
 pub enum FontFamily {
     Named(String),
     Generic(GenericFamily),
@@ -320,6 +320,27 @@ pub(crate) struct FontBook {
     missing_families: Arc<Mutex<Vec<String>>>,
     /// Configured font folders that cannot be read, not yet reported.
     unreadable_directories: Arc<Mutex<Vec<(PathBuf, std::io::Error)>>>,
+    /// What each font list matched, shared by the book's copies until one adds a face or a
+    /// namespace.
+    matched: Arc<Mutex<HashMap<FontList, MatchedList>>>,
+}
+
+/// A font list as matching takes it: its namespace, families and selection, and whether it
+/// falls back to faces it does not name.
+#[derive(Debug, Eq, PartialEq, Hash)]
+struct FontList {
+    namespace: FontNamespace,
+    families: Vec<FontFamily>,
+    selection: FontSelection,
+    fallback: bool,
+}
+
+/// The candidates of a font list, and the families it names that no face has, which a list
+/// with fallback reports.
+#[derive(Clone)]
+struct MatchedList {
+    candidates: Arc<[FontId]>,
+    missing: Vec<String>,
 }
 
 /// A face and the bits of its variation values.
@@ -358,6 +379,7 @@ impl FontBook {
             instances: Arc::default(),
             missing_families: Arc::default(),
             unreadable_directories: Arc::new(Mutex::new(unreadable_directories)),
+            matched: Arc::default(),
         }
     }
     /// The `@font-face` sources and installed files loading has skipped since the last call.
@@ -441,6 +463,7 @@ impl FontBook {
         );
         let namespace = FontNamespace(self.namespaces.len());
         self.namespaces.push(Some(parent));
+        self.matched = Arc::default();
         namespace
     }
     #[cfg(test)]
@@ -450,6 +473,7 @@ impl FontBook {
         data: Vec<u8>,
     ) -> Result<FontId, FontError> {
         validate(&data, 0)?;
+        self.matched = Arc::default();
         let id = FontId(self.faces.len());
         self.faces.push(FontFace {
             descriptor,
@@ -475,6 +499,7 @@ impl FontBook {
         settings: FaceSettings,
         sources: FontSources,
     ) -> FontId {
+        self.matched = Arc::default();
         let id = FontId(self.faces.len());
         self.faces.push(FontFace {
             descriptor,
@@ -566,6 +591,54 @@ impl FontBook {
         selection: FontSelection,
         fallback: bool,
     ) -> Arc<[FontId]> {
+        let list = FontList {
+            namespace,
+            families: families.to_vec(),
+            selection,
+            fallback,
+        };
+        let cached = self
+            .matched
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .get(&list)
+            .cloned();
+        let MatchedList {
+            candidates,
+            missing,
+        } = cached.unwrap_or_else(|| {
+            let matched = self.match_list(&list);
+            self.matched
+                .lock()
+                .unwrap_or_else(PoisonError::into_inner)
+                .insert(list, matched.clone());
+            matched
+        });
+        if !missing.is_empty() {
+            let mut reported = self
+                .missing_families
+                .lock()
+                .unwrap_or_else(PoisonError::into_inner);
+            for name in missing {
+                if !reported
+                    .iter()
+                    .any(|known| matching::names_match(known, &name))
+                {
+                    reported.push(name);
+                }
+            }
+        }
+        candidates
+    }
+
+    fn match_list(&self, list: &FontList) -> MatchedList {
+        crate::work::count(crate::work::Work::FontListMatch, 1);
+        let FontList {
+            namespace,
+            ref families,
+            selection,
+            fallback,
+        } = *list;
         let mut result = Vec::new();
         let mut append = |name: &str, namespace, installed_only| {
             let namespace = self.family_namespace(name, namespace);
@@ -614,21 +687,10 @@ impl FontBook {
             }
         }
         if !fallback {
-            return result.into();
-        }
-        if !missing.is_empty() {
-            let mut reported = self
-                .missing_families
-                .lock()
-                .unwrap_or_else(PoisonError::into_inner);
-            for name in missing {
-                if !reported
-                    .iter()
-                    .any(|known| matching::names_match(known, name))
-                {
-                    reported.push(name.clone());
-                }
-            }
+            return MatchedList {
+                candidates: result.into(),
+                missing: Vec::new(),
+            };
         }
         for name in &self.preferences.fallback {
             append(name, FontNamespace::ROOT, true);
@@ -644,7 +706,10 @@ impl FontBook {
                 append(name, FontNamespace::ROOT, true);
             }
         }
-        result.into()
+        MatchedList {
+            candidates: result.into(),
+            missing: missing.into_iter().cloned().collect(),
+        }
     }
 
     fn family_namespace(&self, name: &str, mut namespace: FontNamespace) -> FontNamespace {

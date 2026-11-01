@@ -36,6 +36,8 @@ pub(crate) enum Work {
     ShapedRun,
     /// A shape plan made for a face.
     ShapePlan,
+    /// A font list matched against the faces of a font book.
+    FontListMatch,
     /// A blurred shadow mask rasterized.
     ShadowMask,
     /// A style rule whose selectors are tried against an element or one of its
@@ -61,7 +63,7 @@ pub(crate) enum Work {
 }
 
 #[cfg(test)]
-const KINDS: usize = 26;
+const KINDS: usize = 27;
 
 #[cfg(test)]
 thread_local! {
