@@ -50,6 +50,11 @@ PROSE_FOOTNOTE_EVERY = 3
 INVOICE_LINES = 12
 CATALOGUE_CARDS = 2000
 TAG_COUNT = 4000
+NEWSLETTER_SECTIONS = 8
+NEWSLETTER_PARAGRAPHS = 32
+NEWSLETTER_LONG_SCALE = 2
+NEWSLETTER_FIGURE_EVERY = 12
+NEWSLETTER_BANNER_EVERY = 3
 
 
 class Words:
@@ -336,6 +341,42 @@ h1{font-size:16pt;margin:0 0 8pt}
     return document("Tag index", css, f'<h1>Tag index</h1><div class="tags">{tags}</div>')
 
 
+def newsletter(words, assets, paragraphs=NEWSLETTER_PARAGRAPHS):
+    css = """
+@page{size:A4;margin:16mm 14mm;@bottom-center{content:'Page ' counter(page);font:8pt sans-serif}}
+body{font:9.5pt/1.4 serif;color:#222;margin:0}
+article{columns:3;column-gap:14pt;column-rule:0.5pt solid #bbb}
+.masthead{column-span:all;border-bottom:2pt solid #1f4e79;margin:0 0 10pt;padding-bottom:6pt}
+.masthead h1{font:bold 26pt sans-serif;color:#1f4e79;margin:0}
+.banner{column-span:all;background:#eef3f8;border-left:4pt solid #1f4e79;padding:6pt 10pt;
+ margin:10pt 0;font:italic 13pt serif}
+h2{font:bold 13pt sans-serif;color:#1f4e79;margin:10pt 0 4pt;break-after:avoid}
+p{margin:0 0 5pt;text-align:justify;hyphens:auto;orphans:2;widows:2}
+figure{margin:6pt 0;break-inside:avoid}
+figure img{width:100%;height:60pt;object-fit:cover}
+figcaption{font:italic 7.5pt sans-serif;color:#555}
+"""
+    images = (assets["png"], assets["jpeg"], assets["svg"])
+    body = [f'<article><header class="masthead"><h1>Regional operations newsletter</h1>'
+            f"<p>{words.sentence()}</p></header>"]
+    for section in range(NEWSLETTER_SECTIONS):
+        if section and section % NEWSLETTER_BANNER_EVERY == 0:
+            body.append(f'<aside class="banner">{words.sentence(10, 16)}</aside>')
+        body.append(f"<h2>{SECTION_TITLES[section % len(SECTION_TITLES)]}</h2>")
+        for paragraph in range(paragraphs):
+            body.append(f"<p>{words.paragraph(3)}</p>")
+            if paragraph % NEWSLETTER_FIGURE_EVERY == NEWSLETTER_FIGURE_EVERY - 1:
+                image = images[(section + paragraph) % len(images)]
+                body.append(f'<figure><img src="{image}" alt="Figure">'
+                            f"<figcaption>{words.sentence(4, 8)}</figcaption></figure>")
+    body.append("</article>")
+    return document("Regional operations newsletter", css, "".join(body))
+
+
+def newsletter_long(words, assets):
+    return newsletter(words, assets, NEWSLETTER_PARAGRAPHS * NEWSLETTER_LONG_SCALE)
+
+
 DOCUMENTS = {
     "report": report,
     "wide-table": wide_table,
@@ -344,6 +385,8 @@ DOCUMENTS = {
     "invoice": invoice,
     "catalogue": catalogue,
     "tag-list": tag_list,
+    "newsletter": newsletter,
+    "newsletter-long": newsletter_long,
 }
 
 

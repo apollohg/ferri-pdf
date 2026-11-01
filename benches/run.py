@@ -14,7 +14,8 @@ import corpus
 
 ROOT = corpus.ROOT
 RUNS = {"report": 5, "wide-table": 3, "event-plan": 5, "prose": 5, "invoice": 100,
-        "catalogue": 3, "tag-list": 3}
+        "catalogue": 3, "tag-list": 3,
+        "newsletter": 3, "newsletter-long": 3}
 TIME = "/usr/bin/time"
 # BSD time reports bytes; GNU time reports kilobytes.
 RSS_PATTERNS = {
@@ -64,13 +65,13 @@ def main():
     paths = corpus.write_corpus(args.output)
     executable = build()
     records = []
-    print(f"{'document':<12} {'pages':>5} {'runs':>4} {'median ms':>10} {'first ms':>9} "
+    print(f"{'document':<15} {'pages':>5} {'runs':>4} {'median ms':>10} {'first ms':>9} "
           f"{'peak RSS MiB':>12}  content lost")
     for name in args.documents or corpus.DOCUMENTS:
         record = measure(executable, paths[name], args.runs or RUNS[name])
         records.append(record)
         rss = "n/a" if record["peak_rss_mib"] is None else f"{record['peak_rss_mib']:.0f}"
-        print(f"{name:<12} {record['pages']:>5} {record['runs']:>4} {record['median_ms']:>10.1f} "
+        print(f"{name:<15} {record['pages']:>5} {record['runs']:>4} {record['median_ms']:>10.1f} "
               f"{record['first_ms']:>9.1f} {rss:>12}  {'; '.join(record['content_lost']) or '-'}",
               flush=True)
     if args.json:
