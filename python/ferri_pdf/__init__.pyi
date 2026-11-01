@@ -26,6 +26,8 @@ class RenderOptions:
         sans_serif: Sequence[str] = (),
         monospace: Sequence[str] = (),
         fallback: Sequence[str] = (),
+        system_fonts: bool = False,
+        font_dirs: Sequence[str | os.PathLike[str]] = (),
         image_dpi: float | None = None,
         jpeg_quality: int | None = None,
         include_layout: bool = False,

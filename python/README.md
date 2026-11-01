@@ -48,6 +48,8 @@ output = ferri_pdf.render(html, options)
 | `reduced_motion` | `"no-preference"` or `"reduce"` for `prefers-reduced-motion` |
 | `serif`, `sans_serif`, `monospace` | Installed families for each generic font |
 | `fallback` | Installed families tried for missing glyphs |
+| `system_fonts` | Let documents and the options above use the operating system's installed fonts (default: `False`) |
+| `font_dirs` | Folders whose fonts are installed families too |
 | `image_dpi` | Downsample raster images to this resolution |
 | `jpeg_quality` | Re-encode opaque photos as JPEG at this quality, 1 to 100 |
 | `include_layout` | Return the measured layout as `output.layout` |

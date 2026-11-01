@@ -206,6 +206,8 @@ mod ferri_pdf_module {
             sans_serif = Vec::new(),
             monospace = Vec::new(),
             fallback = Vec::new(),
+            system_fonts = false,
+            font_dirs = Vec::new(),
             image_dpi = None,
             jpeg_quality = None,
             include_layout = false,
@@ -216,6 +218,7 @@ mod ferri_pdf_module {
         ))]
         #[expect(
             clippy::too_many_arguments,
+            clippy::fn_params_excessive_bools,
             reason = "Python keyword arguments mirror the Rust RenderOptions fields"
         )]
         fn new(
@@ -231,6 +234,8 @@ mod ferri_pdf_module {
             sans_serif: Vec<String>,
             monospace: Vec<String>,
             fallback: Vec<String>,
+            system_fonts: bool,
+            font_dirs: Vec<PathBuf>,
             image_dpi: Option<f32>,
             jpeg_quality: Option<i64>,
             include_layout: bool,
@@ -256,6 +261,8 @@ mod ferri_pdf_module {
                     serif,
                     monospace,
                     fallback,
+                    system_fonts,
+                    font_dirs,
                 },
                 ..PrintSettings::default()
             };
