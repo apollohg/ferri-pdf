@@ -1,0 +1,40 @@
+{
+  "derived_from": {
+    "Regular": "assets/fonts/LiberationSans-Regular.ttf",
+    "Bold": "assets/fonts/LiberationSans-Bold.ttf",
+    "Italic": "assets/fonts/LiberationSans-Italic.ttf",
+    "BoldItalic": "assets/fonts/LiberationSans-BoldItalic.ttf"
+  },
+  "source_sha256": {
+    "Regular": "76d04c18ea243f426b7de1f3ad208e927008f961dc5945e5aad352d0dfde8ee8",
+    "Bold": "788abee4c806d660e8aee46689dd8540cd4bb98da03dcc9d171ce3efd99a9173",
+    "Italic": "e5bae5c4cde31f22142753855f4f8fb86da6ff39955ed3c0a11248b0d16948b0",
+    "BoldItalic": "698da70fc191cc5f33ad4d6d3fe830fe4624b898ea2e3169955928b7c491f1ee"
+  },
+  "license": "../../../assets/fonts/LIBERATION-LICENSE.txt",
+  "generator": "make-system-fonts.py",
+  "tool": "FontTools 4.63.0",
+  "changes": "Subset to U+0020-U+007E without hinting and renamed to the System Test family with PostScript names SystemTest-STYLE; typographic family names removed. The collection holds the same four faces in the order BoldItalic, Italic, Bold, Regular, sharing identical tables.",
+  "files": {
+    "SystemTest-Regular.ttf": {
+      "sha256": "78c79b97d47cd1401264f42a5358b627cd56cf064354ff0d6aae91e4f083932b",
+      "bytes": 9356
+    },
+    "SystemTest-Bold.ttf": {
+      "sha256": "429bb0987720c0eb83c0fec49f75874ac0d56d782c7a851d32764c1571755bbc",
+      "bytes": 9380
+    },
+    "SystemTest-Italic.ttf": {
+      "sha256": "3afa3646a747d7a5a695095d9197c448ec55406d6dcb3514e8090a1edecd290b",
+      "bytes": 9780
+    },
+    "SystemTest-BoldItalic.ttf": {
+      "sha256": "f3acf4dbcc00a4a755fcef75fe209343d6e340345ff936cf25d2b306b58962d0",
+      "bytes": 9928
+    },
+    "SystemTest.ttc": {
+      "sha256": "4a5ae9539fae659a4366d0222d54ee2b914e7d4c74a6881b9733a66830e24800",
+      "bytes": 37980
+    }
+  }
+}
