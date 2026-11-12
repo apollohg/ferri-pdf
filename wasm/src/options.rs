@@ -45,6 +45,8 @@ enum ReducedMotionName {
 #[serde(default, rename_all = "camelCase", deny_unknown_fields)]
 pub(crate) struct Settings {
     base_url: Option<String>,
+    /// Whether `base_url` is a folder rather than the URL of the document.
+    base_directory: bool,
     stylesheets: Vec<String>,
     user_stylesheets: Vec<String>,
     paper: Option<[f32; 2]>,
@@ -68,6 +70,20 @@ pub(crate) fn parse_url(name: &str, url: &str) -> Result<Url, String> {
     Url::parse(url).map_err(|error| format!("{name} {url:?}: {error}"))
 }
 
+/// The base `url` names: a folder if `directory`, else the document at that URL.
+pub(crate) fn resource_base(
+    name: &str,
+    url: &str,
+    directory: bool,
+) -> Result<ResourceBase, String> {
+    let url = parse_url(name, url)?;
+    Ok(if directory {
+        ResourceBase::Directory(url)
+    } else {
+        ResourceBase::Url(url)
+    })
+}
+
 impl Settings {
     pub(crate) fn parse(json: &str) -> Result<Self, String> {
         serde_json::from_str(json).map_err(|error| format!("render options: {error}"))
@@ -81,7 +97,7 @@ impl Settings {
     }
 
     /// The library's options. The parts of a multipart render share `baseUrl` as the place
-    /// their relative URLs resolve against, so there it is not the URL of any one of them.
+    /// their relative URLs resolve against, so there it is a folder, not any one's URL.
     pub(crate) fn into_options(self, multipart: bool) -> Result<RenderOptions, String> {
         let mut print = PrintSettings {
             preferences: PrintPreferences {
@@ -114,15 +130,8 @@ impl Settings {
         print.validate().map_err(|error| error.to_string())?;
         let base = self
             .base_url
-            .map(|url| parse_url(BASE_URL, &url))
+            .map(|url| resource_base(BASE_URL, &url, multipart || self.base_directory))
             .transpose()?
-            .map(|url| {
-                if multipart {
-                    ResourceBase::Directory(url)
-                } else {
-                    ResourceBase::Url(url)
-                }
-            })
             .unwrap_or_default();
         Ok(RenderOptions {
             base,

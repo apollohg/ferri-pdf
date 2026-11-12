@@ -12,7 +12,7 @@ use ferri_pdf::{
 use serde::Serialize;
 use wasm_bindgen::prelude::*;
 
-use crate::options::{Settings, parse_url};
+use crate::options::{Settings, parse_url, resource_base};
 use crate::resources::SuppliedResources;
 
 const PART_BASE_URL: &str = "part baseUrl";
@@ -155,16 +155,27 @@ impl RenderJob {
         })
     }
 
-    /// Adds a document that is already decoded; `base_url` overrides the job's base for it.
+    /// Adds a document that is already decoded; `base_url` overrides the job's base for it,
+    /// as a folder if `directory` and else as the document's own URL.
     #[wasm_bindgen(js_name = addText)]
-    pub fn add_text(&mut self, html: String, base_url: Option<String>) -> Result<(), JsError> {
-        self.add(Html::Text(html), base_url)
+    pub fn add_text(
+        &mut self,
+        html: String,
+        base_url: Option<String>,
+        directory: bool,
+    ) -> Result<(), JsError> {
+        self.add(Html::Text(html), base_url, directory)
     }
 
     /// Adds a document whose encoding the HTML rules detect.
     #[wasm_bindgen(js_name = addBytes)]
-    pub fn add_bytes(&mut self, html: Vec<u8>, base_url: Option<String>) -> Result<(), JsError> {
-        self.add(Html::Bytes(html), base_url)
+    pub fn add_bytes(
+        &mut self,
+        html: Vec<u8>,
+        base_url: Option<String>,
+        directory: bool,
+    ) -> Result<(), JsError> {
+        self.add(Html::Bytes(html), base_url, directory)
     }
 
     /// Renders with the resources supplied so far. Returns the URLs to fetch before calling
@@ -252,9 +263,14 @@ fn resource_url(url: &str) -> Result<ferri_pdf::Url, JsError> {
 }
 
 impl RenderJob {
-    fn add(&mut self, html: Html, base_url: Option<String>) -> Result<(), JsError> {
+    fn add(
+        &mut self,
+        html: Html,
+        base_url: Option<String>,
+        directory: bool,
+    ) -> Result<(), JsError> {
         let base = base_url
-            .map(|url| parse_url(PART_BASE_URL, &url).map(ResourceBase::Url))
+            .map(|url| resource_base(PART_BASE_URL, &url, directory))
             .transpose()
             .map_err(|error| JsError::new(&error))?;
         self.parts.push(Part { html, base });
