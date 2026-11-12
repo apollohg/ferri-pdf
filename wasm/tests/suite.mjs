@@ -2,7 +2,8 @@
 // it against the package's `import` and `require` conditions.
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import fsPromises, { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { syncBuiltinESMExports } from 'node:module';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { after, before, describe, test } from 'node:test';
@@ -312,6 +313,51 @@ export function defineSuite(label, load, createRenderWorker) {
         assert.deepEqual(confined.parts.map((entry) => entry.pageCount), [2, 1]);
         const mixed = await api.renderParts([part('style.css', root), { html: LINKED, baseUrl: 'https://cdn.example/a.html' }], { fetch: noFiles() });
         assert.deepEqual(mixed.parts.map((entry) => entry.pageCount), [1, 1], 'a remote part makes the job remote');
+      });
+
+      test('a file replaced around the open is refused', async () => {
+        const swapped = path.join(root, 'swap.css');
+        // Before the open the path can only be made to lead elsewhere by a link; after it,
+        // the open handle no longer is the file the checked path names.
+        const replacements = {
+          'a link out of the base before the open': [true, () => symlink(secret, swapped)],
+          'a link out of the base after the open': [false, () => symlink(secret, swapped)],
+          'another file after the open': [false, () => writeFile(swapped, 'p { color: blue }')],
+        };
+        const open = fsPromises.open;
+        try {
+          for (const [kind, [before, replace]] of Object.entries(replacements)) {
+            await rm(swapped, { force: true });
+            await writeFile(swapped, PAGE_BREAK_CSS);
+            let swaps = 0;
+            // The reader has resolved and checked the path by now; opening it is the next step.
+            fsPromises.open = async (file, ...rest) => {
+              const swap = async () => {
+                if (String(file).endsWith('swap.css')) {
+                  swaps += 1;
+                  await rm(swapped);
+                  await replace();
+                }
+              };
+              if (before) {
+                await swap();
+              }
+              const handle = await open(file, ...rest);
+              if (!before) {
+                await swap();
+              }
+              return handle;
+            };
+            syncBuiltinESMExports();
+            const { leaked, reported } = await linking('swap.css', { base: root });
+            assert.equal(swaps, 1, `${kind}: the file must be swapped once the path is checked`);
+            assert.equal(leaked, false, `${kind}: the file was read`);
+            assert.match(reported, /changed while it was being opened|ELOOP/, kind);
+          }
+        } finally {
+          fsPromises.open = open;
+          syncBuiltinESMExports();
+        }
       });
 
       test('only regular files within the byte budget are read', async () => {

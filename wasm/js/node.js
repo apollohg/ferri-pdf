@@ -1,7 +1,7 @@
 // Node entry: the module is read from disk, `file:` resources are read by this wrapper (the
 // module has no file system) and every other URL loads through `fetch`.
 import { constants } from 'node:fs';
-import { open, readFile, realpath } from 'node:fs/promises';
+import { lstat, open, readFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -15,6 +15,9 @@ const FILE_SCHEME = 'file:';
 const WASM_FILE = new URL('./generated/ferri_pdf_bg.wasm', import.meta.url);
 const NO_LOCAL_BASE = 'local files are read only for a render with a local base';
 const NOT_A_FILE = 'not a regular file';
+const CHANGED = 'the file changed while it was being opened';
+/** Absent on Windows, where the checks on the open handle stand alone. */
+const NO_FOLLOW = constants.O_NOFOLLOW ?? 0;
 
 let bindings;
 
@@ -66,7 +69,8 @@ async function contains(root, file) {
 
 /**
  * Reads a local file within `budget`. Only a regular file inside one of `roots`, judged by
- * real paths, is read; a device, a directory or a longer file is refused unread.
+ * real paths, is read, and only through the handle that was verified; a device, a directory,
+ * a longer file or a file replaced after the check is refused unread.
  */
 async function readLocal(url, roots, budget) {
   if (roots.length === 0) {
@@ -77,18 +81,25 @@ async function readLocal(url, roots, budget) {
   if (!allowed.includes(true)) {
     throw new Error(`resource escapes the allowed root: ${file}`);
   }
-  // Opening without blocking returns at once for a FIFO, which is then refused.
-  const handle = await open(file, constants.O_RDONLY | constants.O_NONBLOCK);
+  // Opening without blocking returns at once for a FIFO, which is then refused; a link put
+  // in the file's place since the check is not followed where the platform can refuse it.
+  const handle = await open(file, constants.O_RDONLY | constants.O_NONBLOCK | NO_FOLLOW);
   try {
-    const stats = await handle.stat();
+    // The path was checked and then opened by name, so the open file must still be the one
+    // the checked path names: the same real path, device and inode, without following a link.
+    const stats = await handle.stat({ bigint: true });
+    const named = await lstat(file, { bigint: true });
+    if ((await realpath(file)) !== file || stats.dev !== named.dev || stats.ino !== named.ino) {
+      throw new Error(`${CHANGED}: ${file}`);
+    }
     if (!stats.isFile()) {
       throw new Error(`${NOT_A_FILE}: ${file}`);
     }
-    if (stats.size > budget.bytes) {
+    if (stats.size > BigInt(budget.bytes)) {
       throw new Error(budget.reason);
     }
     // One byte more than the budget shows a file that grew past it since its size was read.
-    const buffer = Buffer.alloc(stats.size + 1);
+    const buffer = Buffer.alloc(Number(stats.size) + 1);
     let length = 0;
     for (;;) {
       const { bytesRead } = await handle.read(buffer, length, buffer.length - length, length);
