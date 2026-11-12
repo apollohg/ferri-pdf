@@ -263,7 +263,7 @@ impl Widget {
             svg,
             Default::default(),
             &crate::resources::ResourceBase::default(),
-            &crate::resources::FileResolver::default(),
+            &crate::resources::LocalResolver::default(),
             crate::fonts::FontNamespace::ROOT,
         )
     }

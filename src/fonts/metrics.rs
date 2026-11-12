@@ -6,7 +6,9 @@ use crate::fonts::{
 };
 use crate::resources::ResourceResolver;
 use serde::Serialize;
-use std::sync::{Arc, OnceLock};
+#[cfg(file_system)]
+use std::sync::Arc;
+use std::sync::OnceLock;
 use ttf_parser::Face;
 
 /// CSS Values 4 §6.1.1: an x-height that cannot be determined is 0.5em.
@@ -302,7 +304,11 @@ pub(crate) struct InitialFont {
 /// A face of the initial family: bundled data is parsed once, installed data when measured.
 enum InitialFace {
     Bundled(Box<Face<'static>>),
-    Installed { data: Arc<Vec<u8>>, index: u32 },
+    #[cfg(file_system)]
+    Installed {
+        data: Arc<Vec<u8>>,
+        index: u32,
+    },
 }
 impl InitialFont {
     /// Initial metrics use bundled and installed faces, independent of document webfonts.
@@ -318,6 +324,7 @@ impl InitialFont {
                 FontData::Bundled(data) => Some(InitialFace::Bundled(Box::new(
                     parse(data, 0).expect("bundled fonts are valid"),
                 ))),
+                #[cfg(file_system)]
                 FontData::Installed(source) => {
                     book.resolve_cached(*id).ok()??;
                     Some(InitialFace::Installed {
@@ -334,6 +341,7 @@ impl InitialFont {
             .iter()
             .find_map(|face| match face {
                 InitialFace::Bundled(face) => Some(FaceMetrics::of(face)),
+                #[cfg(file_system)]
                 InitialFace::Installed { data, index } => {
                     parse(data, *index).ok().map(|face| FaceMetrics::of(&face))
                 }
@@ -348,6 +356,7 @@ impl InitialFont {
     pub(crate) fn advance(&self, (ch, vertical): (char, bool)) -> Option<f32> {
         self.faces.iter().find_map(|face| match face {
             InitialFace::Bundled(face) => advance_in_axis(face, ch, vertical),
+            #[cfg(file_system)]
             InitialFace::Installed { data, index } => {
                 advance_in_axis(&parse(data, *index).ok()?, ch, vertical)
             }

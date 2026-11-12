@@ -52,8 +52,10 @@ pub(crate) enum Work {
     /// A style the cascade computes for an element or pseudo-element.
     ComputedStyle,
     /// A scan of a set of font folders for installed fonts.
+    #[cfg(file_system)]
     FontScan,
     /// A byte of a font file that a scan for installed fonts reads.
+    #[cfg(file_system)]
     FontScanBytes,
     /// A child of a box that a walk over its children, for the semantic events after one of
     /// them, steps over.

@@ -184,6 +184,7 @@ fn collection_tables(data: &[u8], index: u32) -> Result<FaceTables<'_>, FontFile
 }
 
 /// Face `index` of the sfnt font or collection `data` as a font of its own.
+#[cfg(file_system)]
 pub(super) fn single_face(data: &[u8], index: u32) -> Result<Vec<u8>, FontFileError> {
     if data.first_chunk() != Some(&COLLECTION_TAG) {
         return Ok(data.to_vec());

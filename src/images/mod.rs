@@ -606,10 +606,7 @@ impl ImageCache {
         }
         let document = requested.map_err(ImageError::from).and_then(|requested| {
             let resource = resolver.resolve(reference, base)?;
-            let mut url = match resource.base {
-                crate::resources::ResourceBase::Url(url) => url,
-                crate::resources::ResourceBase::Directory(_) => requested,
-            };
+            let mut url = resource.base.url().cloned().unwrap_or(requested);
             url.set_fragment(None);
             let text = String::from_utf8(resource.bytes).map_err(ImageError::SvgEncoding)?;
             Ok(crate::svg::usvg::LinkedDocument {

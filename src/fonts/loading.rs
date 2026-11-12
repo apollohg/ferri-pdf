@@ -1,12 +1,18 @@
+#[cfg(file_system)]
 use crate::fonts::installed::InstalledSource;
 use crate::fonts::{
     FontAdjustments, FontBook, FontData, FontError, FontFace, FontFaceStyle, FontFailure, FontId,
     FontInstance, FontRange, FontSelection, FontSlant, FontSource, FontSources, FontStyle,
     FontVariation, FontWeight, LoadedFont, embed_all_glyphs, matching, sfnt, validate,
 };
-use crate::resources::{ResourceBase, ResourceError, ResourceResolver};
+#[cfg(file_system)]
+use crate::resources::ResourceError;
+use crate::resources::{ResourceBase, ResourceResolver};
+#[cfg(file_system)]
 use std::path::Path;
-use std::sync::{Arc, PoisonError};
+#[cfg(file_system)]
+use std::sync::Arc;
+use std::sync::PoisonError;
 
 pub(super) const WEIGHT_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wght");
 pub(super) const WIDTH_AXIS: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"wdth");
@@ -199,6 +205,7 @@ impl FontBook {
             FontData::Lazy { sources, data } if data.get().is_none() => {
                 let _ = data.set(self.load_sources(sources, resolver));
             }
+            #[cfg(file_system)]
             FontData::Installed(source) => self.load_installed(source),
             _ => {}
         }
@@ -208,6 +215,7 @@ impl FontBook {
     /// Reads an installed face's file and checks the face when it is first used; a file that
     /// cannot be read or a face that is not a usable font is recorded, and the face is
     /// unavailable, so matching moves on to the next candidate.
+    #[cfg(file_system)]
     fn load_installed(&self, source: &InstalledSource) {
         source.usable.get_or_init(|| {
             let file = source
@@ -302,6 +310,7 @@ impl FontBook {
             FontData::Lazy { data, .. } if data.get().is_none() => {
                 return Err(FontError::UnresolvedFont(id));
             }
+            #[cfg(file_system)]
             FontData::Installed(source) => self.load_installed(source),
             _ => {}
         }
@@ -354,6 +363,15 @@ impl FontBook {
                 reference: None,
             });
         }
+        #[cfg(not(file_system))]
+        return None;
+        #[cfg(file_system)]
+        self.installed_local(name)
+    }
+
+    /// The installed face whose full or PostScript name is `name`, as a single font.
+    #[cfg(file_system)]
+    fn installed_local(&self, name: &str) -> Option<LoadedFont> {
         let position = self.installed.as_ref()?.named(name)?;
         let face = self.faces.get(self.installed_faces.start + position)?;
         let FontData::Installed(source) = &face.data else {
@@ -396,6 +414,7 @@ impl FontBook {
 }
 
 /// The base and reference a failure of the installed font file `path` names.
+#[cfg(file_system)]
 fn installed_reference(path: &Path) -> (ResourceBase, String) {
     (
         ResourceBase::Directory(path.parent().unwrap_or(path).to_path_buf()),
@@ -411,6 +430,7 @@ fn data_reference(face: &FontFace) -> Option<(ResourceBase, String)> {
             sources.base.clone(),
             data.get()?.as_ref()?.reference.clone()?,
         )),
+        #[cfg(file_system)]
         FontData::Installed(source) => Some(installed_reference(&source.path)),
         FontData::Bundled(_) => None,
         #[cfg(test)]

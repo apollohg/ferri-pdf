@@ -924,6 +924,7 @@ impl StyledDocument {
                     .push(DocumentDiagnostic::MissingFontFamily { family });
             }
         }
+        #[cfg(file_system)]
         for (path, error) in self.styles.fonts.take_unreadable_directories() {
             if !self.diagnostics.iter().any(|known| {
                 matches!(known, DocumentDiagnostic::UnreadableFontDirectory { path: other, .. } if *other == path)

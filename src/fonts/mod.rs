@@ -2,6 +2,7 @@
 mod baselines;
 mod bundled;
 mod feature_values;
+#[cfg(file_system)]
 mod installed;
 mod loading;
 mod matching;
@@ -30,6 +31,7 @@ pub(crate) use silhouette::Silhouettes;
 use serde::Serialize;
 use std::collections::HashMap;
 use std::ops::Range;
+#[cfg(file_system)]
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex, OnceLock, PoisonError};
 
@@ -168,8 +170,10 @@ pub struct FontPreferences {
     /// Installed families tried after the complete CSS font-family list.
     pub fallback: Vec<String>,
     /// Whether the fonts in the operating system's font folders are installed families.
+    #[cfg(file_system)]
     pub system_fonts: bool,
     /// Further folders, searched with their subfolders, whose fonts are installed families.
+    #[cfg(file_system)]
     pub font_dirs: Vec<PathBuf>,
 }
 impl FontPreferences {
@@ -229,6 +233,7 @@ enum FontData {
         sources: Arc<FontSources>,
         data: Arc<OnceLock<Option<LoadedFont>>>,
     },
+    #[cfg(file_system)]
     Installed(Arc<installed::InstalledSource>),
 }
 
@@ -237,6 +242,7 @@ enum FontData {
 enum FaceOrigin {
     Author,
     Bundled,
+    #[cfg(file_system)]
     Installed,
 }
 
@@ -280,19 +286,22 @@ impl FontFace {
                 .get()
                 .and_then(Option::as_ref)
                 .map(|loaded| loaded.data.as_slice()),
+            #[cfg(file_system)]
             FontData::Installed(source) => source.data(),
         }
     }
     /// The index of the face in its data, which is a collection only for installed faces.
     pub(crate) fn index(&self) -> u32 {
-        match &self.data {
-            FontData::Installed(source) => source.index,
-            _ => 0,
+        #[cfg(file_system)]
+        if let FontData::Installed(source) = &self.data {
+            return source.index;
         }
+        0
     }
     fn origin(&self) -> FaceOrigin {
         match self.data {
             FontData::Bundled(_) => FaceOrigin::Bundled,
+            #[cfg(file_system)]
             FontData::Installed(_) => FaceOrigin::Installed,
             #[cfg(test)]
             FontData::Loaded(_) => FaceOrigin::Author,
@@ -305,7 +314,9 @@ impl FontFace {
 pub(crate) struct FontBook {
     faces: Vec<FontFace>,
     /// The installed fonts, which `faces` holds at `installed_faces`, after the bundled ones.
+    #[cfg(file_system)]
     installed: Option<Arc<installed::InstalledFonts>>,
+    /// Empty where there is no file system to install fonts in.
     installed_faces: Range<usize>,
     namespaces: Vec<Option<FontNamespace>>,
     preferences: FontPreferences,
@@ -319,6 +330,7 @@ pub(crate) struct FontBook {
     /// has; not yet reported.
     missing_families: Arc<Mutex<Vec<String>>>,
     /// Configured font folders that cannot be read, not yet reported.
+    #[cfg(file_system)]
     unreadable_directories: Arc<Mutex<Vec<(PathBuf, std::io::Error)>>>,
     /// What each font list matched, shared by the book's copies until one adds a face or a
     /// namespace.
@@ -352,12 +364,19 @@ impl Default for FontBook {
 }
 impl FontBook {
     pub(crate) fn with_preferences(preferences: FontPreferences) -> Self {
+        #[cfg_attr(
+            not(file_system),
+            expect(unused_mut, reason = "only installed fonts follow the bundled ones")
+        )]
         let mut faces = bundled::faces();
-        let installed = installed::installed(&preferences);
         let start = faces.len();
+        #[cfg(file_system)]
+        let installed = installed::installed(&preferences);
+        #[cfg(file_system)]
         if let Some(installed) = &installed {
             faces.extend(installed.book_faces());
         }
+        #[cfg(file_system)]
         let unreadable_directories = preferences
             .font_dirs
             .iter()
@@ -370,6 +389,7 @@ impl FontBook {
         Self {
             installed_faces: start..faces.len(),
             faces,
+            #[cfg(file_system)]
             installed,
             namespaces: vec![None],
             preferences,
@@ -378,6 +398,7 @@ impl FontBook {
             failures: Arc::default(),
             instances: Arc::default(),
             missing_families: Arc::default(),
+            #[cfg(file_system)]
             unreadable_directories: Arc::new(Mutex::new(unreadable_directories)),
             matched: Arc::default(),
         }
@@ -396,6 +417,7 @@ impl FontBook {
         )
     }
     /// The configured font folders that could not be read, since the last call.
+    #[cfg(file_system)]
     pub(crate) fn take_unreadable_directories(&self) -> Vec<(PathBuf, std::io::Error)> {
         std::mem::take(
             &mut self
@@ -569,11 +591,14 @@ impl FontBook {
                 .then_some(FontId(index))
         };
         let Range { start, end } = self.installed_faces;
+        #[cfg(file_system)]
         let installed = self
             .installed
             .as_ref()
             .filter(|_| namespace == FontNamespace::ROOT)
             .map_or(&[][..], |installed| installed.family(name));
+        #[cfg(not(file_system))]
+        let installed: &[usize] = &[];
         self.faces
             .iter()
             .enumerate()

@@ -68,8 +68,10 @@ pub use crate::layout::{
     Convergence, Destination, HeadingLocation, LayoutDiagnostic, LayoutTrace, LinkArea, LinkShape,
     TextLine, WorkFallback,
 };
+#[cfg(file_system)]
+pub use crate::resources::FileResolver;
 pub use crate::resources::{
-    FileResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceMetadata,
+    DataResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceMetadata,
     ResourceResolver, Url,
 };
 #[cfg(feature = "http")]
@@ -157,6 +159,9 @@ pub enum Error {
     InvalidFont,
     #[error("PDF serialization: {0}")]
     Pdf(#[from] PdfError),
+    /// [`ResourceResolver::interrupts`] stopped the render; no input causes it.
+    #[error("the resource resolver interrupted the render")]
+    Interrupted,
     /// Resource limits left author content out of the PDF; holds only those diagnostics.
     #[error("content left out of the PDF: {}", lost_content(diagnostics))]
     ContentLost { diagnostics: Vec<RenderDiagnostic> },
@@ -189,9 +194,10 @@ fn checked_diagnostics(
 #[cfg(feature = "http")]
 type DefaultResolver = UrlResolver;
 #[cfg(not(feature = "http"))]
-type DefaultResolver = FileResolver;
+type DefaultResolver = resources::LocalResolver;
 
-/// Render an HTML string and its CSS with local, data and, with the `http` feature, HTTP(S) resources.
+/// Render an HTML string and its CSS with local, data and, with the `http` feature, HTTP(S)
+/// resources; where there is no file system, only data URLs resolve.
 pub fn render_html(html: &str, options: &RenderOptions) -> Result<RenderOutput, Error> {
     render_with_resolver(html, options, &DefaultResolver::default())
 }
@@ -281,6 +287,9 @@ fn prepare_document(
         DocumentError::Image(error) => Error::Image(error),
         DocumentError::Formatting(message) => Error::Document(message),
     })?;
+    if resolver.interrupts() {
+        return Err(Error::Interrupted);
+    }
     let (document, trace) =
         layout::layout_document(document, resolver).map_err(|error| match error {
             LayoutError::Text(error) => match *error {
@@ -293,6 +302,9 @@ fn prepare_document(
             }
             error => Error::Layout(error.to_string()),
         })?;
+    if resolver.interrupts() {
+        return Err(Error::Interrupted);
+    }
     Ok((document, trace))
 }
 

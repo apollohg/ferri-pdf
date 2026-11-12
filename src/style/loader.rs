@@ -951,10 +951,7 @@ impl<'a> Loader<'a> {
         let mut identity = if requested.scheme() == "data" {
             requested.clone()
         } else {
-            match &resource.resource.base {
-                ResourceBase::Url(url) => url.clone(),
-                ResourceBase::Directory(_) => requested.clone(),
-            }
+            resource.resource.base.url().unwrap_or(&requested).clone()
         };
         identity.set_fragment(None);
         if fetch.context.path.contains(&identity) {
@@ -1137,7 +1134,7 @@ static VISUAL_USER_AGENT_SHEET: LazyLock<UserAgentSheet> =
 fn user_agent_sheet(text: &str) -> UserAgentSheet {
     crate::work::count(crate::work::Work::UserAgentSheet, 1);
     let tree = DocumentTree::parse("");
-    let resolver = crate::resources::FileResolver::default();
+    let resolver = crate::resources::LocalResolver::default();
     let mut loader = Loader::new(
         &tree,
         &StylesheetSources::default(),

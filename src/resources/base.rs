@@ -1,31 +1,49 @@
 use crate::resources::ResourceError;
+#[cfg(file_system)]
 use std::path::{Path, PathBuf};
 use url::Url;
 
+#[cfg(file_system)]
 const CURRENT_DIRECTORY: &str = ".";
+/// The default base where there is no file system; relative references do not resolve
+/// against it.
+#[cfg(not(file_system))]
+const BLANK_URL: &str = "about:blank";
 
-/// A local directory or the full URL of the containing document/resource.
+/// A local directory, where there is a file system, or the full URL of the containing
+/// document/resource.
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub enum ResourceBase {
+    #[cfg(file_system)]
     Directory(PathBuf),
     Url(Url),
 }
+#[cfg(file_system)]
 impl Default for ResourceBase {
     fn default() -> Self {
         Self::Directory(PathBuf::from(CURRENT_DIRECTORY))
     }
 }
+#[cfg(not(file_system))]
+impl Default for ResourceBase {
+    fn default() -> Self {
+        Self::Url(Url::parse(BLANK_URL).expect("a constant URL is valid"))
+    }
+}
 /// String conversions are local directories; use `Url` for remote bases.
+#[cfg(file_system)]
 impl From<&str> for ResourceBase {
     fn from(path: &str) -> Self {
         Self::Directory(PathBuf::from(path))
     }
 }
+#[cfg(file_system)]
 impl From<PathBuf> for ResourceBase {
     fn from(path: PathBuf) -> Self {
         Self::Directory(path)
     }
 }
+#[cfg(file_system)]
 impl From<&Path> for ResourceBase {
     fn from(path: &Path) -> Self {
         Self::Directory(path.to_owned())
@@ -37,12 +55,22 @@ impl From<Url> for ResourceBase {
     }
 }
 impl ResourceBase {
+    /// The URL of the containing document or resource; `None` for a local directory.
+    pub fn url(&self) -> Option<&Url> {
+        match self {
+            Self::Url(url) => Some(url),
+            #[cfg(file_system)]
+            Self::Directory(_) => None,
+        }
+    }
+
     pub fn resolve(&self, reference: &str) -> Result<Url, ResourceError> {
         if let Ok(url) = Url::parse(reference) {
             return Ok(url);
         }
         let base = match self {
             Self::Url(url) => url.clone(),
+            #[cfg(file_system)]
             Self::Directory(directory) => {
                 // The empty parent of a bare file name is the current directory.
                 let directory = if directory.as_os_str().is_empty() {

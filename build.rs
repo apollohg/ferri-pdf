@@ -23,6 +23,10 @@ use std::{
 
 const BUILD_SOURCES: [&str; 2] = ["build.rs", "build"];
 const OUTPUT_FILE: &str = "grammar.rs";
+/// Set for every target but `wasm32-unknown-unknown`, which has no file system.
+const FILE_SYSTEM_CFG: &str = "file_system";
+const WASM_FAMILY: &str = "wasm";
+const UNKNOWN_OS: &str = "unknown";
 const SPEC_CSS_DIRECTORY: &str = "spec/css";
 
 #[derive(Debug, thiserror::Error)]
@@ -74,6 +78,15 @@ fn run() -> Result<(), BuildError> {
     let output = PathBuf::from(env::var_os("OUT_DIR").expect("set by cargo")).join(OUTPUT_FILE);
     for source in BUILD_SOURCES {
         println!("cargo:rerun-if-changed={source}");
+    }
+    println!("cargo:rustc-check-cfg=cfg({FILE_SYSTEM_CFG})");
+    let target = |name| env::var(name).unwrap_or_default();
+    let freestanding_wasm = target("CARGO_CFG_TARGET_FAMILY")
+        .split(',')
+        .any(|family| family == WASM_FAMILY)
+        && target("CARGO_CFG_TARGET_OS") == UNKNOWN_OS;
+    if !freestanding_wasm {
+        println!("cargo:rustc-cfg={FILE_SYSTEM_CFG}");
     }
     let spec = source::Spec::load(&Path::new(env!("CARGO_MANIFEST_DIR")).join(SPEC_CSS_DIRECTORY))?;
     for file in &spec.files {

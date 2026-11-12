@@ -103,10 +103,7 @@ pub(super) fn discover(
     StylesheetSources {
         base: effective.clone(),
         document_encoding: encoding.into(),
-        document_url: match base {
-            ResourceBase::Url(url) => Some(url.clone()),
-            ResourceBase::Directory(_) => None,
-        },
+        document_url: base.url().cloned(),
         document: candidates,
         author: author.iter().map(inline).collect(),
         user: user.iter().map(inline).collect(),

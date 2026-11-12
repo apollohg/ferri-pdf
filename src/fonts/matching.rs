@@ -14,6 +14,7 @@ pub(super) fn names_match(left: &str, right: &str) -> bool {
 }
 
 /// `name` case-folded, so that two names match exactly when their folded forms are equal.
+#[cfg(file_system)]
 pub(super) fn folded(name: &str) -> String {
     if name.is_ascii() {
         name.to_ascii_lowercase()

@@ -9,11 +9,9 @@ pub use base::ResourceBase;
 pub use data_url::DataUrlError;
 #[cfg(feature = "http")]
 pub use http::{LoaderOptions, UrlResolver};
-use std::{
-    fs::File,
-    io::{self, Read},
-    path::PathBuf,
-};
+#[cfg(file_system)]
+use std::{fs::File, io::Read};
+use std::{io, path::PathBuf};
 pub use url::Url;
 
 const DEFAULT_MAX_RESOURCE_BYTES: usize = 64 * 1024 * 1024;
@@ -141,14 +139,86 @@ pub trait ResourceResolver {
                 metadata: ResourceMetadata::default(),
             })
     }
+
+    /// Whether the render should stop with [`crate::Error::Interrupted`]; asked once the
+    /// style sheets have loaded and again after layout. A resolver that only records what it
+    /// lacks, for its caller to acquire before rendering again, spares the stages the
+    /// repeated render redoes.
+    fn interrupts(&self) -> bool {
+        false
+    }
 }
 
+/// Decodes `data:` URLs, which need no transport; every other reference is unsupported.
+#[derive(Clone, Debug)]
+pub struct DataResolver {
+    pub max_resource_bytes: usize,
+}
+impl Default for DataResolver {
+    fn default() -> Self {
+        Self {
+            max_resource_bytes: DEFAULT_MAX_RESOURCE_BYTES,
+        }
+    }
+}
+impl DataResolver {
+    /// The resource `reference` holds if it is a `data:` URL; its relative references
+    /// resolve against `base`.
+    pub fn resolve_data_url(
+        &self,
+        reference: &str,
+        base: &ResourceBase,
+    ) -> Option<Result<ResolvedResource, ResourceError>> {
+        let data = reference.get(data_url::SCHEME.len()..).filter(|_| {
+            reference[..data_url::SCHEME.len()].eq_ignore_ascii_case(data_url::SCHEME)
+        })?;
+        Some(
+            data_url::decode(data, self.max_resource_bytes).and_then(|bytes| {
+                Ok(ResolvedResource {
+                    resource: Resource {
+                        bytes,
+                        base: base.clone(),
+                    },
+                    metadata: data_url::metadata(data)?,
+                })
+            }),
+        )
+    }
+}
+impl ResourceResolver for DataResolver {
+    fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {
+        self.resolve_with_metadata(reference, base)
+            .map(|resolved| resolved.resource)
+    }
+
+    fn resolve_with_metadata(
+        &self,
+        reference: &str,
+        base: &ResourceBase,
+    ) -> Result<ResolvedResource, ResourceError> {
+        self.resolve_data_url(reference, base).unwrap_or_else(|| {
+            Err(ResourceError::UnsupportedScheme(
+                base.resolve(reference)?.scheme().into(),
+            ))
+        })
+    }
+}
+
+/// The resolver for resources that need no network: local files and `data:` URLs, or only
+/// the latter where there is no file system.
+#[cfg(file_system)]
+pub(crate) type LocalResolver = FileResolver;
+#[cfg(not(file_system))]
+pub(crate) type LocalResolver = DataResolver;
+
 /// Loads local files, optionally constrained to a canonical filesystem root.
+#[cfg(file_system)]
 #[derive(Clone, Debug)]
 pub struct FileResolver {
     pub root: Option<PathBuf>,
     pub max_resource_bytes: usize,
 }
+#[cfg(file_system)]
 impl Default for FileResolver {
     fn default() -> Self {
         Self {
@@ -157,6 +227,7 @@ impl Default for FileResolver {
         }
     }
 }
+#[cfg(file_system)]
 impl ResourceResolver for FileResolver {
     fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {
         self.resolve_with_metadata(reference, base)
@@ -168,16 +239,11 @@ impl ResourceResolver for FileResolver {
         reference: &str,
         base: &ResourceBase,
     ) -> Result<ResolvedResource, ResourceError> {
-        if let Some(data) = reference.get(data_url::SCHEME.len()..)
-            && reference[..data_url::SCHEME.len()].eq_ignore_ascii_case(data_url::SCHEME)
-        {
-            return Ok(ResolvedResource {
-                resource: Resource {
-                    bytes: data_url::decode(data, self.max_resource_bytes)?,
-                    base: base.clone(),
-                },
-                metadata: data_url::metadata(data)?,
-            });
+        let data = DataResolver {
+            max_resource_bytes: self.max_resource_bytes,
+        };
+        if let Some(resolved) = data.resolve_data_url(reference, base) {
+            return resolved;
         }
         let url = base.resolve(reference)?;
         if url.scheme() != "file" {
