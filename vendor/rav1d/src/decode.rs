@@ -166,7 +166,7 @@ use crate::src::thread_task::TILE_ERROR;
 use crate::src::warpmv::rav1d_find_affine_int;
 use crate::src::warpmv::rav1d_get_shear_params;
 use crate::src::warpmv::rav1d_set_affine_mv2d;
-use libc::ptrdiff_t;
+use crate::src::c_types::ptrdiff_t;
 use std::array;
 use std::cmp;
 use std::ffi::c_int;

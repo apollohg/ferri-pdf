@@ -30,6 +30,7 @@ pub mod include {
 } // mod include
 pub mod src {
     pub mod align;
+    pub mod c_types;
     pub(crate) mod assume;
     pub(crate) mod c_arc;
     pub(crate) mod c_box;

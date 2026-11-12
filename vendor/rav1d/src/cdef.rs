@@ -17,7 +17,7 @@ use crate::src::tables::dav1d_cdef_directions;
 use crate::src::with_offset::WithOffset;
 use crate::src::wrap_fn_ptr::wrap_fn_ptr;
 use bitflags::bitflags;
-use libc::ptrdiff_t;
+use crate::src::c_types::ptrdiff_t;
 use std::cmp;
 use std::ffi::c_int;
 use std::ffi::c_uint;

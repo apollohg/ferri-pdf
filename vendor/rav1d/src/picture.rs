@@ -27,7 +27,7 @@ use crate::src::log::Rav1dLogger;
 use crate::src::mem::MemPool;
 use crate::src::send_sync_non_null::SendSyncNonNull;
 use bitflags::bitflags;
-use libc::ptrdiff_t;
+use crate::src::c_types::ptrdiff_t;
 use parking_lot::Mutex;
 use std::ffi::c_int;
 use std::ffi::c_void;

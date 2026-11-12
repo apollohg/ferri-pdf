@@ -90,7 +90,7 @@ use crate::src::wedge::dav1d_ii_masks;
 use crate::src::wedge::dav1d_wedge_masks;
 use crate::src::with_offset::WithOffset;
 use assert_matches::debug_assert_matches;
-use libc::intptr_t;
+use crate::src::c_types::intptr_t;
 use std::array;
 use std::cmp;
 use std::ffi::c_int;

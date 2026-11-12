@@ -17,7 +17,7 @@ use crate::src::strided::Strided as _;
 use crate::src::strided::WithStride;
 use crate::src::with_offset::WithOffset;
 use bitflags::bitflags;
-use libc::ptrdiff_t;
+use crate::src::c_types::ptrdiff_t;
 use std::cmp;
 use std::ffi::c_int;
 use std::ffi::c_uint;

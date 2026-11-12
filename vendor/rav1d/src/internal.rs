@@ -88,7 +88,7 @@ use crate::src::thread_task::Rav1dTaskIndex;
 use crate::src::thread_task::Rav1dTasks;
 use atomig::Atom;
 use atomig::Atomic;
-use libc::ptrdiff_t;
+use crate::src::c_types::ptrdiff_t;
 use parking_lot::Condvar;
 use parking_lot::Mutex;
 use parking_lot::RwLock;

@@ -14,7 +14,7 @@ use crate::src::levels::SegmentId;
 use crate::src::levels::TxfmSize;
 use crate::src::relaxed_atomic::RelaxedAtomic;
 use crate::src::tables::dav1d_txfm_dimensions;
-use libc::ptrdiff_t;
+use crate::src::c_types::ptrdiff_t;
 use parking_lot::RwLock;
 use std::cmp;
 use std::ffi::c_int;
