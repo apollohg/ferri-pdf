@@ -103,9 +103,12 @@ pub fn render_parts_with_resolver(
                 StyledDocument::parse_bytes_with_options(bytes, &parse, resolver)
             }
         };
-        let pair = prepare_document(document, resolver).map_err(|source| Error::Part {
-            part: index + 1,
-            source: Box::new(source),
+        let pair = prepare_document(document, resolver).map_err(|source| match source {
+            Error::Interrupted => source,
+            source => Error::Part {
+                part: index + 1,
+                source: Box::new(source),
+            },
         })?;
         if let Some(mut url) = pair
             .0

@@ -10,12 +10,16 @@ const CURRENT_DIRECTORY: &str = ".";
 #[cfg(not(file_system))]
 const BLANK_URL: &str = "about:blank";
 
-/// A local directory, where there is a file system, or the full URL of the containing
-/// document/resource.
+/// A directory or the full URL of the containing document/resource.
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub enum ResourceBase {
+    /// A local directory.
     #[cfg(file_system)]
     Directory(PathBuf),
+    /// Where there is no file system, the URL that relative references resolve against;
+    /// like a local directory, it names no document.
+    #[cfg(not(file_system))]
+    Directory(Url),
     Url(Url),
 }
 #[cfg(file_system)]
@@ -55,11 +59,10 @@ impl From<Url> for ResourceBase {
     }
 }
 impl ResourceBase {
-    /// The URL of the containing document or resource; `None` for a local directory.
+    /// The URL of the containing document or resource; `None` for a directory.
     pub fn url(&self) -> Option<&Url> {
         match self {
             Self::Url(url) => Some(url),
-            #[cfg(file_system)]
             Self::Directory(_) => None,
         }
     }
@@ -70,6 +73,8 @@ impl ResourceBase {
         }
         let base = match self {
             Self::Url(url) => url.clone(),
+            #[cfg(not(file_system))]
+            Self::Directory(url) => url.clone(),
             #[cfg(file_system)]
             Self::Directory(directory) => {
                 // The empty parent of a bare file name is the current directory.
