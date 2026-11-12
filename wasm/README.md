@@ -35,7 +35,7 @@ The WebAssembly module loads on the first render: the browser entry fetches `fer
 
 Stylesheets, images and fonts load through `fetch`. The renderer first reports the URLs a document needs, the package fetches them in parallel, and this repeats until nothing is missing, because a fetched stylesheet can name more resources. `maxFetchRounds` and `maxFetchBytes` bound it.
 
-Relative URLs resolve against `baseUrl`, which defaults to the page's URL in a browser and to the working directory in Node.
+Relative URLs resolve against `baseUrl`, which defaults to the page's URL in a browser and to the working directory in Node. Responses are read as streams and a response that would pass `maxFetchBytes` is abandoned.
 
 In a browser, resources from another origin need CORS headers that allow the page to read them, or a proxy on your own origin. A resource that is blocked, missing or unreachable does not fail the render: the PDF is produced without it and a diagnostic names it.
 
@@ -48,15 +48,19 @@ const output = await render(html, {
 });
 ```
 
-In Node, `file:` URLs are read from disk by the package, whatever `fetch` is; `fileRoot` refuses files outside a directory.
+## Local files in Node
+
+A document reads local files only when you point it at them: pass `base`, a directory, or a `file:` `baseUrl`. Files are then read from inside that directory and nowhere else, judged after symbolic links and `..` are resolved, so `file:///etc/passwd` or `../../secret` in the HTML or in a stylesheet is refused and reported as a diagnostic. `fileRoot` names a different directory to confine reads to, for example a shared assets folder above the base.
+
+Without a local base no file is read, and a document whose base is an `http(s)` URL never reads one, as in a browser. Local files are read by the package itself and never passed to a custom `fetch`. Only regular files are read, within `maxFetchBytes`.
 
 ## Options
 
 | Option | Effect |
 |---|---|
 | `baseUrl` | Document URL that relative URLs resolve against |
-| `base` | Node only: directory that relative URLs resolve against, instead of `baseUrl` (default: the working directory) |
-| `fileRoot` | Node only: refuse local files outside this directory |
+| `base` | Node only: directory that relative URLs resolve against and local files are read from, instead of `baseUrl` |
+| `fileRoot` | Node only: the directory local files are read from, instead of the base's |
 | `stylesheets` | Author stylesheets applied after the document's own |
 | `userStylesheets` | User-origin stylesheets |
 | `paper` | Paper size `[width, height]` in points when CSS sets none (default: A4) |
@@ -103,7 +107,7 @@ const output = await renderParts([
 ]);
 ```
 
-Each entry of `output.parts` has `firstPage`, `pageCount`, `headings` and `diagnostics`. The parts share the options' base for their relative URLs; a part's own `baseUrl` (or `base` in Node) is the URL of that document, which links from other parts can name.
+Each entry of `output.parts` has `firstPage`, `pageCount`, `headings` and `diagnostics`. The parts share the options' base for their relative URLs; a part's own `baseUrl` is the URL of that document, which links from other parts can name, and in Node a part's `base` is its directory.
 
 ## Lost content
 

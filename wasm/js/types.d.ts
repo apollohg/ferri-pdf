@@ -125,9 +125,12 @@ export interface RenderWorker<Options, PartInput> extends Renderer<Options, Part
 
 /** Options of the Node entry, which also reads local files. */
 export interface NodeRenderOptions extends RenderOptions {
-  /** Directory that relative URLs resolve against (default: the working directory). */
+  /**
+   * Directory that relative URLs resolve against. Local files are read only with a local
+   * base, and only inside it.
+   */
   base?: string;
-  /** Refuse local files outside this directory. */
+  /** The directory local files are read inside, instead of the base's. */
   fileRoot?: string;
 }
 

@@ -1,5 +1,6 @@
 // The worker side of `createRenderWorker`: runs the renders its client asks for. A custom
 // fetch function cannot cross the thread boundary, so its calls are sent back to the client.
+import { BUDGETED } from './api.js';
 import { describeError, reviveError } from './errors.js';
 
 const METHODS = ['render', 'renderParts'];
@@ -11,12 +12,17 @@ export function serve(api, port) {
   const fetches = new Map();
   let nextFetch = 0;
 
-  const clientFetch = (call) => (url) =>
-    new Promise((resolve, reject) => {
-      const id = nextFetch++;
-      fetches.set(id, { resolve, reject });
-      port.post({ fetch: { id, call, url } });
-    });
+  /** The client's fetch function for `call`; the client reads the body within `budget`. */
+  function clientFetch(call) {
+    const fetch = (url, budget) =>
+      new Promise((resolve, reject) => {
+        const id = nextFetch++;
+        fetches.set(id, { resolve, reject });
+        port.post({ fetch: { id, call, url, budget } });
+      });
+    fetch[BUDGETED] = true;
+    return fetch;
+  }
 
   function fetched({ id, resource, error }) {
     const { resolve, reject } = fetches.get(id);

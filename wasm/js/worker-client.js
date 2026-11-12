@@ -21,9 +21,9 @@ export function connect(port) {
     calls.clear();
   }
 
-  async function fetchFor({ id, call, url }) {
+  async function fetchFor({ id, call, url, budget }) {
     try {
-      const resource = await fetchedResource(await calls.get(call).fetch(url));
+      const resource = await fetchedResource(await calls.get(call).fetch(url), budget);
       port.post({ fetched: { id, resource } });
     } catch (error) {
       port.post({ fetched: { id, error: describeError(error) } });

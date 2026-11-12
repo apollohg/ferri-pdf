@@ -84,7 +84,7 @@ const url = URL.createObjectURL(new Blob([output.pdf], { type: 'application/pdf'
 ```
 
 ```js
-// In Node, with import or require: relative URLs resolve against a directory.
+// In Node, with import or require: local files are read only inside the base directory.
 const output = await render(html, { base: 'templates/invoice' });
 await writeFile('invoice.pdf', output.pdf);
 ```

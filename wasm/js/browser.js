@@ -1,6 +1,6 @@
 // Browser entry: the module is fetched beside this file and resources load through `fetch`.
 import init, { RenderJob } from './generated/ferri_pdf.js';
-import { createApi } from './api.js';
+import { budgeted, createApi } from './api.js';
 
 export { ContentLostError, RenderError } from './errors.js';
 
@@ -19,9 +19,9 @@ const api = createApi({
     return bindings;
   },
   prepare({ fetch = globalThis.fetch, baseUrl = defaultBaseUrl(), ...settings }) {
-    return { settings: { ...settings, baseUrl }, fetch: (url) => fetch(url) };
+    return { settings: { ...settings, baseUrl }, fetch: budgeted(fetch) };
   },
-  partBaseUrl: (part) => part.baseUrl,
+  partBase: ({ baseUrl }) => ({ baseUrl }),
 });
 
 export const { render, renderParts } = api;

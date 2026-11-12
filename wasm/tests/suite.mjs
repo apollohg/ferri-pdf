@@ -2,7 +2,7 @@
 // it against the package's `import` and `require` conditions.
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { after, before, describe, test } from 'node:test';
@@ -209,12 +209,11 @@ export function defineSuite(label, load, createRenderWorker) {
       assert.equal(exact.pageCount, 2, messages(exact.diagnostics).join('\n'));
     });
 
-    test('reads local files below a directory base and refuses those outside fileRoot', async () => {
+    test('reads local files below a directory base or a file: base URL', async () => {
       const root = path.join(directory, 'site');
       await mkdir(root);
       await writeFile(path.join(root, 'style.css'), PAGE_BREAK_CSS);
       await writeFile(path.join(root, 'photo.png'), PNG);
-      await writeFile(path.join(directory, 'outside.css'), PAGE_BREAK_CSS);
       const html = LINKED.replace('one', 'one <img src=photo.png>');
 
       const local = await api.render(html, { base: root });
@@ -228,14 +227,147 @@ export function defineSuite(label, load, createRenderWorker) {
       assert.equal(elsewhere.pageCount, 1);
       assert.equal(elsewhere.diagnostics.length, 2, messages(elsewhere.diagnostics).join('\n'));
 
-      const escaping = LINKED.replace('style.css', '../outside.css');
-      const unrestricted = await api.render(escaping, { base: root });
-      assert.equal(unrestricted.pageCount, 2, messages(unrestricted.diagnostics).join('\n'));
-      const restricted = await api.render(escaping, { base: root, fileRoot: root });
-      assert.equal(restricted.pageCount, 1);
-      assert.match(messages(restricted.diagnostics).join('\n'), /escapes the allowed root/);
-
       await assert.rejects(api.render(html, { base: root, baseUrl: 'https://example.com/' }), TypeError);
+    });
+
+    describe('local file confinement', () => {
+      let root;
+      let secret;
+      /** A custom fetch function that must never be handed a `file:` URL. */
+      const noFiles = (responses = {}) => (url) => {
+        assert.ok(!url.startsWith('file:'), `fetch was asked for ${url}`);
+        return responses[url] ?? null;
+      };
+      /** Renders a document linking `href` and reports whether the secret sheet applied. */
+      async function linking(href, options) {
+        const output = await api.render(LINKED.replace('style.css', href), options);
+        return { leaked: output.pageCount === 2, reported: messages(output.diagnostics).join('\n') };
+      }
+
+      before(async () => {
+        root = path.join(directory, 'confined');
+        await mkdir(root);
+        await mkdir(path.join(root, 'folder.css'));
+        secret = path.join(directory, 'secret.css');
+        await writeFile(secret, PAGE_BREAK_CSS);
+        await writeFile(path.join(root, 'style.css'), PAGE_BREAK_CSS);
+        await symlink(secret, path.join(root, 'link.css'));
+      });
+
+      test('without a local base no file is read', async () => {
+        const absolute = pathToFileURL(secret).href;
+        for (const options of [undefined, { fetch: noFiles() }]) {
+          const { leaked, reported } = await linking(absolute, options);
+          assert.equal(leaked, false, 'a document must not read files the caller did not point it at');
+          assert.match(reported, /local files are read only for a render with a local base/);
+        }
+      });
+
+      test('an absolute path, a traversal and a symlink out of the base are refused', async () => {
+        for (const href of [pathToFileURL(secret).href, '../secret.css', 'link.css', 'sub/../../secret.css']) {
+          for (const options of [{ base: root }, { base: root, fileRoot: root }, { base: root, fetch: noFiles() }]) {
+            const { leaked, reported } = await linking(href, options);
+            assert.equal(leaked, false, `${href} was read with ${JSON.stringify(Object.keys(options))}`);
+            assert.match(reported, /escapes the allowed root/, href);
+          }
+        }
+        const inside = await linking('style.css', { base: root, fileRoot: root, fetch: noFiles() });
+        assert.deepEqual(inside, { leaked: true, reported: '' });
+      });
+
+      test('fileRoot widens the readable directory beyond the base', async () => {
+        const { leaked, reported } = await linking('../secret.css', { base: root, fileRoot: directory });
+        assert.equal(leaked, true, reported);
+      });
+
+      test('a document with a remote base reads no file, directly or through a remote sheet', async () => {
+        const absolute = pathToFileURL(secret).href;
+        for (const fileRoot of [undefined, directory]) {
+          const direct = await linking(absolute, { baseUrl: 'https://cdn.example/', fileRoot, fetch: noFiles() });
+          assert.equal(direct.leaked, false, 'file: reference from an https document');
+          assert.match(direct.reported, /local files are read only/);
+
+          const imported = await linking('remote.css', {
+            baseUrl: 'https://cdn.example/',
+            fileRoot,
+            fetch: noFiles({ 'https://cdn.example/remote.css': new TextEncoder().encode(`@import '${absolute}';`) }),
+          });
+          assert.equal(imported.leaked, false, 'file: import from a remote stylesheet');
+          assert.match(imported.reported, /local files are read only/);
+
+          const redirected = await linking('moved.css', {
+            baseUrl: 'https://cdn.example/',
+            fileRoot,
+            fetch: noFiles({
+              'https://cdn.example/moved.css': { data: new TextEncoder().encode("@import 'secret.css';"), url: pathToFileURL(path.join(directory, 'moved.css')).href },
+            }),
+          });
+          assert.equal(redirected.leaked, false, 'a response that claims a file: location');
+        }
+      });
+
+      test('a multipart render reads only below the bases its parts name', async () => {
+        const part = (href, base) => ({ html: LINKED.replace('style.css', href), base });
+        const confined = await api.renderParts([part('style.css', root), part('../secret.css', root)]);
+        assert.deepEqual(confined.parts.map((entry) => entry.pageCount), [2, 1]);
+        const mixed = await api.renderParts([part('style.css', root), { html: LINKED, baseUrl: 'https://cdn.example/a.html' }], { fetch: noFiles() });
+        assert.deepEqual(mixed.parts.map((entry) => entry.pageCount), [1, 1], 'a remote part makes the job remote');
+      });
+
+      test('only regular files within the byte budget are read', async () => {
+        const folder = await linking('folder.css', { base: root });
+        assert.equal(folder.leaked, false);
+        assert.match(folder.reported, /not a regular file/);
+
+        const size = Buffer.byteLength(PAGE_BREAK_CSS);
+        const over = await linking('style.css', { base: root, maxFetchBytes: size - 1 });
+        assert.equal(over.leaked, false);
+        assert.match(over.reported, new RegExp(`limit of ${size - 1} fetched bytes`));
+        const exact = await linking('style.css', { base: root, maxFetchBytes: size });
+        assert.deepEqual(exact, { leaked: true, reported: '' });
+      });
+    });
+
+    test('a response over the byte budget is refused without buffering it', async () => {
+      const budget = 64;
+      let pulled = 0;
+      let cancelled = 0;
+      const endless = () =>
+        new ReadableStream({
+          pull(controller) {
+            pulled += 1;
+            controller.enqueue(new Uint8Array(16));
+          },
+          cancel() {
+            cancelled += 1;
+          },
+        });
+      const options = { baseUrl: 'https://cdn.example/', maxFetchBytes: budget };
+
+      const streamed = await api.render(LINKED, { ...options, fetch: () => new Response(endless()) });
+      assert.match(messages(streamed.diagnostics).join('\n'), /limit of 64 fetched bytes/);
+      assert.equal(cancelled, 1, 'the stream is cancelled once it passes the budget');
+      assert.ok(pulled <= budget / 16 + 2, `read ${pulled} chunks of an endless body`);
+
+      pulled = 0;
+      const declared = await api.render(LINKED, {
+        ...options,
+        fetch: () => new Response(endless(), { headers: { 'content-length': String(budget + 1) } }),
+      });
+      assert.match(messages(declared.diagnostics).join('\n'), /limit of 64 fetched bytes/);
+      assert.ok(pulled <= 1, `a declared length over the budget was read (${pulled} chunks)`);
+
+      const worker = createRenderWorker();
+      try {
+        pulled = 0;
+        const proxied = await worker.render(LINKED, { ...options, fetch: () => new Response(endless()) });
+        assert.match(messages(proxied.diagnostics).join('\n'), /limit of 64 fetched bytes/);
+        assert.ok(pulled <= budget / 16 + 2, `the calling thread read ${pulled} chunks for the worker`);
+        const bytes = await worker.render(LINKED, { ...options, fetch: () => new Uint8Array(budget + 1) });
+        assert.match(messages(bytes.diagnostics).join('\n'), /limit of 64 fetched bytes/);
+      } finally {
+        await worker.terminate();
+      }
     });
 
     test('options change the render and invalid ones are rejected', async () => {

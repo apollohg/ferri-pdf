@@ -15,14 +15,34 @@ function bytesOf(value, name) {
   throw new TypeError(`${name} must be a Uint8Array or ArrayBuffer`);
 }
 
-/** Reads a response body, giving up once it is longer than `budget` bytes. */
-async function readBody(response, budget, limitReason) {
+/**
+ * Marks a fetch function that takes the byte budget, `{ bytes, reason }`, as its second
+ * argument and enforces it itself, as the worker's proxy to the calling thread does.
+ */
+export const BUDGETED = Symbol('budgeted');
+
+/** Throws the budget's reason if `length` bytes are more than it allows. */
+function checkBudget(length, budget) {
+  if (length > budget.bytes) {
+    throw new Error(budget.reason);
+  }
+}
+
+/**
+ * Reads a response body as a stream, giving up once it is longer than the budget; a declared
+ * length over the budget is refused unread.
+ */
+async function readBody(response, budget) {
+  const declared = Number(response.headers?.get('content-length'));
   const reader = response.body?.getReader?.();
+  if (declared > budget.bytes) {
+    await reader?.cancel();
+    throw new Error(budget.reason);
+  }
   if (!reader) {
+    // A response-like object without a stream has its bytes in memory already.
     const data = new Uint8Array(await response.arrayBuffer());
-    if (data.length > budget) {
-      throw new Error(limitReason);
-    }
+    checkBudget(data.length, budget);
     return data;
   }
   const chunks = [];
@@ -33,9 +53,9 @@ async function readBody(response, budget, limitReason) {
       break;
     }
     length += value.length;
-    if (length > budget) {
+    if (length > budget.bytes) {
       await reader.cancel();
-      throw new Error(limitReason);
+      throw new Error(budget.reason);
     }
     chunks.push(value);
   }
@@ -50,39 +70,47 @@ async function readBody(response, budget, limitReason) {
 
 /**
  * What a fetch function returned, as `{ data, contentType, url }`: a `Response`, bytes, or
- * that object itself. Throws for no resource and for an HTTP error status.
+ * that object itself. Throws for no resource, an HTTP error status and data over `budget`.
  */
-export async function fetchedResource(result, budget = Infinity, limitReason = '') {
+export async function fetchedResource(result, budget) {
   if (result === null || result === undefined) {
     throw new Error(NO_RESOURCE);
   }
   if (typeof result.arrayBuffer === 'function') {
     if (result.ok === false) {
+      await result.body?.cancel?.();
       throw new Error(`HTTP ${result.status}`);
     }
     return {
-      data: await readBody(result, budget, limitReason),
+      data: await readBody(result, budget),
       contentType: result.headers?.get('content-type') ?? undefined,
       url: result.url || undefined,
     };
   }
-  if (result instanceof Uint8Array || result instanceof ArrayBuffer) {
-    return { data: bytesOf(result, 'a fetched resource') };
-  }
-  return {
-    data: bytesOf(result.data, "a fetched resource's data"),
-    contentType: result.contentType ?? undefined,
-    url: result.url ?? undefined,
-  };
+  const resource =
+    result instanceof Uint8Array || result instanceof ArrayBuffer
+      ? { data: bytesOf(result, 'a fetched resource') }
+      : {
+          data: bytesOf(result.data, "a fetched resource's data"),
+          contentType: result.contentType ?? undefined,
+          url: result.url ?? undefined,
+        };
+  checkBudget(resource.data.length, budget);
+  return resource;
+}
+
+/** `fetch` as a function of a URL and the byte budget its result must fit. */
+export function budgeted(fetch) {
+  return fetch[BUDGETED] ? fetch : (url) => fetch(url);
 }
 
 /** Fetches `url` into `job`; a failure of any kind leaves the resource unavailable. */
 async function answer(job, url, fetch) {
   try {
+    const budget = { bytes: job.remainingBytes(), reason: job.byteLimitReason() };
     const { data, contentType, url: location } = await fetchedResource(
-      await fetch(url),
-      job.remainingBytes(),
-      job.byteLimitReason(),
+      await fetch(url, budget),
+      budget,
     );
     job.supply(url, data, contentType, location);
   } catch (error) {
@@ -102,22 +130,23 @@ function failure({ message, lost, part }) {
 /**
  * `render` and `renderParts` for one environment, which supplies:
  * - `bindings()`: resolves to the initialised WebAssembly exports;
- * - `prepare(options)`: `{ settings, fetch }`, the renderer's settings and the function
- *   that loads a URL;
- * - `partBaseUrl(part)`: the base URL a part object names, if any.
+ * - `prepare(options, documents)`: `{ settings, fetch }`, the renderer's settings and the
+ *   function that loads a URL within a byte budget;
+ * - `partBase(part)`: `{ baseUrl, directory }`, the base a part object names, if any, and
+ *   whether it is a folder rather than the part's own URL.
  */
 export function createApi(environment) {
   async function run(documents, multipart, options = {}) {
-    const { settings, fetch } = environment.prepare(options);
+    const { settings, fetch } = environment.prepare(options, documents);
     const { RenderJob } = await environment.bindings();
     let trapped = false;
     const job = new RenderJob(JSON.stringify(settings), multipart);
     try {
-      for (const { html, baseUrl } of documents) {
+      for (const { html, baseUrl, directory = false } of documents) {
         if (typeof html === 'string') {
-          job.addText(html, baseUrl);
+          job.addText(html, baseUrl, directory);
         } else {
-          job.addBytes(bytesOf(html, 'HTML'), baseUrl);
+          job.addBytes(bytesOf(html, 'HTML'), baseUrl, directory);
         }
       }
       for (let urls = job.advance(); urls.length > 0; urls = job.advance()) {
@@ -146,7 +175,7 @@ export function createApi(environment) {
     if (part === null || typeof part !== 'object') {
       throw new TypeError('a part must be a string, bytes or a { html } object');
     }
-    return { html: part.html, baseUrl: environment.partBaseUrl(part) };
+    return { html: part.html, ...environment.partBase(part) };
   }
 
   return {
