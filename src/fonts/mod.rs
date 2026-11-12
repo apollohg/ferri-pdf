@@ -291,6 +291,10 @@ impl FontFace {
         }
     }
     /// The index of the face in its data, which is a collection only for installed faces.
+    #[cfg_attr(
+        not(file_system),
+        expect(clippy::unused_self, reason = "only installed faces are collections")
+    )]
     pub(crate) fn index(&self) -> u32 {
         #[cfg(file_system)]
         if let FontData::Installed(source) = &self.data {

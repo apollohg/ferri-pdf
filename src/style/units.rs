@@ -279,9 +279,12 @@ impl Line<'_> {
 
 /// Font metrics can be concrete or resolved on demand while constructing the first page.
 #[derive(Clone)]
-#[expect(
-    clippy::large_enum_variant,
-    reason = "bases are built on the stack for every element; boxing would allocate for each"
+#[cfg_attr(
+    target_pointer_width = "64",
+    expect(
+        clippy::large_enum_variant,
+        reason = "bases are built on the stack for every element; boxing would allocate for each"
+    )
 )]
 pub(crate) enum FontBasis<'a> {
     Known {

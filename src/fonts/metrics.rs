@@ -337,6 +337,13 @@ impl InitialFont {
                 FontData::Lazy { .. } => None,
             })
             .collect();
+        #[cfg_attr(
+            not(file_system),
+            expect(
+                clippy::unnecessary_find_map,
+                reason = "only an installed face can fail to parse"
+            )
+        )]
         let metrics = faces
             .iter()
             .find_map(|face| match face {

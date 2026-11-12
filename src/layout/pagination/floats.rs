@@ -627,6 +627,13 @@ impl<'a> Paginator<'a, '_, 'a> {
     /// Ends the layout of `float`, whose box is `active`, excluding it from the flow that
     /// resumes at `parent`.
     #[inline(never)]
+    #[cfg_attr(
+        target_pointer_width = "32",
+        expect(
+            clippy::boxed_local,
+            reason = "callers hold the position boxed, as its size with wider pointers needs"
+        )
+    )]
     fn end_float(
         &mut self,
         float: &FloatLayout<'a>,

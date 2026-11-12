@@ -33,9 +33,12 @@ impl Default for Motion {
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Serialize)]
-#[expect(
-    clippy::large_enum_variant,
-    reason = "offset paths are already shared through Arc"
+#[cfg_attr(
+    target_pointer_width = "64",
+    expect(
+        clippy::large_enum_variant,
+        reason = "offset paths are already shared through Arc"
+    )
 )]
 pub(crate) enum OffsetPath {
     #[default]
