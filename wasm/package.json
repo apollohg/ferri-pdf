@@ -1,0 +1,54 @@
+{
+  "name": "ferri-pdf",
+  "version": "0.1.10",
+  "description": "HTML and CSS to PDF renderer for print, in pure Rust compiled to WebAssembly, for browsers and Node",
+  "license": "MIT AND (Apache-2.0 OR MIT) AND Unicode-3.0 AND CC0-1.0 AND Bitstream-Vera AND LicenseRef-Arev AND OFL-1.1-RFN AND BSD-3-Clause AND Unlicense AND FSFAP-no-warranty-disclaimer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apollohg/ferri-pdf.git",
+    "directory": "wasm"
+  },
+  "keywords": ["pdf", "html", "css", "print", "wasm"],
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": ["js", "README.md"],
+  "exports": {
+    ".": {
+      "node": {
+        "import": {
+          "types": "./js/node.d.ts",
+          "default": "./js/node.js"
+        },
+        "require": {
+          "types": "./js/node.d.cts",
+          "default": "./js/node.cjs"
+        }
+      },
+      "types": "./js/browser.d.ts",
+      "default": "./js/browser.js"
+    },
+    "./worker": {
+      "node": {
+        "import": {
+          "types": "./js/worker-node.d.ts",
+          "default": "./js/worker-node.js"
+        },
+        "require": {
+          "types": "./js/worker-node.d.cts",
+          "default": "./js/worker-node.cjs"
+        }
+      },
+      "types": "./js/worker-browser.d.ts",
+      "default": "./js/worker-browser.js"
+    },
+    "./ferri_pdf_bg.wasm": "./js/generated/ferri_pdf_bg.wasm"
+  },
+  "scripts": {
+    "build": "cargo build --locked --profile wasm-release --target wasm32-unknown-unknown -p ferri-pdf-wasm && wasm-bindgen --target web --no-typescript --out-dir js/generated --out-name ferri_pdf ../target/wasm32-unknown-unknown/wasm-release/ferri_pdf_wasm.wasm",
+    "test": "node --test tests/node-esm.test.mjs tests/node-cjs.test.mjs tests/browser.test.mjs"
+  }
+}

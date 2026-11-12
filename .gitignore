@@ -6,3 +6,5 @@ __pycache__/
 .venv/
 /python/ferri_pdf/*.so
 /python/ferri_pdf/*.pyd
+/wasm/js/generated/
+node_modules/
