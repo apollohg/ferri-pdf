@@ -1,5 +1,5 @@
 [workspace]
-members = ["python"]
+members = ["python", "wasm"]
 exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendor/avif-decode", "vendor/rav1d", "vendor/heic-decoder", "vendor/selectors"]
 resolver = "3"
 
@@ -120,6 +120,8 @@ brotli-decompressor = "5.0.3"
 thiserror = "2"
 # Python bindings in python/; the stable ABI from 3.10 lets one wheel serve every later CPython.
 pyo3 = { version = "0.30.1", features = ["abi3-py310", "extension-module"] }
+# JavaScript bindings in wasm/; the npm package is built with the same wasm-bindgen CLI version.
+wasm-bindgen = "=0.2.129"
 # Only languages whose patterns are MIT, BSD-3-Clause, Unlicense or FSFAP-no-warranty-disclaimer
 # licensed; assets/hyphenation/PATTERNS.txt carries their notices.
 hypher = { version = "=0.1.8", default-features = false, features = [
@@ -272,3 +274,10 @@ rustls = { version = "=0.23.46", default-features = false, features = ["std", "t
 # font parsers port HarfBuzz's unsigned arithmetic); debug builds must not panic on it either.
 [profile.dev.package."*"]
 overflow-checks = false
+
+# The npm package's module: one optimisation unit and no symbol names, for download size.
+[profile.wasm-release]
+inherits = "release"
+lto = true
+codegen-units = 1
+strip = true

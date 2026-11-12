@@ -1,0 +1,29 @@
+[package]
+name = "ferri-pdf-wasm"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "WebAssembly bindings for the ferri-pdf HTML and CSS to PDF renderer"
+repository.workspace = true
+readme = "README.md"
+keywords = ["pdf", "html", "css", "print", "wasm"]
+categories = ["rendering", "api-bindings", "wasm"]
+# Released as an npm package, never to crates.io.
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+# The module runs only inside a JavaScript engine; `npm test` exercises it.
+test = false
+doctest = false
+
+[lints]
+workspace = true
+
+# The crate is empty for every other target, so host builds of the workspace skip these.
+[target.'cfg(all(target_family = "wasm", target_os = "unknown"))'.dependencies]
+ferri-pdf = { path = "..", default-features = false }
+serde.workspace = true
+serde_json.workspace = true
+wasm-bindgen.workspace = true
