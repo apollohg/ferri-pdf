@@ -67,6 +67,32 @@ open("hello.pdf", "wb").write(output.pdf)
 
 The bindings live in `python/`; see [python/README.md](python/README.md) for options, multipart rendering and the `fetch` callback for loading remote resources yourself.
 
+## JavaScript
+
+The renderer also runs as WebAssembly, in browsers and in Node 18 or later.
+
+```sh
+npm install ferri-pdf
+```
+
+```js
+import { render } from 'ferri-pdf';
+
+// In a browser: relative URLs resolve against the page and resources load through fetch.
+const output = await render('<h1>Hello</h1><img src="/logo.png">');
+const url = URL.createObjectURL(new Blob([output.pdf], { type: 'application/pdf' }));
+```
+
+```js
+// In Node, with import or require: relative URLs resolve against a directory.
+const output = await render(html, { base: 'templates/invoice' });
+await writeFile('invoice.pdf', output.pdf);
+```
+
+In a browser, resources from another origin need CORS headers that allow the page to read them, or a proxy on your own origin passed as the `fetch` option. A resource that cannot be fetched never fails the render; it is reported in `output.diagnostics`.
+
+The bindings live in `wasm/`; see [wasm/README.md](wasm/README.md) for options, the `fetch` function, rendering in a worker and multipart rendering.
+
 ## Development
 
 Requires Rust 1.97 or newer.
@@ -78,6 +104,8 @@ cargo clippy --workspace --all-targets -- -D warnings
 ```
 
 To build and test the Python bindings: `pip install maturin pytest && maturin develop && pytest python/tests`.
+
+To build and test the JavaScript package: `rustup target add wasm32-unknown-unknown && cargo install wasm-bindgen-cli --version 0.2.129`, then `npm run build && npm test` in `wasm/`.
 
 The PDF checks in `tests/*.py` and the standards oracle in `tests/oracle` also need Python with Pillow and fontTools, Poppler and GNU FriBidi. See [tests/oracle/README.md](tests/oracle/README.md).
 
