@@ -370,7 +370,7 @@ fn a_resolver_without_a_root_reads_nothing() {
 #[test]
 fn only_regular_files_within_the_byte_limit_are_read() {
     /// Far past the limit, and sparse: it is refused by its size, not by reading it.
-    const HUGE: u64 = 1 << 40;
+    const HUGE: u64 = 1 << 30;
     let sandbox = Sandbox::new("kinds");
     let base: ResourceBase = sandbox.root.as_path().into();
     let resolver = FileResolver::for_base(&base);
