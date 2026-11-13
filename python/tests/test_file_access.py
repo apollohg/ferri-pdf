@@ -15,6 +15,12 @@ NO_ROOT = "no local base or file root"
 NO_BASE = "has no base"
 NOT_LOCAL = "the content that names it is not local"
 LOCAL_LOCATION = "places a remote resource at a local file"
+UNSUPPORTED_SCHEME = "unsupported resource scheme"
+
+
+def absolute_path_reason(reason):
+    """Why a bare absolute path is refused: a Windows drive letter parses as a URL scheme."""
+    return UNSUPPORTED_SCHEME if os.name == "nt" else reason
 
 
 def document(href):
@@ -96,10 +102,12 @@ def test_only_files_inside_the_base_folder_are_read(tree: Path):
     assert_loaded("style.css", base=root)
     assert_loaded((root / "style.css").as_uri(), base=root)
     assert_loaded("style.css", base_url=(root / "index.html").as_uri())
-    for href in (secret, secret.as_uri(), "../secret.css", "sub/../../secret.css"):
-        assert_refused(href, OUTSIDE_FOLDER, base=root)
-        assert_refused(href, OUTSIDE_FOLDER, base=root, fetch=lambda url: None)
-        assert_refused(href, OUTSIDE_FOLDER, base=root, allow_http=False)
+    refused = [(secret, absolute_path_reason(OUTSIDE_FOLDER))]
+    refused += [(href, OUTSIDE_FOLDER) for href in (secret.as_uri(), "../secret.css", "sub/../../secret.css")]
+    for href, reason in refused:
+        assert_refused(href, reason, base=root)
+        assert_refused(href, reason, base=root, fetch=lambda url: None)
+        assert_refused(href, reason, base=root, allow_http=False)
     assert_refused("../secret.css", OUTSIDE_FOLDER, base_url=(root / "index.html").as_uri())
 
 
@@ -127,7 +135,7 @@ def test_without_a_base_no_local_file_is_read(tree: Path, monkeypatch: pytest.Mo
     root = tree / "root"
     monkeypatch.chdir(root)
     assert_refused("style.css", NO_BASE)
-    assert_refused(root / "style.css", NO_BASE)
+    assert_refused(root / "style.css", absolute_path_reason(NO_BASE))
     assert_refused((root / "style.css").as_uri(), NO_ROOT)
     assert_refused((root / "style.css").as_uri(), NO_ROOT, fetch=lambda url: None)
     assert_loaded((root / "style.css").as_uri(), file_root=root)
