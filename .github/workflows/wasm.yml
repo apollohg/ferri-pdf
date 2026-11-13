@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -16,9 +18,12 @@ env:
   # The oldest Node the package supports.
   NODE_VERSION: "18"
   TYPESCRIPT_VERSION: 5.8.3
+  # npm's trusted publishing needs the npm that ships with this Node.
+  PUBLISH_NODE_VERSION: "24"
 
 jobs:
   test:
+    if: github.event_name != 'release'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -46,4 +51,37 @@ jobs:
       - run: |
           npx --yes --package "typescript@$TYPESCRIPT_VERSION" tsc -p tests/types/tsconfig.node.json
           npx --yes --package "typescript@$TYPESCRIPT_VERSION" tsc -p tests/types/tsconfig.browser.json
+        working-directory: wasm
+
+  publish:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+          targets: wasm32-unknown-unknown
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.PUBLISH_NODE_VERSION }}
+          registry-url: https://registry.npmjs.org
+      - run: cargo install wasm-bindgen-cli --locked --version "$WASM_BINDGEN_VERSION"
+      - run: npm run build
+        working-directory: wasm
+      # A release rerun must not fail on the version it already published.
+      - run: |
+          version=$(node -p "require('./package.json').version")
+          if npm view "ferri-pdf@$version" version >/dev/null 2>&1; then
+            echo "ferri-pdf@$version is already published"
+          else
+            npm publish
+          fi
         working-directory: wasm
