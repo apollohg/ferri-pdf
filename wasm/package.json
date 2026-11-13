@@ -14,7 +14,7 @@
   "engines": {
     "node": ">=18"
   },
-  "files": ["js", "README.md"],
+  "files": ["js", "licenses", "README.md"],
   "exports": {
     ".": {
       "node": {
@@ -48,6 +48,7 @@
   },
   "scripts": {
     "build": "cargo build --locked --profile wasm-release --target wasm32-unknown-unknown -p ferri-pdf-wasm && wasm-bindgen --target web --no-typescript --out-dir js/generated --out-name ferri_pdf ../target/wasm32-unknown-unknown/wasm-release/ferri_pdf_wasm.wasm",
+    "prepack": "node scripts/licenses.mjs",
     "test": "node --test tests/node-esm.test.mjs tests/node-cjs.test.mjs tests/browser.test.mjs"
   }
 }

@@ -7,4 +7,6 @@ __pycache__/
 /python/ferri_pdf/*.so
 /python/ferri_pdf/*.pyd
 /wasm/js/generated/
+/wasm/licenses/
+/wasm/*.tgz
 node_modules/
