@@ -13,7 +13,7 @@
 edition = "2024"
 rust-version = "1.97"
 name = "ferri-pdf-avif-decode"
-version = "3.0.2"
+version = "3.0.3"
 authors = ["Kornel <kornel@geekhood.net>"]
 build = false
 autolib = false
@@ -65,7 +65,7 @@ default-features = false
 version = "0.8.19"
 
 [dependencies.rav1d]
-version = "=1.1.2"
+version = "=1.1.3"
 path = "../rav1d"
 package = "ferri-pdf-rav1d"
 default-features = false
