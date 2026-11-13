@@ -26,13 +26,13 @@ mod ferri_pdf_module {
     use ferri_pdf::{
         ColorScheme, ContentLoss, ContrastPreference, Error, FontPreferences, HeadingLocation,
         HtmlPart, ImageDpi, ImageOptions, JpegQuality, LayoutTrace, MotionPreference,
-        PrintPreferences, PrintSettings, RenderDiagnostic, ResourceBase, ResourceResolver, Url,
+        PrintPreferences, PrintSettings, RenderDiagnostic, ResourceBase, Url,
     };
     use pyo3::exceptions::{PyTypeError, PyValueError};
     use pyo3::prelude::*;
     use pyo3::types::{PyBytes, PyString, PyTuple};
 
-    use super::resolver::Resolver;
+    use super::resolver::Loader;
     #[pymodule_export]
     use super::resolver::Resource;
     #[pymodule_export]
@@ -143,19 +143,19 @@ mod ferri_pdf_module {
     }
 
     /// Settings shared by every render that uses them; CSS controls page size and formatting.
+    /// Local files are read only inside the folder `base` or a `file:` `base_url` names, or
+    /// inside `file_root` when given, and never for content with a remote base.
     #[pyclass(frozen)]
     struct RenderOptions {
         options: ferri_pdf::RenderOptions,
         allow_http: bool,
-        file_root: Option<PathBuf>,
         fetch: Option<Py<PyAny>>,
     }
 
     impl RenderOptions {
-        fn resolver(&self, py: Python<'_>) -> Resolver {
-            Resolver::new(
+        fn loader(&self, py: Python<'_>) -> Loader {
+            Loader::new(
                 self.allow_http,
-                self.file_root.clone(),
                 self.fetch.as_ref().map(|fetch| fetch.clone_ref(py)),
             )
         }
@@ -165,12 +165,12 @@ mod ferri_pdf_module {
     /// in preference to the render's own result.
     fn detached<T: Send>(
         py: Python<'_>,
-        resolver: Resolver,
-        render: impl FnOnce(&dyn ResourceResolver) -> Result<T, Error> + Send,
+        loader: Loader,
+        render: impl FnOnce(&Loader) -> Result<T, Error> + Send,
     ) -> PyResult<T> {
         let (rendered, fatal) = py.detach(|| {
-            let rendered = render(resolver.as_dyn());
-            (rendered, resolver.into_fatal())
+            let rendered = render(&loader);
+            (rendered, loader.into_fatal())
         });
         if let Some(error) = fatal {
             return Err(error);
@@ -183,7 +183,6 @@ mod ferri_pdf_module {
             Self {
                 options: ferri_pdf::RenderOptions::default(),
                 allow_http: ALLOW_HTTP,
-                file_root: None,
                 fetch: None,
             }
         }
@@ -275,6 +274,7 @@ mod ferri_pdf_module {
             Ok(Self {
                 options: ferri_pdf::RenderOptions {
                     base: resource_base(base, base_url)?.unwrap_or_default(),
+                    file_root,
                     stylesheets,
                     user_stylesheets,
                     print,
@@ -292,7 +292,6 @@ mod ferri_pdf_module {
                     },
                 },
                 allow_http,
-                file_root,
                 fetch: fetch.map(Bound::unbind),
             })
         }
@@ -456,10 +455,15 @@ mod ferri_pdf_module {
         let html = Html::extract(html)?;
         let defaults = RenderOptions::default();
         let options = options.map_or(&defaults, Bound::get);
-        let rendered = detached(py, options.resolver(py), |resolver| match &html {
-            Html::Text(text) => ferri_pdf::render_with_resolver(text, &options.options, resolver),
-            Html::Bytes(bytes) => {
-                ferri_pdf::render_bytes_with_resolver(bytes, &options.options, resolver)
+        let loader = options.loader(py);
+        let options = &options.options;
+        let rendered = detached(py, loader, |loader| {
+            let resolver = &loader.resolver(options.file_resolver(&options.base));
+            match &html {
+                Html::Text(text) => ferri_pdf::render_with_resolver(text, options, resolver),
+                Html::Bytes(bytes) => {
+                    ferri_pdf::render_bytes_with_resolver(bytes, options, resolver)
+                }
             }
         })?;
         Ok(RenderOutput {
@@ -491,7 +495,9 @@ mod ferri_pdf_module {
             .collect::<PyResult<Vec<_>>>()?;
         let defaults = RenderOptions::default();
         let options = options.map_or(&defaults, Bound::get);
-        let rendered = detached(py, options.resolver(py), |resolver| {
+        let loader = options.loader(py);
+        let options = &options.options;
+        let rendered = detached(py, loader, |loader| {
             let parts: Vec<_> = parts
                 .iter()
                 .map(|(html, base)| match base {
@@ -499,7 +505,9 @@ mod ferri_pdf_module {
                     None => html.part(),
                 })
                 .collect();
-            ferri_pdf::render_parts_with_resolver(&parts, &options.options, resolver)
+            ferri_pdf::render_parts_with_resolvers(&parts, options, |base| {
+                loader.resolver(options.file_resolver(base))
+            })
         })?;
         let outputs = rendered
             .parts

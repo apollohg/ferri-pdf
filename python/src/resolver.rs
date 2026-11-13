@@ -2,7 +2,6 @@
 //! every URL that is not a local file or a data URL.
 
 use std::cell::RefCell;
-use std::path::PathBuf;
 
 use ferri_pdf::{
     FileResolver, LoaderOptions, ResolvedResource, Resource as FetchedResource, ResourceBase,
@@ -16,6 +15,7 @@ const FILE_SCHEME: &str = "file";
 const DATA_URL_PREFIX: &str = "data:";
 const NONE_RETURNED: &str = "fetch returned None";
 const ABANDONED: &str = "fetch was not called after an earlier call failed";
+const LOCAL_LOCATION: &str = "fetch places a remote resource at a local file";
 
 /// A fetched resource; `url` is where it ended up after redirects, for its relative URLs.
 #[pyclass(frozen, module = "ferri_pdf")]
@@ -44,22 +44,21 @@ impl Resource {
     }
 }
 
-/// Sends URLs to a Python callable. An `Exception` it raises leaves that resource
+/// A Python callable that fetches URLs. An `Exception` it raises leaves that resource
 /// unavailable, like a failed request; anything else, such as `KeyboardInterrupt` or a
 /// result of the wrong type, stops further calls and is raised once rendering returns.
-pub(crate) struct FetchResolver {
-    files: FileResolver,
+pub(crate) struct FetchCallback {
     fetch: Py<PyAny>,
     fatal: RefCell<Option<PyErr>>,
 }
 
-impl FetchResolver {
-    fn fetch(&self, url: Url) -> Result<ResolvedResource, ResourceError> {
+impl FetchCallback {
+    fn fetch(&self, url: Url, max_bytes: usize) -> Result<ResolvedResource, ResourceError> {
         if self.fatal.borrow().is_some() {
             return Err(unavailable(url, ABANDONED.to_owned()));
         }
         Python::attach(|py| match self.fetch.call1(py, (url.as_str(),)) {
-            Ok(value) => self.fetched(url, value.bind(py)),
+            Ok(value) => self.fetched(url, value.bind(py), max_bytes),
             Err(error) if error.is_instance_of::<PyException>(py) => {
                 Err(unavailable(url, error.to_string()))
             }
@@ -75,6 +74,7 @@ impl FetchResolver {
         &self,
         url: Url,
         value: &Bound<'_, PyAny>,
+        max_bytes: usize,
     ) -> Result<ResolvedResource, ResourceError> {
         if value.is_none() {
             return Err(unavailable(url, NONE_RETURNED.to_owned()));
@@ -100,10 +100,17 @@ impl FetchResolver {
             self.fatal.replace(Some(error));
             return Err(unavailable(url, reason));
         };
-        if data.len() > self.files.max_resource_bytes {
+        // As a redirect to a local file would, it lets remote content name local files.
+        if location
+            .as_ref()
+            .is_some_and(|location| location.scheme() == FILE_SCHEME)
+        {
+            return Err(unavailable(url, LOCAL_LOCATION.to_owned()));
+        }
+        if data.len() > max_bytes {
             return Err(ResourceError::RemoteTooLarge {
                 url,
-                limit: self.files.max_resource_bytes,
+                limit: max_bytes,
             });
         }
         Ok(ResolvedResource {
@@ -118,6 +125,12 @@ impl FetchResolver {
     }
 }
 
+/// Reads local files and data URLs itself and sends every other URL to the callback.
+pub(crate) struct FetchResolver<'a> {
+    files: FileResolver,
+    callback: &'a FetchCallback,
+}
+
 fn unavailable(url: Url, reason: String) -> ResourceError {
     ResourceError::Unavailable {
         url,
@@ -125,7 +138,7 @@ fn unavailable(url: Url, reason: String) -> ResourceError {
     }
 }
 
-impl ResourceResolver for FetchResolver {
+impl ResourceResolver for FetchResolver<'_> {
     fn resolve(
         &self,
         reference: &str,
@@ -150,54 +163,81 @@ impl ResourceResolver for FetchResolver {
         if url.scheme() == FILE_SCHEME {
             return self.files.resolve_with_metadata(reference, base);
         }
-        self.fetch(url)
+        self.callback.fetch(url, self.files.max_resource_bytes)
     }
 }
 
-pub(crate) enum Resolver {
-    Files(FileResolver),
-    Urls(UrlResolver),
-    Fetch(FetchResolver),
+/// What loads the resources of a render that are not local files or data URLs.
+pub(crate) enum Loader {
+    Nothing,
+    Http,
+    Fetch(FetchCallback),
 }
 
-impl Resolver {
+impl Loader {
     /// `fetch`, when given, replaces the built-in HTTP client whatever `allow_http` says.
-    pub(crate) fn new(
-        allow_http: bool,
-        file_root: Option<PathBuf>,
-        fetch: Option<Py<PyAny>>,
-    ) -> Self {
-        let files = FileResolver {
-            root: file_root,
-            ..FileResolver::default()
-        };
+    pub(crate) fn new(allow_http: bool, fetch: Option<Py<PyAny>>) -> Self {
         match fetch {
-            Some(fetch) => Self::Fetch(FetchResolver {
-                files,
+            Some(fetch) => Self::Fetch(FetchCallback {
                 fetch,
                 fatal: RefCell::new(None),
             }),
-            None if allow_http => Self::Urls(UrlResolver::new(LoaderOptions {
-                files,
-                ..LoaderOptions::default()
-            })),
-            None => Self::Files(files),
+            None if allow_http => Self::Http,
+            None => Self::Nothing,
         }
     }
 
-    pub(crate) fn as_dyn(&self) -> &dyn ResourceResolver {
+    /// The resolver for a document whose local files `files` reads.
+    pub(crate) fn resolver(&self, files: FileResolver) -> Resolver<'_> {
         match self {
-            Self::Files(resolver) => resolver,
-            Self::Urls(resolver) => resolver,
-            Self::Fetch(resolver) => resolver,
+            Self::Nothing => Resolver::Files(files),
+            Self::Http => Resolver::Urls(UrlResolver::new(LoaderOptions {
+                files,
+                ..LoaderOptions::default()
+            })),
+            Self::Fetch(callback) => Resolver::Fetch(FetchResolver { files, callback }),
         }
     }
 
     /// The error that stopped a `fetch` callback, which the render must raise instead.
     pub(crate) fn into_fatal(self) -> Option<PyErr> {
         match self {
-            Self::Fetch(resolver) => resolver.fatal.into_inner(),
-            Self::Files(_) | Self::Urls(_) => None,
+            Self::Fetch(callback) => callback.fatal.into_inner(),
+            Self::Nothing | Self::Http => None,
         }
+    }
+}
+
+pub(crate) enum Resolver<'a> {
+    Files(FileResolver),
+    Urls(UrlResolver),
+    Fetch(FetchResolver<'a>),
+}
+
+impl Resolver<'_> {
+    fn loader(&self) -> &dyn ResourceResolver {
+        match self {
+            Self::Files(resolver) => resolver,
+            Self::Urls(resolver) => resolver,
+            Self::Fetch(resolver) => resolver,
+        }
+    }
+}
+
+impl ResourceResolver for Resolver<'_> {
+    fn resolve(
+        &self,
+        reference: &str,
+        base: &ResourceBase,
+    ) -> Result<FetchedResource, ResourceError> {
+        self.loader().resolve(reference, base)
+    }
+
+    fn resolve_with_metadata(
+        &self,
+        reference: &str,
+        base: &ResourceBase,
+    ) -> Result<ResolvedResource, ResourceError> {
+        self.loader().resolve_with_metadata(reference, base)
     }
 }

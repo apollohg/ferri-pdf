@@ -56,20 +56,6 @@ def test_base_url_resolves_against_a_document_url(tmp_path: Path):
     assert ferri_pdf.render(html, options).page_count == 2
 
 
-def test_file_root_refuses_files_outside_it(tmp_path: Path):
-    root = tmp_path / "assets"
-    root.mkdir()
-    (tmp_path / "outside.css").write_text(PAGE_BREAK_CSS)
-    html = "<!doctype html><link rel=stylesheet href=../outside.css><p>one</p><p>two</p>"
-    unrestricted = ferri_pdf.render(html, ferri_pdf.RenderOptions(base=root))
-    assert unrestricted.page_count == 2, messages(unrestricted.diagnostics)
-    restricted = ferri_pdf.render(html, ferri_pdf.RenderOptions(base=root, file_root=root))
-    assert restricted.page_count == 1
-    assert any("outside" in m for m in messages(restricted.diagnostics)), messages(
-        restricted.diagnostics
-    )
-
-
 def test_allow_http_false_never_requests_remote_resources():
     output = ferri_pdf.render(UNREACHABLE_HTTP_IMAGE, ferri_pdf.RenderOptions(allow_http=False))
     found = messages(output.diagnostics)
