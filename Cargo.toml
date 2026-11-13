@@ -4,7 +4,7 @@ exclude = ["vendor/krilla", "vendor/icu_casemap", "vendor/zenavif-parse", "vendo
 resolver = "3"
 
 [workspace.package]
-version = "0.1.12"
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.97"
 # Own code, inlined SVG libraries, CLDR and mdn-data, the DejaVu and Liberation fonts, then

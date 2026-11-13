@@ -1,6 +1,6 @@
 {
   "name": "ferri-pdf",
-  "version": "0.1.12",
+  "version": "0.2.0",
   "description": "HTML and CSS to PDF renderer for print, in pure Rust compiled to WebAssembly, for browsers and Node",
   "license": "MIT AND (Apache-2.0 OR MIT) AND Unicode-3.0 AND CC0-1.0 AND Bitstream-Vera AND LicenseRef-Arev AND OFL-1.1-RFN AND BSD-3-Clause AND Unlicense AND FSFAP-no-warranty-disclaimer",
   "repository": {

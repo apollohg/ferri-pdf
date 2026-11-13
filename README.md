@@ -35,7 +35,7 @@ Invalid markup, unsupported CSS and missing resources never fail a render; they 
 
 ```toml
 [dependencies]
-ferri-pdf = "0.1"
+ferri-pdf = "0.2"
 ```
 
 ```rust
