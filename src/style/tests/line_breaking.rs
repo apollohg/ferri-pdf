@@ -1,6 +1,5 @@
 //! Cascade of the CSS Text 4 wrapping properties and the CSS Overflow 4 clamping shorthands.
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{
     BlockEllipsis, Continue, Display, HangingEnd, HangingPunctuation, HyphenateLimitChars,
     LineBreak, LineClamp, Style, Stylesheet, StylesheetSource, TextJustify, TextWrapStyle,
@@ -20,7 +19,7 @@ fn computed(css: &str) -> [Style; 2] {
         let parent = styles.last().cloned().unwrap_or_default();
         styles.push(
             sheet
-                .computed_with_resolver(element, &parent, &FileResolver::default())
+                .computed_with_resolver(element, &parent, &crate::tests::common::fixture_resolver())
                 .unwrap_or_else(|error| panic!("{css}: {error}")),
         );
     }

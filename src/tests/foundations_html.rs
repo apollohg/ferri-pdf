@@ -277,7 +277,7 @@ fn formatting_depth_limit_covers_block_inline_atomic_and_positioned_trees() {
                 &html,
                 &ResourceBase::default(),
                 &[],
-                &crate::FileResolver::default(),
+                &common::fixture_resolver(),
             )
             .unwrap_or_else(|error| panic!("{levels} levels of {opening} must format: {error}"));
             let mut pending = vec![(document.root(), 0)];

@@ -183,7 +183,7 @@ pub(crate) fn supplied_type(url: &url::Url, metadata: &ResourceMetadata) -> Opti
     if let Some(media_type) = &metadata.media_type {
         return Some(media_type.clone());
     }
-    if url.scheme() != "file" {
+    if url.scheme() != crate::resources::FILE_SCHEME {
         return None;
     }
     let extension = url.path().rsplit_once('.')?.1.to_ascii_lowercase();

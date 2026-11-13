@@ -1,5 +1,4 @@
 use crate::images::{Image, ImageCache};
-use crate::resources::FileResolver;
 use std::{path::PathBuf, sync::Arc};
 
 #[test]
@@ -19,13 +18,21 @@ fn lossless_avif_preserves_rgb_alpha_rotation_and_grid() {
             .unwrap()
             .to_rgba8();
         let asset = cache
-            .load(&name, &base.clone().into(), &FileResolver::default())
+            .load(
+                &name,
+                &base.clone().into(),
+                &crate::tests::common::fixture_resolver(),
+            )
             .unwrap_or_else(|error| panic!("{name}: {error}"));
         assert!(
             Arc::ptr_eq(
                 &asset,
                 &cache
-                    .load(&name, &base.clone().into(), &FileResolver::default())
+                    .load(
+                        &name,
+                        &base.clone().into(),
+                        &crate::tests::common::fixture_resolver()
+                    )
                     .unwrap()
             ),
             "{name}: decoded cache storage"
@@ -66,7 +73,7 @@ fn ten_bit_avif_matches_independent_samples_without_eight_bit_quantization() {
         .load(
             "image-high-depth.avif",
             &base.into(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .unwrap();
     let Image::Pixels(decoded) = &*asset else {
@@ -129,7 +136,11 @@ fn embedded_icc_takes_precedence_over_an_earlier_nclx_property() {
         .unwrap();
     let expected = source.icc_profile().unwrap().unwrap();
     let asset = ImageCache::default()
-        .load("image-icc.avif", &base.into(), &FileResolver::default())
+        .load(
+            "image-icc.avif",
+            &base.into(),
+            &crate::tests::common::fixture_resolver(),
+        )
         .unwrap();
     let Image::Pixels(decoded) = &*asset else {
         panic!("expected pixel asset")

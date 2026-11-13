@@ -1,8 +1,8 @@
 mod common;
 
 use ferri_pdf::{
-    FileResolver, HtmlPart, Resource, ResourceBase, ResourceError, ResourceResolver,
-    render_parts_with_resolver, render_with_resolver,
+    HtmlPart, Resource, ResourceBase, ResourceError, ResourceResolver, render_parts_with_resolver,
+    render_with_resolver,
 };
 
 const BROKEN_IMAGE: &str = "broken.png";
@@ -261,7 +261,7 @@ impl ResourceResolver for ImageResolver {
                     ),
                 });
         }
-        FileResolver::default().resolve(reference, base)
+        common::fixture_resolver().resolve(reference, base)
     }
 }
 

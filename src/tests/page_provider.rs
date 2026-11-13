@@ -2,7 +2,6 @@ use super::common;
 
 use crate::document::StyledDocument;
 use crate::graphics::BackgroundImage;
-use crate::resources::FileResolver;
 use crate::style::{PageRequest, PageSide};
 use common::{PROFILE, local_options};
 use std::sync::Arc;
@@ -11,7 +10,7 @@ use std::sync::Arc;
 fn owned_page_records_freeze_viewport_and_share_loaded_images() {
     let document = StyledDocument::parse(
         &format!("<!doctype html><style>{PROFILE}@page A{{size:300pt 400pt;margin:20pt;background-image:url('../assets/image-pattern.png')}}@page B{{size:500pt 300pt;margin:10vw;background-image:url('../assets/image-pattern.png')}}@page unused{{background-image:url('missing-page.png')}}body{{page:A;background-image:url('../assets/image-pattern.png')}}</style><p>Body</p>"),
-        &local_options().base, &[], &FileResolver::default(),
+        &local_options().base, &[], &common::fixture_resolver(),
     ).unwrap();
     let first = document.page_box();
     assert_eq!(first.request.name.as_deref(), Some("A"));
@@ -24,7 +23,7 @@ fn owned_page_records_freeze_viewport_and_share_loaded_images() {
         sequence: None,
     };
     let later = document
-        .resolve_page(request.clone(), &FileResolver::default())
+        .resolve_page(request.clone(), &common::fixture_resolver())
         .unwrap();
     assert_eq!(later.geometry.paper, [500.0, 300.0]);
     assert_eq!(
@@ -33,7 +32,7 @@ fn owned_page_records_freeze_viewport_and_share_loaded_images() {
     );
     assert_eq!(later.geometry.area, [448.0, 248.0]);
     let again = document
-        .resolve_page(request, &FileResolver::default())
+        .resolve_page(request, &common::fixture_resolver())
         .unwrap();
     assert!(
         Arc::ptr_eq(&later, &again),
@@ -69,7 +68,7 @@ fn owned_page_records_freeze_viewport_and_share_loaded_images() {
         "page resolution retains the formatting image cache"
     );
     let original = document
-        .resolve_page(first.request.clone(), &FileResolver::default())
+        .resolve_page(first.request.clone(), &common::fixture_resolver())
         .unwrap();
     assert!(
         std::ptr::eq(first, original.as_ref()),
@@ -81,7 +80,7 @@ fn owned_page_records_freeze_viewport_and_share_loaded_images() {
 fn page_record_cache_distinguishes_side_first_and_blank_flags() {
     let document = StyledDocument::parse(
         &format!("<!doctype html><style>{PROFILE}@page B{{size:300pt 400pt;margin:10pt}}@page B:left{{margin-left:20pt}}@page B:first{{margin-top:30pt}}@page B:blank{{margin-bottom:40pt}}</style><p>Body</p>"),
-        &local_options().base, &[], &FileResolver::default(),
+        &local_options().base, &[], &common::fixture_resolver(),
     ).unwrap();
     for (side, first, blank, expected) in [
         (PageSide::Right, false, false, [10.0; 4]),
@@ -97,7 +96,7 @@ fn page_record_cache_distinguishes_side_first_and_blank_flags() {
             sequence: None,
         };
         let page = document
-            .resolve_page(request.clone(), &FileResolver::default())
+            .resolve_page(request.clone(), &common::fixture_resolver())
             .unwrap();
         assert_eq!(page.geometry.margin, expected, "request {request:?}");
         assert_eq!(page.request, request);

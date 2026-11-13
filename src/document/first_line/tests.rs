@@ -1,6 +1,6 @@
 use super::*;
 use crate::document::{BlockBox, BlockContent, StyledDocument};
-use crate::resources::{FileResolver, ResourceBase};
+use crate::resources::ResourceBase;
 use crate::style::Display;
 
 const CANONICAL_SIZE: f32 = 20.0;
@@ -14,7 +14,7 @@ fn parse(html: &str) -> StyledDocument {
         html,
         &ResourceBase::default(),
         &[],
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )
     .expect("Math typographic boundary fixture must format")
 }
@@ -102,7 +102,7 @@ fn math_boxes_do_not_generate_their_own_first_line_styles() {
         }
         let style = math.expect("actual computed Math box");
         let origin = style.origin.node().expect("Math source origin").element;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = ResourceBase::default();
         let mut cache = crate::images::ImageCache::default();
         let mut resources = ImageResources {

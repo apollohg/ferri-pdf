@@ -1,6 +1,5 @@
 use super::*;
 use crate::dom::Selector;
-use crate::resources::FileResolver;
 use crate::style::StylesheetSource;
 
 /// Mask layers as loaded without their images, which serialization does not read.
@@ -28,7 +27,7 @@ fn serialized_within(
         text: css.into(),
         base: Default::default(),
     }])?;
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let styling = Styling {
         sheet: &sheet,
         resolver: &resolver,
@@ -473,7 +472,7 @@ fn sprites_in_other_svg_elements_and_nested_uses_get_instances_and_cycles_render
     let selector = Selector::parse("svg").unwrap();
     let second = tree.select(&selector).nth(1).unwrap();
     let sheet = Stylesheet::parse(&[]).unwrap();
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let work = crate::layout::work::Budget::new(crate::document::MAX_FORMATTING_WORK);
     let styling = Styling {
         sheet: &sheet,

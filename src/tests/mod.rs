@@ -1,5 +1,5 @@
 #[path = "../../tests/common/mod.rs"]
-mod common;
+pub(crate) mod common;
 #[path = "../../tests/common/weasy_reference.rs"]
 mod weasy_reference;
 

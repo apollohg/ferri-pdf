@@ -932,7 +932,7 @@ impl Stylesheet {
         element: Element<'_>,
         parent: &Style,
     ) -> Result<Style, StyleError> {
-        self.computed_with_resolver(element, parent, &crate::resources::FileResolver::default())
+        self.computed_with_resolver(element, parent, &crate::tests::common::fixture_resolver())
     }
 
     #[cfg(test)]
@@ -946,7 +946,7 @@ impl Stylesheet {
             element,
             parent,
             pseudo,
-            &crate::resources::FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
     }
 

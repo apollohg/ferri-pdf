@@ -1,7 +1,6 @@
 use super::common;
 
 use crate::document::{BlockContent, Paragraph, StyledDocument};
-use crate::resources::FileResolver;
 use crate::style::TextAlign;
 use crate::text::{AtomicMetrics, Line, TextContext, TextError};
 use common::{assert_pt, local_options};
@@ -16,7 +15,7 @@ fn document(css: &str, body: &str) -> StyledDocument {
         ),
         &local_options().base,
         &[],
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap()
 }
@@ -59,7 +58,7 @@ fn resumed_lines_use_new_widths_and_absolute_source_checkpoints() {
     let document = document("", &format!("<p>{}</p>", words.join(" ")));
     let paragraphs = paragraphs(&document);
     let source = paragraphs[0];
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let prepared = context.prepare_paragraph(source);
     let mut cursor = prepared.start();
@@ -94,7 +93,7 @@ fn resumed_arabic_keeps_full_word_shaping_absolute_spans_and_unboxed_link_identi
         1,
         "display:contents links use source text ranges"
     );
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let prepared = context.prepare_paragraph(source);
     let arabic_start = source.text().find('س').unwrap();
@@ -158,7 +157,7 @@ fn a_resumed_numeric_line_keeps_bidi_embedding_from_preceding_source() {
     let document = document("", "<p>A000 A001 A002 \u{202b}אבג 12 34 56 78\u{202c}</p>");
     let paragraphs = paragraphs(&document);
     let source = paragraphs[0];
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let prepared = context.prepare_paragraph(source);
     let numbers = source.text().find("12").unwrap();
@@ -193,7 +192,7 @@ fn soft_hyphens_and_emergency_graphemes_resume_at_consumed_source_boundaries() {
         "<p>A000 A001 A002 ab\u{ad}cd A003</p><p id=comb>e\u{301}e\u{301}e\u{301}e\u{301}</p>",
     );
     let paragraphs = paragraphs(&document);
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let prepared = context.prepare_paragraph(paragraphs[0]);
     let mut first = prepared.lines(prepared.start(), 100.0, &[]).unwrap();
@@ -225,7 +224,7 @@ fn page_local_iteration_does_not_turn_a_wrapped_line_into_a_paragraph_last_line(
         "<p>A000 A001 A002 A003<br>A004 A005</p>",
     );
     let paragraphs = paragraphs(&document);
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let prepared = context.prepare_paragraph(paragraphs[0]);
     let mut first = prepared.lines(prepared.start(), 100.0, &[]).unwrap();
@@ -249,7 +248,7 @@ fn empty_inline_edges_are_consumed_once_even_when_the_next_page_changes_width() 
     assert_eq!(paragraphs.len(), 1);
     assert_eq!(paragraphs[0].text(), "");
     assert!(!paragraphs[0].boxes().is_empty());
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let prepared = context.prepare_paragraph(paragraphs[0]);
     let mut first = prepared.lines(prepared.start(), 20.0, &[]).unwrap();
@@ -273,7 +272,7 @@ fn resumed_atomic_metrics_keep_original_indices_and_ignore_consumed_objects() {
     );
     let paragraphs = paragraphs(&document);
     assert_eq!(paragraphs[0].atomics().len(), 2);
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let prepared = context.prepare_paragraph(paragraphs[0]);
     let initial = [
@@ -315,7 +314,7 @@ fn resumed_atomic_metrics_keep_original_indices_and_ignore_consumed_objects() {
 fn a_checkpoint_from_another_paragraph_is_rejected_before_layout() {
     let document = document("", "<p>Same text</p><p>Same text</p>");
     let paragraphs = paragraphs(&document);
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let first = context.prepare_paragraph(paragraphs[0]);
     let second = context.prepare_paragraph(paragraphs[1]);
@@ -349,7 +348,11 @@ fn producing_one_line_does_not_shape_an_unrequested_suffix_or_retry_a_denied_fal
                     base.resolve(reference)?,
                 ));
             }
-            crate::resources::ResourceResolver::resolve(&FileResolver::default(), reference, base)
+            crate::resources::ResourceResolver::resolve(
+                &common::fixture_resolver(),
+                reference,
+                base,
+            )
         }
     }
     let resolver = DeniedFallback(std::cell::Cell::new(0));
@@ -393,7 +396,7 @@ fn pathological_missing_combining_sequences_cannot_trigger_unbounded_matching() 
     let text = format!("\u{ef00}{}", "\u{1ab0}".repeat(COMBINING_MARKS));
     let document = document("", &format!("<p>{text}</p>"));
     let paragraphs = paragraphs(&document);
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let result = context.layout_paragraph(paragraphs[0], 100.0, &[]);
     assert!(
@@ -425,7 +428,7 @@ fn resumed_css_bidi_overrides_preserve_visual_order_and_original_source_position
         &format!("<p><span style='direction:rtl;unicode-bidi:isolate-override'>{words}</span></p>"),
     );
     let paragraphs = paragraphs(&document);
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let prepared = context.prepare_paragraph(paragraphs[0]);
     let mut first = prepared.lines(prepared.start(), 100.0, &[]).unwrap();
@@ -497,7 +500,7 @@ fn pathological_css_bidi_expansion_hits_a_sticky_typed_limit() {
     );
     let document = document("", &body);
     let paragraphs = paragraphs(&document);
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let ready = context.prepare_paragraph(paragraphs[1]);
     let mut live = ready.lines(ready.start(), 100.0, &[]).unwrap();
@@ -540,7 +543,7 @@ fn pathological_css_bidi_expansion_hits_a_sticky_typed_limit() {
 fn leader_intrinsic_widths_keep_one_pattern_and_do_not_mutate_after_expansion() {
     let document = document("p::after{content:leader('.') 'Z'}", "<p>A</p>");
     let source = paragraphs(&document)[0];
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let minimum = Paragraph::generated(".Z", source.style()).unwrap().unwrap();
     let maximum = Paragraph::generated("A", source.style()).unwrap().unwrap();
@@ -586,7 +589,7 @@ fn indentation_keeps_first_and_forced_line_state_across_resumed_widths() {
             &format!("p{{text-indent:20% {keywords}}}"),
             "<p>MMMM MMMM<br>MMMM MMMM</p>",
         );
-        let resolver = FileResolver::default();
+        let resolver = common::fixture_resolver();
         let context = TextContext::new(&document.styles().fonts, &resolver);
         let prepared = context.prepare_paragraph(paragraphs(&document)[0]);
         let mut cursor = prepared.start();
@@ -606,7 +609,7 @@ fn indentation_keeps_first_and_forced_line_state_across_resumed_widths() {
 #[test]
 fn intrinsic_indentation_uses_zero_percentage_and_the_selected_line() {
     let document = document("", "<p>MMMM MMMM</p>");
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let source = paragraphs(&document)[0];
     let baseline = context.intrinsic_widths(source, &[], &[]).unwrap();
@@ -695,7 +698,7 @@ fn line_candidates_shape_each_whole_span_once() {
         64,
         |words| {
             let document = alternating_spans(words);
-            let resolver = FileResolver::default();
+            let resolver = common::fixture_resolver();
             let context = TextContext::new(&document.styles().fonts, &resolver);
             let prepared = context.prepare_paragraph(paragraphs(&document)[0]);
             let (runs, lines) = shaped_runs(&prepared, 1.0e5);
@@ -709,7 +712,7 @@ fn line_candidates_shape_each_whole_span_once() {
 fn relaying_a_paragraph_reshapes_only_the_pieces_line_ends_clip() {
     const WORDS: usize = 120;
     let document = alternating_spans(WORDS);
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let prepared = context.prepare_paragraph(paragraphs(&document)[0]);
     let (first, lines) = shaped_runs(&prepared, 200.0);
@@ -731,7 +734,7 @@ fn runs_with_the_same_settings_share_their_shape_plan() {
     // follow its faces and settings, not its runs.
     let shaped = |words| {
         let document = alternating_spans(words);
-        let resolver = FileResolver::default();
+        let resolver = common::fixture_resolver();
         let context = TextContext::new(&document.styles().fonts, &resolver);
         let prepared = context.prepare_paragraph(paragraphs(&document)[0]);
         let ((runs, lines), plans) = crate::work::measured(crate::work::Work::ShapePlan, || {

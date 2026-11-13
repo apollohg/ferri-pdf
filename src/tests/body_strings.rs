@@ -129,7 +129,7 @@ fn absent_named_string_in_an_empty_document_is_an_empty_value() {
 
 #[test]
 fn named_string_bookmark_labels_resolve_on_the_heading_page() {
-    let resolver = crate::resources::FileResolver::default();
+    let resolver = common::fixture_resolver();
     let html = format!(
         "<style>{PROFILE}h2{{string-set:heading content();bookmark-label:'Chapter ' string(heading)}}h2+h2{{break-before:page}}</style><h2>Alpha</h2><h2>Beta</h2>"
     );
@@ -217,7 +217,7 @@ fn body_string_reflow_cycles_keep_the_last_layout_with_a_diagnostic() {
 
 #[test]
 fn borrowed_layout_repeats_body_string_resolution_without_mutating_the_source() {
-    let resolver = crate::resources::FileResolver::default();
+    let resolver = common::fixture_resolver();
     let html = format!(
         "<style>{PROFILE}h2{{string-set:heading content()}}p::after{{content:string(heading)}}</style><p>See </p><h2>Title</h2>"
     );

@@ -1,7 +1,6 @@
 //! CSS Values 4 §6.1 relative lengths at computed-value time, against the bundled faces' own
 //! tables.
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
 
 const TOLERANCE_PT: f32 = 1e-3;
@@ -22,7 +21,7 @@ const INITIAL_FONT_SIZE: f32 = 12.0;
 /// The `#target` element's style in `<html><body><div id=target>`, after the page geometry
 /// is resolved from the root as documents do.
 fn target(css: &str) -> (Style, Stylesheet) {
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let mut sheet = Stylesheet::parse(&[StylesheetSource {
         text: css.into(),
         base: Default::default(),

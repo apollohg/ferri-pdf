@@ -1,5 +1,5 @@
 use crate::document::{BlockContent, Paragraph, StyledDocument};
-use crate::resources::{FileResolver, ResourceBase, Url};
+use crate::resources::{ResourceBase, Url};
 use std::fmt::Write;
 
 fn document(css: &str, body: &str) -> StyledDocument {
@@ -10,7 +10,7 @@ fn document(css: &str, body: &str) -> StyledDocument {
         &format!("<style>{css}</style>{body}"),
         &base,
         &[],
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )
     .unwrap_or_else(|error| panic!("transform fixture: {error}; CSS={css}; body={body}"))
 }

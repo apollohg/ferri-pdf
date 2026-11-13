@@ -659,6 +659,7 @@ dependencies = [
  "image-webp",
  "imagesize",
  "kurbo",
+ "libc",
  "log",
  "moxcms",
  "percent-encoding",

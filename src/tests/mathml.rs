@@ -1354,7 +1354,7 @@ fn math_attribute_metrics_report_unavailable_fonts_they_activate() {
         .join("tests/fixtures/fonts/MetricGlyphTest.ttf");
     let resolver = crate::resources::FileResolver {
         max_resource_bytes: RESOURCE_LIMIT_BYTES,
-        ..Default::default()
+        ..crate::tests::common::fixture_resolver()
     };
     let font_failures = |attribute: &str| {
         let source = format!(

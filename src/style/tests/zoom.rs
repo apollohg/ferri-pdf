@@ -1,5 +1,4 @@
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{LengthPercentage, Size, Style, Stylesheet, StylesheetSource};
 
 fn styles(child: &str) -> (Style, Style) {
@@ -9,7 +8,7 @@ fn styles(child: &str) -> (Style, Style) {
     }]).unwrap();
     let html = DocumentTree::parse("<section id=parent><div id=child>Text</div></section>");
     let select = |id| html.select(&Selector::parse(id).unwrap()).next().unwrap();
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let parent = sheet
         .computed_with_resolver(select("#parent"), &Style::default(), &resolver)
         .unwrap();

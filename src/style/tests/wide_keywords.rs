@@ -1,5 +1,4 @@
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{
     Display, LengthPercentage, Size, Style, Stylesheet, StylesheetSource, TableLayout,
     VerticalAlign, WhiteSpace,
@@ -17,11 +16,15 @@ fn styles(css: &str, html: &str) -> (Style, Style) {
         .computed_with_resolver(
             select("#parent"),
             &Style::default(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .unwrap();
     let child = sheet
-        .computed_with_resolver(select("#child"), &parent, &FileResolver::default())
+        .computed_with_resolver(
+            select("#child"),
+            &parent,
+            &crate::tests::common::fixture_resolver(),
+        )
         .unwrap();
     (parent, child)
 }

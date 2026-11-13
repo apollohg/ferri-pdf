@@ -18,7 +18,7 @@ fn font_base() -> crate::ResourceBase {
 }
 
 fn computed(css: &str) -> Style {
-    computed_with(css, &FileResolver::default())
+    computed_with(css, &common::fixture_resolver())
         .unwrap_or_else(|error| panic!("CSS {css}: {error}"))
 }
 
@@ -153,7 +153,7 @@ fn attribute_syntax_type_keywords_are_ascii_case_insensitive() {
     let style = computed_in(
         "#target{width:13pt;width:attr(data-size <LENGTH>,99pt);color:attr(data-color '<CoLoR>');transform:attr(data-transform <TRANSFORM-LIST>)}",
         "<p id=target data-size='17pt' data-color='red' data-transform='translateX(5pt) scale(2)'>Attribute</p>",
-        "#target", &Default::default(), &FileResolver::default(),
+        "#target", &Default::default(), &common::fixture_resolver(),
     ).unwrap();
     common::assert_pt(points(&style.width), 17.0);
     assert_eq!(style.color.rgb, [255, 0, 0]);
@@ -165,7 +165,7 @@ fn attribute_tokens_substitute_in_context_and_keep_relative_values_for_the_recei
     let style = computed_in(
         "#parent{font-size:10pt;--size:attr(data-size <length>)}#target{font-size:20pt;--seed:17pt;width:var(--size);height:attr(data-expression <length>,99pt);margin-left:attr(data-invalid <length>,3pt);background-image:attr(data-image <image>)}",
         "<div id=parent data-size='1em'><p id=target data-expression='if(media(print):calc(var(--seed) + attr(data-extra &lt;length>));else:99pt)' data-extra='2pt' data-invalid='var(--missing)' data-image='linear-gradient(red,blue)'>Attribute</p></div>",
-        "#target", &Default::default(), &FileResolver::default(),
+        "#target", &Default::default(), &common::fixture_resolver(),
     ).unwrap();
     common::assert_pt(points(&style.width), 20.0);
     common::assert_pt(points(&style.height), 19.0);
@@ -186,7 +186,7 @@ fn attribute_typed_strings_parse_css_escapes_and_custom_ident_rejects_reserved_v
         let style = computed_in(
             "#target{--label:attr(data-label <custom-ident>,missing);width:if(style(--label:marker):17pt;else:3pt)}",
             &format!("<p id=target data-label='{value}'>Attribute</p>"),
-            "#target", &Default::default(), &FileResolver::default(),
+            "#target", &Default::default(), &common::fixture_resolver(),
         ).unwrap();
         common::assert_pt(points(&style.width), expected);
     }
@@ -199,7 +199,7 @@ fn attribute_recursion_stops_at_the_nesting_bound_instead_of_using_fallback() {
         "<p id=target data-size='attr(data-size &lt;length>,19pt)'>Attribute</p>",
         "#target",
         &Default::default(),
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .expect("recursive attribute substitution must not fail computing");
     assert!(
@@ -239,7 +239,7 @@ fn attribute_values_match_all_numeric_syntax_types_in_context() {
             &html,
             "#target",
             &Default::default(),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         )
         .unwrap_or_else(|error| panic!("typed attribute {syntax} / {value}: {error}"));
         common::assert_pt(points(&style.width), 17.0);
@@ -251,7 +251,7 @@ fn attribute_values_share_shorthand_math_and_syntax_alternatives() {
     let style = computed_in(
         "#target{width:calc(3pt + attr(data-size <length>));margin:attr(data-edges '<length>+');height:attr(data-auto <length> | auto);font-family:attr(data-families <string>#);color:attr(data-color <color>);transform:attr(data-transform <transform-list>)}",
         "<p id=target data-size='14pt' data-edges='1pt 2pt 3pt 4pt' data-auto='auto' data-families='&quot;One&quot;,&quot;Two&quot;' data-color='red' data-transform='translateX(5pt) scale(2)'>Attribute</p>",
-        "#target",&Default::default(),&FileResolver::default(),
+        "#target",&Default::default(),&common::fixture_resolver(),
     ).unwrap();
     common::assert_pt(points(&style.width), 17.0);
     assert_eq!(style.height, Size::Auto);
@@ -276,7 +276,7 @@ fn attribute_values_share_shorthand_math_and_syntax_alternatives() {
         "<p id=target data-edges='1pt 2pt'>Attribute</p>",
         "#target",
         &Default::default(),
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     assert_eq!(
@@ -332,7 +332,7 @@ fn attribute_values_separate_missing_empty_invalid_and_syntax_error_stages() {
             &html,
             "#target",
             &Default::default(),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         )
         .unwrap();
         match expected {
@@ -406,7 +406,7 @@ fn attribute_types_parse_values_as_their_syntax_unit_or_raw_string() {
             &html,
             "#target",
             &Default::default(),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         )
         .unwrap_or_else(|error| panic!("{attribute} / {value}: {error}"));
         assert_eq!(
@@ -428,7 +428,7 @@ fn attribute_custom_values_freeze_lookup_on_the_declaring_element() {
     let style = computed_in(
         "#parent{--size:attr(data-size <length>);--label:attr(data-label)}#target{width:var(--size);height:attr(data-size <length>);margin-left:if(style(--label:\"Parent\"):3pt;else:99pt)}",
         "<div id=parent data-size='17pt' data-label='Parent'><p id=target data-size='29pt' data-label='Child'>Attribute</p></div>",
-        "#target",&Default::default(),&FileResolver::default(),
+        "#target",&Default::default(),&common::fixture_resolver(),
     ).unwrap();
     common::assert_pt(points(&style.width), 17.0);
     common::assert_pt(points(&style.height), 29.0);
@@ -468,7 +468,7 @@ fn attribute_taint_covers_selected_custom_reference_fallbacks() {
             "<p id=target data-color=red>Attribute</p>",
             "#target",
             &Default::default(),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         )
         .unwrap();
         assert!(
@@ -485,7 +485,7 @@ fn attribute_taint_blocks_url_use_through_inherited_custom_values() {
         "#parent{--asset:attr(data-asset <url>)}#target{background-image:var(--asset)}",
         "#parent{--asset:attr(data-asset *)}#target{--copy:var(--asset);background-image:var(--copy)}",
     ] {
-        let style = computed_in(css,"<div id=parent data-asset='url(&quot;secret.png&quot;)'><p id=target data-asset='url(&quot;secret.png&quot;)'>Attribute</p></div>","#target",&Default::default(),&FileResolver::default()).unwrap();
+        let style = computed_in(css,"<div id=parent data-asset='url(&quot;secret.png&quot;)'><p id=target data-asset='url(&quot;secret.png&quot;)'>Attribute</p></div>","#target",&Default::default(),&common::fixture_resolver()).unwrap();
         assert!(
             !style.decoration.backgrounds.has_images(),
             "attribute data cannot become a URL: {css}"
@@ -496,7 +496,7 @@ fn attribute_taint_blocks_url_use_through_inherited_custom_values() {
         "<p id=target data-color='red'>Attribute</p>",
         "#target",
         &Default::default(),
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     assert!(
@@ -521,7 +521,7 @@ fn attribute_url_taint_and_quoted_url_templates_keep_computed_invalidity() {
             "<p id=target data-extra='red' data-name='secret.png'>Attribute</p>",
             "#target",
             &Default::default(),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         )
         .unwrap();
         assert!(
@@ -529,7 +529,7 @@ fn attribute_url_taint_and_quoted_url_templates_keep_computed_invalidity() {
             "computed invalidity must not revive the earlier gradient: {value}"
         );
     }
-    let empty=computed_in("#target{background-image:linear-gradient(red,blue);background-image:url(\"safe.png\" attr(data-extra *))}","<p id=target data-extra=''>Attribute</p>","#target",&Default::default(),&FileResolver::default()).unwrap();
+    let empty=computed_in("#target{background-image:linear-gradient(red,blue);background-image:url(\"safe.png\" attr(data-extra *))}","<p id=target data-extra=''>Attribute</p>","#target",&Default::default(),&common::fixture_resolver()).unwrap();
     assert!(
         !empty.decoration.backgrounds.has_images(),
         "an empty tainted substitution inside a URL keeps its function ownership"
@@ -545,21 +545,21 @@ fn attribute_url_taint_and_quoted_url_templates_keep_computed_invalidity() {
 
 #[test]
 fn attribute_taint_is_checked_in_style_query_url_operands() {
-    let style=computed_in("#target{background-image:url(https://example.invalid/asset.png);width:if(style(background-image:attr(data-asset <url>)):99pt;else:17pt)}","<p id=target data-asset='url(https://example.invalid/asset.png)'>Attribute</p>","#target",&Default::default(),&FileResolver::default()).unwrap();
+    let style=computed_in("#target{background-image:url(https://example.invalid/asset.png);width:if(style(background-image:attr(data-asset <url>)):99pt;else:17pt)}","<p id=target data-asset='url(https://example.invalid/asset.png)'>Attribute</p>","#target",&Default::default(),&common::fixture_resolver()).unwrap();
     common::assert_pt(points(&style.width), 17.0);
 }
 
 #[test]
 fn attribute_substitution_preserves_whole_value_syntax_constraints() {
     let html = "<p id=target data-width='17pt'>Attribute</p>";
-    let selected=computed_in("#target{width:first-valid(toggle(10pt,attr(data-width <length>)),attr(data-width <length>))}",html,"#target",&Default::default(),&FileResolver::default()).unwrap();
+    let selected=computed_in("#target{width:first-valid(toggle(10pt,attr(data-width <length>)),attr(data-width <length>))}",html,"#target",&Default::default(),&common::fixture_resolver()).unwrap();
     common::assert_pt(points(&selected.width), 17.0);
     let invalid = computed_in(
         "#target{width:11pt;width:if(else:toggle(10pt,attr(data-width <length>)))}",
         html,
         "#target",
         &Default::default(),
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     assert_eq!(
@@ -567,7 +567,7 @@ fn attribute_substitution_preserves_whole_value_syntax_constraints() {
         Size::Auto,
         "a selected invalid whole value remains invalid at computed time"
     );
-    let queried=computed_in("#target{width:10pt;margin-left:if(style(width:toggle(10pt,attr(data-width <length>))):99pt;else:17pt)}",html,"#target",&Default::default(),&FileResolver::default()).unwrap();
+    let queried=computed_in("#target{width:10pt;margin-left:if(style(width:toggle(10pt,attr(data-width <length>))):99pt;else:17pt)}",html,"#target",&Default::default(),&common::fixture_resolver()).unwrap();
     common::assert_pt(points(&queried.margin[3]), 17.0);
     let supports = computed(
         "#target{margin-left:17pt}@supports(width:toggle(10pt,attr(data-width <length>))){#target{margin-left:99pt}}",
@@ -605,7 +605,7 @@ fn conditional_values_select_the_first_matching_print_and_supports_branch() {
         "<p id=target>Print</p>",
         "#target",
         &settings,
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     common::assert_pt(points(&style.width), 17.0);
@@ -729,7 +729,7 @@ fn conditional_style_ranges_share_typed_units_and_element_metrics() {
 fn conditional_style_queries_report_computed_property_cycles_with_sources() {
     let (_, degradations) = discarding(
         "#target{width:if(style(height:20pt):17pt;else:99pt);\nheight:if(style(width:17pt):20pt;else:88pt)}",
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     );
     let (sources, dependencies) = cycle(&degradations);
     assert_eq!(
@@ -749,7 +749,7 @@ fn conditional_style_queries_report_computed_property_cycles_with_sources() {
 fn conditional_style_queries_report_cross_custom_and_ordinary_property_cycles() {
     let (_, degradations) = discarding(
         "#target{--size:if(style(width:17pt):20pt;else:99pt);\nwidth:var(--size)}",
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     );
     let (sources, dependencies) = cycle(&degradations);
     assert_eq!(
@@ -839,7 +839,7 @@ fn conditional_supports_queries_use_the_declaring_stylesheet_namespace_map() {
         "<p id=target style='width:if(supports(selector(s|rect)):99pt;else:17pt)'>Inline</p>",
         "#target",
         &Default::default(),
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     common::assert_pt(points(&inline.width), 17.0);
@@ -881,7 +881,7 @@ fn conditional_font_queries_resolve_absolute_dimensions_without_font_cycles() {
     common::assert_pt(points(&style.width), 34.0);
     let (_, degradations) = discarding(
         "#target{height:2em;font-size:if(style(height:34pt):17pt;else:99pt)}",
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     );
     let (sources, dependencies) = cycle(&degradations);
     assert!(
@@ -913,7 +913,7 @@ fn conditional_custom_dependencies_do_not_evaluate_unselected_replacements() {
 #[test]
 fn conditional_queries_skip_inactive_metrics_and_keep_shared_limits() {
     let resolver = RecordingResolver {
-        inner: FileResolver::default(),
+        inner: common::fixture_resolver(),
         requests: Default::default(),
     };
     let face =
@@ -1268,7 +1268,7 @@ fn overflow_toggle_pairing_keeps_raw_values_and_avoids_false_cycles() {
 fn mutually_dependent_overflow_toggles_report_authored_cycle_sources() {
     let error = computed_with(
         "#parent{overflow:auto}\n#target{overflow-x:toggle(visible,scroll);\noverflow-y:toggle(visible,scroll)}",
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     ).expect_err("mutually dependent computed overflow axes must not guess a fixed point");
     let StyleError::DependencyCycle {
         sources,
@@ -1297,7 +1297,7 @@ fn toggle_display_comparison_uses_contents_exceptions_and_box_ancestry() {
         "<div id=parent><img id=target></div>",
         "#target",
         &Default::default(),
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     assert_eq!(
@@ -1307,7 +1307,7 @@ fn toggle_display_comparison_uses_contents_exceptions_and_box_ancestry() {
     );
     let item = computed_in(
         "#parent{display:flex}section{display:contents}#target{display:toggle(inline-block,inline-flex)}",
-        "<div id=parent><section><p id=target>item</p></section></div>", "#target", &Default::default(), &FileResolver::default(),
+        "<div id=parent><section><p id=target>item</p></section></div>", "#target", &Default::default(), &common::fixture_resolver(),
     ).unwrap();
     assert_eq!(
         item.display,
@@ -1323,7 +1323,7 @@ fn computed_display_blockifies_roots_and_flex_items_before_value_comparison() {
         "<p>Root</p>",
         "html",
         &Default::default(),
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     assert_eq!(
@@ -1421,7 +1421,7 @@ fn inherited_value_fallbacks_keep_local_lookup_and_empty_values_distinct() {
         "<p>Root</p>",
         "html",
         &Default::default(),
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     common::assert_pt(points(&style.width), 13.0);
@@ -1653,7 +1653,7 @@ fn calc_mix_rejects_invalid_types_easing_and_arity_before_cascading() {
 #[test]
 fn calc_mix_uses_element_fonts_variables_and_capability_checks() {
     let resolver = RecordingResolver {
-        inner: FileResolver::default(),
+        inner: common::fixture_resolver(),
         requests: Default::default(),
     };
     let style=computed_with("@font-face{font-family:Metric;src:url(FontStyleTest-Ital.ttf)}#target{font-family:Metric;font-size:20pt;--end:2ch;width:calc-mix(.5,1em,var(--end));height:first-valid(calc-mix(.25,10pt,30pt),99pt)}@supports(width:calc-mix(.5 by steps(2),10pt,30pt)){#target{margin-left:13pt}}",&resolver).unwrap();
@@ -1668,7 +1668,7 @@ fn calc_mix_reports_excluded_animation_timelines_without_fabricating_progress() 
     for timeline in ["--clock", "scroll()", "view()"] {
         let (style, degradations) = discarding(
             &format!("#target{{width:12pt;width:calc-mix({timeline},10pt,30pt)}}"),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         );
         assert!(
             degradations.iter().any(|degradation| matches!(
@@ -1702,7 +1702,7 @@ fn calc_mix_easing_parameters_keep_element_context_and_computed_ranges() {
         common::assert_pt(points(&style.margin[3]), expected);
     }
     let resolver = RecordingResolver {
-        inner: FileResolver::default(),
+        inner: common::fixture_resolver(),
         requests: Default::default(),
     };
     let style=computed_with("@font-face{font-family:Metric;src:url(FontStyleTest-Ital.ttf)}#target{font-family:Metric;font-size:20pt;width:calc-mix(.5 by cubic-bezier(0,calc(1ch / 1pt),1,0),0pt,100pt)}",&resolver).unwrap();
@@ -1762,13 +1762,13 @@ fn media_progress_uses_the_shared_range_feature_values_and_types() {
     ] {
         let style = media_computed(
             &format!("#target{{margin-left:calc({source} * 100pt)}}"),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         );
         common::assert_pt(points(&style.margin[3]), expected);
     }
     let style = media_computed(
         "#target{width:calc(media-progress(width,0pt,1000pt) * 100%)}",
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     );
     assert_eq!(
         style.width.resolve_definite(None),
@@ -1781,7 +1781,7 @@ fn media_progress_uses_the_shared_range_feature_values_and_types() {
 #[test]
 fn media_progress_endpoints_use_initial_fonts_and_the_media_viewport() {
     let resolver = RecordingResolver {
-        inner: FileResolver::default(),
+        inner: common::fixture_resolver(),
         requests: Default::default(),
     };
     for (endpoint, expected) in [("50em", 30.0), ("100ch", 30.0), ("50vw", 60.0)] {
@@ -1819,7 +1819,7 @@ fn media_progress_rejects_invalid_features_and_feature_value_types() {
     ] {
         let style = media_computed(
             &format!("#target{{margin-left:11pt;margin-left:calc({source} * 1pt)}}"),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         );
         assert_eq!(
             points(&style.margin[3]),
@@ -1829,7 +1829,7 @@ fn media_progress_rejects_invalid_features_and_feature_value_types() {
     }
     let style = media_computed(
         "#target{--end:100%;width:17pt;width:calc(media-progress(width,0pt,var(--end)) * 1pt)}",
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     );
     assert!(
         matches!(style.width, Size::Auto),
@@ -1837,7 +1837,7 @@ fn media_progress_rejects_invalid_features_and_feature_value_types() {
     );
     let style = media_computed(
         "#target{width:first-valid(calc(media-progress(width,0pt,1000pt) * 100pt),99pt)}@supports (width:calc(media-progress(width,0pt,100%)*1pt)){#target{height:99pt}}@supports (opacity:media-progress(color,0,16)){#target{margin-left:13pt}}",
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     );
     common::assert_pt(points(&style.width), 60.0);
     assert!(matches!(style.height, Size::Auto));
@@ -1857,7 +1857,7 @@ fn media_progress_applies_media_value_boundaries_before_interpolation() {
     ] {
         let style = media_computed(
             &format!("#target{{margin-left:calc(7pt + sign({source}) * 1pt)}}"),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         );
         common::assert_pt(points(&style.margin[3]), expected);
     }
@@ -1883,7 +1883,7 @@ fn media_progress_in_font_face_descriptors_uses_the_configured_paper() {
         ),
     ] {
         let resolver = RecordingResolver {
-            inner: FileResolver::default(),
+            inner: common::fixture_resolver(),
             requests: Default::default(),
         };
         let style = media_computed(
@@ -1920,7 +1920,7 @@ fn tree_counting_functions_resolve_against_element_siblings_in_typed_math() {
     let style = computed_in(
         "#target{order:sibling-count();z-index:sibling-index();font-size:calc(sibling-index() * 6pt);line-height:sibling-count();width:calc(100% / sibling-count());margin-left:calc(sibling-index() * 3pt);opacity:calc(sibling-count() / 8);color:rgb(calc(sibling-index() * 50) 0 0);--index:sibling-index();height:calc(var(--index) * 4pt)}",
         "<section>text<!--comment--><i></i><p id=target>0</p><span hidden></span><b style='display:none'></b></section>",
-        "#target", &crate::style::PrintSettings::default(), &FileResolver::default(),
+        "#target", &crate::style::PrintSettings::default(), &common::fixture_resolver(),
     ).unwrap();
     assert_eq!(
         style.flex.order, 4,
@@ -1956,7 +1956,7 @@ fn tree_counting_functions_preserve_syntax_validation_and_consumer_context() {
     }
     let style = computed_in(
         "section{--index:sibling-index()}#target{order:SiBlInG-CoUnT();z-index:sibling-\\69ndex();height:calc(var(--index) * 7pt);width:first-valid(calc(sibling-index() * 6pt),99pt)}@supports(width:calc(sibling-count() * 1pt)){#target{margin-left:14pt}}",
-        "<section><i></i><p id=target>0</p><b></b></section>","#target", &crate::style::PrintSettings::default(), &FileResolver::default(),
+        "<section><i></i><p id=target>0</p><b></b></section>","#target", &crate::style::PrintSettings::default(), &common::fixture_resolver(),
     ).unwrap();
     assert_eq!(style.flex.order, 3);
     assert_eq!(style.z_index, Some(2));
@@ -1975,7 +1975,7 @@ fn tree_counting_uses_the_pinned_flat_tree_instead_of_light_siblings() {
             html,
             selector,
             &crate::style::PrintSettings::default(),
-            &FileResolver::default(),
+            &common::fixture_resolver(),
         )
         .unwrap();
         assert_eq!(
@@ -2011,7 +2011,7 @@ fn tree_counting_root_and_page_contexts_do_not_invent_an_element_for_media() {
 #[test]
 fn tree_counting_stays_invalid_in_font_descriptors_and_negated_media_queries() {
     let resolver = RecordingResolver {
-        inner: FileResolver::default(),
+        inner: common::fixture_resolver(),
         requests: Default::default(),
     };
     let style = computed_with(
@@ -2301,7 +2301,7 @@ fn first_valid_page_properties_share_selection_and_defaulting() {
 #[test]
 fn first_valid_support_queries_and_metric_resources_share_capabilities() {
     let resolver = RecordingResolver {
-        inner: FileResolver::default(),
+        inner: common::fixture_resolver(),
         requests: Default::default(),
     };
     let face = "@font-face{font-family:Metric;src:url(FontStyleTest-Ital.ttf)}#target{font-family:Metric;font-size:20pt}";
@@ -3004,7 +3004,7 @@ impl ResourceResolver for RecordingResolver {
 #[test]
 fn inactive_metric_values_and_support_queries_do_not_load_author_faces() {
     let resolver = RecordingResolver {
-        inner: FileResolver::default(),
+        inner: common::fixture_resolver(),
         requests: Default::default(),
     };
     let face =
@@ -3029,7 +3029,7 @@ fn inactive_metric_values_and_support_queries_do_not_load_author_faces() {
 #[test]
 fn math_color_metrics_load_only_for_the_computed_value() {
     let resolver = RecordingResolver {
-        inner: FileResolver::default(),
+        inner: common::fixture_resolver(),
         requests: Default::default(),
     };
     let face = "@font-face{font-family:Metric;src:url(FontStyleTest-Ital.ttf)}#target{font-family:Metric;font-size:20pt}";
@@ -3062,7 +3062,7 @@ fn metric_fonts_over_the_resource_limit_fall_back_to_the_next_family() {
     const FACE: &str = "@font-face{font-family:Metric;src:url(MetricGlyphTest.ttf)}";
     let resolver = FileResolver {
         max_resource_bytes: RESOURCE_LIMIT_BYTES,
-        ..Default::default()
+        ..common::fixture_resolver()
     };
     let metrics = |style: &Style| format!("{:?} {:?}", style.width, style.color);
     for declaration in [
@@ -3287,7 +3287,7 @@ fn geometry_cycle_reports_winning_declarations_and_the_closed_dependency_chain()
         .unwrap();
         let tree = DocumentTree::parse("<p>Cycle</p>");
         sheet
-            .resolve_document_root(tree.root_element(), &FileResolver::default())
+            .resolve_document_root(tree.root_element(), &common::fixture_resolver())
             .unwrap_or_else(|error| panic!("{css}: a cycle must not fail computing: {error}"));
         let degradations = sheet.take_degradations();
         let (sources, dependencies) = cycle(&degradations);
@@ -3494,7 +3494,7 @@ fn page_border_metrics_follow_computed_styles_before_geometry_dependencies() {
         .unwrap();
         let tree = DocumentTree::parse("<p>Borders</p>");
         sheet
-            .resolve_document_root(tree.root_element(), &FileResolver::default())
+            .resolve_document_root(tree.root_element(), &common::fixture_resolver())
             .unwrap_or_else(|error| panic!("page border {css}: {error}"));
         let area = sheet.page_content_box();
         common::assert_pt(area.x, inset);
@@ -3506,7 +3506,7 @@ fn page_border_metrics_follow_computed_styles_before_geometry_dependencies() {
 fn suppressed_borders_do_not_resolve_font_metric_lengths() {
     for border_style in ["none", "hidden", "solid"] {
         let resolver = RecordingResolver {
-            inner: FileResolver::default(),
+            inner: common::fixture_resolver(),
             requests: Default::default(),
         };
         let css = format!(
@@ -3542,7 +3542,7 @@ fn suppressed_borders_do_not_resolve_font_metric_lengths() {
         }
     }
     let resolver = RecordingResolver {
-        inner: FileResolver::default(),
+        inner: common::fixture_resolver(),
         requests: Default::default(),
     };
     let mut options = common::local_options();
@@ -3580,7 +3580,7 @@ fn large_negative_page_margins_keep_the_resolved_content_size() {
     }]).unwrap();
     let tree = DocumentTree::parse("<p>Finite content area</p>");
     let root = sheet
-        .resolve_document_root(tree.root_element(), &FileResolver::default())
+        .resolve_document_root(tree.root_element(), &common::fixture_resolver())
         .expect("finite negative margins must not erase an independently resolved content size");
     let area = sheet.page_content_box();
     assert_eq!([area.width, area.height], [100.0, 100.0]);
@@ -3598,7 +3598,7 @@ fn overflowing_page_margin_extents_take_the_initial_page_geometry() {
     .unwrap();
     let tree = DocumentTree::parse("<p>Finite geometry</p>");
     sheet
-        .resolve_document_root(tree.root_element(), &FileResolver::default())
+        .resolve_document_root(tree.root_element(), &common::fixture_resolver())
         .unwrap_or_else(|error| panic!("a nonfinite derived extent must degrade: {error}"));
     let degradations = sheet.take_degradations();
     assert!(
@@ -3738,7 +3738,7 @@ fn zero_authored_page_sizes_keep_css_geometry_on_a_positive_output_sheet() {
         .unwrap();
         let tree = DocumentTree::parse("<p>Viewport</p>");
         let root = sheet
-            .resolve_document_root(tree.root_element(), &FileResolver::default())
+            .resolve_document_root(tree.root_element(), &common::fixture_resolver())
             .unwrap();
         common::assert_pt(points(&root.width), area[0]);
         common::assert_pt(points(&root.height), area[1]);
@@ -3756,7 +3756,7 @@ fn zero_page_area_is_a_valid_first_page_viewport() {
     .unwrap();
     let tree = DocumentTree::parse("<p>Zero viewport</p>");
     let root = sheet
-        .resolve_document_root(tree.root_element(), &FileResolver::default())
+        .resolve_document_root(tree.root_element(), &common::fixture_resolver())
         .expect("zero dimensions are valid CSS sizes, not dependency cycles or invalid geometry");
     assert_eq!(sheet.page, [400.0, 600.0]);
     assert_eq!(

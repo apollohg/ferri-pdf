@@ -477,7 +477,7 @@ impl Stylesheet {
         &mut self,
         root: &crate::style::Style,
     ) -> Result<(), StyleError> {
-        self.resolve_page_geometry_with_resolver(root, &crate::resources::FileResolver::default())
+        self.resolve_page_geometry_with_resolver(root, &crate::tests::common::fixture_resolver())
     }
 
     #[cfg(test)]

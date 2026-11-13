@@ -1,7 +1,6 @@
 use super::common;
 
 use crate::document::{BlockBox, BlockContent, DocumentDiagnostic, DocumentError, StyledDocument};
-use crate::resources::FileResolver;
 use crate::style::Degradation;
 use common::{PROFILE, local_options};
 
@@ -87,7 +86,7 @@ fn side_independent_geometry_can_supply_viewport_values_during_selection() {
     ] {
         let document = StyledDocument::parse(
             &format!("<!doctype html><style>{PROFILE}@page{{size:200pt 300pt;margin:10pt}}{css}</style><p>Visible</p>"),
-            &local_options().base, &[], &FileResolver::default(),
+            &local_options().base, &[], &common::fixture_resolver(),
         ).unwrap_or_else(|error| panic!("independent geometry must not produce a false cycle for {css}: {error}"));
         assert_eq!(
             document.page_box().request.side,
@@ -117,7 +116,7 @@ fn independent_page_name_can_supply_geometry_to_side_selection() {
 fn independent_page_side_can_supply_geometry_to_name_selection() {
     let document = StyledDocument::parse(
         &format!("<!doctype html><style>{PROFILE}@page{{size:200pt 300pt;margin:10pt}}@page:left{{size:300pt 400pt}}body{{direction:rtl}}p{{page:if(style(width:28pt):A;else:B);width:10vw}}</style><p>Visible</p>"),
-        &local_options().base, &[], &FileResolver::default(),
+        &local_options().base, &[], &common::fixture_resolver(),
     ).unwrap_or_else(|error| panic!("independent left page must supply the viewport for page name: {error}"));
     assert_eq!(document.styles().page, [300.0, 400.0]);
     assert_eq!(document.page_box().request.name.as_deref(), Some("A"));
@@ -131,7 +130,7 @@ fn independent_page_side_can_supply_geometry_to_name_selection() {
 fn inactive_side_qualified_page_names_do_not_create_viewport_cycles() {
     let document = StyledDocument::parse(
         &format!("<!doctype html><style>{PROFILE}@page{{size:200pt 300pt;margin:10pt}}@page A:left{{size:400pt 500pt}}p{{page:if(style(width:18pt):A;else:B);width:10vw}}</style><p>Visible</p>"),
-        &local_options().base, &[], &FileResolver::default(),
+        &local_options().base, &[], &common::fixture_resolver(),
     ).unwrap_or_else(|error| panic!("a left-only named rule cannot affect the fixed right first page: {error}"));
     assert_eq!(document.styles().page, [200.0, 300.0]);
     assert_eq!(document.page_box().request.name.as_deref(), Some("A"));
@@ -146,7 +145,7 @@ fn parse(css: &str, body: &str) -> Result<StyledDocument, DocumentError> {
         &format!("<!doctype html><style>{PROFILE}{PAGE_RULES}{css}</style>{body}"),
         &local_options().base,
         &[],
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
 }
 
@@ -299,7 +298,7 @@ fn first_selection_matches_normalized_inline_table_and_flex_boundaries() {
 fn page_name_independent_geometry_can_supply_a_viewport_during_selection() {
     let document = StyledDocument::parse(
         &format!("<!doctype html><style>{PROFILE}@page{{size:200pt 300pt;margin:10pt}}span{{padding-left:10vw}}p{{page:if(style(width:100pt):A;else:B);width:10vw}}</style><span></span><p>Body</p>"),
-        &local_options().base, &[], &FileResolver::default(),
+        &local_options().base, &[], &common::fixture_resolver(),
     ).unwrap();
     assert_eq!(document.styles().page, [200.0, 300.0]);
 }

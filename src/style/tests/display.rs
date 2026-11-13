@@ -1,6 +1,5 @@
 //! CSS Display 3 §2.7 and §5: run-in boxes inlinify their contents.
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{Display, Style, Stylesheet, StylesheetSource};
 
 /// Computed displays of `#run`, `#child` and `#leaf`, each the previous one's child.
@@ -15,7 +14,7 @@ fn displays(css: &str) -> [Display; 3] {
     ["#run", "#child", "#leaf"].map(|id| {
         let element = html.select(&Selector::parse(id).unwrap()).next().unwrap();
         parent = sheet
-            .computed_with_resolver(element, &parent, &FileResolver::default())
+            .computed_with_resolver(element, &parent, &crate::tests::common::fixture_resolver())
             .unwrap_or_else(|error| panic!("`{css}`: {id} must compute: {error}"));
         parent.display.clone()
     })
@@ -125,7 +124,11 @@ fn math_inner_display_uses_namespace_and_table_tag_before_box_fixup() {
                     panic!("computed-display fixture must retain #target: {markup}")
                 });
             let style = sheet
-                .computed_with_resolver(target, &Style::default(), &FileResolver::default())
+                .computed_with_resolver(
+                    target,
+                    &Style::default(),
+                    &crate::tests::common::fixture_resolver(),
+                )
                 .unwrap();
             assert_eq!(
                 style.display, expected,
@@ -141,7 +144,11 @@ fn math_inner_display_uses_namespace_and_table_tag_before_box_fixup() {
         .unwrap();
     assert_eq!(
         sheet
-            .computed_with_resolver(target, &Style::default(), &FileResolver::default())
+            .computed_with_resolver(
+                target,
+                &Style::default(),
+                &crate::tests::common::fixture_resolver()
+            )
             .unwrap()
             .display,
         Display::InlineTable,

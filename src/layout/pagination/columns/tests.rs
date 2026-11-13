@@ -1,6 +1,5 @@
 use super::*;
 use crate::document::StyledDocument;
-use crate::resources::FileResolver;
 use crate::text::TextContext;
 
 impl<'a, 't> ColumnLayout<'a, 't>
@@ -55,7 +54,7 @@ fn paint_signature(output: &ColumnOutput<'_>) -> Vec<String> {
 #[test]
 fn retained_column_layouts_release_the_measurer_and_preserve_independent_source_state() {
     const COLUMN_HEIGHT: f32 = 30.0;
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("tests/oracle/fixtures")
         .into();

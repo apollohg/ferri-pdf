@@ -1,5 +1,4 @@
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{Page, PageRequest, PageSide, Style, Stylesheet, StylesheetSource};
 
 const TOLERANCE_PT: f32 = 0.001;
@@ -35,7 +34,7 @@ fn selected_rules_resolve_geometry_production_and_margin_content_from_one_cascad
     let sheet = sheet(
         "@page{size:200pt 300pt;margin:20pt;font-size:10pt;@top-center{content:'Default'}}@page A{size:300pt 400pt;@top-center{content:'A ' counter(page)}}@page B{size:500pt 300pt;margin:10pt;padding:1vw;bleed:calc(1vw + 1pt);marks:crop;@top-center{content:'B ' counter(page) ' of ' counter(pages)}}",
     );
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let root = Style::default();
     let snapshot = sheet.page;
     let first = sheet
@@ -91,7 +90,7 @@ fn selector_lists_choose_their_maximum_specificity_and_distinguish_case_blank_an
     let sheet = sheet(
         r"@page{size:200pt 300pt;margin:20pt}@page cases_page, :first{margin-left:25pt}@page ca\73 es_page:first{margin-left:12pt}@page cases_page:first:first{margin-left:10pt}@page cases_page:right{margin-left:40pt}@page cases_page:left{margin-left:30pt}@page cases_page:blank{margin-left:8pt}@page Cases_Page{margin-left:90pt}@page cases_page:left:right{margin-left:99pt}@page auto{margin-left:98pt}@page AUTO{margin-left:97pt}",
     );
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     for (name, side, first, blank, expected) in [
         (Some("cases_page"), PageSide::Right, true, false, 10.0),
         (Some("cases_page"), PageSide::Left, false, false, 30.0),
@@ -123,7 +122,7 @@ fn page_candidates_preserve_important_layer_inversion_and_descriptor_rollback() 
             &Style::default(),
             request(Some("chosen"), PageSide::Right, true, false),
             None,
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .unwrap();
     assert_eq!(page.geometry.paper, [300.0, 400.0]);
@@ -142,7 +141,7 @@ fn page_candidates_preserve_important_layer_inversion_and_descriptor_rollback() 
             &Style::default(),
             request(Some("chosen"), PageSide::Right, true, false),
             None,
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .unwrap();
     assert_eq!(
@@ -156,7 +155,7 @@ fn page_candidates_preserve_important_layer_inversion_and_descriptor_rollback() 
 fn unmatched_named_descriptors_do_not_block_other_page_types() {
     let sheet =
         sheet("@page{size:200pt 300pt;margin:20pt}@page unused{page-orientation:rotate-left}");
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let ordinary = sheet
         .resolve_page(&Style::default(), PageRequest::default(), None, &resolver)
         .unwrap();
@@ -175,7 +174,7 @@ fn user_important_page_values_outrank_more_specific_author_rules() {
             &Style::default(),
             request(Some("chosen"), PageSide::Right, true, false),
             None,
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .unwrap();
     assert_eq!(page.geometry.paper, [300.0, 400.0]);
@@ -202,7 +201,7 @@ fn page_specificity_components_saturate_without_overflowing_into_the_name_compon
             &Style::default(),
             request(Some("chosen"), PageSide::Right, true, false),
             None,
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .unwrap();
     assert_pt(page.geometry.margin[3], 11.0);
@@ -219,7 +218,7 @@ fn nth_page_selectors_parse_an_plus_b_and_groups_and_count_as_first() {
         4,
         "a reserved group name, a missing group, bad An+B and a space after the colon are invalid: {diagnostics:?}"
     );
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let sequence = |number, groups: &[(&str, usize)]| {
         Some(crate::style::PageSequence {
             number,
@@ -287,7 +286,7 @@ fn the_computed_page_property_keeps_auto_distinct_from_explicit_inheritance() {
             .next()
             .unwrap()
     };
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let parent = sheet
         .computed_with_resolver(element("parent"), &Style::default(), &resolver)
         .unwrap();

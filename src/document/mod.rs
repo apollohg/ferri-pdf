@@ -352,7 +352,7 @@ impl StyledDocument {
                 presentation: crate::style::Presentation::Paged,
                 ancestors: &[],
             },
-            &crate::resources::FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
             work_limit,
         )
     }

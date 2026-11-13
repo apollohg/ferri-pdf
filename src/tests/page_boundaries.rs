@@ -1,7 +1,6 @@
 use super::common;
 
 use crate::document::{BlockBox, BlockContent, StyledDocument};
-use crate::resources::FileResolver;
 use crate::style::{Display, Page};
 use common::{PROFILE, local_options};
 
@@ -10,7 +9,7 @@ fn document(css: &str, body: &str) -> StyledDocument {
         &format!("<!doctype html><style>{PROFILE}{css}</style>{body}"),
         &local_options().base,
         &[],
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap()
 }

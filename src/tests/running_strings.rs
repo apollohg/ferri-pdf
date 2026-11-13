@@ -94,7 +94,7 @@ fn captured(css: &str, body: &str) -> Vec<Vec<(String, String)>> {
         &format!("<style>{PROFILE}{css}</style>{body}"),
         &local_options().base,
         &[],
-        &crate::resources::FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .expect("string assignments must be captured without laying out page headers");
     document
@@ -539,7 +539,7 @@ fn element_text_repeated_past_the_text_limit_is_cut_in_running_strings_and_bookm
         &html,
         &local_options().base,
         &[],
-        &crate::resources::FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .expect("bookmark labels past the limit are cut, not failed");
     let label = &document.navigation().bookmarks[0].label;

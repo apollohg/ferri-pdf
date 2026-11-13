@@ -45,7 +45,7 @@ fn file_resource_limit_and_root_apply_before_font_parsing() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
     let resolver = crate::FileResolver {
         max_resource_bytes: 4,
-        ..Default::default()
+        ..common::fixture_resolver()
     };
     assert!(
         matches!(
@@ -1515,7 +1515,10 @@ fn an_empty_trailing_box_cannot_create_an_automatic_blank_page() {
 fn missing_image_resources_cannot_vanish_when_display_is_block() {
     let result = render_html(
         "<img style='display:block' src='image.png'>",
-        &RenderOptions::default(),
+        &RenderOptions {
+            base: env!("CARGO_MANIFEST_DIR").into(),
+            ..Default::default()
+        },
     );
     let output = result.unwrap();
     assert!(
@@ -1909,6 +1912,7 @@ fn unused_font_sources_are_not_opened_and_failed_primary_fonts_fall_back() {
     }
     let assets = RecordingAssets(RefCell::new(Vec::new()));
     let options = RenderOptions {
+        base: Path::new("assets").into(),
         include_layout: true,
         ..Default::default()
     };
@@ -2147,7 +2151,7 @@ fn source_lists_try_supported_fonts_in_order_and_report_skipped_sources() {
         },
         &crate::FileResolver {
             max_resource_bytes: 4,
-            ..Default::default()
+            ..common::fixture_resolver()
         },
     )
     .expect("a font over the resource limit is unavailable, not fatal");

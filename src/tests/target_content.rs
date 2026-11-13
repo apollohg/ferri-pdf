@@ -83,7 +83,7 @@ fn target_counters_preserve_nested_instances_and_counter_styles() {
 #[test]
 fn borrowed_layout_resolves_literal_targets_without_mutating_the_source_document() {
     let options = local_options();
-    let resolver = crate::resources::FileResolver::default();
+    let resolver = common::fixture_resolver();
     let html = format!(
         "<style>{PROFILE}.next{{break-before:page}}.reference::after{{content:target-counter('#target',page)}}</style><p class=reference>Page </p><p id=target class=next>Destination</p>"
     );
@@ -151,7 +151,7 @@ fn repeated_target_layout_reuses_loaded_images() {
     }
     let resolver = CountingResolver {
         images: Cell::new(0),
-        files: FileResolver::default(),
+        files: common::fixture_resolver(),
     };
     let html = format!(
         "<style>{PROFILE}img{{width:20pt;height:20pt}}h2{{break-before:page}}p::after{{content:target-counter('#target',page)}}</style><img src='../assets/image-pattern.png'><p>Page </p><h2 id=target>Destination</h2>"
@@ -192,7 +192,7 @@ fn late_named_page_margins_resolve_targets_not_seen_on_the_first_page() {
 
 #[test]
 fn borrowed_layout_resolves_late_margin_targets_on_repeated_calls() {
-    let resolver = crate::resources::FileResolver::default();
+    let resolver = common::fixture_resolver();
     let html = format!(
         "<style>{PROFILE}@page chapter{{@top-left{{content:target-text('#target') ' ' target-counter('#target',page)}}}}h2{{page:chapter;break-before:page}}</style><p>Opening</p><h2 id=target>Destination</h2>"
     );
@@ -271,7 +271,7 @@ fn target_references_in_string_assignments_reach_page_margins() {
 
 #[test]
 fn target_reference_in_an_explicit_bookmark_label_resolves() {
-    let resolver = crate::resources::FileResolver::default();
+    let resolver = common::fixture_resolver();
     let html = format!(
         "<style>{PROFILE}h2{{bookmark-label:target-text('#target') ' page ' target-counter('#target',page)}}.next{{break-before:page}}</style><h2>Opening</h2><p id=target class=next>Destination</p>"
     );
@@ -408,7 +408,7 @@ fn layouts_for_page_numbers_reuse_every_style_the_first_formatting_computed() {
     let html = format!(
         "<style>{PROFILE}@page{{size:360pt 240pt;margin:24pt}}p,h2{{margin:0;font:12pt/18pt Spike}}.next{{break-before:page}}a::after{{content:' ' target-counter(attr(href),page)}}.total::after{{content:' of ' counter(pages)}}</style>{contents}<p class=total>Pages</p>{sections}"
     );
-    let resolver = crate::resources::FileResolver::default();
+    let resolver = common::fixture_resolver();
     let (document, formatting) = work::measured(Work::ComputedStyle, || {
         crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .expect("the document formats")

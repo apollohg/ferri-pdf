@@ -1,5 +1,5 @@
 use crate::document::{BlockContent, StyledDocument};
-use crate::resources::{FileResolver, ResourceBase};
+use crate::resources::ResourceBase;
 
 const SERIF: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSerif.ttf");
 const SANS: &[u8] = include_bytes!("../../../assets/fonts/DejaVuSans.ttf");
@@ -9,7 +9,7 @@ const OUTER: &str = "@font-face{font-family:Shared;src:local('DejaVu Serif')}bod
 const INNER: &str = "@font-face{font-family:Shared;src:local('DejaVu Sans')}";
 
 fn assert_faces(html: &str, expected: &[(&str, &[u8])]) {
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let document = StyledDocument::parse(html, &ResourceBase::default(), &[], &resolver)
         .expect("the shadow font document must format");
     let mut pending = vec![document.root()];

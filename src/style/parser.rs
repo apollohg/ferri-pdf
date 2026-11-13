@@ -1,4 +1,4 @@
-use crate::resources::ResourceBase;
+use crate::resources::{FILE_SCHEME, ResourceBase, ResourceError, Url};
 use crate::style::selector::Namespaces;
 use crate::style::{
     SourceLocation, StyleDiagnostic, StyleDiagnosticKind, StyleError, selector::RuleSelector,
@@ -687,11 +687,17 @@ fn consume_nested<'i>(
 }
 
 const URL_FUNCTION: &str = "url(";
+/// The functions whose string arguments are URLs (CSS Images 4 §2.3 and §2.4).
+const IMAGE_FUNCTIONS: [&str; 2] = ["image", "image-set"];
+const FUNCTION_OPEN: char = '(';
 const FRAGMENT_PREFIX: char = '#';
 
+#[derive(PartialEq)]
 enum UrlPart {
     Token,
     String,
+    /// A string argument of one of [`IMAGE_FUNCTIONS`].
+    ImageString,
 }
 struct UrlReference {
     range: Range<usize>,
@@ -699,9 +705,11 @@ struct UrlReference {
     part: UrlPart,
 }
 
+/// Collects the URL references of `input`, the arguments of an image function if `image`.
 fn url_references<'i>(
     input: &mut Parser<'i, '_>,
     found: &mut Vec<UrlReference>,
+    image: bool,
 ) -> Result<(), ParseError<'i, String>> {
     loop {
         let start = input.position().byte_index();
@@ -709,6 +717,11 @@ fn url_references<'i>(
             return Ok(());
         };
         match token {
+            Token::QuotedString(reference) if image => found.push(UrlReference {
+                range: start..input.position().byte_index(),
+                reference: reference.to_string(),
+                part: UrlPart::ImageString,
+            }),
             Token::UnquotedUrl(reference) => found.push(UrlReference {
                 range: start..input.position().byte_index(),
                 reference: reference.to_string(),
@@ -723,23 +736,30 @@ fn url_references<'i>(
                         reference,
                         part: UrlPart::String,
                     });
-                    url_references(nested, found)
+                    url_references(nested, found, false)
                 })?;
             }
-            Token::Function(_)
-            | Token::ParenthesisBlock
-            | Token::SquareBracketBlock
-            | Token::CurlyBracketBlock => {
-                input.parse_nested_block(|nested| url_references(nested, found))?;
+            Token::Function(name) => {
+                let image = IMAGE_FUNCTIONS
+                    .iter()
+                    .any(|function| name.eq_ignore_ascii_case(function));
+                input.parse_nested_block(|nested| url_references(nested, found, image))?;
+            }
+            Token::ParenthesisBlock | Token::SquareBracketBlock | Token::CurlyBracketBlock => {
+                input.parse_nested_block(|nested| url_references(nested, found, false))?;
             }
             _ => {}
         }
     }
 }
 
-/// Resolves relative `url()` references against the declaring stylesheet, as computed
-/// values require; absolute and `data:` references are unchanged, and so are fragment-only
-/// references, which name the current document whatever the base (CSS Values 4 §4.5.1).
+/// Resolves relative `url()` references, and the strings that name images, against the
+/// declaring stylesheet, as computed values require; absolute and `data:` references are
+/// unchanged, and so are fragment-only references, which name the current document whatever
+/// the base (CSS Values 4 §4.5.1). A reference with no base to resolve against is unchanged
+/// too: the declaration stays valid and the resource it names is unavailable when it is
+/// loaded. A remote stylesheet that names a local file declares nothing: the file would
+/// load with the document's base, which may be local.
 pub(super) fn absolute_urls(
     declaration: &mut Declaration,
     base: &ResourceBase,
@@ -750,25 +770,41 @@ pub(super) fn absolute_urls(
     Ok(())
 }
 
-/// `value`, declared for `name`, with its relative `url()` references resolved against `base`;
+/// `value`, declared for `name`, with its relative URL references resolved against `base`;
 /// `None` when it has none to resolve.
 pub(super) fn absolute_url_text(
     value: &str,
     base: &ResourceBase,
     name: &str,
 ) -> Result<Option<String>, StyleError> {
-    if !value.contains('\\') && !value.to_ascii_lowercase().contains(URL_FUNCTION) {
+    let lowercase = value.to_ascii_lowercase();
+    if !value.contains('\\')
+        && !lowercase.contains(URL_FUNCTION)
+        && !IMAGE_FUNCTIONS.iter().any(|function| {
+            lowercase
+                .match_indices(function)
+                .any(|(start, _)| lowercase[start + function.len()..].starts_with(FUNCTION_OPEN))
+        })
+    {
         return Ok(None);
     }
     let found = references_in(value).map_err(|error| format!("url() in {name}: {error}"))?;
     splice(value, found, |reference| {
-        if reference.is_empty()
-            || reference.starts_with(FRAGMENT_PREFIX)
-            || crate::resources::Url::parse(reference).is_ok()
-        {
+        if reference.is_empty() || reference.starts_with(FRAGMENT_PREFIX) {
             return Ok(None);
         }
-        Ok(Some(base.resolve(reference)?.to_string()))
+        if let Ok(url) = Url::parse(reference) {
+            return if url.scheme() == FILE_SCHEME && base.is_remote() {
+                Err(ResourceError::LocalFromRemote(url).into())
+            } else {
+                Ok(None)
+            };
+        }
+        match base.resolve(reference) {
+            Ok(url) => Ok(Some(url.to_string())),
+            Err(ResourceError::NoBase(_)) => Ok(None),
+            Err(error) => Err(error.into()),
+        }
     })
 }
 
@@ -781,17 +817,18 @@ pub(crate) fn rewrite_urls(
     if !value.to_ascii_lowercase().contains(URL_FUNCTION) {
         return None;
     }
-    let found = references_in(value).ok()?;
+    let mut found = references_in(value).ok()?;
+    found.retain(|reference| reference.part != UrlPart::ImageString);
     splice(value, found, |reference| Ok(map(reference)))
         .ok()
         .flatten()
 }
 
-/// The `url()` references of `value`, in order.
+/// The `url()` references and image strings of `value`, in order.
 fn references_in(value: &str) -> Result<Vec<UrlReference>, String> {
     let mut found = Vec::new();
     let mut input = ParserInput::new(value);
-    url_references(&mut Parser::new(&mut input), &mut found)
+    url_references(&mut Parser::new(&mut input), &mut found, false)
         .map_err(|error| format!("{error:?}"))?;
     Ok(found)
 }

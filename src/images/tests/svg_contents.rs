@@ -17,7 +17,7 @@ fn svg(xml: &str) -> crate::svg::usvg::Tree {
         .inline_svg(
             xml.to_owned(),
             &ResourceBase::default(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .expect("SVG contents fixture must load");
     let Image::Svg(svg) = image.as_ref() else {
@@ -504,7 +504,7 @@ fn active_svg_data_urls_obey_the_callers_resource_budget() {
     );
     let resolver = FileResolver {
         max_resource_bytes: RESOURCE_LIMIT,
-        ..Default::default()
+        ..crate::tests::common::fixture_resolver()
     };
     let (tree, failures) = svg_with_failures(xml, &resolver);
     assert!(
@@ -545,7 +545,7 @@ fn svg_css_component_depth_is_bounded_before_native_conversion() {
                 let result = ImageCache::default().inline_svg(
                     xml,
                     &ResourceBase::default(),
-                    &FileResolver::default(),
+                    &crate::tests::common::fixture_resolver(),
                 );
                 assert_eq!(
                     result.is_ok(),
@@ -582,7 +582,11 @@ fn resized_svg_viewports_keep_authored_root_attributes_for_selectors() {
         "{SVG_OPEN}<style>svg[width='200'] g{{display:contents}}svg[width='200'] image{{display:none}}</style><g transform='translate(50)'><rect x='10' y='20' width='30' height='40'/></g><image href='https://denied.example/unused.png' width='20' height='20'/></svg>"
     );
     let image = ImageCache::default()
-        .inline_svg(xml, &ResourceBase::default(), &FileResolver::default())
+        .inline_svg(
+            xml,
+            &ResourceBase::default(),
+            &crate::tests::common::fixture_resolver(),
+        )
         .unwrap();
     let Image::Svg(svg) = image.as_ref() else {
         panic!("vector image expected")
@@ -837,7 +841,7 @@ fn svg_functional_selector_depth_uses_the_existing_source_budget() {
         let result = ImageCache::default().inline_svg(
             xml,
             &ResourceBase::default(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         );
         if depth < EXCESSIVE_DEPTH {
             let image = result.expect("the accepted selector depth must remain usable");
@@ -875,7 +879,7 @@ fn svg_zoom_products_reject_overflow_and_underflow_before_geometry() {
         let result = ImageCache::default().inline_svg(
             xml,
             &ResourceBase::default(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         );
         assert!(
             matches!(
@@ -1057,7 +1061,11 @@ fn svg_natural_dimensions_use_cascaded_lengths_and_root_font_metrics() {
             "<svg xmlns='http://www.w3.org/2000/svg' {attributes}><style>{css}</style><rect width='100%' height='100%' fill='green'/></svg>"
         );
         let image = ImageCache::default()
-            .inline_svg(xml, &ResourceBase::default(), &FileResolver::default())
+            .inline_svg(
+                xml,
+                &ResourceBase::default(),
+                &crate::tests::common::fixture_resolver(),
+            )
             .unwrap_or_else(|error| panic!("{name}: {error}"));
         let actual = image.natural_size();
         assert_eq!(
@@ -1240,7 +1248,7 @@ fn svg_text_glyphs_scale_by_the_size_adjust_descriptor() {
             .inline_svg(
                 format!("{SVG_OPEN}<text x='10' y='60' font-family='Adjusted' font-size='20'>HHH</text></svg>"),
                 &ResourceBase::default(),
-                &FileResolver::default(),
+                &crate::tests::common::fixture_resolver(),
             )
             .unwrap();
         let Image::Svg(svg) = image.as_ref() else {
@@ -1272,7 +1280,7 @@ fn svg_text_line_metrics_take_the_metric_override_descriptors() {
                      style='white-space:pre'>H\nH</text></svg>"
                 ),
                 &ResourceBase::default(),
-                &FileResolver::default(),
+                &crate::tests::common::fixture_resolver(),
             )
             .unwrap();
         let Image::Svg(svg) = image.as_ref() else {
@@ -1533,7 +1541,7 @@ fn svg_elements_past_the_depth_limit_are_placed_beside_their_parents() {
             "<g transform='translate(1)'>".repeat(groups),
             "</g>".repeat(groups)
         );
-        let (tree, limits) = limited_svg(&body, &FileResolver::default());
+        let (tree, limits) = limited_svg(&body, &crate::tests::common::fixture_resolver());
         assert_eq!(limits, limited, "limits of {groups} nested groups");
         let paths = paths(&tree);
         assert_eq!(
@@ -1569,7 +1577,7 @@ fn svg_text_past_the_depth_limit_keeps_its_characters_in_order() {
             "<tspan>".repeat(spans),
             "</tspan>".repeat(spans)
         );
-        let (tree, limits) = limited_svg(&body, &FileResolver::default());
+        let (tree, limits) = limited_svg(&body, &crate::tests::common::fixture_resolver());
         assert_eq!(limits, limited, "limits of {spans} nested spans");
         let text: String = groups(&tree)
             .into_iter()
@@ -1604,7 +1612,10 @@ fn svg_references_past_the_reference_depth_are_omitted() {
         }
         body + "<rect width='20' height='10' mask='url(#m0)'/>"
     };
-    let (tree, limits) = limited_svg(&chain(MAX_REFERENCE_DEPTH), &FileResolver::default());
+    let (tree, limits) = limited_svg(
+        &chain(MAX_REFERENCE_DEPTH),
+        &crate::tests::common::fixture_resolver(),
+    );
     assert!(
         limits.is_empty(),
         "the reference depth itself converts: {limits:?}"
@@ -1612,7 +1623,10 @@ fn svg_references_past_the_reference_depth_are_omitted() {
     assert_bounds(&tree, [0.0, 0.0, 20.0, 10.0]);
     // One further mask is omitted as an invalid reference is, which leaves each mask that
     // holds it empty, and so invalid, up to the rectangle.
-    let (tree, limits) = limited_svg(&chain(MAX_REFERENCE_DEPTH + 1), &FileResolver::default());
+    let (tree, limits) = limited_svg(
+        &chain(MAX_REFERENCE_DEPTH + 1),
+        &crate::tests::common::fixture_resolver(),
+    );
     assert_eq!(
         limits,
         [(crate::images::SVG_REFERENCE_RESOURCE, MAX_REFERENCE_DEPTH)]
@@ -1760,7 +1774,11 @@ fn markers_in_markers_stop_converting_at_the_node_budget() {
         work::measured(Work::Conversion, || {
             let mut cache = ImageCache::default();
             cache
-                .inline_svg(body, &ResourceBase::default(), &FileResolver::default())
+                .inline_svg(
+                    body,
+                    &ResourceBase::default(),
+                    &crate::tests::common::fixture_resolver(),
+                )
                 .expect("SVG content past the node budget renders limited");
             cache.take_limited()
         })
@@ -2033,7 +2051,7 @@ fn svg_declarations_without_presentation_values_compute_as_unset_and_are_reporte
                 "{SVG_OPEN}<text x='0' y='20' style='text-transform:toggle(uppercase, none)'>AB</text></svg>"
             ),
             &ResourceBase::default(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .expect("a toggle() in SVG content renders rather than failing");
     assert!(

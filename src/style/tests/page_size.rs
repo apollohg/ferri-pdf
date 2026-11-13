@@ -1,4 +1,3 @@
-use crate::resources::FileResolver;
 use crate::style::{Style, Stylesheet, StylesheetSource};
 
 const TOLERANCE_PT: f32 = 0.005;
@@ -9,7 +8,10 @@ fn parse(css: &str) -> Result<Stylesheet, crate::style::StyleError> {
         text: css.into(),
         base: Default::default(),
     }])?;
-    sheet.resolve_page_geometry_with_resolver(&Style::default(), &FileResolver::default())?;
+    sheet.resolve_page_geometry_with_resolver(
+        &Style::default(),
+        &crate::tests::common::fixture_resolver(),
+    )?;
     Ok(sheet)
 }
 

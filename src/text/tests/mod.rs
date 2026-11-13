@@ -7,7 +7,7 @@ mod skip_ink;
 mod tailoring;
 
 use crate::document::{BlockBox, BlockContent, Paragraph, StyledDocument};
-use crate::resources::{FileResolver, ResourceBase};
+use crate::resources::ResourceBase;
 use crate::style::Style;
 
 /// `body` styled as a document.
@@ -16,7 +16,7 @@ fn document(body: &str) -> StyledDocument {
         body,
         &ResourceBase::default(),
         &[],
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )
     .expect("parse document")
 }

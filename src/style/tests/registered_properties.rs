@@ -1,7 +1,7 @@
 //! CSS Properties and Values API 1: `@property` registrations and the computed values,
 //! inheritance and initial values they give custom properties.
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::{FileResolver, ResourceBase};
+use crate::resources::ResourceBase;
 use crate::style::{LengthPercentage, POINTS_PER_PIXEL, Size, Style, Stylesheet, StylesheetSource};
 
 const TREE: &str = "<section id=root data-image=a.png data-size=4pt><div id=child><p id=leaf>X</p></div></section>";
@@ -19,7 +19,7 @@ fn computed_in(css: &str, base: ResourceBase) -> (Vec<Style>, Vec<String>) {
         let parent = styles.last().cloned().unwrap_or_default();
         styles.push(
             sheet
-                .computed_with_resolver(element, &parent, &FileResolver::default())
+                .computed_with_resolver(element, &parent, &crate::tests::common::fixture_resolver())
                 .unwrap_or_else(|error| panic!("compute `{css}`: {error}")),
         );
     }

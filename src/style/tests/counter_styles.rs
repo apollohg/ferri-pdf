@@ -2,7 +2,6 @@
 //! descriptors that shape a representation, fallback, `extends` and the cascade of rules.
 use crate::dom::{DocumentTree, Selector};
 use crate::fonts::FontNamespace;
-use crate::resources::FileResolver;
 use crate::style::{
     ListStyleType, Style, Stylesheet, StylesheetSource,
     counter_style::{CounterStyle, Scope},
@@ -562,9 +561,13 @@ fn list_style_type(css: &str) -> Result<ListStyleType, crate::style::StyleError>
         .next()
         .unwrap();
     let ol = html.select(&Selector::parse("ol").unwrap()).next().unwrap();
-    let parent = sheet.computed_with_resolver(ol, &Style::default(), &FileResolver::default())?;
+    let parent = sheet.computed_with_resolver(
+        ol,
+        &Style::default(),
+        &crate::tests::common::fixture_resolver(),
+    )?;
     sheet
-        .computed_with_resolver(item, &parent, &FileResolver::default())
+        .computed_with_resolver(item, &parent, &crate::tests::common::fixture_resolver())
         .map(|style| style.list_style_type)
 }
 

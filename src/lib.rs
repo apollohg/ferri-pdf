@@ -43,6 +43,7 @@ mod writer;
 
 pub use multipart::{
     HtmlPart, MultipartOutput, PartOutput, render_parts, render_parts_with_resolver,
+    render_parts_with_resolvers,
 };
 
 use crate::document::{DocumentError, StyledDocument};
@@ -89,8 +90,14 @@ pub use crate::writer::{
 /// Settings for a rendering job. CSS controls page size and formatting.
 #[derive(Clone, Debug, Default)]
 pub struct RenderOptions {
-    /// Local directory or full document URL for resolving relative resources.
+    /// Local directory or full document URL for resolving relative resources. The default
+    /// names no location: relative references do not resolve and no local file is read.
     pub base: ResourceBase,
+    /// The folder [`render_html`], [`render_bytes`] and [`render_parts`] read local files
+    /// in, instead of the one `base` names ([`ResourceBase::local_directory`]). The
+    /// functions that take a resolver leave local files to it.
+    #[cfg(file_system)]
+    pub file_root: Option<std::path::PathBuf>,
     /// Additional author stylesheets, appended after document stylesheets.
     pub stylesheets: Vec<String>,
     /// User-origin stylesheets, including accessibility and personal print preferences.
@@ -196,10 +203,41 @@ type DefaultResolver = UrlResolver;
 #[cfg(not(feature = "http"))]
 type DefaultResolver = resources::LocalResolver;
 
+#[cfg(file_system)]
+impl RenderOptions {
+    /// The loader of the local files a document with `base` reads: those inside `file_root`
+    /// or, when that is unset, inside the folder `base` names.
+    pub fn file_resolver(&self, base: &ResourceBase) -> FileResolver {
+        FileResolver {
+            root: self.file_root.clone().or_else(|| base.local_directory()),
+            ..FileResolver::default()
+        }
+    }
+}
+
+/// The resolver of the functions that take none, for a document with `base`.
+#[cfg(feature = "http")]
+fn default_resolver(options: &RenderOptions, base: &ResourceBase) -> DefaultResolver {
+    UrlResolver::new(LoaderOptions {
+        files: options.file_resolver(base),
+        ..LoaderOptions::default()
+    })
+}
+#[cfg(all(not(feature = "http"), file_system))]
+fn default_resolver(options: &RenderOptions, base: &ResourceBase) -> DefaultResolver {
+    options.file_resolver(base)
+}
+#[cfg(not(file_system))]
+fn default_resolver(_: &RenderOptions, _: &ResourceBase) -> DefaultResolver {
+    DefaultResolver::default()
+}
+
 /// Render an HTML string and its CSS with local, data and, with the `http` feature, HTTP(S)
-/// resources; where there is no file system, only data URLs resolve.
+/// resources; where there is no file system, only data URLs resolve. Local files are read
+/// only inside the folder [`RenderOptions::base`] names, or `file_root` when set, and never
+/// for content with a remote base.
 pub fn render_html(html: &str, options: &RenderOptions) -> Result<RenderOutput, Error> {
-    render_with_resolver(html, options, &DefaultResolver::default())
+    render_with_resolver(html, options, &default_resolver(options, &options.base))
 }
 
 /// Render using a caller-supplied resource source, such as an in-memory asset map.
@@ -224,7 +262,7 @@ pub fn render_with_resolver(
 
 /// Render buffered HTML bytes using standards encoding detection.
 pub fn render_bytes(bytes: &[u8], options: &RenderOptions) -> Result<RenderOutput, Error> {
-    render_bytes_with_resolver(bytes, options, &DefaultResolver::default())
+    render_bytes_with_resolver(bytes, options, &default_resolver(options, &options.base))
 }
 
 /// Render buffered HTML bytes with a caller-supplied resource resolver.

@@ -20,7 +20,6 @@ mod wide_keywords;
 mod zoom;
 
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{Degradation, Style, Stylesheet, StylesheetSource};
 
 /// The selector of the element `discarded` styles.
@@ -38,9 +37,11 @@ fn discarded(css: &str) -> Vec<Degradation> {
         .select(&Selector::parse(TARGET).expect("static selector"))
         .next()
         .expect("the target element");
-    if let Err(error) =
-        sheet.computed_with_resolver(element, &Style::default(), &FileResolver::default())
-    {
+    if let Err(error) = sheet.computed_with_resolver(
+        element,
+        &Style::default(),
+        &crate::tests::common::fixture_resolver(),
+    ) {
         panic!("`{css}` must compute, discarding what the engine cannot: {error}");
     }
     sheet.take_degradations()

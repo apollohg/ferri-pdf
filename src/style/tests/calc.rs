@@ -1,6 +1,5 @@
 use crate::dom::{DocumentTree, Selector};
 use crate::paint::MAX_CALC_MAGNITUDE;
-use crate::resources::FileResolver;
 use crate::style::{LengthPercentage, Size, Style, StyleError, Stylesheet, StylesheetSource};
 
 const TOLERANCE: f32 = 1e-4;
@@ -15,9 +14,13 @@ fn computed(css: &str) -> Result<Style, StyleError> {
     let parent = sheet.computed_with_resolver(
         select("#parent"),
         &Style::default(),
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )?;
-    sheet.computed_with_resolver(select("#child"), &parent, &FileResolver::default())
+    sheet.computed_with_resolver(
+        select("#child"),
+        &parent,
+        &crate::tests::common::fixture_resolver(),
+    )
 }
 fn child(declarations: &str) -> Style {
     computed(&format!(

@@ -1,7 +1,6 @@
 //! CSS Logical 1 §4: flow-relative and physical declarations cascade together as one.
 use crate::dom::{DocumentTree, Selector};
 use crate::paint::BorderStyle;
-use crate::resources::FileResolver;
 use crate::style::{
     LengthPercentage, Overflow, Size, Style, Stylesheet, StylesheetSource,
     logical::{BOTTOM, LEFT, RIGHT, TOP},
@@ -30,11 +29,15 @@ fn styles(css: &str, html: &str) -> (Style, Style) {
         .computed_with_resolver(
             select("#parent"),
             &Style::default(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .unwrap_or_else(|error| panic!("{css:?}: parent style failed: {error}"));
     let child = sheet
-        .computed_with_resolver(select("#child"), &parent, &FileResolver::default())
+        .computed_with_resolver(
+            select("#child"),
+            &parent,
+            &crate::tests::common::fixture_resolver(),
+        )
         .unwrap_or_else(|error| panic!("{css:?}: child style failed: {error}"));
     (parent, child)
 }

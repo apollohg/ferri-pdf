@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 
 #[test]
 fn data_urls_decode_bytes_and_preserve_the_containing_base() {
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     for reference in [
         "data:application/octet-stream;base64,AAH%2B%2Fw%3D%3D",
         "data:,\0%01%FE%FF",
@@ -81,7 +81,7 @@ fn embedded_stylesheets_use_the_same_public_resource_pipeline() {
 
 #[test]
 fn literal_percent_signs_and_utf8_survive_data_url_decoding() {
-    let resolver = FileResolver::default();
+    let resolver = common::fixture_resolver();
     for payload in ["100%", "%x0", "%0", "%x%41", "café", "%%"] {
         let expected = payload.replace("%41", "A");
         assert_eq!(
@@ -173,7 +173,7 @@ fn data_metadata_preserves_mime_parameters_and_default_type() {
             Some("utf-8"),
         ),
     ] {
-        let resolved = FileResolver::default()
+        let resolved = common::fixture_resolver()
             .resolve_with_metadata(reference, &base)
             .unwrap();
         assert_eq!(resolved.resource.bytes, b"a", "{reference}");

@@ -7,13 +7,36 @@ use std::path::Path;
 )]
 pub(crate) const PROFILE: &str = include_str!("../oracle/fixtures/profile.css");
 
+/// The repository: the fixtures name files beside their own folder, and the fonts among them
+/// are links to the bundled ones.
+#[allow(
+    dead_code,
+    reason = "each test binary uses a subset of the shared helpers"
+)]
+pub(crate) const FIXTURE_ROOT: &str = env!("CARGO_MANIFEST_DIR");
+
+#[allow(
+    dead_code,
+    reason = "each test binary uses a subset of the shared helpers"
+)]
 pub(crate) fn local_options() -> RenderOptions {
     RenderOptions {
-        base: Path::new(env!("CARGO_MANIFEST_DIR"))
-            .join("tests/oracle/fixtures")
-            .into(),
+        base: Path::new(FIXTURE_ROOT).join("tests/oracle/fixtures").into(),
+        file_root: Some(FIXTURE_ROOT.into()),
         include_layout: true,
         ..Default::default()
+    }
+}
+
+/// Reads the files of the repository, wherever the fixture that names them is.
+#[allow(
+    dead_code,
+    reason = "each test binary uses a subset of the shared helpers"
+)]
+pub(crate) fn fixture_resolver() -> ferri_pdf::FileResolver {
+    ferri_pdf::FileResolver {
+        root: Some(FIXTURE_ROOT.into()),
+        ..ferri_pdf::FileResolver::default()
     }
 }
 

@@ -151,7 +151,7 @@ mod tests {
 
     #[test]
     fn target_stabilization_charges_all_passes_to_one_budget() {
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -203,7 +203,7 @@ mod tests {
     #[test]
     fn a_first_pass_out_of_work_omits_the_content_it_reached_late() {
         const ITEMS: usize = 300;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -274,7 +274,7 @@ mod tests {
         // layout fails at the next of them and omits it.
         const SECTIONS: usize = crate::layout::MAX_OMITTED_BOXES;
         const FAILING_BOX: &str = "<div class=over></div>";
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -352,7 +352,7 @@ mod tests {
     #[test]
     fn column_candidates_share_the_jobs_budget_without_poisoning_later_jobs() {
         const LIMIT: usize = 8192;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let content = "<div class=item></div>".repeat(320);
         let parse = |columns| {
             StyledDocument::parse(
@@ -386,7 +386,7 @@ mod tests {
         const LIMIT: usize = 16_384;
         const BLOCKS: usize = 256;
         const BLOCKS_PER_PAGE: usize = 8;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -443,7 +443,7 @@ mod tests {
         // Formatting flattens orthogonal flows nested deeper, so a smaller budget, not more
         // segments, is what the same measurements must exhaust.
         const SMALLER_LIMIT: usize = LIMIT / 1000;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -488,7 +488,7 @@ mod tests {
         const TOKENS: usize = 8192;
         const WORK_PER_TOKEN: usize = 512;
         const LIMIT: usize = TOKENS * WORK_PER_TOKEN;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -565,7 +565,7 @@ mod tests {
     #[test]
     fn balancing_stops_when_adjacent_heights_cannot_be_bisected() {
         const LIMIT: usize = 4096;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let document = StyledDocument::parse(
             "<!doctype html><style>@page{size:200pt 2000000pt;margin:0}html,body{margin:0}section{column-count:2;column-gap:0}div{height:1000000pt}</style><section><div></div><div></div></section>",
             &ResourceBase::default(),
@@ -581,7 +581,7 @@ mod tests {
     fn repeated_table_geometry_consumes_the_same_budget() {
         const LIMIT: usize = 1024;
         const ROWS: usize = 32;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let body = "<tr><td><div></div></td></tr>".repeat(ROWS);
         let document = StyledDocument::parse(
             &format!("<!doctype html><style>@page{{size:200pt 200pt;margin:10pt}}html,body{{margin:0}}table{{border-spacing:0}}td{{padding:0}}thead div{{height:40pt}}tbody div{{height:100pt}}</style><table><thead><tr><td><div></div></td></tr></thead><tbody>{body}</tbody></table>"),
@@ -606,7 +606,7 @@ mod tests {
     fn generated_margin_text_shares_the_body_budget() {
         const LIMIT: usize = 4096;
         const PAGES: usize = 8;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -678,7 +678,7 @@ mod tests {
     #[test]
     fn footnote_parts_copy_only_the_lines_they_show() {
         const FOOTNOTES: usize = 96;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -721,7 +721,7 @@ mod tests {
     #[test]
     fn row_lanes_start_fragmentainers_without_room_instead_of_yielding_them_again() {
         const LIMIT: usize = 65_536;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -756,7 +756,7 @@ mod tests {
 
     #[test]
     fn grid_lanes_in_a_shrink_to_fit_float_of_a_thousand_columns_progress() {
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -791,7 +791,7 @@ mod tests {
     #[test]
     fn floats_across_fragmentainers_measure_their_content_once_per_containing_block() {
         const LINES: usize = 48;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -821,7 +821,7 @@ mod tests {
     #[test]
     fn table_rows_progress_past_repeated_edges_that_fill_their_fragmentainers() {
         const LIMIT: usize = 65_536;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -853,7 +853,7 @@ mod tests {
     fn fixed_columns_without_room_for_cloned_edges_take_1px_of_content_each() {
         const LIMIT: usize = 4096;
         const CONTENT_HEIGHT: f32 = 100.0;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         // The columns are as tall as the box's cloned padding, so each takes the 1px of its
         // content that guarantees progress (CSS Break 3 §4.4) and the overflow columns
         // continue in the inline direction (CSS Multi-column Layout 1 §8.2).
@@ -899,7 +899,7 @@ mod tests {
     #[test]
     fn paginating_a_table_takes_work_linear_in_its_rows() {
         const ROWS: usize = 96;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();
@@ -979,7 +979,7 @@ mod tests {
 
     /// The units of `work` that laying out `body` does on small pages, which it must span.
     fn paged_work(what: &str, body: &str, work: crate::work::Work) -> usize {
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let document = paged_document(body, &resolver);
         let (_, units) = crate::work::measured(work, || {
             paged_pass(what, &document, &resolver, Budget::new(MAX_LAYOUT_WORK))
@@ -1089,7 +1089,7 @@ mod tests {
                 let cards: String = (0..items)
                     .map(|index| format!("<div>card {index}</div>"))
                     .collect();
-                let resolver = FileResolver::default();
+                let resolver = crate::tests::common::fixture_resolver();
                 let document = paged_document(
                     &format!(
                         "<style>.grid{{display:grid;grid-template-columns:repeat(4,1fr);gap:2pt;{css}}}.grid div{{border:1pt solid}}</style><div class=grid>{cards}</div>"
@@ -1145,7 +1145,7 @@ mod tests {
                     siblings("after")
                 );
             }
-            let resolver = FileResolver::default();
+            let resolver = crate::tests::common::fixture_resolver();
             let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
                 .join("tests/oracle/fixtures")
                 .into();
@@ -1194,7 +1194,7 @@ mod tests {
         const TWO_COLUMN_PARAGRAPHS: usize = 144;
         const THREE_COLUMN_PARAGRAPHS: usize = 96;
         const BANNER_AFTER: usize = 8;
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let base: ResourceBase = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("tests/oracle/fixtures")
             .into();

@@ -5,9 +5,8 @@ use crate::document::{ParseOptions, StyledDocument};
 use crate::writer::PdfPart;
 
 use crate::{
-    DefaultResolver, Error, HeadingLocation, LayoutTrace, PdfError, RenderDiagnostic,
-    RenderOptions, ResourceBase, ResourceResolver, checked_diagnostics, pdf_error,
-    prepare_document,
+    Error, HeadingLocation, LayoutTrace, PdfError, RenderDiagnostic, RenderOptions, ResourceBase,
+    ResourceResolver, checked_diagnostics, default_resolver, pdf_error, prepare_document,
 };
 
 enum HtmlSource<'a> {
@@ -69,11 +68,13 @@ pub struct MultipartOutput {
 
 /// Render independent HTML parts in order. Each part begins on a new page.
 /// The first part supplies PDF metadata; output image settings apply to the whole job.
+/// Each part reads local files only inside the folder its own base names, or the options'
+/// `file_root` when set.
 pub fn render_parts(
     parts: &[HtmlPart<'_>],
     options: &RenderOptions,
 ) -> Result<MultipartOutput, Error> {
-    render_parts_with_resolver(parts, options, &DefaultResolver::default())
+    render_parts_with_resolvers(parts, options, |base| default_resolver(options, base))
 }
 
 /// Render independent parts using a shared caller-supplied resource resolver.
@@ -82,14 +83,26 @@ pub fn render_parts_with_resolver(
     options: &RenderOptions,
     resolver: &dyn ResourceResolver,
 ) -> Result<MultipartOutput, Error> {
+    render_parts_with_resolvers(parts, options, |_| resolver)
+}
+
+/// Render independent parts, each with the resolver `resolver_for` makes for its base, such
+/// as one that reads only that part's folder.
+pub fn render_parts_with_resolvers<R: ResourceResolver>(
+    parts: &[HtmlPart<'_>],
+    options: &RenderOptions,
+    resolver_for: impl Fn(&ResourceBase) -> R,
+) -> Result<MultipartOutput, Error> {
     if parts.is_empty() {
         return Err(PdfError::EmptyParts.into());
     }
     let mut prepared = Vec::with_capacity(parts.len());
     let mut document_urls = HashMap::new();
     for (index, part) in parts.iter().enumerate() {
+        let base = part.base.as_ref().unwrap_or(&options.base);
+        let resolver = &resolver_for(base);
         let parse = ParseOptions {
-            base: part.base.as_ref().unwrap_or(&options.base),
+            base,
             additional: &options.stylesheets,
             user: &options.user_stylesheets,
             settings: &options.print,

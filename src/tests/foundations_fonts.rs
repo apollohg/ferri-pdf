@@ -456,7 +456,7 @@ fn modern_font_source_hints_skip_unsupported_technology_and_report_policy_failur
     );
     let resolver = crate::FileResolver {
         max_resource_bytes: FONT_BYTE_LIMIT,
-        ..Default::default()
+        ..common::fixture_resolver()
     };
     let output = crate::render_with_resolver(&html, &options, &resolver)
         .expect("a font over the resource limit is unavailable, not fatal");

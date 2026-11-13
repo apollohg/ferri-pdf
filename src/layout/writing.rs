@@ -921,9 +921,9 @@ mod tests {
     fn frame_jobs_include_atomic_annotations_table_groups_and_column_spanners() {
         use crate::document::{BlockContent, StyledDocument};
         use crate::layout::measure::{Measurer, frame_dependencies};
-        use crate::resources::{FileResolver, ResourceBase};
+        use crate::resources::ResourceBase;
         let html = "<!doctype html><style>@page{size:600pt;margin:20pt}body{margin:0;font:12pt/1 serif}.v{writing-mode:vertical-rl}.flex{display:flex}.grid{display:grid}table{border-spacing:0}td{padding:0}.columns{columns:2;height:60pt}p{margin:0}.all{column-span:all}ruby{ruby-position:inter-character}</style>            <p><span class=v>A</span></p>            <div class=flex><div><span class=v>B</span></div></div>            <div class=grid><div><span class=v>C</span></div></div>            <table><thead><tr><td><span class=v>D</span></td></tr></thead><tbody><tr><td><span class=v>E</span></td></tr></tbody><tfoot><tr><td><span class=v>F</span></td></tr></tfoot></table>            <div class=columns><p><span class=v>G</span></p><p class=all><span class=v>H</span></p><p><span class=v>I</span></p></div>            <p><ruby>J<rt>K</rt></ruby></p>";
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let document =
             StyledDocument::parse(html, &ResourceBase::default(), &[], &resolver).unwrap();
         let text = crate::text::TextContext::new(&document.styles().fonts, &resolver);
@@ -972,7 +972,7 @@ mod tests {
     fn alternating_frame_measurements_complete_on_the_default_test_stack() {
         use crate::document::StyledDocument;
         use crate::layout::measure::{FlowItem, Measurer};
-        use crate::resources::{FileResolver, ResourceBase};
+        use crate::resources::ResourceBase;
         const DEPTH: usize = 254;
         let body: String = (0..DEPTH)
             .map(|index| format!("<section class={}>", if index % 2 == 0 { "v" } else { "h" }))
@@ -981,7 +981,7 @@ mod tests {
             "<!doctype html><style>@page{{size:240pt;margin:20pt}}body{{margin:0}}section{{width:40pt;height:40pt}}.v{{writing-mode:vertical-rl}}.h{{writing-mode:horizontal-tb}}</style>{body}A{}",
             "</section>".repeat(DEPTH)
         );
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let document =
             StyledDocument::parse(&html, &ResourceBase::default(), &[], &resolver).unwrap();
         let text = crate::text::TextContext::new(&document.styles().fonts, &resolver);

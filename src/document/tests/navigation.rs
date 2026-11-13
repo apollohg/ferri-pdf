@@ -1,10 +1,10 @@
 use crate::document::{
     BlockBox, BlockContent, Bookmark, BoxNavigation, LinkTarget, StyledDocument,
 };
-use crate::resources::{FileResolver, ResourceBase, Url};
+use crate::resources::{ResourceBase, Url};
 
 fn parse(html: &str, base: &ResourceBase) -> StyledDocument {
-    StyledDocument::parse(html, base, &[], &FileResolver::default())
+    StyledDocument::parse(html, base, &[], &crate::tests::common::fixture_resolver())
         .expect("navigation fixture must parse")
 }
 
@@ -318,8 +318,12 @@ fn multipart_capture_keeps_unreferenced_targets_and_html_fragment_precedence() {
         presentation: crate::style::Presentation::Paged,
         ancestors: &[],
     };
-    let document = StyledDocument::parse_with_options(html, &options, &FileResolver::default())
-        .expect("multipart capture must retain fragment intents");
+    let document = StyledDocument::parse_with_options(
+        html,
+        &options,
+        &crate::tests::common::fixture_resolver(),
+    )
+    .expect("multipart capture must retain fragment intents");
     let navigation = document.navigation();
     assert_eq!(
         navigation.links[0],

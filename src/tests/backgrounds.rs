@@ -18,7 +18,7 @@ const PAGE_AREA: Rect = Rect {
 #[test]
 fn formatting_preserves_computed_background_and_border_image_urls() {
     use crate::document::{BlockContent, StyledDocument};
-    use crate::resources::FileResolver;
+
     let settings = options();
     let reference = settings
         .base
@@ -29,7 +29,7 @@ fn formatting_preserves_computed_background_and_border_image_urls() {
         &format!("<!doctype html><style>{PROFILE}html{{background-image:url(../assets/image-pattern.png);border-image-source:url(../assets/image-pattern.png)}}body,div{{background-image:inherit;border-image-source:inherit}}</style><div>Computed sources</div>"),
         &settings.base,
         &[],
-        &FileResolver::default(),
+        &common::fixture_resolver(),
     ).unwrap();
     let root = document.root();
     let expected = serde_json::json!({"Url": {"url": reference, "resolution": null, "scale": crate::paint::INITIAL_IMAGE_SCALE}});
@@ -765,7 +765,7 @@ fn page_and_margin_images_over_the_resource_limit_are_invalid_images() {
     const RESOURCE_LIMIT_BYTES: usize = 1;
     let resolver = crate::FileResolver {
         max_resource_bytes: RESOURCE_LIMIT_BYTES,
-        ..Default::default()
+        ..common::fixture_resolver()
     };
     for css in [
         "@page{background-image:url(../assets/image-pattern.png)}",

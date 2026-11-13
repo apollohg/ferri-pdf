@@ -1,6 +1,6 @@
 use crate::resources::{
-    FileResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceResolver, Url,
-    mime::parse_content_type,
+    FILE_SCHEME, FileResolver, ResolvedResource, Resource, ResourceBase, ResourceError,
+    ResourceResolver, Url, mime::parse_content_type,
 };
 use std::{
     io::Read,
@@ -38,7 +38,9 @@ impl Default for LoaderOptions {
     }
 }
 
-/// Local/data/HTTP(S) loading with policy checks before every request and redirect.
+/// Local/data/HTTP(S) loading with policy checks before every request and redirect. Local
+/// files are read as [`LoaderOptions::files`] allows, and never for remote content or by a
+/// redirect.
 pub struct UrlResolver {
     options: LoaderOptions,
     agent: Agent,
@@ -101,7 +103,12 @@ impl UrlResolver {
         loop {
             self.check(&url)?;
             if !matches!(url.scheme(), "http" | "https") {
-                return Err(ResourceError::UnsupportedScheme(url.scheme().into()));
+                // Only a redirect leads here, and what it names is named by remote content.
+                return Err(if url.scheme() == FILE_SCHEME {
+                    ResourceError::LocalFromRemote(url)
+                } else {
+                    ResourceError::UnsupportedScheme(url.scheme().into())
+                });
             }
             let remaining = self
                 .options

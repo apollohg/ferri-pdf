@@ -1,6 +1,5 @@
 //! CSS Text 4 §6.3 automatic hyphenation opportunities.
 use super::{document, first_paragraph, paragraph, segments};
-use crate::resources::FileResolver;
 use crate::style::{HyphenateLimitChars, Hyphens, Style, WordBreak};
 use crate::text::TextContext;
 use crate::text::hyphenation::{SOFT_HYPHEN, automatic, decorate};
@@ -156,7 +155,7 @@ fn candidate_lines_of_a_paragraph_shape_each_hyphen_once() {
     let paragraph = first_paragraph(document.root()).unwrap();
     let points = automatic(paragraph);
     assert!(points.len() > 1, "the words hyphenate at {points:?}");
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let shapes = |ends: &[usize]| {
         let context = TextContext::new(&document.styles().fonts, &resolver);
         let bidi = crate::text::bidi::resolve(paragraph, &context.bidi_work).unwrap();

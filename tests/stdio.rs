@@ -230,3 +230,137 @@ fn cli_accepts_legacy_bytes_from_file_and_stdin() {
         assert_eq!(trace["pages"][0][0]["text"], "café");
     }
 }
+
+/// Runs the CLI in `directory` on `input`, or on `html` from stdin when `input` is `-`, and
+/// returns what it reports on stderr.
+fn cli_report(directory: &std::path::Path, input: &str, html: &str, flags: &[&str]) -> String {
+    let mut child = Command::new(env!("CARGO_BIN_EXE_ferri-pdf"))
+        .args([input, "-"])
+        .args(flags)
+        .current_dir(directory)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .unwrap();
+    child
+        .stdin
+        .take()
+        .unwrap()
+        .write_all(html.as_bytes())
+        .unwrap();
+    let result = child.wait_with_output().unwrap();
+    let report = String::from_utf8_lossy(&result.stderr).into_owned();
+    assert!(
+        result.status.success(),
+        "a refused file never fails the render of {input} {flags:?}: {report}"
+    );
+    report
+}
+
+#[test]
+fn cli_reads_local_files_only_in_the_inputs_folder_or_the_file_root() {
+    // Puts the second paragraph on a second page, so a loaded sheet shows in the page count.
+    const SHEET: &str = "p + p { break-before: page }";
+    const REFUSED: &str = "outside the allowed folder";
+    let document = |href: &str| format!("<link rel=stylesheet href='{href}'><p>one</p><p>two</p>");
+    let directory =
+        std::env::temp_dir().join(format!("ferri-pdf-file-root-{}", std::process::id()));
+    for folder in ["document", "shared"] {
+        std::fs::create_dir_all(directory.join(folder)).unwrap();
+        std::fs::write(directory.join(folder).join("sheet.css"), SHEET).unwrap();
+    }
+    for (name, href) in [
+        ("own.html", "sheet.css"),
+        ("other.html", "../shared/sheet.css"),
+    ] {
+        std::fs::write(directory.join("document").join(name), document(href)).unwrap();
+    }
+    std::fs::write(
+        directory.join("shared/part.html"),
+        document("../document/sheet.css"),
+    )
+    .unwrap();
+    let root = directory.to_str().unwrap();
+    let run = |folder: &str, input: &str, html: &str, flags: &[&str]| {
+        cli_report(&directory.join(folder), input, html, flags)
+    };
+    let cases = [
+        (
+            "the input's folder is read",
+            run("", "document/own.html", "", &[]),
+            2,
+            false,
+        ),
+        (
+            "a folder beside the input's is not",
+            run("", "document/other.html", "", &[]),
+            1,
+            true,
+        ),
+        (
+            "--file-root names another folder",
+            run("", "document/other.html", "", &["--file-root", root]),
+            2,
+            false,
+        ),
+        (
+            "--file-root replaces the input's folder",
+            run("", "document/own.html", "", &["--file-root", "shared"]),
+            1,
+            true,
+        ),
+        (
+            "stdin reads the current directory",
+            run("document", "-", &document("sheet.css"), &[]),
+            2,
+            false,
+        ),
+        (
+            "stdin reads nothing outside the current directory",
+            run("document", "-", &document("../shared/sheet.css"), &[]),
+            1,
+            true,
+        ),
+        (
+            "stdin reads the --file-root",
+            run(
+                "document",
+                "-",
+                &document("../shared/sheet.css"),
+                &["--file-root", ".."],
+            ),
+            2,
+            false,
+        ),
+        (
+            "a part does not read another part's folder",
+            run("", "document/own.html", "", &["--part", "shared/part.html"]),
+            3,
+            true,
+        ),
+        (
+            "--file-root covers every part",
+            run(
+                "",
+                "document/own.html",
+                "",
+                &["--part", "shared/part.html", "--file-root", root],
+            ),
+            4,
+            false,
+        ),
+    ];
+    std::fs::remove_dir_all(&directory).unwrap();
+    for (case, report, pages, refused) in cases {
+        assert!(
+            report.contains(&format!("{pages} pages")),
+            "{case}: expected {pages} pages: {report}"
+        );
+        assert_eq!(
+            report.contains(REFUSED),
+            refused,
+            "{case}: a refused file is reported with its reason, and only then: {report}"
+        );
+    }
+}

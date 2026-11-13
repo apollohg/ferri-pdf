@@ -110,12 +110,11 @@ fn bookmark_labels_show_the_page_counter_of_their_element() {
         &html,
         &local_options().base,
         &[],
-        &crate::resources::FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     let (document, _) =
-        crate::layout::layout_document(document, &crate::resources::FileResolver::default())
-            .unwrap();
+        crate::layout::layout_document(document, &common::fixture_resolver()).unwrap();
     assert_eq!(
         document
             .navigation()

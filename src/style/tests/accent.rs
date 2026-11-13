@@ -1,6 +1,5 @@
 //! CSS UI 4 §7.1 and CSS Color 4 §6.2: `AccentColor` takes the element's `accent-color`.
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{Style, Stylesheet, StylesheetSource};
 
 /// Used `color` and `background-color` of `#parent` and of its child `#child`.
@@ -15,7 +14,7 @@ fn colors(css: &str) -> [([u8; 3], [u8; 3]); 2] {
     ["#parent", "#child"].map(|id| {
         let element = html.select(&Selector::parse(id).unwrap()).next().unwrap();
         parent = sheet
-            .computed_with_resolver(element, &parent, &FileResolver::default())
+            .computed_with_resolver(element, &parent, &crate::tests::common::fixture_resolver())
             .unwrap_or_else(|error| panic!("`{css}`: {id} must compute: {error}"));
         (parent.color.rgb, parent.decoration.background.rgb)
     })

@@ -1,7 +1,6 @@
 //! CSS Color 4 and 5 values checked against the specifications' worked examples.
 use crate::dom::{DocumentTree, Selector};
 use crate::paint::{AbsoluteColor, ColorSpace};
-use crate::resources::FileResolver;
 use crate::style::{
     ColorScheme, PrintPreferences, PrintSettings, Style, StyleError, Stylesheet, StylesheetSource,
     colors, units::Relative,
@@ -107,7 +106,11 @@ fn computed_with(
     ancestors.reverse();
     let mut style = Style::default();
     for element in ancestors.into_iter().chain([element]) {
-        style = sheet.computed_with_resolver(element, &style, &FileResolver::default())?;
+        style = sheet.computed_with_resolver(
+            element,
+            &style,
+            &crate::tests::common::fixture_resolver(),
+        )?;
     }
     Ok(style)
 }

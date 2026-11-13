@@ -571,3 +571,117 @@ fn http_metadata_enforces_redirect_and_expanded_body_policy() {
         "metadata must never bypass URL or expanded-body limits"
     );
 }
+
+#[test]
+fn remote_sheets_and_redirects_never_reach_local_files() {
+    const NOT_LOCAL: &str = "the content that names it is not local";
+    const IMAGE: &[u8] = include_bytes!("oracle/assets/image-pattern.png");
+    let directory =
+        std::env::temp_dir().join(format!("ferri-pdf-remote-local-{}", std::process::id()));
+    std::fs::create_dir_all(&directory).unwrap();
+    let directory = directory.canonicalize().unwrap();
+    // Puts the second paragraph on a second page, so a loaded sheet shows in the page count.
+    std::fs::write(directory.join("local.css"), "p + p { break-before: page }").unwrap();
+    std::fs::write(
+        directory.join("local.ttf"),
+        include_bytes!("oracle/assets/DejaVuSans.ttf"),
+    )
+    .unwrap();
+    for image in ["background.png", "set.png", "nested.png"] {
+        std::fs::write(directory.join(image), IMAGE).unwrap();
+    }
+    let local = |name: &str| Url::from_file_path(directory.join(name)).unwrap();
+    let sheet = local("local.css");
+    let server = Server::new([
+        (
+            "/importing.css",
+            Reply::ok(format!("@import url('{sheet}'); p {{ color: red }}")),
+        ),
+        ("/moved.css", Reply::redirect(sheet.as_str())),
+        (
+            "/using.css",
+            Reply::ok(format!(
+                "@font-face {{ font-family: Local; src: url('{}') }} \
+                 p {{ font-family: Local; background-image: url('{}') }} \
+                 p {{ border-image-source: image-set('{}' 1x) }}",
+                local("local.ttf"),
+                local("background.png"),
+                local("set.png")
+            )),
+        ),
+        (
+            "/picture.svg",
+            Reply::ok(format!(
+                "<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'>\
+                 <image href='{}' width='8' height='8'/></svg>",
+                local("nested.png")
+            )),
+        ),
+    ]);
+    let options = RenderOptions {
+        base: directory.as_path().into(),
+        include_layout: true,
+        ..Default::default()
+    };
+    let render = |href: &str, body: &str| {
+        let output = ferri_pdf::render_html(
+            &format!("<link rel=stylesheet href='{href}'><p>one</p><p>two</p>{body}"),
+            &options,
+        )
+        .expect("a refused file never fails");
+        let diagnostics: Vec<_> = output.diagnostics.iter().map(ToString::to_string).collect();
+        (output, diagnostics)
+    };
+    let remote = |name: &str| String::from(server.base.join(name).unwrap());
+    let local_document = render(
+        "local.css",
+        "<style>@font-face{font-family:Local;src:url(local.ttf)}</style>\
+         <p style='font-family:Local;background-image:url(background.png);\
+         border-image-source:image-set(url(set.png) 1x)'>three</p>\
+         <img src='nested.png'>",
+    );
+    let imported = render(&remote("importing.css"), "");
+    let moved = render(&remote("moved.css"), "");
+    let used = render(
+        &remote("using.css"),
+        &format!("<img src='{}'>", remote("picture.svg")),
+    );
+    std::fs::remove_dir_all(&directory).unwrap();
+    assert_eq!(
+        (local_document.0.page_count, local_document.1.as_slice()),
+        (2, [].as_slice()),
+        "the document itself reads the sheet, the images and the font in its base folder"
+    );
+    assert_eq!(
+        imported.0.page_count, 1,
+        "a remote sheet imported a local file: {:?}",
+        imported.1
+    );
+    assert_eq!(
+        imported.0.layout.unwrap().pages[0][0].color.rgb,
+        [255, 0, 0],
+        "the remote sheet itself applies"
+    );
+    assert_eq!(
+        moved.0.page_count, 1,
+        "a redirect led to a local file: {:?}",
+        moved.1
+    );
+    for (diagnostics, files) in [
+        (&imported.1, vec!["local.css"]),
+        (&moved.1, vec!["local.css"]),
+        (
+            &used.1,
+            vec!["local.ttf", "background.png", "set.png", "nested.png"],
+        ),
+    ] {
+        for file in files {
+            assert!(
+                diagnostics
+                    .iter()
+                    .any(|diagnostic| diagnostic.contains(file) && diagnostic.contains(NOT_LOCAL)),
+                "the refusal of {file} names it and the reason: {diagnostics:?}"
+            );
+        }
+    }
+}

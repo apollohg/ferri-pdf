@@ -1,5 +1,4 @@
 use crate::images::{Image, ImageCache};
-use crate::resources::FileResolver;
 use std::{path::PathBuf, sync::Arc};
 
 #[test]
@@ -19,13 +18,21 @@ fn lossless_heif_preserves_pixels_alpha_rotation_and_tiled_crop() {
         ("image-grid.heic", source, false),
     ] {
         let asset = cache
-            .load(name, &base.clone().into(), &FileResolver::default())
+            .load(
+                name,
+                &base.clone().into(),
+                &crate::tests::common::fixture_resolver(),
+            )
             .unwrap();
         assert!(
             Arc::ptr_eq(
                 &asset,
                 &cache
-                    .load(name, &base.clone().into(), &FileResolver::default())
+                    .load(
+                        name,
+                        &base.clone().into(),
+                        &crate::tests::common::fixture_resolver()
+                    )
                     .unwrap()
             ),
             "{name}: repeated images must share decoded storage"
@@ -72,7 +79,7 @@ fn ten_bit_heif_preserves_precision_against_libheif_reference() {
         .load(
             "image-high-depth.heic",
             &base.clone().into(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .unwrap();
     let Image::Pixels(decoded) = &*asset else {

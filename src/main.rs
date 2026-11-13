@@ -13,7 +13,7 @@ use std::{
     process::ExitCode,
 };
 
-const USAGE: &str = "usage: ferri-pdf INPUT.html OUTPUT.pdf [--trace] [--headings HEADINGS.json] [--font-serif FAMILY] [--font-sans-serif FAMILY] [--font-monospace FAMILY] [--font-fallback FAMILY] [--system-fonts] [--font-dir DIR] [--jpeg-quality 1..100] [--image-dpi DPI] [--allow-content-loss] [--part INPUT.html ...]";
+const USAGE: &str = "usage: ferri-pdf INPUT.html OUTPUT.pdf [--trace] [--headings HEADINGS.json] [--font-serif FAMILY] [--font-sans-serif FAMILY] [--font-monospace FAMILY] [--font-fallback FAMILY] [--system-fonts] [--font-dir DIR] [--jpeg-quality 1..100] [--image-dpi DPI] [--allow-content-loss] [--file-root DIR] [--part INPUT.html ...]";
 const JPEG_QUALITY_FLAG: &str = "--jpeg-quality";
 const IMAGE_DPI_FLAG: &str = "--image-dpi";
 const PART_FLAG: &str = "--part";
@@ -24,6 +24,7 @@ const FONT_MONOSPACE_FLAG: &str = "--font-monospace";
 const FONT_FALLBACK_FLAG: &str = "--font-fallback";
 const SYSTEM_FONTS_FLAG: &str = "--system-fonts";
 const FONT_DIR_FLAG: &str = "--font-dir";
+const FILE_ROOT_FLAG: &str = "--file-root";
 const FIRST_FLAG_ARGUMENT: usize = 3;
 const TRACE_EXTENSION: &str = "trace.json";
 
@@ -125,6 +126,7 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     let mut fonts = FontPreferences::default();
     let mut images = ImageOptions::default();
     let mut content_loss = ContentLoss::default();
+    let mut file_root = None;
     let mut flags = args[FIRST_FLAG_ARGUMENT..].iter();
     while let Some(flag) = flags.next() {
         if flag == "--trace" && !trace {
@@ -137,6 +139,8 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
             fonts
                 .font_dirs
                 .push(PathBuf::from(flags.next().ok_or(USAGE)?));
+        } else if flag == FILE_ROOT_FLAG && file_root.is_none() {
+            file_root = Some(PathBuf::from(flags.next().ok_or(USAGE)?));
         } else if flag == PART_FLAG {
             let path = Path::new(flags.next().ok_or(USAGE)?);
             if path == Path::new("-") {
@@ -203,7 +207,10 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
         ("heading-map output", headings),
     ];
     validate_output_paths(&input_paths, &output_paths)?;
+    // The input's folder is the base, and so where local files are read unless `file_root`
+    // names another; for stdin it is the directory the command runs in.
     let options = RenderOptions {
+        file_root,
         base: if stdin {
             Path::new(".")
         } else {

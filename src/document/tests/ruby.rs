@@ -1,7 +1,7 @@
 //! Ruby box generation and annotation pairing (CSS Ruby 1 §2) from HTML markup and the
 //! ruby display values.
 use crate::document::{BlockContent, Paragraph, StyledDocument};
-use crate::resources::{FileResolver, ResourceBase};
+use crate::resources::ResourceBase;
 use crate::style::{Display, UnicodeBidi};
 use std::fmt::Write;
 
@@ -10,7 +10,7 @@ fn document(css: &str, body: &str) -> Result<StyledDocument, crate::document::Do
         &format!("<style>{css}</style>{body}"),
         &ResourceBase::default(),
         &[],
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )
 }
 

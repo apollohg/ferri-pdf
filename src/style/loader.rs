@@ -1220,7 +1220,7 @@ pub(super) fn inline(
     prepare_with_limits(
         &DocumentTree::parse(""),
         &sources,
-        &crate::resources::FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
         settings,
         Presentation::Paged,
         crate::document::encoding::stylesheet,
@@ -1232,9 +1232,7 @@ pub(super) fn inline(
 mod tests {
     use super::*;
     use crate::dom::DocumentTree;
-    use crate::resources::{
-        FileResolver, Resource, ResourceBase, ResourceError, ResourceResolver, Url,
-    };
+    use crate::resources::{Resource, ResourceBase, ResourceError, ResourceResolver, Url};
     use crate::style::{PrintSettings, StyleError};
     use std::cell::Cell;
 
@@ -1271,7 +1269,7 @@ mod tests {
         let sheet = Stylesheet::prepare(
             &tree,
             &sources,
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
             &PrintSettings::default(),
             Presentation::Paged,
             decode,
@@ -1586,7 +1584,7 @@ mod tests {
         let prepared = prepare_with_limits(
             &tree,
             &sources,
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
             &PrintSettings::default(),
             Presentation::Paged,
             decode,
@@ -1710,7 +1708,7 @@ mod tests {
         let sources = StylesheetSources {
             document: vec![StylesheetInput::External {
                 reference: "wrong-type.css".into(),
-                base: ResourceBase::default(),
+                base: std::path::Path::new("styles").into(),
                 media: String::new(),
                 owner: None,
                 fallback_encoding: "UTF-8".into(),

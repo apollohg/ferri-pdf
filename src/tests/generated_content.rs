@@ -195,7 +195,7 @@ fn contents_places_descendants_once_and_labels_bookmarks_with_their_text() {
         ["Heading one", "Own", "None", "[]List", "Item"],
         "descendants stay in their element; pseudo-elements' `contents` adds nothing"
     );
-    let resolver = crate::resources::FileResolver::default();
+    let resolver = common::fixture_resolver();
     let document =
         crate::document::StyledDocument::parse(&html, &local_options().base, &[], &resolver)
             .unwrap();

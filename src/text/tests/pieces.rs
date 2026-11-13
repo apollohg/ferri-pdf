@@ -1,6 +1,5 @@
 //! Pieces of spans a text context shapes once for the layouts that repeat them.
 use super::{document, first_paragraph};
-use crate::resources::FileResolver;
 use crate::text::TextContext;
 use crate::work::{self, Work};
 
@@ -18,7 +17,7 @@ fn a_paragraph_laid_out_again_at_one_width_reshapes_nothing_once_its_pieces_repe
     // they shape a second time, and a reused piece spends the glyph matching work again.
     let document = document(BODY);
     let paragraph = first_paragraph(document.root()).unwrap();
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     let context = TextContext::new(&document.styles().fonts, &resolver);
     let layout = || {
         let before = context.matching_work.get().unwrap();

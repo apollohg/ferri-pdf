@@ -776,8 +776,7 @@ fn nested_data_stylesheets_keep_identity_separate_from_their_reference_base() {
     let mut options = local_options();
     options.base = crate::Url::parse(GRAPH_BASE).unwrap().into();
     let html = "<!doctype html><style>@import \"data:text/css,@import%20%27data:text/css,p%257Bfont-size:19pt%257D%27;\";</style><p>Data</p>";
-    let output =
-        crate::render_with_resolver(html, &options, &crate::FileResolver::default()).unwrap();
+    let output = crate::render_with_resolver(html, &options, &common::fixture_resolver()).unwrap();
     assert_pt(output.layout.unwrap().pages[0][0].font_size, 19.0);
     assert!(
         output.diagnostics.is_empty(),

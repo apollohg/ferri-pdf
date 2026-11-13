@@ -10,7 +10,6 @@ mod styled_paragraphs;
 mod text_transform;
 
 use super::*;
-use crate::resources::FileResolver;
 
 fn paragraphs<'a>(block: &'a BlockBox, output: &mut Vec<&'a Paragraph>) {
     for child in block.children() {
@@ -30,7 +29,7 @@ fn html_newline_normalization_does_not_reinterpret_preserved_character_reference
         "<pre>A&#13;B\rC</pre>",
         &crate::resources::ResourceBase::default(),
         &[],
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )
     .unwrap();
     let mut content = Vec::new();

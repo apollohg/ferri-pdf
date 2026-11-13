@@ -1,5 +1,4 @@
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{
     Degradation, FirstPageStart, Page, PageSide, PageStyleTarget, Stylesheet, StylesheetSource,
 };
@@ -22,7 +21,7 @@ fn selected_geometry_and_tree_attribute_custom_values_share_the_dependency_graph
     let root = sheet
         .resolve_document_root_with_pages(
             &tree,
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
             &|styles, _| {
                 let Page::Name(name) = styles.page(PageStyleTarget {
                     element: selected.id(),
@@ -52,7 +51,7 @@ fn selected_page_cycle_records_the_named_property_and_viewport_request() {
     sheet
         .resolve_document_root_with_pages(
             &tree,
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
             &|styles, _| match styles.page(PageStyleTarget {
                 element: selected.id(),
                 pseudo: None,
@@ -116,7 +115,7 @@ fn selecting_a_deep_target_prepares_ancestors_without_recursive_stack_growth() {
     sheet
         .resolve_document_root_with_pages(
             &tree,
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
             &|styles, _| {
                 let target = PageStyleTarget {
                     element: selected.id(),

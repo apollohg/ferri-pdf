@@ -1,6 +1,5 @@
 //! Splitting text into the runs of one script that shape apart.
 use super::{document, first_paragraph};
-use crate::resources::FileResolver;
 use crate::text::{Scripts, TextContext};
 use crate::work::{self, Work};
 use std::ops::Range;
@@ -60,7 +59,7 @@ fn candidate_lines_look_up_each_character_script_once() {
         let body = format!("<p>{}</p>", vec!["word"; words].join(" "));
         let document = document(&body);
         let paragraph = first_paragraph(document.root()).unwrap();
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let context = TextContext::new(&document.styles().fonts, &resolver);
         let (lines, lookups) = work::measured(Work::ScriptCharacter, || {
             context.layout_paragraph(paragraph, 1.0e6, &[]).unwrap()

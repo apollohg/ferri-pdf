@@ -1,6 +1,6 @@
 use super::*;
 use crate::document::StyledDocument;
-use crate::resources::{FileResolver, ResourceBase};
+use crate::resources::ResourceBase;
 use crate::text::TextContext;
 
 fn flex_cells(block: MeasuredBlock<'_>) -> Vec<crate::layout::measure::MeasuredCell<'_>> {
@@ -23,7 +23,7 @@ fn flex_cells(block: MeasuredBlock<'_>) -> Vec<crate::layout::measure::MeasuredC
 fn resumed_cells_keep_source_paint_order_when_a_later_lane_finishes_first() {
     const EARLIER: [u8; 3] = [0, 0, 255];
     const LATER: [u8; 3] = [255, 0, 0];
-    let resolver = FileResolver::default();
+    let resolver = crate::tests::common::fixture_resolver();
     for placement in ["relative", "static", "deferred", "z-index"] {
         let html = "<!doctype html><style>@page{size:200pt 100pt;margin:0}html,body{margin:0}section{display:flex}article{width:100pt}i{display:block;height:10pt}b{display:block;position:relative;width:100pt;height:20pt;break-before:page}article:first-child b{background:blue}article:last-child b{background:red;left:-100pt}</style><section><article><i></i><b></b></article><article><i></i><b></b></article></section>";
         let html = match placement {

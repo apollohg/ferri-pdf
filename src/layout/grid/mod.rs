@@ -555,7 +555,7 @@ impl<'a> Geometry<'a> {
 mod tests {
     use super::*;
     use crate::document::StyledDocument;
-    use crate::resources::{FileResolver, ResourceBase};
+    use crate::resources::ResourceBase;
     use crate::text::TextContext;
 
     #[test]
@@ -736,7 +736,7 @@ mod tests {
     }
 
     fn with_probe(html: &str, check: impl for<'a> FnOnce(&'a BlockBox, &mut Measurer<'a>)) {
-        let resolver = FileResolver::default();
+        let resolver = crate::tests::common::fixture_resolver();
         let document =
             StyledDocument::parse(html, &ResourceBase::default(), &[], &resolver).unwrap();
         let text = TextContext::new(&document.styles().fonts, &resolver);

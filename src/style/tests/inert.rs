@@ -1,6 +1,5 @@
 use crate::dom::{DocumentTree, Selector};
 use crate::paint::{Easing, LengthPercentage};
-use crate::resources::FileResolver;
 use crate::style::{
     Degradation, Style, StyleError, Stylesheet, StylesheetSource,
     calc::Kind,
@@ -20,10 +19,13 @@ fn styles(css: &str) -> Result<(Style, Style), StyleError> {
     let parent = sheet.computed_with_resolver(
         select("#parent"),
         &Style::default(),
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )?;
-    let child =
-        sheet.computed_with_resolver(select("#child"), &parent, &FileResolver::default())?;
+    let child = sheet.computed_with_resolver(
+        select("#child"),
+        &parent,
+        &crate::tests::common::fixture_resolver(),
+    )?;
     Ok((parent, child))
 }
 

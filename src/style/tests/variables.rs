@@ -1,5 +1,4 @@
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{LengthPercentage, Style, Stylesheet, StylesheetSource};
 use std::fmt::Write;
 
@@ -15,7 +14,7 @@ fn computed(css: &str, html: &str) -> Vec<Style> {
         let parent = styles.last().cloned().unwrap_or_default();
         styles.push(
             sheet
-                .computed_with_resolver(element, &parent, &FileResolver::default())
+                .computed_with_resolver(element, &parent, &crate::tests::common::fixture_resolver())
                 .unwrap(),
         );
     }
@@ -140,7 +139,11 @@ fn assert_custom_properties_discarded(
     resource: &str,
 ) {
     let style = sheet
-        .computed_with_resolver(element, &Style::default(), &FileResolver::default())
+        .computed_with_resolver(
+            element,
+            &Style::default(),
+            &crate::tests::common::fixture_resolver(),
+        )
         .unwrap_or_else(|error| panic!("a variable limit must not fail computing: {error}"));
     let degradations = sheet.take_degradations();
     assert!(
@@ -203,7 +206,11 @@ fn invalid_substitutions_reset_display_content_and_page_size() {
     let selector = Selector::parse("#root").unwrap();
     let element = html.select(&selector).next().unwrap();
     let style = sheet
-        .computed_with_resolver(element, &Style::default(), &FileResolver::default())
+        .computed_with_resolver(
+            element,
+            &Style::default(),
+            &crate::tests::common::fixture_resolver(),
+        )
         .unwrap();
     assert_eq!(
         style.display,
@@ -216,14 +223,14 @@ fn invalid_substitutions_reset_display_content_and_page_size() {
                 element,
                 &style,
                 crate::style::PseudoElement::Before,
-                &FileResolver::default()
+                &crate::tests::common::fixture_resolver()
             )
             .unwrap()
             .is_none(),
         "an invalid computed content value suppresses the pseudo element"
     );
     sheet
-        .resolve_page_geometry_with_resolver(&style, &FileResolver::default())
+        .resolve_page_geometry_with_resolver(&style, &crate::tests::common::fixture_resolver())
         .unwrap();
     assert_eq!(
         sheet.page,
@@ -259,7 +266,11 @@ fn deeply_nested_values_are_rejected_during_stylesheet_parsing() {
         .next()
         .unwrap();
     let style = sheet
-        .computed_with_resolver(element, &Style::default(), &FileResolver::default())
+        .computed_with_resolver(
+            element,
+            &Style::default(),
+            &crate::tests::common::fixture_resolver(),
+        )
         .expect("the remaining sheet computes");
     assert!(
         style.custom_properties.get("--deep").is_none(),
@@ -310,7 +321,7 @@ fn substitution_preserves_display_values_and_white_space_longhands() {
         .computed_with_resolver(
             html.select(&selector).next().unwrap(),
             &Style::default(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .expect("a substituted white-space shorthand expands to its longhands");
     assert_eq!(
@@ -340,7 +351,7 @@ fn generated_function_argument_types_are_checked_after_substitution() {
                     element,
                     &Style::default(),
                     crate::style::PseudoElement::Before,
-                    &FileResolver::default()
+                    &crate::tests::common::fixture_resolver()
                 )
                 .unwrap()
                 .is_none(),
@@ -362,7 +373,7 @@ fn color_functions_compute_after_substitution() {
         .computed_with_resolver(
             html.select(&selector).next().unwrap(),
             &Style::default(),
-            &FileResolver::default(),
+            &crate::tests::common::fixture_resolver(),
         )
         .expect("a substituted color-mix() computes");
     assert_eq!(

@@ -1,16 +1,19 @@
 //! Resource loading policy is separate from document styling and layout.
 mod base;
 mod data_url;
+#[cfg(file_system)]
+mod file;
 #[cfg(feature = "http")]
 mod http;
 mod mime;
 pub(crate) mod sniffing;
+pub(crate) use base::FILE_SCHEME;
 pub use base::ResourceBase;
 pub use data_url::DataUrlError;
+#[cfg(file_system)]
+pub use file::FileResolver;
 #[cfg(feature = "http")]
 pub use http::{LoaderOptions, UrlResolver};
-#[cfg(file_system)]
-use std::{fs::File, io::Read};
 use std::{io, path::PathBuf};
 pub use url::Url;
 
@@ -54,6 +57,8 @@ pub enum ResourceError {
         #[source]
         source: url::ParseError,
     },
+    #[error("relative reference {0} has no base URL to resolve against")]
+    NoBase(String),
     #[error("invalid local file URL: {0}")]
     InvalidFileUrl(Url),
     #[error("resource URL rejected by policy: {0}")]
@@ -88,8 +93,18 @@ pub enum ResourceError {
     },
     #[error("resource exceeds {limit} bytes: {path}")]
     TooLarge { path: PathBuf, limit: usize },
-    #[error("resource escapes the allowed root: {0}")]
+    #[error("local file is outside the allowed folder: {0}")]
     OutsideRoot(PathBuf),
+    /// The render has no folder to read local files in.
+    #[error("local file {0} is not read: the render has no local base or file root")]
+    NoFileRoot(Url),
+    /// Remote content named a local file.
+    #[error("local file {0} is not read: the content that names it is not local")]
+    LocalFromRemote(Url),
+    #[error("not a regular file: {0}")]
+    NotRegularFile(PathBuf),
+    #[error("the file changed while it was being opened: {0}")]
+    Changed(PathBuf),
     #[error("unsupported resource scheme: {0}")]
     UnsupportedScheme(String),
     #[error("invalid data URL: {0}")]
@@ -116,7 +131,12 @@ impl ResourceError {
             | Self::Denied(_)
             | Self::Read { .. }
             | Self::TooLarge { .. }
+            | Self::NoBase(_)
             | Self::OutsideRoot(_)
+            | Self::NoFileRoot(_)
+            | Self::LocalFromRemote(_)
+            | Self::NotRegularFile(_)
+            | Self::Changed(_)
             | Self::UnsupportedScheme(_)
             | Self::InvalidDataUrl(_)
             | Self::Unavailable { .. } => false,
@@ -146,6 +166,24 @@ pub trait ResourceResolver {
     /// repeated render redoes.
     fn interrupts(&self) -> bool {
         false
+    }
+}
+
+impl<T: ResourceResolver + ?Sized> ResourceResolver for &T {
+    fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {
+        (**self).resolve(reference, base)
+    }
+
+    fn resolve_with_metadata(
+        &self,
+        reference: &str,
+        base: &ResourceBase,
+    ) -> Result<ResolvedResource, ResourceError> {
+        (**self).resolve_with_metadata(reference, base)
+    }
+
+    fn interrupts(&self) -> bool {
+        (**self).interrupts()
     }
 }
 
@@ -210,90 +248,6 @@ impl ResourceResolver for DataResolver {
 pub(crate) type LocalResolver = FileResolver;
 #[cfg(not(file_system))]
 pub(crate) type LocalResolver = DataResolver;
-
-/// Loads local files, optionally constrained to a canonical filesystem root.
-#[cfg(file_system)]
-#[derive(Clone, Debug)]
-pub struct FileResolver {
-    pub root: Option<PathBuf>,
-    pub max_resource_bytes: usize,
-}
-#[cfg(file_system)]
-impl Default for FileResolver {
-    fn default() -> Self {
-        Self {
-            root: None,
-            max_resource_bytes: DEFAULT_MAX_RESOURCE_BYTES,
-        }
-    }
-}
-#[cfg(file_system)]
-impl ResourceResolver for FileResolver {
-    fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {
-        self.resolve_with_metadata(reference, base)
-            .map(|resolved| resolved.resource)
-    }
-
-    fn resolve_with_metadata(
-        &self,
-        reference: &str,
-        base: &ResourceBase,
-    ) -> Result<ResolvedResource, ResourceError> {
-        let data = DataResolver {
-            max_resource_bytes: self.max_resource_bytes,
-        };
-        if let Some(resolved) = data.resolve_data_url(reference, base) {
-            return resolved;
-        }
-        let url = base.resolve(reference)?;
-        if url.scheme() != "file" {
-            return Err(ResourceError::UnsupportedScheme(url.scheme().into()));
-        }
-        let path = url
-            .to_file_path()
-            .map_err(|()| ResourceError::InvalidFileUrl(url))?;
-        let canonical = path.canonicalize().map_err(|source| ResourceError::Read {
-            path: path.clone(),
-            source,
-        })?;
-        if let Some(root) = &self.root {
-            let root = root.canonicalize().map_err(|source| ResourceError::Read {
-                path: root.clone(),
-                source,
-            })?;
-            if !canonical.starts_with(&root) {
-                return Err(ResourceError::OutsideRoot(canonical));
-            }
-        }
-        let mut file = File::open(&canonical)
-            .map_err(|source| ResourceError::Read {
-                path: canonical.clone(),
-                source,
-            })?
-            .take(self.max_resource_bytes.saturating_add(1) as u64);
-        let mut bytes = Vec::new();
-        file.read_to_end(&mut bytes)
-            .map_err(|source| ResourceError::Read {
-                path: canonical.clone(),
-                source,
-            })?;
-        if bytes.len() > self.max_resource_bytes {
-            return Err(ResourceError::TooLarge {
-                path: canonical,
-                limit: self.max_resource_bytes,
-            });
-        }
-        Ok(ResolvedResource {
-            resource: Resource {
-                bytes,
-                base: Url::from_file_path(&canonical)
-                    .map_err(|()| ResourceError::InvalidBase(canonical.clone()))?
-                    .into(),
-            },
-            metadata: ResourceMetadata::default(),
-        })
-    }
-}
 
 #[cfg(test)]
 mod tests;

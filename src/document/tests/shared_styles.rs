@@ -1,7 +1,7 @@
 //! A box, its paragraph and the text spans its element's text forms share the style the
 //! element computes rather than each holding a copy of it.
 use crate::document::{BlockBox, BlockContent, StyledDocument};
-use crate::resources::{FileResolver, ResourceBase};
+use crate::resources::ResourceBase;
 use crate::style::{Display, Style};
 use std::{collections::HashSet, sync::Arc};
 
@@ -37,7 +37,7 @@ fn table_cells_share_their_style_with_their_paragraphs_and_text_spans() {
         &html,
         &ResourceBase::default(),
         &[],
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )
     .unwrap();
     let mut found = Vec::new();

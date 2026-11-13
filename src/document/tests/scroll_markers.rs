@@ -1,13 +1,13 @@
 //! CSS Overflow 5 §3.1: `::scroll-marker-group` boxes and the `::scroll-marker` boxes in them.
 use crate::document::{BlockBox, BlockContent, BoxNavigation, LinkTarget, StyledDocument};
-use crate::resources::{FileResolver, ResourceBase};
+use crate::resources::ResourceBase;
 
 fn parse(html: &str) -> StyledDocument {
     StyledDocument::parse(
         html,
         &ResourceBase::default(),
         &[],
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )
     .unwrap_or_else(|error| panic!("scroll marker fixture must format: {error}\n{html}"))
 }

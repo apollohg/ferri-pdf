@@ -458,7 +458,7 @@ fn heading_defaults_and_bookmarks_follow_computed_levels_and_author_cascade() {
         &html,
         &local_options().base,
         &[],
-        &crate::resources::FileResolver::default(),
+        &common::fixture_resolver(),
     )
     .unwrap();
     assert_eq!(

@@ -3,7 +3,6 @@
 //! engine's defaults, inheritance follows the data, and every other property's values are
 //! invalid at computed-value time.
 use crate::dom::{DocumentTree, Selector};
-use crate::resources::FileResolver;
 use crate::style::{
     Degradation, Style, StyleError, Stylesheet, StylesheetSource,
     component::Component,
@@ -912,10 +911,13 @@ fn styles_reporting(css: &str) -> Result<(Style, Style, Vec<Degradation>), Style
     let parent = sheet.computed_with_resolver(
         select(PARENT_ELEMENT),
         &Style::default(),
-        &FileResolver::default(),
+        &crate::tests::common::fixture_resolver(),
     )?;
-    let child =
-        sheet.computed_with_resolver(select(CHILD_ELEMENT), &parent, &FileResolver::default())?;
+    let child = sheet.computed_with_resolver(
+        select(CHILD_ELEMENT),
+        &parent,
+        &crate::tests::common::fixture_resolver(),
+    )?;
     Ok((parent, child, sheet.take_degradations()))
 }
 

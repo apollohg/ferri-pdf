@@ -1,6 +1,5 @@
 use crate::dom::{DocumentTree, Selector};
 use crate::fonts::{FontFamily, GenericFamily};
-use crate::resources::FileResolver;
 use crate::style::{Style, Stylesheet, StylesheetSource};
 
 fn families(declaration: &str) -> Vec<FontFamily> {
@@ -12,7 +11,11 @@ fn families(declaration: &str) -> Vec<FontFamily> {
     let html = DocumentTree::parse("<p>Text</p>");
     let element = html.select(&Selector::parse("p").unwrap()).next().unwrap();
     sheet
-        .computed_with_resolver(element, &Style::default(), &FileResolver::default())
+        .computed_with_resolver(
+            element,
+            &Style::default(),
+            &crate::tests::common::fixture_resolver(),
+        )
         .unwrap()
         .families
 }
