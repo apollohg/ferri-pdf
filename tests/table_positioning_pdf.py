@@ -6,6 +6,7 @@ import unittest
 
 from PIL import Image
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / 'target/debug/ferri-pdf'
@@ -143,7 +144,7 @@ class TablePositioningPdf(unittest.TestCase):
 @page{{size:300pt {PAGE_HEIGHT}pt;margin:{PAGE_MARGIN}pt}}
 body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}
 {css}</style>{body}''')
-        subprocess.run([str(RENDERER), str(source), str(output)], check=True, capture_output=True)
+        subprocess.run([str(RENDERER), str(source), str(output), *FILE_ROOT], check=True, capture_output=True)
         return output
 
     def raster(self, root, output, *, vector_antialias=True, page=1):

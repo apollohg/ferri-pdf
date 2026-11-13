@@ -9,6 +9,7 @@ import unittest
 
 from PIL import Image
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / 'target/debug/ferri-pdf'
@@ -73,7 +74,7 @@ class CssImagesPdf(unittest.TestCase):
 @page{{size:{PAGE_SIZE}pt {PAGE_SIZE}pt;margin:{PAGE_MARGIN}pt}}
 body{{margin:0;font:{FONT_SIZE}pt/{LINE_HEIGHT}pt Probe}}p,ul,li{{margin:0;padding:0}}
 .box{{width:{BOX}pt;height:{BOX}pt}}{css}</style>{body}''')
-        result = subprocess.run([str(RENDERER), str(source), str(output)], capture_output=True, text=True)
+        result = subprocess.run([str(RENDERER), str(source), str(output), *FILE_ROOT], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, f'render failed for {css!r}: {result.stderr}')
         return output
 

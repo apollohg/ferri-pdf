@@ -13,6 +13,7 @@ import unittest
 from fontTools.ttLib import TTFont
 
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "tests/fixtures/fonts"
@@ -63,7 +64,7 @@ class TextSpacingPdf(unittest.TestCase):
                         for name, family in FAMILIES.items())
         source.write_text(f"<!doctype html><style>{faces}@page{{size:300pt 300pt;margin:{MARGIN_PT}pt}}"
                           f"body{{margin:0;font:{SIZE_PT}pt/20pt Halt}}p{{margin:0}}{rules}</style>{body}")
-        rendered = subprocess.run([str(RENDERER), str(source), str(target)],
+        rendered = subprocess.run([str(RENDERER), str(source), str(target), *FILE_ROOT],
                                   capture_output=True, text=True, timeout=60)
         self.assertEqual(rendered.returncode, 0, rendered.stderr)
         rows = {}

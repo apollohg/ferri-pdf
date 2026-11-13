@@ -10,6 +10,7 @@ import xml.etree.ElementTree as ET
 
 from PIL import Image
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
@@ -56,7 +57,7 @@ class NamedPages(unittest.TestCase):
             "<!doctype html><style>@font-face{font-family:Probe;src:url('" + font + "')}"
             + reference["base_css"] + case["css"] + "</style>" + case["body"]
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         return pdf_text_pages(self.pdf)
@@ -327,7 +328,7 @@ class NamedPages(unittest.TestCase):
                         " ".join(words) + "</td><td>First</td></tr><tr class=second><td>Second</td>"
                         "</tr></table><p>After</p>"
                     )
-                    result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                    result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                             capture_output=True, text=True, timeout=60)
                     self.assertEqual(result.returncode, 0, result.stderr)
                     pages = pdf_text_pages(self.pdf)
@@ -376,7 +377,7 @@ class NamedPages(unittest.TestCase):
                     "</style><table><tr><td rowspan=2><table class=inner>" + inner +
                     "</table></td><td>First</td></tr><tr class=second><td>Second</td></tr></table><p>After</p>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 pages = pdf_text_pages(self.pdf)
@@ -418,7 +419,7 @@ class NamedPages(unittest.TestCase):
                         "<table><tr><td rowspan=2><div class=columns>" + content +
                         "</div></td><td>First</td></tr><tr class=second><td>Second</td></tr></table><p>After</p>"
                     )
-                    result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                    result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                             capture_output=True, text=True, timeout=60)
                     self.assertEqual(result.returncode, 0, result.stderr)
                     pages = pdf_text_pages(self.pdf)
@@ -472,7 +473,7 @@ class NamedPages(unittest.TestCase):
                             " ".join(words) + "</td><td class=short>Short</td></tr></table></section></div></td>"
                             "<td>First</td></tr><tr class=second><td>Second</td></tr></table><p>After</p>"
                         )
-                        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                                 capture_output=True, text=True, timeout=60)
                         self.assertEqual(result.returncode, 0, result.stderr)
                         pages = pdf_text_pages(self.pdf)
@@ -523,7 +524,7 @@ class NamedPages(unittest.TestCase):
                         " ".join(words) + "</p><p class=spanner>Heading</p><p class=tail>Tail</p></section>"
                         "<p>Following</p></div></td><td>First</td></tr><tr class=second><td>Second</td></tr></table>"
                     )
-                    result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                    result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                             capture_output=True, text=True, timeout=60)
                     self.assertEqual(result.returncode, 0, result.stderr)
                     characters = [(character, glyph) for glyph in pdf_content.glyphs(self.pdf)
@@ -559,7 +560,7 @@ class NamedPages(unittest.TestCase):
                     "background:blue;box-decoration-break:clone}"
                     ".outer{padding:2% 0;box-decoration-break:clone}</style>" + body
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 pages = pdf_text_pages(self.pdf)
@@ -615,7 +616,7 @@ class NamedPages(unittest.TestCase):
                     '<caption class=changed>' + content + '</caption><tr><td>Cell</td></tr></table>'
                     '<p class=after>After</p>'
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 sheets = pdf_text_pages(self.pdf)
@@ -661,7 +662,7 @@ class NamedPages(unittest.TestCase):
                     f"caption{{caption-side:{side};background:blue;break-inside:auto}}td{{background:lime}}</style>"
                     "<table><caption>" + " ".join(labels) + "</caption><tr><td>Cell</td></tr></table><p>After</p>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertEqual(len(pdf_text_pages(self.pdf)), 2)
@@ -731,7 +732,7 @@ class NamedPages(unittest.TestCase):
                     "p{background:lime}" + styles + "</style><table>" + body +
                     "<tr><td>Cell</td></tr></table><p>After</p>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertEqual(len(pdf_text_pages(self.pdf)), 1)
@@ -788,7 +789,7 @@ class NamedPages(unittest.TestCase):
                     f"{outer}.box{{padding:5% 0 10%;background:blue;box-decoration-break:{decoration}}}</style>"
                     "<div class=outer>" + body + "<p>After</p></div>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 sheets = pdf_text_pages(self.pdf)
@@ -845,7 +846,7 @@ class NamedPages(unittest.TestCase):
                     f"background:blue;box-decoration-break:{decoration}}}</style>"
                     "<div class=outer><div class=box>" + "<br>".join(labels) + "</div><p>After</p></div>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 pages = pdf_text_pages(self.pdf)
@@ -902,7 +903,7 @@ class NamedPages(unittest.TestCase):
                         "<p class=spanner>Heading</p><p>Tail</p></section><p>Following</p></div></td>"
                         "<td>First</td></tr><tr class=second><td>Second</td></tr></table>"
                     )
-                    result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                    result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                             capture_output=True, text=True, timeout=60)
                     self.assertEqual(result.returncode, 0, result.stderr)
                     characters = [(character, glyph) for glyph in pdf_content.glyphs(self.pdf)
@@ -949,7 +950,7 @@ class NamedPages(unittest.TestCase):
                             "<p>Before</p><p class=spanner>Heading</p>" + middle +
                             "<p>Tail</p></section><p>Following</p></div><p>Outside</p>"
                         )
-                        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                                 capture_output=True, text=True, timeout=60)
                         self.assertEqual(result.returncode, 0, result.stderr)
                         characters = [(character, glyph) for glyph in pdf_content.glyphs(self.pdf)
@@ -988,7 +989,7 @@ class NamedPages(unittest.TestCase):
             "</style><table><tr><td rowspan=2><div class=tall>Start</div><p>End</p></td>"
             "<td>First</td></tr><tr class=second><td>Second</td></tr></table><p>After</p>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         pages = pdf_text_pages(self.pdf)
@@ -1021,7 +1022,7 @@ class NamedPages(unittest.TestCase):
             "</style><section><table><tr><td>" +
             "".join(f"<p>{word}</p>" for word in words) + "</td></tr></table></section>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         pages = pdf_text_pages(self.pdf)
@@ -1040,7 +1041,7 @@ class NamedPages(unittest.TestCase):
             "tbody{break-before:right;break-after:left}"
             "</style><p>Before</p><table><tbody><tr><td>First</td></tr></tbody></table><p>After</p>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         pages = pdf_text_pages(self.pdf)
@@ -1076,7 +1077,7 @@ class NamedPages(unittest.TestCase):
                 f"{target}.A{{page:A}}{target}.B{{page:B}}"
                 "</style><table>" + "".join(rows) + "</table>"
             )
-            result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+            result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                     capture_output=True, text=True, timeout=60)
             self.assertEqual(result.returncode, 0, result.stderr)
             pages = pdf_text_pages(self.pdf)
@@ -1109,7 +1110,7 @@ class NamedPages(unittest.TestCase):
                 "</style><section><p class=before>Before</p>"
                 "<p class=after>After</p>Return</section>"
             )
-            result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+            result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                     capture_output=True, text=True, timeout=60)
             self.assertEqual(result.returncode, 0, result.stderr)
             pages = pdf_text_pages(self.pdf)
@@ -1151,7 +1152,7 @@ class NamedPages(unittest.TestCase):
                 "td{padding:0;vertical-align:top}.after{break-before:right}"
                 f"</style><table><tr>{cells}</tr></table>"
             )
-            result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+            result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                     capture_output=True, text=True, timeout=60)
             self.assertEqual(result.returncode, 0, result.stderr)
             pages = pdf_text_pages(self.pdf)
@@ -1191,7 +1192,7 @@ class NamedPages(unittest.TestCase):
                 f"{css}</style><section><p>First</p><div></div></section>"
                 "<section><p>Second</p><div></div></section>"
             )
-            result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+            result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                     capture_output=True, text=True, timeout=60)
             self.assertEqual(result.returncode, 0, result.stderr)
             pages = pdf_text_pages(self.pdf)
@@ -1227,7 +1228,7 @@ class NamedPages(unittest.TestCase):
             "</style><section><i></i></section><section><i></i></section>"
             "<section style='page:upright'><i></i></section>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         document = pdf_content.Document(self.pdf)
@@ -1257,7 +1258,7 @@ class NamedPages(unittest.TestCase):
             "html,body,p{margin:0;padding:0;font:10pt/10pt serif}"
             "p+p{break-before:right}</style><p>Before</p><p>After</p>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         pages = pdf_text_pages(self.pdf)
@@ -1295,7 +1296,7 @@ class NamedPages(unittest.TestCase):
             "<section class=b><h1 id=second>Second</h1></section>"
             "<section class=a><h1 id=third>Third</h1></section>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf),
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT,
                                  "--headings", str(self.headings)],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -1351,7 +1352,7 @@ class NamedPages(unittest.TestCase):
             "td{padding:0;border:2pt solid red;font:10pt/10pt Fixed}"
             f"</style><table>{rows}</table>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         raster = self.output / "table"
@@ -1382,7 +1383,7 @@ class NamedPages(unittest.TestCase):
             "td{padding:0;font:10pt/10pt Fixed;widows:1;orphans:1;background:red}"
             f"</style><table><tr><td>{words}</td></tr></table>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         raster = self.output / "cell"
@@ -1416,7 +1417,7 @@ class NamedPages(unittest.TestCase):
                     "</style><table><colgroup><col></colgroup><tbody><tr>"
                     f"<td>{words}</td></tr></tbody></table>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 raster = self.output / layer
@@ -1450,7 +1451,7 @@ class NamedPages(unittest.TestCase):
                     "</style><table><colgroup><col></colgroup><tbody>"
                     f"<tr><td>{words}</td></tr><tr><td>End</td></tr></tbody></table>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertEqual(len(pdf_content.Document(self.pdf).pages()), 4)
@@ -1476,7 +1477,7 @@ class NamedPages(unittest.TestCase):
             "border-left:2pt solid red;border-right:2pt solid red}"
             f"</style><table><tr><td>{words}</td></tr></table>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         raster = self.output / "collapsed-cell"
@@ -1511,7 +1512,7 @@ class NamedPages(unittest.TestCase):
             f"<tbody><tr><td>{' '.join(left)}</td><td>{' '.join(right)}</td></tr></tbody>"
             "<tfoot><tr><td>FootLeft</td><td>FootRight</td></tr></tfoot></table>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         raster = self.output / "active-groups"
@@ -1561,7 +1562,7 @@ class NamedPages(unittest.TestCase):
                     f"<tbody>{body}</tbody><tfoot><tr><td>InnerFoot</td></tr></tfoot></table>"
                     "</td></tr></tbody><tfoot><tr><td>OuterFoot</td></tr></tfoot></table>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 raster = self.output / f"nested-{name}"
@@ -1610,7 +1611,7 @@ class NamedPages(unittest.TestCase):
                     + f"<td class=first>{label or ' '.join(right)}</td></tr>"
                     + "<tr><td class=last>Bottom</td></tr></table>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 raster = self.output / f"span-{name}"
@@ -1659,7 +1660,7 @@ class NamedPages(unittest.TestCase):
             "td{padding:0;font:10pt/10pt Fixed;widows:1;orphans:1;vertical-align:top}"
             f"td+td{{background:blue}}</style><table><tr><td>{left}</td><td>{right}</td></tr></table>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         raster = self.output / "short-cell"
@@ -1694,7 +1695,7 @@ class NamedPages(unittest.TestCase):
                 f"td+td{{background:blue;vertical-align:{alignment}}}"
                 f"</style><table><tr><td>{lines}</td><td>Short</td></tr></table>"
             )
-            result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+            result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                     capture_output=True, text=True, timeout=60)
             self.assertEqual(result.returncode, 0, result.stderr)
             raster = self.output / alignment
@@ -1736,7 +1737,7 @@ class NamedPages(unittest.TestCase):
                     f"</style><table><tr>{cells}<td>Top</td></tr>"
                     "<tr><td>Bottom</td></tr></table>"
                 )
-                result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+                result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                         capture_output=True, text=True, timeout=60)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 pages = pdf_text_pages(self.pdf)
@@ -1775,7 +1776,7 @@ class NamedPages(unittest.TestCase):
                 f"td+td{{vertical-align:{alignment};background:blue}}</style>"
                 f"<table><tr><td>{' '.join(words)}</td><td>Short</td></tr></table>"
             )
-            result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+            result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                     capture_output=True, text=True, timeout=60)
             self.assertEqual(result.returncode, 0, result.stderr)
             pages = pdf_text_pages(self.pdf)
@@ -1821,7 +1822,7 @@ class NamedPages(unittest.TestCase):
             ".next{break-before:page}</style><table><tr><td><p>Before</p>"
             f"<p class=next>{' '.join(words)}</p></td><td>Neighbour</td></tr></table>"
         )
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         raster = self.output / "forced-cell"

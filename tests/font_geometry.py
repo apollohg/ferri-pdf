@@ -16,6 +16,7 @@ from fontTools.ttLib import TTFont
 from PIL import Image
 
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "tests/fixtures/fonts"
@@ -112,7 +113,7 @@ class FontGeometry(unittest.TestCase):
         source, target = self.output / "input.html", self.output / "output.pdf"
         source.write_text(f"<!doctype html><style>{css}</style>{body}")
         rendered = subprocess.run(
-            [str(RENDERER), str(source), str(target), *arguments],
+            [str(RENDERER), str(source), str(target), *FILE_ROOT, *arguments],
             capture_output=True, text=True, timeout=60,
         )
         self.assertEqual(rendered.returncode, 0, rendered.stderr)

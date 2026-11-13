@@ -28,6 +28,8 @@ fn bench(path: &Path, runs: usize) -> Result<String, Box<dyn std::error::Error>>
     let html = fs::read(path)?;
     let options = RenderOptions {
         base: path.parent().unwrap_or(Path::new(".")).into(),
+        // The corpus names the repository's fonts and images from its own folder.
+        file_root: Some(env!("CARGO_MANIFEST_DIR").into()),
         content_loss: ContentLoss::Render,
         ..Default::default()
     };

@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 
 from PIL import Image
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
@@ -41,7 +42,7 @@ class GcpmPdf(unittest.TestCase):
         source = self.output / "source.html"
         self.pdf = self.output / "output.pdf"
         source.write_text("<!doctype html><style>" + BASE_CSS + css + "</style>" + body)
-        result = subprocess.run([str(RENDERER), str(source), str(self.pdf)],
+        result = subprocess.run([str(RENDERER), str(source), str(self.pdf), *FILE_ROOT],
                                 capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         return pdf_pages(self.pdf)

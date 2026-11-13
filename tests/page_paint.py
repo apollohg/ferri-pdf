@@ -9,6 +9,7 @@ import unittest
 
 from PIL import Image, ImageChops
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
@@ -666,7 +667,7 @@ class PagePaint(unittest.TestCase):
             f"{css}</style>{body}"
         )
         result = subprocess.run(
-            [str(RENDERER), str(source), str(target)],
+            [str(RENDERER), str(source), str(target), *FILE_ROOT],
             capture_output=True, text=True, timeout=60,
         )
         self.assertEqual(result.returncode, 0, result.stderr)

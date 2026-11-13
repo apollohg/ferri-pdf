@@ -12,6 +12,8 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 OUTPUT = HERE / 'output'
 BINARY = ROOT / 'target/release/ferri-pdf'
+# The fixtures name the assets beside their folder, and the fonts there link to the bundled ones.
+FILE_ROOT = ('--file-root', str(ROOT))
 SOURCE_PATHS = [ROOT/'Cargo.toml',ROOT/'Cargo.lock',ROOT/'build.rs',ROOT/'build',ROOT/'src',ROOT/'spec',ROOT/'assets',ROOT/'vendor',HERE]
 
 
@@ -222,7 +224,7 @@ def main():
         case_timeout_s = definition['timeout_s']
         candidate = OUTPUT / f'{run_id}-{name}.rust.pdf'
         try:
-            rendered = run_command([str(binary), str(source), str(candidate), '--trace'], OUTPUT / 'logs', case_timeout_s)
+            rendered = run_command([str(binary), str(source), str(candidate), '--trace', *FILE_ROOT], OUTPUT / 'logs', case_timeout_s)
             if rendered['status'] == COMMAND_INTERRUPTED:
                 raise KeyboardInterrupt
             execution_status = classify_render(rendered, candidate)

@@ -12,6 +12,7 @@ import unittest
 from fontTools.ttLib import TTFont
 
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 FONT = ROOT / "tests/fixtures/fonts/CJKSpacingTest.otf"
@@ -52,7 +53,7 @@ class RubyPdf(unittest.TestCase):
                           f"@page{{size:{PAGE_PT}pt {PAGE_PT}pt;margin:{MARGIN_PT}pt}}"
                           f"body{{margin:0;font:{SIZE_PT}pt/{LINE_HEIGHT_PT}pt J}}p{{margin:0}}{rules}"
                           f"</style>{body}")
-        rendered = subprocess.run([str(RENDERER), str(source), str(target)],
+        rendered = subprocess.run([str(RENDERER), str(source), str(target), *FILE_ROOT],
                                   capture_output=True, text=True, timeout=60)
         self.assertEqual(rendered.returncode, 0, rendered.stderr)
         return [(glyph.text, glyph.matrix[3], glyph.matrix[4] - MARGIN_PT,

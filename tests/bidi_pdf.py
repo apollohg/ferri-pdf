@@ -14,6 +14,7 @@ from fontTools.ttLib import TTFont
 
 from font_geometry import InstanceInterpreter
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
@@ -58,7 +59,7 @@ class BidiPdf(unittest.TestCase):
         source.write_text("<!doctype html><style>@page{size:600pt 500pt;margin:20pt}"
                           "html,body,p{margin:0;padding:0;font:20pt/24pt 'DejaVu Sans'}"
                           + css + "</style>" + body)
-        result = subprocess.run([str(RENDERER), str(source), str(target)], capture_output=True,
+        result = subprocess.run([str(RENDERER), str(source), str(target), *FILE_ROOT], capture_output=True,
                                 text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         document = pdf_content.Document(target)

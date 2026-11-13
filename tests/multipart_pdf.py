@@ -8,6 +8,7 @@ import tempfile
 import unittest
 
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
@@ -23,7 +24,7 @@ class MultipartNavigation(unittest.TestCase):
         self.pdf = self.output / "combined.pdf"
 
     def invoke(self, *flags):
-        return subprocess.run([str(RENDERER), str(self.index), str(self.pdf), "--part", str(self.body), *flags],
+        return subprocess.run([str(RENDERER), str(self.index), str(self.pdf), *FILE_ROOT, "--part", str(self.body), *flags],
                               capture_output=True, text=True, timeout=60)
 
     def test_forward_backward_local_and_url_scoped_links_resolve_real_pages(self):
@@ -125,8 +126,8 @@ class MultipartNavigation(unittest.TestCase):
         trace = self.pdf.with_suffix(".trace.json")
         os.link(self.pdf, trace)
         commands = [
-            [str(RENDERER), str(self.index), str(self.pdf), "--trace"],
-            [str(RENDERER), str(self.index), str(self.pdf), "--part", str(self.body), "--trace"],
+            [str(RENDERER), str(self.index), str(self.pdf), *FILE_ROOT, "--trace"],
+            [str(RENDERER), str(self.index), str(self.pdf), *FILE_ROOT, "--part", str(self.body), "--trace"],
         ]
         for command in commands:
             with self.subTest(command=command):
@@ -142,7 +143,7 @@ class MultipartNavigation(unittest.TestCase):
         html = '<h1 id=index>Index café</h1><a href="#body">Body</a>'
         first = b"\xff\xfe" + html.encode("utf-16-le")
         headings = self.output / "headings.json"
-        result = subprocess.run([str(RENDERER), "-", "-", "--part", str(self.body), "--headings", str(headings)],
+        result = subprocess.run([str(RENDERER), "-", "-", *FILE_ROOT, "--part", str(self.body), "--headings", str(headings)],
                                 input=first, capture_output=True, timeout=60, cwd=self.output)
         self.assertEqual(result.returncode, 0, result.stderr.decode())
         self.assertTrue(result.stdout.startswith(b"%PDF"))

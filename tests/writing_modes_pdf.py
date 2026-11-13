@@ -9,6 +9,7 @@ import unittest
 from oracle import pdf_content
 from fontTools.ttLib import TTFont
 from PIL import Image, ImageChops
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
@@ -27,7 +28,7 @@ class WritingModesPdf(unittest.TestCase):
             source.write_text(f"<!doctype html><style>@page{{size:{PAGE_PT}pt;margin:{MARGIN_PT}pt}}"
                               f"html{{writing-mode:{mode}}}body{{margin:0;font:{FONT_PT}pt/1 serif}}"
                               f"p{{margin:0}}{rules}</style>{body}")
-            result = subprocess.run([str(RENDERER), str(source), str(target)],
+            result = subprocess.run([str(RENDERER), str(source), str(target), *FILE_ROOT],
                                     capture_output=True, text=True, timeout=60)
             self.assertEqual(result.returncode, 0, f"{mode} must render: {result.stderr}")
             if pixels:

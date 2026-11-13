@@ -7,6 +7,7 @@ import unittest
 from fontTools.ttLib import TTFont
 from PIL import Image
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
@@ -66,7 +67,7 @@ class MathmlPdf(unittest.TestCase):
         @page{{size:300pt {PAGE_HEIGHT_PT}pt;margin:10pt}}
         body{{margin:0;font:{FONT_SIZE}pt Probe}}math{{font-family:Probe}}
         {css}</style>{body}""")
-        subprocess.run([str(RENDERER), str(source), str(output)], check=True, capture_output=True)
+        subprocess.run([str(RENDERER), str(source), str(output), *FILE_ROOT], check=True, capture_output=True)
         return output, inspect_math(output)
 
     def test_fraction_rule_and_gaps_follow_actual_math_table_and_text_remains_selectable(self):

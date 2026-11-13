@@ -7,6 +7,7 @@ import unittest
 
 from fontTools.ttLib import TTFont
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
@@ -29,7 +30,7 @@ class TabsPdf(unittest.TestCase):
         source.write_text(f"<!doctype html><style>@font-face{{font-family:TabTest;src:url('{FONT.as_uri()}')}}"
                           f"@page{{size:300pt 400pt;margin:{MARGIN}pt}}body{{margin:0}}"
                           f"p{{margin:0;font:{SIZE}pt/24pt TabTest;white-space:pre}}{css}</style>{body}")
-        result = subprocess.run([str(RENDERER), str(source), str(target)], capture_output=True, text=True, timeout=60)
+        result = subprocess.run([str(RENDERER), str(source), str(target), *FILE_ROOT], capture_output=True, text=True, timeout=60)
         self.assertEqual(result.returncode, 0, result.stderr)
         return pdf_content.inspect(target)["glyphs"]
 

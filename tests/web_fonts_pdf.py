@@ -7,6 +7,7 @@ import unittest
 
 import font_geometry
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "tests/fixtures/fonts"
@@ -35,7 +36,7 @@ class WebFontsPdf(unittest.TestCase):
         source, target = self.output / "input.html", self.output / "output.pdf"
         source.write_text(f"<!doctype html><base href='{FIXTURES.as_uri()}/'><style>{faces}"
                           f"p{{margin:0;font-size:{font_geometry.FONT_SIZE_PT}pt}}</style>{body}")
-        rendered = subprocess.run([str(RENDERER), str(source), str(target)],
+        rendered = subprocess.run([str(RENDERER), str(source), str(target), *FILE_ROOT],
                                   capture_output=True, text=True, timeout=60)
         self.assertEqual(rendered.returncode, 0, rendered.stderr)
         document = pdf_content.Document(target)

@@ -9,6 +9,7 @@ from fontTools.ttLib import TTFont
 from PIL import Image
 
 from oracle import pdf_content
+from file_root import FILE_ROOT
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "target/debug/ferri-pdf"
@@ -58,7 +59,7 @@ class TextEffectsPdf(unittest.TestCase):
             f"<!doctype html><style>@font-face{{font-family:Probe;src:url('{FONT.as_uri()}')}}"
             f"{PAGE}p{{position:absolute;left:{LEFT_PT}pt;top:{TOP_PT}pt;margin:0;"
             f"font:{SIZE_PT}pt/{LINE_HEIGHT_PT}pt Probe;{style}}}</style><p>{text}</p>")
-        rendered = subprocess.run([str(RENDERER), str(source), str(target)],
+        rendered = subprocess.run([str(RENDERER), str(source), str(target), *FILE_ROOT],
                                   capture_output=True, text=True, timeout=60)
         self.assertEqual(rendered.returncode, 0, rendered.stderr)
         return target
@@ -75,7 +76,7 @@ class TextEffectsPdf(unittest.TestCase):
             f"{200 / PT_PER_CSS_PX}\"><text x=\"{LEFT_PT / PT_PER_CSS_PX}\" "
             f"y=\"{self.baseline_pt() / PT_PER_CSS_PX}\" style=\"font:{SIZE_PT}pt Probe;"
             f"{style.replace('color:', 'fill:')}\">{text}</text></svg>")
-        rendered = subprocess.run([str(RENDERER), str(source), str(target)],
+        rendered = subprocess.run([str(RENDERER), str(source), str(target), *FILE_ROOT],
                                   capture_output=True, text=True, timeout=60)
         self.assertEqual(rendered.returncode, 0, rendered.stderr)
         return target
@@ -248,7 +249,7 @@ class TextEffectsPdf(unittest.TestCase):
         source, target = self.output / "input.html", self.output / "output.pdf"
         source.write_text(f"<!doctype html><style>{PAGE}svg,img{{position:absolute;left:0;"
                           f"top:0}}</style>{body}")
-        rendered = subprocess.run([str(RENDERER), str(source), str(target)],
+        rendered = subprocess.run([str(RENDERER), str(source), str(target), *FILE_ROOT],
                                   capture_output=True, text=True, timeout=60)
         self.assertEqual(rendered.returncode, 0, rendered.stderr)
         return target
