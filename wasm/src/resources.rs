@@ -5,12 +5,34 @@
 use std::cell::RefCell;
 use std::collections::BTreeMap;
 
+use serde::Serialize;
+
 use ferri_pdf::{
     DataResolver, ResolvedResource, Resource, ResourceBase, ResourceError, ResourceMetadata,
     ResourceResolver, Url,
 };
 
 const NOT_FETCHED: &str = "not fetched yet";
+const FILE_SCHEME: &str = "file";
+const LOCAL_LOCATION: &str = "the response places a remote resource at a local file";
+
+/// What a render asks JavaScript to fetch. A local file is asked for together with the
+/// folder it must be in, so the same file answers separately for each folder.
+#[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub(crate) struct Request {
+    /// Without its fragment, which names a part of the resource and is not fetched.
+    pub url: Url,
+    /// The `file:` URL of the folder a local file is read in; absent for other URLs.
+    pub file_root: Option<Url>,
+}
+
+/// A [`Request`] as JavaScript receives it.
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) struct RequestReport {
+    url: String,
+    file_root: Option<String>,
+}
 
 /// The bounds on what one render job fetches.
 #[derive(Clone, Copy)]
@@ -34,8 +56,7 @@ enum Entry {
 }
 
 pub(crate) struct SuppliedResources {
-    /// By URL without its fragment, which names a part of the resource and is not fetched.
-    entries: RefCell<BTreeMap<Url, Entry>>,
+    entries: RefCell<BTreeMap<Request, Entry>>,
     data: DataResolver,
     limits: FetchLimits,
     rounds: u32,
@@ -59,15 +80,29 @@ impl SuppliedResources {
         self.rounds >= self.limits.rounds
     }
 
-    /// Starts a fetch round: the URLs renders have asked for that are not yet answered.
-    pub(crate) fn start_round(&mut self) -> Vec<String> {
+    /// Starts a fetch round: what renders have asked for that is not yet answered.
+    pub(crate) fn start_round(&mut self) -> Vec<RequestReport> {
         self.rounds += 1;
         self.entries
             .borrow()
             .iter()
             .filter(|(_, entry)| matches!(entry, Entry::Pending))
-            .map(|(url, _)| url.as_str().to_owned())
+            .map(|(request, _)| RequestReport {
+                url: request.url.as_str().to_owned(),
+                file_root: request
+                    .file_root
+                    .as_ref()
+                    .map(|root| root.as_str().to_owned()),
+            })
             .collect()
+    }
+
+    /// The resources of a document that reads local files in `file_root`, if anywhere.
+    pub(crate) fn confined(&self, file_root: Option<Url>) -> ConfinedResources<'_> {
+        ConfinedResources {
+            supplied: self,
+            file_root,
+        }
     }
 
     /// Bytes the job may still be supplied.
@@ -77,29 +112,38 @@ impl SuppliedResources {
 
     pub(crate) fn supply(
         &mut self,
-        url: Url,
+        request: Request,
         bytes: Vec<u8>,
         metadata: ResourceMetadata,
         location: Option<Url>,
     ) {
         if bytes.len() > self.remaining_bytes() {
             let reason = self.byte_limit_reason();
-            self.fail(url, &reason);
+            self.fail(request, &reason);
+            return;
+        }
+        // As a redirect to a local file would, it lets remote content name local files.
+        if request.file_root.is_none()
+            && location
+                .as_ref()
+                .is_some_and(|location| location.scheme() == FILE_SCHEME)
+        {
+            self.fail(request, LOCAL_LOCATION);
             return;
         }
         self.loaded_bytes += bytes.len();
         let entry = Entry::Loaded {
             bytes,
-            location: location.unwrap_or_else(|| url.clone()),
+            location: location.unwrap_or_else(|| request.url.clone()),
             metadata,
         };
-        self.entries.get_mut().insert(url, entry);
+        self.entries.get_mut().insert(request, entry);
     }
 
-    pub(crate) fn fail(&mut self, url: Url, reason: &str) {
+    pub(crate) fn fail(&mut self, request: Request, reason: &str) {
         self.entries
             .get_mut()
-            .insert(url, Entry::Failed(reason.into()));
+            .insert(request, Entry::Failed(reason.into()));
     }
 
     pub(crate) fn byte_limit_reason(&self) -> String {
@@ -117,14 +161,36 @@ impl SuppliedResources {
     }
 }
 
-fn unavailable(url: Url, reason: impl Into<Box<str>>) -> ResourceError {
-    ResourceError::Unavailable {
-        url,
-        reason: reason.into(),
+/// One document's view of the job's resources: it reads local files only in its own folder.
+pub(crate) struct ConfinedResources<'a> {
+    supplied: &'a SuppliedResources,
+    file_root: Option<Url>,
+}
+
+impl ConfinedResources<'_> {
+    /// The request for `url` made by content with `base`; a local file is refused here for
+    /// remote content and for a document with no folder, and by JavaScript outside it.
+    fn request(&self, url: Url, base: &ResourceBase) -> Result<Request, ResourceError> {
+        if url.scheme() != FILE_SCHEME {
+            return Ok(Request {
+                url,
+                file_root: None,
+            });
+        }
+        if base.is_remote() {
+            return Err(ResourceError::LocalFromRemote(url));
+        }
+        match &self.file_root {
+            Some(root) => Ok(Request {
+                url,
+                file_root: Some(root.clone()),
+            }),
+            None => Err(ResourceError::NoFileRoot(url)),
+        }
     }
 }
 
-impl ResourceResolver for SuppliedResources {
+impl ResourceResolver for ConfinedResources<'_> {
     fn resolve(&self, reference: &str, base: &ResourceBase) -> Result<Resource, ResourceError> {
         self.resolve_with_metadata(reference, base)
             .map(|resolved| resolved.resource)
@@ -135,13 +201,19 @@ impl ResourceResolver for SuppliedResources {
         reference: &str,
         base: &ResourceBase,
     ) -> Result<ResolvedResource, ResourceError> {
-        if let Some(resolved) = self.data.resolve_data_url(reference, base) {
+        let supplied = self.supplied;
+        if let Some(resolved) = supplied.data.resolve_data_url(reference, base) {
             return resolved;
         }
         let mut url = base.resolve(reference)?;
         url.set_fragment(None);
-        let mut entries = self.entries.borrow_mut();
-        match entries.get(&url) {
+        let request = self.request(url, base)?;
+        let unavailable = |reason: Box<str>| ResourceError::Unavailable {
+            url: request.url.clone(),
+            reason,
+        };
+        let mut entries = supplied.entries.borrow_mut();
+        match entries.get(&request) {
             Some(Entry::Loaded {
                 bytes,
                 location,
@@ -153,20 +225,22 @@ impl ResourceResolver for SuppliedResources {
                 },
                 metadata: metadata.clone(),
             }),
-            Some(Entry::Failed(reason)) => Err(unavailable(url, reason.clone())),
-            Some(Entry::Pending) | None if self.exhausted() => {
-                Err(unavailable(url, self.round_limit_reason()))
+            Some(Entry::Failed(reason)) => Err(unavailable(reason.clone())),
+            Some(Entry::Pending) | None if supplied.exhausted() => {
+                Err(unavailable(supplied.round_limit_reason().into()))
             }
             Some(Entry::Pending) | None => {
-                entries.insert(url.clone(), Entry::Pending);
-                Err(unavailable(url, NOT_FETCHED))
+                let error = unavailable(NOT_FETCHED.into());
+                entries.insert(request, Entry::Pending);
+                Err(error)
             }
         }
     }
 
     fn interrupts(&self) -> bool {
-        !self.exhausted()
+        !self.supplied.exhausted()
             && self
+                .supplied
                 .entries
                 .borrow()
                 .values()

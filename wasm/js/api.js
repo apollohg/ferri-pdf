@@ -1,6 +1,6 @@
 // The render loop shared by the browser and Node entries. The WebAssembly renderer resolves
-// resources synchronously, so each attempt reports the URLs it lacked; they are fetched in
-// parallel and the render repeats until nothing is missing.
+// resources synchronously, so each attempt reports what it lacked as `{ url, fileRoot }`
+// requests; they are fetched in parallel and the render repeats until nothing is missing.
 import { ContentLostError, RenderError } from './errors.js';
 
 const NO_RESOURCE = 'fetch returned no resource';
@@ -99,22 +99,25 @@ export async function fetchedResource(result, budget) {
   return resource;
 }
 
-/** `fetch` as a function of a URL and the byte budget its result must fit. */
+/**
+ * `fetch` as a function of a URL, the byte budget its result must fit and, for a local file,
+ * the URL of the folder it must be in.
+ */
 export function budgeted(fetch) {
   return fetch[BUDGETED] ? fetch : (url) => fetch(url);
 }
 
-/** Fetches `url` into `job`; a failure of any kind leaves the resource unavailable. */
-async function answer(job, url, fetch) {
+/** Answers a request of `job`; a failure of any kind leaves the resource unavailable. */
+async function answer(job, { url, fileRoot }, fetch) {
   try {
     const budget = { bytes: job.remainingBytes(), reason: job.byteLimitReason() };
     const { data, contentType, url: location } = await fetchedResource(
-      await fetch(url, budget),
+      await fetch(url, budget, fileRoot ?? undefined),
       budget,
     );
-    job.supply(url, data, contentType, location);
+    job.supply(url, fileRoot ?? undefined, data, contentType, location);
   } catch (error) {
-    job.fail(url, error instanceof Error ? error.message : String(error));
+    job.fail(url, fileRoot ?? undefined, error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -130,14 +133,14 @@ function failure({ message, lost, part }) {
 /**
  * `render` and `renderParts` for one environment, which supplies:
  * - `bindings()`: resolves to the initialised WebAssembly exports;
- * - `prepare(options, documents)`: `{ settings, fetch }`, the renderer's settings and the
- *   function that loads a URL within a byte budget;
+ * - `prepare(options)`: `{ settings, fetch }`, the renderer's settings and the function
+ *   that loads a URL within a byte budget;
  * - `partBase(part)`: `{ baseUrl, directory }`, the base a part object names, if any, and
  *   whether it is a folder rather than the part's own URL.
  */
 export function createApi(environment) {
   async function run(documents, multipart, options = {}) {
-    const { settings, fetch } = environment.prepare(options, documents);
+    const { settings, fetch } = environment.prepare(options);
     const { RenderJob } = await environment.bindings();
     let trapped = false;
     const job = new RenderJob(JSON.stringify(settings), multipart);
@@ -149,8 +152,12 @@ export function createApi(environment) {
           job.addBytes(bytesOf(html, 'HTML'), baseUrl, directory);
         }
       }
-      for (let urls = job.advance(); urls.length > 0; urls = job.advance()) {
-        await Promise.all(urls.map((url) => answer(job, url, fetch)));
+      for (
+        let requests = JSON.parse(job.advance());
+        requests.length > 0;
+        requests = JSON.parse(job.advance())
+      ) {
+        await Promise.all(requests.map((request) => answer(job, request, fetch)));
       }
       const report = JSON.parse(job.report());
       if (report.error) {

@@ -234,6 +234,8 @@ export function defineSuite(label, load, createRenderWorker) {
     describe('local file confinement', () => {
       let root;
       let secret;
+      /** A folder beside `root`, for a second part or a wider `fileRoot`. */
+      let other;
       /** A custom fetch function that must never be handed a `file:` URL. */
       const noFiles = (responses = {}) => (url) => {
         assert.ok(!url.startsWith('file:'), `fetch was asked for ${url}`);
@@ -253,15 +255,35 @@ export function defineSuite(label, load, createRenderWorker) {
         await writeFile(secret, PAGE_BREAK_CSS);
         await writeFile(path.join(root, 'style.css'), PAGE_BREAK_CSS);
         await symlink(secret, path.join(root, 'link.css'));
+        await mkdir(path.join(root, 'sub'));
+        await writeFile(path.join(root, 'sub', 'plain.css'), PAGE_BREAK_CSS);
+        await writeFile(path.join(root, 'sub', 'inside.css'), "@import '../style.css';");
+        await writeFile(path.join(root, 'sub', 'escape.css'), "@import '../../secret.css';");
+        other = path.join(directory, 'other');
+        await mkdir(other);
+        await writeFile(path.join(other, 'shared.css'), PAGE_BREAK_CSS);
+        await symlink(path.join(other, 'shared.css'), path.join(root, 'other.css'));
       });
 
-      test('without a local base no file is read', async () => {
-        const absolute = pathToFileURL(secret).href;
+      test('without a base no file is read', async () => {
+        const absolute = pathToFileURL(path.join(root, 'style.css')).href;
         for (const options of [undefined, { fetch: noFiles() }]) {
           const { leaked, reported } = await linking(absolute, options);
           assert.equal(leaked, false, 'a document must not read files the caller did not point it at');
-          assert.match(reported, /local files are read only for a render with a local base/);
+          assert.match(reported, /no local base or file root/);
+          assert.ok(reported.includes(absolute), `the diagnostic names the file: ${reported}`);
         }
+        const directoryBefore = process.cwd();
+        process.chdir(root);
+        try {
+          const relative = await linking('style.css', { fetch: noFiles() });
+          assert.equal(relative.leaked, false, 'a relative path in the working directory was read');
+          assert.match(relative.reported, /style\.css has no base/);
+        } finally {
+          process.chdir(directoryBefore);
+        }
+        const rooted = await linking(absolute, { fileRoot: root, fetch: noFiles() });
+        assert.deepEqual(rooted, { leaked: true, reported: '' }, 'fileRoot allows a file: URL inside it');
       });
 
       test('an absolute path, a traversal and a symlink out of the base are refused', async () => {
@@ -269,50 +291,84 @@ export function defineSuite(label, load, createRenderWorker) {
           for (const options of [{ base: root }, { base: root, fileRoot: root }, { base: root, fetch: noFiles() }]) {
             const { leaked, reported } = await linking(href, options);
             assert.equal(leaked, false, `${href} was read with ${JSON.stringify(Object.keys(options))}`);
-            assert.match(reported, /escapes the allowed root/, href);
+            assert.match(reported, /outside the allowed folder/, href);
+            assert.ok(reported.includes(href), `the diagnostic names ${href}: ${reported}`);
           }
         }
         const inside = await linking('style.css', { base: root, fileRoot: root, fetch: noFiles() });
         assert.deepEqual(inside, { leaked: true, reported: '' });
       });
 
-      test('fileRoot widens the readable directory beyond the base', async () => {
-        const { leaked, reported } = await linking('../secret.css', { base: root, fileRoot: directory });
-        assert.equal(leaked, true, reported);
+      test('the folder is the document\'s, whichever sheet names the file', async () => {
+        const inside = await linking('sub/inside.css', { base: root });
+        assert.deepEqual(inside, { leaked: true, reported: '' }, 'a sheet in a subfolder importing ../style.css');
+        const escape = await linking('sub/escape.css', { base: root });
+        assert.equal(escape.leaked, false, 'a sheet in a subfolder read outside the base');
+        assert.match(escape.reported, /secret\.css.*outside the allowed folder/);
       });
 
-      test('a document with a remote base reads no file, directly or through a remote sheet', async () => {
-        const absolute = pathToFileURL(secret).href;
+      test('fileRoot replaces the folder of the base', async () => {
+        const wider = await linking('../secret.css', { base: root, fileRoot: directory });
+        assert.equal(wider.leaked, true, wider.reported);
+        const sibling = await linking('../other/shared.css', { base: root, fileRoot: directory });
+        assert.equal(sibling.leaked, true, sibling.reported);
+        const narrow = { base: root, fileRoot: path.join(root, 'sub') };
+        assert.deepEqual(await linking('sub/plain.css', narrow), { leaked: true, reported: '' });
+        const narrower = await linking('style.css', narrow);
+        assert.equal(narrower.leaked, false, 'the base folder is outside the narrower fileRoot');
+        assert.match(narrower.reported, /outside the allowed folder/);
+      });
+
+      test('remote content reads no file, whatever the base and fileRoot', async () => {
+        const absolute = pathToFileURL(path.join(root, 'style.css')).href;
+        const importing = new TextEncoder().encode(`@import '${absolute}';`);
         for (const fileRoot of [undefined, directory]) {
           const direct = await linking(absolute, { baseUrl: 'https://cdn.example/', fileRoot, fetch: noFiles() });
           assert.equal(direct.leaked, false, 'file: reference from an https document');
-          assert.match(direct.reported, /local files are read only/);
+          assert.match(direct.reported, /the content that names it is not local/);
 
-          const imported = await linking('remote.css', {
-            baseUrl: 'https://cdn.example/',
-            fileRoot,
-            fetch: noFiles({ 'https://cdn.example/remote.css': new TextEncoder().encode(`@import '${absolute}';`) }),
-          });
-          assert.equal(imported.leaked, false, 'file: import from a remote stylesheet');
-          assert.match(imported.reported, /local files are read only/);
+          for (const base of [{ baseUrl: 'https://cdn.example/' }, { base: root }]) {
+            const imported = await linking('https://cdn.example/remote.css', {
+              ...base,
+              fileRoot,
+              fetch: noFiles({ 'https://cdn.example/remote.css': importing }),
+            });
+            assert.equal(imported.leaked, false, `file: import from a remote stylesheet with ${JSON.stringify(base)}`);
+            assert.match(imported.reported, /the content that names it is not local/);
 
-          const redirected = await linking('moved.css', {
-            baseUrl: 'https://cdn.example/',
-            fileRoot,
-            fetch: noFiles({
-              'https://cdn.example/moved.css': { data: new TextEncoder().encode("@import 'secret.css';"), url: pathToFileURL(path.join(directory, 'moved.css')).href },
-            }),
-          });
-          assert.equal(redirected.leaked, false, 'a response that claims a file: location');
+            const redirected = await linking('https://cdn.example/moved.css', {
+              ...base,
+              fileRoot,
+              fetch: noFiles({
+                'https://cdn.example/moved.css': { data: new TextEncoder().encode("@import 'style.css';"), url: pathToFileURL(path.join(root, 'moved.css')).href },
+              }),
+            });
+            assert.equal(redirected.leaked, false, 'a response that claims a file: location');
+            assert.match(redirected.reported, /places a remote resource at a local file/);
+          }
         }
       });
 
-      test('a multipart render reads only below the bases its parts name', async () => {
+      test('each part of a multipart render reads only the folder of its own base', async () => {
         const part = (href, base) => ({ html: LINKED.replace('style.css', href), base });
+        const pages = (output) => output.parts.map((entry) => entry.pageCount);
         const confined = await api.renderParts([part('style.css', root), part('../secret.css', root)]);
-        assert.deepEqual(confined.parts.map((entry) => entry.pageCount), [2, 1]);
+        assert.deepEqual(pages(confined), [2, 1]);
+
+        const shared = pathToFileURL(path.join(other, 'shared.css')).href;
+        // The other part's file is asked for before and after that part reads it itself.
+        const parts = [part(shared, root), part('shared.css', other), part(shared, root), part('other.css', root), LINKED.replace('style.css', shared)];
+        const separate = await api.renderParts(parts);
+        assert.deepEqual(pages(separate), [1, 2, 1, 1, 1], 'a part read the folder of another part');
+        for (const index of [0, 2, 3]) {
+          assert.match(messages(separate.parts[index].diagnostics).join('\n'), /outside the allowed folder/);
+        }
+        assert.match(messages(separate.parts[4].diagnostics).join('\n'), /no local base or file root/);
+        const rooted = await api.renderParts(parts, { fileRoot: directory });
+        assert.deepEqual(pages(rooted), [2, 2, 2, 2, 2], 'fileRoot covers every part');
+
         const mixed = await api.renderParts([part('style.css', root), { html: LINKED, baseUrl: 'https://cdn.example/a.html' }], { fetch: noFiles() });
-        assert.deepEqual(mixed.parts.map((entry) => entry.pageCount), [1, 1], 'a remote part makes the job remote');
+        assert.deepEqual(pages(mixed), [2, 1], 'a remote part reads no file and leaves the local part its folder');
       });
 
       test('a file replaced around the open is refused', async () => {

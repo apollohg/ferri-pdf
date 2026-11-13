@@ -3,7 +3,6 @@
 import { constants } from 'node:fs';
 import { lstat, open, readFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
-import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { initSync, RenderJob } from './generated/ferri_pdf.js';
@@ -13,7 +12,9 @@ export { ContentLostError, RenderError } from './errors.js';
 
 const FILE_SCHEME = 'file:';
 const WASM_FILE = new URL('./generated/ferri_pdf_bg.wasm', import.meta.url);
-const NO_LOCAL_BASE = 'local files are read only for a render with a local base';
+// The reasons match the native library's, so a refusal reads the same everywhere.
+const NO_FILE_ROOT = 'the render has no local base or file root';
+const OUTSIDE_ROOT = 'local file is outside the allowed folder';
 const NOT_A_FILE = 'not a regular file';
 const CHANGED = 'the file changed while it was being opened';
 /** Absent on Windows, where the checks on the open handle stand alone. */
@@ -37,30 +38,6 @@ function baseOf({ base, baseUrl }) {
   return base === undefined ? { baseUrl } : { baseUrl: directoryUrl(base), directory: true };
 }
 
-/** The directory a `file:` base URL names: itself, or the one holding its document. */
-function baseDirectory(baseUrl) {
-  const location = fileURLToPath(baseUrl);
-  return baseUrl.endsWith('/') ? location : path.dirname(location);
-}
-
-/**
- * The directories a render may read local files in: `fileRoot` if given, else those of the
- * local bases the caller named. None when the document's base is remote or the caller named
- * no local base, so a document cannot read files the caller did not point it at.
- */
-function readableRoots(baseUrl, fileRoot, documents) {
-  const named = [baseUrl, ...documents.map((document) => document.baseUrl)].filter(
-    (url) => url !== undefined,
-  );
-  if (named.some((url) => !url.startsWith(FILE_SCHEME))) {
-    return [];
-  }
-  if (fileRoot !== undefined) {
-    return [fileRoot];
-  }
-  return named.map(baseDirectory);
-}
-
 /** Whether `file`, with links resolved, lies in `root` once its links are resolved too. */
 async function contains(root, file) {
   const inside = path.relative(await realpath(root), file);
@@ -68,18 +45,19 @@ async function contains(root, file) {
 }
 
 /**
- * Reads a local file within `budget`. Only a regular file inside one of `roots`, judged by
- * real paths, is read, and only through the handle that was verified; a device, a directory,
- * a longer file or a file replaced after the check is refused unread.
+ * Reads a local file within `budget`. Only a regular file inside the folder at the URL
+ * `root`, judged by real paths, is read, and only through the handle that was verified; a
+ * device, a directory, a longer file or a file replaced after the check is refused unread.
+ * The renderer names the root: the caller's `fileRoot`, or else the folder of the base of
+ * the document that asks, and it asks for no file on behalf of remote content.
  */
-async function readLocal(url, roots, budget) {
-  if (roots.length === 0) {
-    throw new Error(NO_LOCAL_BASE);
+async function readLocal(url, root, budget) {
+  if (root === undefined) {
+    throw new Error(NO_FILE_ROOT);
   }
   const file = await realpath(fileURLToPath(url));
-  const allowed = await Promise.all(roots.map((root) => contains(root, file)));
-  if (!allowed.includes(true)) {
-    throw new Error(`resource escapes the allowed root: ${file}`);
+  if (!(await contains(fileURLToPath(root), file))) {
+    throw new Error(`${OUTSIDE_ROOT}: ${file}`);
   }
   // Opening without blocking returns at once for a FIFO, which is then refused; a link put
   // in the file's place since the check is not followed where the platform can refuse it.
@@ -125,19 +103,20 @@ const api = createApi({
     });
     return bindings;
   },
-  prepare({ fetch = globalThis.fetch, base, baseUrl, fileRoot, ...settings }, documents) {
+  prepare({ fetch = globalThis.fetch, base, baseUrl, fileRoot, ...settings }) {
     const named = baseOf({ base, baseUrl });
-    const roots = readableRoots(named.baseUrl, fileRoot, documents);
     const remote = budgeted(fetch);
     return {
       settings: {
         ...settings,
-        baseUrl: named.baseUrl ?? directoryUrl(process.cwd()),
-        baseDirectory: named.directory ?? named.baseUrl === undefined,
+        // Without a base, relative references do not resolve and no local file is read.
+        baseUrl: named.baseUrl,
+        baseDirectory: named.directory ?? false,
+        fileRoot: fileRoot === undefined ? undefined : directoryUrl(fileRoot),
       },
-      // Local files never reach a custom fetch function, which could read around the roots.
-      fetch: (url, budget) =>
-        url.startsWith(FILE_SCHEME) ? readLocal(url, roots, budget) : remote(url, budget),
+      // Local files never reach a custom fetch function, which could read around the root.
+      fetch: (url, budget, root) =>
+        url.startsWith(FILE_SCHEME) ? readLocal(url, root, budget) : remote(url, budget),
     };
   },
   partBase: baseOf,

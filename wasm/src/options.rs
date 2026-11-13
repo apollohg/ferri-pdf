@@ -13,6 +13,7 @@ use crate::resources::FetchLimits;
 /// turn take a round each; documents rarely need more than four.
 const DEFAULT_FETCH_ROUNDS: u32 = 16;
 const BASE_URL: &str = "baseUrl";
+const FILE_ROOT: &str = "fileRoot";
 const DEFAULT_FETCH_BYTES: usize = 256 * 1024 * 1024;
 
 #[derive(Clone, Copy, Default, Deserialize)]
@@ -47,6 +48,8 @@ pub(crate) struct Settings {
     base_url: Option<String>,
     /// Whether `base_url` is a folder rather than the URL of the document.
     base_directory: bool,
+    /// The `file:` URL of the folder local files are read in, instead of each base's.
+    file_root: Option<String>,
     stylesheets: Vec<String>,
     user_stylesheets: Vec<String>,
     paper: Option<[f32; 2]>,
@@ -94,6 +97,14 @@ impl Settings {
             rounds: self.max_fetch_rounds.unwrap_or(DEFAULT_FETCH_ROUNDS),
             bytes: self.max_fetch_bytes.unwrap_or(DEFAULT_FETCH_BYTES),
         }
+    }
+
+    /// The folder the caller confined local files to, if any.
+    pub(crate) fn file_root(&self) -> Result<Option<Url>, String> {
+        self.file_root
+            .as_deref()
+            .map(|root| parse_url(FILE_ROOT, root))
+            .transpose()
     }
 
     /// The library's options. The parts of a multipart render share `baseUrl` as the place

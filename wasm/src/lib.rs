@@ -7,16 +7,17 @@ mod resources;
 
 use ferri_pdf::{
     Error, HeadingLocation, HtmlPart, LayoutTrace, PdfError, RenderDiagnostic, RenderOptions,
-    ResourceBase, ResourceMetadata,
+    ResourceBase, ResourceMetadata, Url,
 };
 use serde::Serialize;
 use wasm_bindgen::prelude::*;
 
 use crate::options::{Settings, parse_url, resource_base};
-use crate::resources::SuppliedResources;
+use crate::resources::{ConfinedResources, Request, SuppliedResources};
 
 const PART_BASE_URL: &str = "part baseUrl";
 const RESOURCE_URL: &str = "resource url";
+const RESOURCE_FILE_ROOT: &str = "resource fileRoot";
 const UNFINISHED: &str = "the render job has not finished";
 
 enum Html {
@@ -126,12 +127,14 @@ struct Outcome {
 }
 
 /// One render of a document, or of several parts into one PDF. JavaScript calls `advance`
-/// until it returns no URLs, answering each URL with `supply` or `fail` in between.
+/// until it returns no requests, answering each with `supply` or `fail` in between.
 #[wasm_bindgen]
 pub struct RenderJob {
     parts: Vec<Part>,
     multipart: bool,
     options: RenderOptions,
+    /// The folder every document reads local files in, instead of its own base's.
+    file_root: Option<Url>,
     resources: SuppliedResources,
     outcome: Option<Outcome>,
 }
@@ -147,6 +150,7 @@ impl RenderJob {
         Ok(Self {
             parts: Vec::new(),
             multipart,
+            file_root: settings.file_root().map_err(|error| JsError::new(&error))?,
             options: settings
                 .into_options(multipart)
                 .map_err(|error| JsError::new(&error))?,
@@ -178,26 +182,29 @@ impl RenderJob {
         self.add(Html::Bytes(html), base_url, directory)
     }
 
-    /// Renders with the resources supplied so far. Returns the URLs to fetch before calling
-    /// again, or none once the job has finished.
-    pub fn advance(&mut self) -> Vec<String> {
-        if self.outcome.is_some() {
-            return Vec::new();
-        }
-        match self.render() {
-            Err(Error::Interrupted) => self.resources.start_round(),
-            Ok(outcome) => {
-                self.outcome = Some(outcome);
-                Vec::new()
+    /// Renders with the resources supplied so far. Returns, as JSON, the `{ url, fileRoot }`
+    /// requests to answer before calling again, or none once the job has finished; a local
+    /// file may be read only inside its `fileRoot`.
+    pub fn advance(&mut self) -> Result<String, JsError> {
+        let requests = if self.outcome.is_some() {
+            Vec::new()
+        } else {
+            match self.render() {
+                Err(Error::Interrupted) => self.resources.start_round(),
+                Ok(outcome) => {
+                    self.outcome = Some(outcome);
+                    Vec::new()
+                }
+                Err(error) => {
+                    self.outcome = Some(Outcome {
+                        pdf: Vec::new(),
+                        report: Report::Error(error.into()),
+                    });
+                    Vec::new()
+                }
             }
-            Err(error) => {
-                self.outcome = Some(Outcome {
-                    pdf: Vec::new(),
-                    report: Report::Error(error.into()),
-                });
-                Vec::new()
-            }
-        }
+        };
+        serde_json::to_string(&requests).map_err(|error| JsError::new(&error.to_string()))
     }
 
     /// Bytes the job may still be supplied; a longer response is not worth reading.
@@ -212,10 +219,12 @@ impl RenderJob {
         self.resources.byte_limit_reason()
     }
 
-    /// Answers `url` with its bytes; `location` is where redirects ended, if they moved it.
+    /// Answers the request for `url` in `file_root` with its bytes; `location` is where
+    /// redirects ended, if they moved it.
     pub fn supply(
         &mut self,
         url: &str,
+        file_root: Option<String>,
         data: Vec<u8>,
         content_type: Option<String>,
         location: Option<String>,
@@ -228,13 +237,19 @@ impl RenderJob {
             .map(|content_type| ResourceMetadata::from_content_type(&content_type))
             .unwrap_or_default();
         self.resources
-            .supply(resource_url(url)?, data, metadata, location);
+            .supply(request(url, file_root)?, data, metadata, location);
         Ok(())
     }
 
-    /// Answers `url` as unavailable, which the render reports as a diagnostic.
-    pub fn fail(&mut self, url: &str, reason: &str) -> Result<(), JsError> {
-        self.resources.fail(resource_url(url)?, reason);
+    /// Answers the request for `url` in `file_root` as unavailable, which the render reports
+    /// as a diagnostic.
+    pub fn fail(
+        &mut self,
+        url: &str,
+        file_root: Option<String>,
+        reason: &str,
+    ) -> Result<(), JsError> {
+        self.resources.fail(request(url, file_root)?, reason);
         Ok(())
     }
 
@@ -258,8 +273,18 @@ impl RenderJob {
     }
 }
 
-fn resource_url(url: &str) -> Result<ferri_pdf::Url, JsError> {
-    parse_url(RESOURCE_URL, url).map_err(|error| JsError::new(&error))
+fn request(url: &str, file_root: Option<String>) -> Result<Request, JsError> {
+    let file_root = file_root
+        .map(|root| parse_url(RESOURCE_FILE_ROOT, &root))
+        .transpose();
+    parse_url(RESOURCE_URL, url)
+        .and_then(|url| {
+            Ok(Request {
+                url,
+                file_root: file_root?,
+            })
+        })
+        .map_err(|error| JsError::new(&error))
 }
 
 impl RenderJob {
@@ -277,11 +302,19 @@ impl RenderJob {
         Ok(())
     }
 
+    /// The resources of a document with `base`, which reads local files in the job's
+    /// `fileRoot` or else in the folder its own base names.
+    fn resources(&self, base: &ResourceBase) -> ConfinedResources<'_> {
+        self.resources
+            .confined(self.file_root.clone().or_else(|| base.local_directory()))
+    }
+
     fn render(&self) -> Result<Outcome, Error> {
         if self.multipart {
             let parts: Vec<_> = self.parts.iter().map(Part::html).collect();
-            let rendered =
-                ferri_pdf::render_parts_with_resolver(&parts, &self.options, &self.resources)?;
+            let rendered = ferri_pdf::render_parts_with_resolvers(&parts, &self.options, |base| {
+                self.resources(base)
+            })?;
             return Ok(Outcome {
                 pdf: rendered.pdf,
                 report: Report::Multipart(MultipartReport {
@@ -300,12 +333,13 @@ impl RenderJob {
                 }),
             });
         }
+        let resources = &self.resources(&self.options.base);
         let rendered = match self.parts.first().map(|part| &part.html) {
             Some(Html::Text(text)) => {
-                ferri_pdf::render_with_resolver(text, &self.options, &self.resources)
+                ferri_pdf::render_with_resolver(text, &self.options, resources)
             }
             Some(Html::Bytes(bytes)) => {
-                ferri_pdf::render_bytes_with_resolver(bytes, &self.options, &self.resources)
+                ferri_pdf::render_bytes_with_resolver(bytes, &self.options, resources)
             }
             None => Err(PdfError::EmptyParts.into()),
         }?;
