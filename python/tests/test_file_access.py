@@ -16,11 +16,15 @@ NO_BASE = "has no base"
 NOT_LOCAL = "the content that names it is not local"
 LOCAL_LOCATION = "places a remote resource at a local file"
 UNSUPPORTED_SCHEME = "unsupported resource scheme"
+FETCH_DECLINED = "fetch returned None"
 
 
-def absolute_path_reason(reason):
-    """Why a bare absolute path is refused: a Windows drive letter parses as a URL scheme."""
-    return UNSUPPORTED_SCHEME if os.name == "nt" else reason
+def absolute_path_reason(reason, fetch=False):
+    """Why a bare absolute path is refused. A Windows drive letter parses as a URL scheme,
+    which is no file: `fetch` is asked for it when given, and nothing else loads it."""
+    if os.name != "nt":
+        return reason
+    return FETCH_DECLINED if fetch else UNSUPPORTED_SCHEME
 
 
 def document(href):
@@ -102,12 +106,14 @@ def test_only_files_inside_the_base_folder_are_read(tree: Path):
     assert_loaded("style.css", base=root)
     assert_loaded((root / "style.css").as_uri(), base=root)
     assert_loaded("style.css", base_url=(root / "index.html").as_uri())
-    refused = [(secret, absolute_path_reason(OUTSIDE_FOLDER))]
-    refused += [(href, OUTSIDE_FOLDER) for href in (secret.as_uri(), "../secret.css", "sub/../../secret.css")]
-    for href, reason in refused:
-        assert_refused(href, reason, base=root)
-        assert_refused(href, reason, base=root, fetch=lambda url: None)
-        assert_refused(href, reason, base=root, allow_http=False)
+    decline = lambda url: None
+    assert_refused(secret, absolute_path_reason(OUTSIDE_FOLDER), base=root)
+    assert_refused(secret, absolute_path_reason(OUTSIDE_FOLDER), base=root, allow_http=False)
+    assert_refused(secret, absolute_path_reason(OUTSIDE_FOLDER, fetch=True), base=root, fetch=decline)
+    for href in (secret.as_uri(), "../secret.css", "sub/../../secret.css"):
+        assert_refused(href, OUTSIDE_FOLDER, base=root)
+        assert_refused(href, OUTSIDE_FOLDER, base=root, fetch=decline)
+        assert_refused(href, OUTSIDE_FOLDER, base=root, allow_http=False)
     assert_refused("../secret.css", OUTSIDE_FOLDER, base_url=(root / "index.html").as_uri())
 
 
