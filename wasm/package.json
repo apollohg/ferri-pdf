@@ -9,7 +9,6 @@
     "directory": "wasm"
   },
   "keywords": ["pdf", "html", "css", "print", "wasm"],
-  "private": true,
   "type": "module",
   "sideEffects": false,
   "engines": {
