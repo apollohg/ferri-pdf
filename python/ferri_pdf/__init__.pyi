@@ -11,6 +11,13 @@ class ContentLostError(RenderError):
     part: int | None
 
 class RenderOptions:
+    """Settings for a render.
+
+    Local files are read only inside the folder `base` or a `file:` `base_url` names, and
+    never for content with a remote base; without a base none is read. `file_root` names
+    another folder to read inside instead.
+    """
+
     def __init__(
         self,
         *,

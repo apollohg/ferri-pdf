@@ -38,7 +38,7 @@ output = ferri_pdf.render(html, options)
 
 | Option | Effect |
 |---|---|
-| `base` | Directory that relative URLs resolve against (default: the working directory) |
+| `base` | Directory that relative URLs resolve against and local files are read inside (default: none, so no local file is read) |
 | `base_url` | Document URL that relative URLs resolve against, instead of `base` |
 | `stylesheets` | Author stylesheets applied after the document's own |
 | `user_stylesheets` | User-origin stylesheets |
@@ -55,10 +55,16 @@ output = ferri_pdf.render(html, options)
 | `include_layout` | Return the measured layout as `output.layout` |
 | `allow_content_loss` | Return the PDF even when a resource limit left content out |
 | `allow_http` | Fetch HTTP(S) resources with the built-in client (default: `True`) |
-| `file_root` | Refuse local files outside this directory |
+| `file_root` | Directory local files are read inside, instead of the base's |
 | `fetch` | Callable that loads every URL other than local files and data URLs |
 
-Rendering untrusted HTML? Set `allow_http=False` and `file_root` so a document cannot reach your network or read files outside its own assets, or route requests through `fetch` and decide there.
+A document reads local files only inside its base folder: `base`, or the folder holding the `file:` document that `base_url` names. Without a base no local file is read, and a document or stylesheet with a remote base such as `https:` never reads one. `file_root` names another folder to read inside instead, for example a shared assets folder above the base:
+
+```python
+ferri_pdf.RenderOptions(base="templates/invoice", file_root="templates")
+```
+
+Files outside the folder, judged after symbolic links and `..` are resolved, are refused and listed in `diagnostics`. Rendering untrusted HTML? Also set `allow_http=False` so a document cannot reach your network, or route requests through `fetch` and decide there.
 
 ## Fetching resources yourself
 
@@ -84,7 +90,7 @@ def fetch(url: str) -> ferri_pdf.Resource | None:
 output = ferri_pdf.render(html, ferri_pdf.RenderOptions(fetch=fetch))
 ```
 
-Relative URLs inside a fetched resource resolve against its `url`. An `Exception` raised by `fetch`, like `None`, leaves that resource unavailable and is reported in `diagnostics`; rendering carries on. `KeyboardInterrupt`, `SystemExit` and a return value of the wrong type stop further fetches and are raised from `render`. Local files still load from disk, within `file_root` when set.
+Relative URLs inside a fetched resource resolve against its `url`. An `Exception` raised by `fetch`, like `None`, leaves that resource unavailable and is reported in `diagnostics`; rendering carries on. `KeyboardInterrupt`, `SystemExit` and a return value of the wrong type stop further fetches and are raised from `render`. Local files still load from disk, inside the base folder or `file_root`, and never for a resource `fetch` returned.
 
 ## Several documents in one PDF
 
@@ -97,7 +103,7 @@ for part in output.parts:
     print(part.first_page, part.page_count)
 ```
 
-Each part starts on a new page. Parts can also be plain `str` or `bytes`, which use the options' base.
+Each part starts on a new page. Parts can also be plain `str` or `bytes`, which use the options' base. Each part reads local files only inside its own base folder, unless `file_root` names one folder for all.
 
 ## Errors
 

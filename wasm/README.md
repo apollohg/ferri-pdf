@@ -50,9 +50,13 @@ const output = await render(html, {
 
 ## Local files in Node
 
-A document reads local files only when you point it at them: pass `base`, a directory, or a `file:` `baseUrl`. Files are then read from inside that directory and nowhere else, judged after symbolic links and `..` are resolved, so `file:///etc/passwd` or `../../secret` in the HTML or in a stylesheet is refused and reported as a diagnostic. `fileRoot` names a different directory to confine reads to, for example a shared assets folder above the base.
+A document reads local files only when you point it at them: pass `base`, a directory, or a `file:` `baseUrl`. Files are then read from inside that directory and nowhere else, judged after symbolic links and `..` are resolved, so `file:///etc/passwd` or `../../secret` in the HTML or in a stylesheet is refused and reported as a diagnostic. `fileRoot` names a different directory to read inside instead, for example a shared assets folder above the base:
 
-Without a local base no file is read, and a document whose base is an `http(s)` URL never reads one, as in a browser. Local files are read by the package itself and never passed to a custom `fetch`. Only regular files are read, within `maxFetchBytes`.
+```js
+const output = await render(html, { base: 'templates/invoice', fileRoot: 'templates' });
+```
+
+Without a base or a `fileRoot` no file is read, and a document or stylesheet whose base is an `http(s)` URL never reads one, as in a browser. Each part of a multipart render reads only inside its own base's directory, unless `fileRoot` names one for all. Local files are read by the package itself and never passed to a custom `fetch`. Only regular files are read, within `maxFetchBytes`.
 
 ## Options
 

@@ -25,6 +25,9 @@ Use `-` for stdin or stdout. Options:
 | `--headings HEADINGS.json` | Write heading page numbers as JSON |
 | `--trace` | Write the measured layout next to the PDF |
 | `--allow-content-loss` | Write the PDF even when a resource limit left content out |
+| `--file-root DIR` | Read local files inside this folder instead of the input's |
+
+A document reads local files only inside the folder of its input file, or the current directory when the input is stdin. `--file-root DIR` names another folder, for example a shared assets folder above the input. Content fetched over HTTP(S) never reads a local file.
 
 Invalid markup, unsupported CSS and missing resources never fail a render; they are recovered as the specifications say and printed as warnings. Input that exceeds a resource limit so that content is left out fails with the losses listed, unless `--allow-content-loss` is given.
 
@@ -48,6 +51,16 @@ std::fs::write("hello.pdf", output.pdf)?;
 
 Relative URLs resolve against `base`. HTTP(S) fetching is behind the default `http` feature. To control resource loading, pass your own resolver to `render_with_resolver`.
 
+Local files are read only inside the folder `base` names: the directory itself, or the one holding a `file:` document. Without a `base` no local file is read, and neither a document with an `http(s)` base nor a stylesheet fetched from one ever reads a local file. Set `file_root` to read inside another folder instead, for example a shared assets folder above the base:
+
+```rust
+let options = RenderOptions {
+    base: std::path::Path::new("templates/invoice").into(),
+    file_root: Some("templates".into()),
+    ..Default::default()
+};
+```
+
 Besides `@font-face` web fonts, only the bundled Liberation and DejaVu fonts are used unless `options.print.fonts.system_fonts` is set or `font_dirs` lists folders; then `font-family`, `local()` and the generic and fallback preferences can also name the fonts installed there. Installed fonts are read only from the system font folders and the folders you give, never from a path the document chooses.
 
 Recovered input is reported in `output.diagnostics`. When a resource limit leaves content out, rendering returns `Error::ContentLost` with those diagnostics; set `content_loss: ContentLoss::Render` to get the PDF anyway.
@@ -64,6 +77,8 @@ import ferri_pdf
 output = ferri_pdf.render("<h1>Hello</h1>", ferri_pdf.RenderOptions(base="assets"))
 open("hello.pdf", "wb").write(output.pdf)
 ```
+
+Local files are read only inside `base`; without it none is read. Pass `file_root` to read inside another folder, such as `RenderOptions(base="templates/invoice", file_root="templates")`.
 
 The bindings live in `python/`; see [python/README.md](python/README.md) for options, multipart rendering and the `fetch` callback for loading remote resources yourself.
 
@@ -88,6 +103,8 @@ const url = URL.createObjectURL(new Blob([output.pdf], { type: 'application/pdf'
 const output = await render(html, { base: 'templates/invoice' });
 await writeFile('invoice.pdf', output.pdf);
 ```
+
+Without a `base` Node reads no local file. Pass `fileRoot` to read inside another folder, such as `{ base: 'templates/invoice', fileRoot: 'templates' }`.
 
 In a browser, resources from another origin need CORS headers that allow the page to read them, or a proxy on your own origin passed as the `fetch` option. A resource that cannot be fetched never fails the render; it is reported in `output.diagnostics`.
 
